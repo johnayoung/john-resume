@@ -11815,7 +11815,7 @@ ol,ul {
 }
 
 a {
-    color: #6d56c1;
+    color: #E03A3E;
     transition: all .3s;
     position: relative;
     text-decoration: none;
@@ -11823,7 +11823,7 @@ a {
 }
 
 a:focus,a:hover,a a:active {
-    color: #6d56c1;
+    color: #E03A3E;
     text-decoration: underline
 }
 
@@ -11854,13 +11854,13 @@ nav ul li a:after {
     right: 42px;
     opacity: 0;
     transition: background .3s;
-    background: #6d56c1
+    background: #E03A3E
 }
 
 nav ul li a:hover {
     text-decoration: none;
     transition: all .15s;
-    color: #6d56c1
+    color: #E03A3E
 }
 
 nav ul li a:hover:after {
@@ -12115,11 +12115,11 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 }
 
 .menu.menu--active .menu__wrapper a:hover {
-    color: #6d56c1!important
+    color: #E03A3E!important
 }
 
 .menu.menu--active .menu__wrapper a:after {
-    background: #6d56c1!important
+    background: #E03A3E!important
 }
 
 .menu.menu--active .menu__mobile-button {
@@ -12132,12 +12132,12 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 }
 
 .menu.menu--active .menu__mobile-button:hover {
-    color: #6d56c1!important;
+    color: #E03A3E!important;
     opacity: 1
 }
 
 .menu.menu--active .menu__mobile-button:after {
-    background: #6d56c1!important
+    background: #E03A3E!important
 }
 
 .project-card {
@@ -12268,7 +12268,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 }
 
 .background {
-    background-color: #6d56c1;
+    background-color: #E03A3E;
     height: 100%;
     background-repeat: no-repeat;
     background-position: 50%;
@@ -12312,7 +12312,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 }
 
 .contacts .contacts__social a:hover {
-    color: #6d56c1;
+    color: #E03A3E;
     text-decoration: none;
     background-color: #fff
 }
@@ -12339,7 +12339,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     right: 0;
     bottom: 0;
     border-radius: 2px;
-    border: 2px solid #6d56c1;
+    border: 2px solid #E03A3E;
     pointer-events: none;
     opacity: 0;
     transition: all .3s
@@ -12652,7 +12652,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 .article .article__share a:hover {
     opacity: 1;
-    color: #6d56c1
+    color: #E03A3E
 }
 
 @media screen and (max-width: 768px) {
@@ -12681,7 +12681,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 .posts a:hover .posts__title {
     text-decoration: underline;
-    color: #6d56c1
+    color: #E03A3E
 }
 
 .posts .posts__title {
@@ -12702,7 +12702,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 }
 
 .portfolio-menu .portfolio-menu__link--active {
-    color: #6d56c1;
+    color: #E03A3E;
     text-decoration: none
 }
 
@@ -12949,7 +12949,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 }
 
 .style-switcher .style-switcher__link--color {
-    background-color: #6d56c1
+    background-color: #E03A3E
 }
 
 .style-switcher .style-switcher__link--mono {

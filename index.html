@@ -282,16 +282,23 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href data-portfolio-target-tag="all" class="portfolio-menu__link--active">
-                                all
-                            </a>
+                            <a href data-portfolio-target-tag="all">all</a>
+                        </li>
+                        <li>
+                            <a href data-portfolio-target-tag="web-app">web-app</a>
+                        </li>
+                        <li>
+                            <a href data-portfolio-target-tag="add-in">add-in</a>
+                        </li>
+                        <li>
+                            <a href data-portfolio-target-tag="serverless">serverless</a>
                         </li>
                     </ul>
                 </nav>
             </div>
         </div>
         <div class="portfolio-cards">
-            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="web-sites">
+            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="web-app">
                 <div class="col-md-6 col-lg-5 project-card__img">
                     <img class="" src="https://res.cloudinary.com/hjihgo1pd/image/upload/v1555343902/wotg-home.jpg" alt="project-img">
                 </div>
@@ -311,7 +318,7 @@
                     <a href="https://warofthegames.com" target="_isblank" class="project-card__link">https://warofthegames.com</a>
                 </div>
             </div>
-            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="web-sites">
+            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="add-in">
                 <div class="col-md-6 col-lg-5 project-card__img">
                     <img class="" src="img/quotes_website.gif" alt="project-img">
                 </div>
@@ -326,10 +333,10 @@
                         <li>NodeJs</li>
                         <li>Postgres</li>
                     </ul>
-                    <a href="https://cryptosheets.com/" target="_isblank" class="project-card__link">https://cryptosheets.com/</a>
+                    <a href="https://cryptosheets.com/" target="_isblank" class="project-card__link">https://cryptosheets.com</a>
                 </div>
             </div>
-            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="web-sites">
+            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="add-in">
                 <div class="col-md-6 col-lg-5 project-card__img">
                     <img class="" src="img/spreadstreet.gif" alt="project-img">
                 </div>
@@ -348,23 +355,43 @@
                     <a href="https://chrome.google.com/webstore/detail/spreadstreet/fghpmppcbabgnpekploacbjijhppnkpp?hl=en-US" target="_isblank" class="project-card__link">Link to Google</a>
                 </div>
             </div>
-            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="web-sites">
+            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="web-app">
                 <div class="col-md-6 col-lg-5 project-card__img">
-                    <img class="" src="img/spreadstreet.gif" alt="project-img">
+                    <img class="" src="https://res.cloudinary.com/hjihgo1pd/image/upload/v1555344595/api-hub.gif" alt="project-img">
                 </div>
                 <div class="col-md-6 col-lg-7 project-card__info">
-                    <h3 class="project-card__title">Spreadstreet</h3>
+                    <h3 class="project-card__title">API Hub</h3>
                     <p class="project-card__description">
-                        Easy way to get cryptocurrency data directly into Google Sheets. 
+                        Online repository for public REST API endpoints. 
                     </p>
                     <p class="project-card__stack">Used stack:</p>
                     <ul class="tags">
-                        <li>Apps Script</li>
+                        <li>ReactJs</li>
                         <li>NodeJs</li>
                         <li>Mongo</li>
                         <li>Heroku</li>
                     </ul>
-                    <a href="https://chrome.google.com/webstore/detail/spreadstreet/fghpmppcbabgnpekploacbjijhppnkpp?hl=en-US" target="_isblank" class="project-card__link">Link to Google</a>
+                    <a href="https://warm-peak-72707.herokuapp.com/" target="_isblank" class="project-card__link">https://warm-peak-72707.herokuapp.com</a>
+                </div>
+            </div>
+            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="serverless">
+                <div class="col-md-6 col-lg-5 project-card__img">
+                    <img class="" src="img/morph-demo.gif" alt="project-img">
+                </div>
+                <div class="col-md-6 col-lg-7 project-card__info">
+                    <h3 class="project-card__title">Morph</h3>
+                    <p class="project-card__description">
+                        A standardized RESTful utility microservice.
+                    </p>
+                    <p class="project-card__stack">Used stack:</p>
+                    <ul class="tags">
+                        <li>ReactJs</li>
+                        <li>Python</li>
+                        <li>Mongo</li>
+                        <li>Zeit/Now</li>
+                        <li>Serverless</li>
+                    </ul>
+                    <a href="https://morphapi.com/" target="_isblank" class="project-card__link">https://morphapi.com</a>
                 </div>
             </div>
         </div>
@@ -372,5 +399,7 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="js/menu.js"></script>
+    <script src="js/portfolio-filter.js"></script>
+    <script src="js/section.js"></script>
 </body>
 </html>
