@@ -1,6 +1,6 @@
 'use strict';
 
-console.log('Width', $(window).width());
+
 if ($(window).width() < 992) {
   // disable carousel
   $('.carousel').carousel({

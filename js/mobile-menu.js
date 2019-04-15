@@ -1,7 +1,12 @@
 'use strict';
 
+$('.personal-profile__name').on('click', function() {
+  console.log('does anything work?');
+});
+
 //Open mobile menu
-$('.menu__mobile-button, .mobile-menu__close').on('click', function() {
+$('.menu__wrapper, .mobile-menu__close').on('click', function() {
+  console.log('it worked');
   $('.mobile-menu').toggleClass('active');
 });
 
