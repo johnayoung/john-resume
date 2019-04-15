@@ -397,8 +397,66 @@
         </div>
     </section>
 
+    <div class="main-header" style="background-image: url(img/img_bg_main.jpg)">
+        <div id="contact" class="container section">
+            <div class="row">
+                <div class="col-md-12">
+                    <p id="contacts_header" class="section__title" style="text-indent: 0px;">Get in touch_</p>
+                </div>
+            </div>
+            <div class="row contacts">
+                <div class="col-md-5 col-lg-4">
+                    <div class="contacts__list">
+                        <dl class="contact-list">
+                            <dt>Email:</dt>
+                            <dd><a href="mailto:jyoung1985@live.com">jyoung1985@live.com</a></dd>
+                        </dl>
+                    </div>
+                    <div class="contacts__social">
+                        <ul>
+                            <li><a href="https://www.linkedin.com/in/jyoung1985/" target="_blank">LinkedIn</a></li>
+                            <li><a href="https://github.com/johnatspreadstreet" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-7 col-lg-5">
+                    <div class="contacts__form">
+                        <p class="contacts__form-title">Or, just write me a message here_</p>
+                        <form class="js-form" name="contact" method="POST" data-netlify="true">
+                            <div class="form-group">
+                                <input class="form-field js-field-name" type="text" placeholder="Your name" required>
+                                <span class="form-validation"></span>
+                                <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-field js-field-email" type="email" placeholder="Your e-mail" required="">
+                                <span class="form-validation"></span>
+                                <span class="form-invalid-icon">
+                                    <i class="mdi mdi-close" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-field js-field-message" placeholder="Type the message here" required=""></textarea>
+                                <span class="form-validation"></span>
+                                <span class="form-invalid-icon">
+                                    <i class="mdi mdi-close" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <button class="site-btn site-btn--form" type="submit" value="Send">Send</button>
+                        </form>
+                    </div>
+                    <div class="footer">
+                        <p>© 2019 John Young. All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/site-btn.js"></script>
     <script src="js/menu.js"></script>
+    <script src="js/mobile-menu.js"></script>
     <script src="js/portfolio-filter.js"></script>
     <script src="js/section.js"></script>
 </body>

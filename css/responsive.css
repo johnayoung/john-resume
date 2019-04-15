@@ -12043,7 +12043,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 }
 
 .site-btn.site-btn--form:hover {
-    background-color: #7b67c7!important
+    background-color: darkred!important
 }
 
 .site-btn.site-btn--form:active,.site-btn.site-btn--form:focus {
@@ -12289,6 +12289,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 .contacts {
     margin-top: 20px
+}
+
+#contacts_header {
+    color: #fff
 }
 
 .contacts .contacts__list {
