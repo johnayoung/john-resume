@@ -12009,7 +12009,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 }
 
 .site-btn {
-    background-color: #6d56c1;
+    background-color: #E03A3E;
     height: 50px;
     border-radius: 25px;
     font-size: 14px;
@@ -12031,7 +12031,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 }
 
 .site-btn:focus,.site-btn:hover {
-    background-color: #7b67c7;
+    background-color: darkred;
     text-decoration: none
 }
 
@@ -12154,7 +12154,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 .project-card .project-card__img img {
     width: 100%;
-    height: 100%;
+    height: auto;
     -o-object-fit: cover;
     object-fit: cover
 }
@@ -12199,65 +12199,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .project-card:hover {
     box-shadow: 0 1px 31px rgba(0,0,0,.09);
     cursor: pointer
-}
-
-.resume-list {
-    margin-top: 30px;
-    margin-bottom: 30px
-}
-
-.resume-list .resume-list_title {
-    font-family: Roboto Mono,monospace;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: #999;
-    margin-bottom: 40px
-}
-
-.resume-list .resume-list__block {
-    border-left: 2px solid #6d56c1;
-    padding-left: 25px;
-    padding-bottom: 50px
-}
-
-.resume-list .resume-list__block p {
-    margin: 0
-}
-
-.resume-list .resume-list__block:before {
-    width: 12px;
-    height: 12px;
-    border: 2px solid #6d56c1;
-    position: absolute;
-    content: "";
-    border-radius: 50%;
-    background-color: #fff;
-    left: 10px
-}
-
-.resume-list .resume-list__block:last-child {
-    padding-bottom: 0
-}
-
-.resume-list .resume-list__block-title {
-    text-transform: uppercase;
-    color: #6d56c1;
-    font-size: 14px;
-    line-height: 20px;
-    font-family: Roboto Mono,monospace;
-    font-weight: 700;
-    padding-bottom: 5px
-}
-
-.resume-list .resume-list__block-date {
-    font-family: Inconsolata,monospace;
-    font-size: 14px;
-    line-height: 20px;
-    color: #999;
-    padding-bottom: 10px
 }
 
 .post-cards {
@@ -12534,43 +12475,6 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     top: 60px;
     position: relative;
     margin-bottom: 30px
-}
-
-.progress-list {
-    margin-top: 30px
-}
-
-.progress-list .progress-list__title {
-    font-family: Roboto Mono,monospace;
-    letter-spacing: 5px;
-    font-weight: 700;
-    color: #999;
-    margin-bottom: 40px
-}
-
-.progress-list .progress-list__title,.progress-list p {
-    font-size: 14px;
-    line-height: 20px;
-    text-transform: uppercase
-}
-
-.progress-list p {
-    width: 100%;
-    font-family: Inconsolata,monospace;
-    margin-bottom: 10px
-}
-
-.progress-list p .progress-list__skill-value {
-    float: right
-}
-
-.progress-list .progress {
-    height: 6px;
-    margin-bottom: 30px
-}
-
-.progress-list .progress .progress-bar {
-    background-color: #6d56c1
 }
 
 .portfolio-modal .modal-content {
