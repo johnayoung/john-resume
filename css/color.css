@@ -61,6 +61,79 @@ body {
   padding-bottom: 10px
 }
 
+.resume-list .resume-list__block-role {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #333;
+  margin-bottom: 12px;
+  margin-top: 8px
+}
+
+.resume-list .resume-list__block-description {
+  font-size: 15px;
+  line-height: 24px;
+  color: #555;
+  margin-bottom: 15px;
+  font-style: italic
+}
+
+.resume-list .resume-list__block ul {
+  margin-top: 8px;
+  margin-bottom: 0;
+  padding-left: 20px
+}
+
+.resume-list .resume-list__block li {
+  font-size: 14px;
+  line-height: 22px;
+  color: #444;
+  margin-bottom: 8px;
+  position: relative
+}
+
+.resume-list .resume-list__block li:before {
+  content: "▸";
+  color: #E03A3E;
+  font-size: 12px;
+  position: absolute;
+  left: -15px;
+  top: 1px
+}
+
+.resume-list .resume-list__block-degree {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #333;
+  margin-bottom: 8px;
+  margin-top: 8px
+}
+
+.resume-list .resume-list__block-institution {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #333;
+  margin-bottom: 8px;
+  margin-top: 8px
+}
+
+.resume-list .resume-list__block-details {
+  font-size: 14px;
+  line-height: 22px;
+  color: #555;
+  margin-bottom: 8px
+}
+
+.resume-list .resume-list__block-activities {
+  font-size: 14px;
+  line-height: 20px;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 5px
+}
+
 .progress-list {
   margin-top: 30px
 }
