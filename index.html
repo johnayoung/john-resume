@@ -638,7 +638,7 @@
         <nav>
           <ul>
             <li>
-              <a href data-portfolio-target-tag="all">all</a>
+              <a href data-portfolio-target-tag="all" class="portfolio-menu__link--active">all</a>
             </li>
             <li>
               <a href data-portfolio-target-tag="add-in">add-in</a>
@@ -651,149 +651,138 @@
       </div>
     </header>
     <div class="portfolio-cards">
-      <article class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="cli-tool">
-        <div class="col-md-6 col-lg-5 project-card__img">
-          <img class="" src="https://opengraph.githubassets.com/1/johnayoung/eth-finetuning-cookbook"
-            alt="project-img" />
+      <article class="project-card" data-portfolio-tag="cli-tool">
+        <div class="project-card__header">
+          <div class="project-card__meta">
+            <span class="project-card__type">CLI Tool</span>
+            <span class="project-card__divider">•</span>
+            <span class="project-card__lang">Python</span>
+          </div>
+          <h3 class="project-card__title">Ethereum Fine-Tuning Cookbook</h3>
         </div>
-        <div class="col-md-6 col-lg-7 project-card__info">
-          <h3 class="project-card__title">
-            Ethereum Fine-Tuning Cookbook
-            <a href="https://github.com/johnayoung/eth-finetuning-cookbook" target="_blank">
-              <i class="fab fa-github"></i>
-            </a>
-          </h3>
-          <p class="project-card__description">
-            An open-source educational cookbook teaching developers how to fine-tune language models on blockchain data
-            using QLoRA/LoRA techniques. Features complete working examples for extracting structured intents from
-            Ethereum transactions with 90%+ accuracy targets.
-          </p>
-          <p class="project-card__stack">Used stack:</p>
-          <ul class="tags">
-            <li>Python</li>
-            <li>PyTorch</li>
-            <li>HuggingFace Transformers</li>
-            <li>QLoRA/PEFT</li>
-            <li>web3.py</li>
-            <li>Ethereum</li>
-            <li>LLM Fine-tuning</li>
-          </ul>
-          <a href="https://github.com/johnayoung/eth-finetuning-cookbook" target="_isblank"
-            class="project-card__link">View on
-            GitHub</a>
+        <p class="project-card__description">
+          Open-source educational cookbook for fine-tuning language models on blockchain data using QLoRA/LoRA. Complete
+          examples for extracting structured intents from Ethereum transactions with 90%+ accuracy.
+        </p>
+        <div class="project-card__tags">
+          <span>PyTorch</span>
+          <span>HuggingFace</span>
+          <span>QLoRA</span>
+          <span>web3.py</span>
+          <span>Ethereum</span>
+        </div>
+        <div class="project-card__footer">
+          <a href="https://github.com/johnayoung/eth-finetuning-cookbook" target="_blank" class="project-card__link">
+            <i class="fab fa-github"></i> GitHub
+          </a>
         </div>
       </article>
-      <article class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="cli-tool">
-        <div class="col-md-6 col-lg-5 project-card__img">
-          <img class="" src="https://opengraph.githubassets.com/1/johnayoung/llm-orchestrator" alt="project-img" />
+      <article class="project-card" data-portfolio-tag="cli-tool">
+        <div class="project-card__header">
+          <div class="project-card__meta">
+            <span class="project-card__type">CLI Tool</span>
+            <span class="project-card__divider">•</span>
+            <span class="project-card__lang">Go</span>
+          </div>
+          <h3 class="project-card__title">LLM Orchestrator</h3>
         </div>
-        <div class="col-md-6 col-lg-7 project-card__info">
-          <h3 class="project-card__title">
-            LLM Orchestrator
-            <a href="https://github.com/johnayoung/llm-orchestrator" target="_blank">
-              <i class="fab fa-github"></i>
-            </a>
-          </h3>
-          <p class="project-card__description">
-            A powerful Go CLI application that sends prompts to multiple Large Language Models (LLMs) in parallel and
-            uses a configurable Master Agent to analyze and synthesize responses from OpenAI, Google Gemini, Groq, and
-            Anthropic Claude.
-          </p>
-          <p class="project-card__stack">Used stack:</p>
-          <ul class="tags">
-            <li>Go</li>
-            <li>CLI</li>
-            <li>Anthropic Claude</li>
-            <li>OpenAI GPT-4</li>
-            <li>Google Gemini</li>
-            <li>Groq Llama</li>
-            <li>Parallel Processing</li>
-          </ul>
-          <a href="https://github.com/johnayoung/llm-orchestrator" target="_isblank" class="project-card__link">View on
-            GitHub</a>
+        <p class="project-card__description">
+          Powerful Go CLI that sends prompts to multiple LLMs in parallel and uses a Master Agent to synthesize
+          responses from OpenAI, Google Gemini, Groq, and Anthropic Claude.
+        </p>
+        <div class="project-card__tags">
+          <span>Go</span>
+          <span>Claude</span>
+          <span>GPT-4</span>
+          <span>Gemini</span>
+          <span>Parallel Processing</span>
+        </div>
+        <div class="project-card__footer">
+          <a href="https://github.com/johnayoung/llm-orchestrator" target="_blank" class="project-card__link">
+            <i class="fab fa-github"></i> GitHub
+          </a>
         </div>
       </article>
-      <article class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="cli-tool">
-        <div class="col-md-6 col-lg-5 project-card__img">
-          <img class="" src="https://opengraph.githubassets.com/1/johnayoung/go-ohlcv-collector" alt="project-img" />
+      <article class="project-card" data-portfolio-tag="cli-tool">
+        <div class="project-card__header">
+          <div class="project-card__meta">
+            <span class="project-card__type">CLI Tool</span>
+            <span class="project-card__divider">•</span>
+            <span class="project-card__lang">Go</span>
+          </div>
+          <h3 class="project-card__title">Go OHLCV Collector</h3>
         </div>
-        <div class="col-md-6 col-lg-7 project-card__info">
-          <h3 class="project-card__title">
-            Go OHLCV Collector
-            <a href="https://github.com/johnayoung/go-ohlcv-collector" target="_blank">
-              <i class="fab fa-github"></i>
-            </a>
-          </h3>
-          <p class="project-card__description">
-            A robust, production-ready Go library and CLI for collecting and maintaining complete historical OHLCV
-            cryptocurrency market data with automatic gap detection, self-healing capabilities, and pluggable storage
-            adapters.
-          </p>
-          <p class="project-card__stack">Used stack:</p>
-          <ul class="tags">
-            <li>Go</li>
-            <li>CLI</li>
-            <li>DuckDB</li>
-            <li>PostgreSQL</li>
-            <li>Cryptocurrency APIs</li>
-            <li>Time Series Data</li>
-            <li>Data Validation</li>
-          </ul>
-          <a href="https://github.com/johnayoung/go-ohlcv-collector" target="_isblank" class="project-card__link">View
-            on GitHub</a>
+        <p class="project-card__description">
+          Production-ready Go library and CLI for collecting historical OHLCV cryptocurrency market data with automatic
+          gap detection, self-healing, and pluggable storage adapters.
+        </p>
+        <div class="project-card__tags">
+          <span>Go</span>
+          <span>DuckDB</span>
+          <span>PostgreSQL</span>
+          <span>Time Series</span>
+          <span>Crypto APIs</span>
+        </div>
+        <div class="project-card__footer">
+          <a href="https://github.com/johnayoung/go-ohlcv-collector" target="_blank" class="project-card__link">
+            <i class="fab fa-github"></i> GitHub
+          </a>
         </div>
       </article>
-      <article class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="add-in">
-        <div class="col-md-6 col-lg-5 project-card__img">
-          <img class="" src="img/quotes_website.gif" alt="project-img" />
+      <article class="project-card project-card--featured" data-portfolio-tag="add-in">
+        <div class="project-card__header">
+          <div class="project-card__meta">
+            <span class="project-card__type">Excel Add-in</span>
+            <span class="project-card__divider">•</span>
+            <span class="project-card__lang">React + Node.js</span>
+            <span class="project-card__badge">Acquired 2019</span>
+          </div>
+          <h3 class="project-card__title">Cryptosheets</h3>
         </div>
-        <div class="col-md-6 col-lg-7 project-card__info">
-          <h3 class="project-card__title">
-            Cryptosheets
-            <a href="https://github.com/johnayoung/cryptosheets" target="_blank">
-              <i class="fab fa-github"></i>
-            </a>
-          </h3>
-          <p class="project-card__description">
-            Real-time cryptocurrency data platform for Microsoft Excel with 30,000+ active users. Successfully acquired
-            in 2019.
-          </p>
-          <p class="project-card__stack">Used stack:</p>
-          <ul class="tags">
-            <li>ReactJs</li>
-            <li>NodeJs</li>
-            <li>PostgreSQL</li>
-            <li>Excel APIs</li>
-            <li>WebSockets</li>
-          </ul>
-          <a href="https://cryptosheets.com/" target="_isblank" class="project-card__link">https://cryptosheets.com</a>
+        <p class="project-card__description">
+          Real-time cryptocurrency data platform for Microsoft Excel with 30,000+ active users. Full-featured Excel
+          add-in with live market data, portfolio tracking, and custom formulas.
+        </p>
+        <div class="project-card__tags">
+          <span>React</span>
+          <span>Node.js</span>
+          <span>PostgreSQL</span>
+          <span>Excel APIs</span>
+          <span>WebSockets</span>
+        </div>
+        <div class="project-card__footer">
+          <a href="https://cryptosheets.com/" target="_blank" class="project-card__link">
+            <i class="fas fa-external-link-alt"></i> Visit Site
+          </a>
+          <a href="https://github.com/johnayoung/cryptosheets" target="_blank" class="project-card__link">
+            <i class="fab fa-github"></i> GitHub
+          </a>
         </div>
       </article>
-      <article class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="cli-tool">
-        <div class="col-md-6 col-lg-5 project-card__img">
-          <img class="" src="https://opengraph.githubassets.com/1/johnayoung/go-code-2-prompt" alt="project-img" />
+      <article class="project-card" data-portfolio-tag="cli-tool">
+        <div class="project-card__header">
+          <div class="project-card__meta">
+            <span class="project-card__type">CLI Tool</span>
+            <span class="project-card__divider">•</span>
+            <span class="project-card__lang">Go</span>
+          </div>
+          <h3 class="project-card__title">go-code-2-prompt</h3>
         </div>
-        <div class="col-md-6 col-lg-7 project-card__info">
-          <h3 class="project-card__title">
-            go-code-2-prompt
-            <a href="https://github.com/johnayoung/go-code-2-prompt" target="_blank">
-              <i class="fab fa-github"></i>
-            </a>
-          </h3>
-          <p class="project-card__description">
-            A powerful CLI tool for generating LLM prompts from codebases. Features directory traversal, file filtering,
-            Git integration, and token counting.
-          </p>
-          <p class="project-card__stack">Used stack:</p>
-          <ul class="tags">
-            <li>Go</li>
-            <li>CLI</li>
-            <li>Git Integration</li>
-            <li>Template System</li>
-            <li>Token Counting</li>
-          </ul>
-          <a href="https://github.com/johnayoung/go-code-2-prompt" target="_isblank" class="project-card__link">View on
-            GitHub</a>
+        <p class="project-card__description">
+          Powerful CLI for generating LLM prompts from codebases. Features directory traversal, file filtering, Git
+          integration, and token counting for AI-assisted development.
+        </p>
+        <div class="project-card__tags">
+          <span>Go</span>
+          <span>CLI</span>
+          <span>Git</span>
+          <span>Templates</span>
+          <span>Token Counting</span>
+        </div>
+        <div class="project-card__footer">
+          <a href="https://github.com/johnayoung/go-code-2-prompt" target="_blank" class="project-card__link">
+            <i class="fab fa-github"></i> GitHub
+          </a>
         </div>
       </article>
     </div>
