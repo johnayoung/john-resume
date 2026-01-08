@@ -16,6 +16,15 @@ With 12+ years in fintech, spearheaded multi-agent systems development, optimize
 
 ## WORK EXPERIENCE
 
+### Technical Lead
+**Infrared** • *December 2025 - Present*
+
+- Architecting a unified MIMO token router that models swaps, deposits, and LP operations as arcs in a single flow network, eliminating suboptimal sequential solving across **50+ liquidity sources**
+- Implementing min-cost flow optimization with capacity scaling, reducing algorithmic complexity to **O((V+E) × log U)** for handling ERC-20 amounts at **10^18 precision**
+- Designing piecewise linear cost approximation with configurable segment counts, achieving **<1% slippage estimation error** while maintaining **sub-100ms** route computation
+- Engineering discretized bundle nodes for LP composition, enabling the optimizer to evaluate **11 ratio configurations** per pool and discover optimal token allocations dynamically
+- Building gas-aware cost modeling that factors execution overhead into routing decisions, optimizing net output for trade sizes from **$10K to $500K+**
+
 ### Chief Technology Officer
 **Combine Capital** • *January 2023 - Present*
 
