@@ -116,10 +116,10 @@ You know things about your system the agent doesn't. If there's a footgun, flag 
 
 ## The Full Example
 
-Here's what all of this looks like assembled into a single task:
+Here's what all of this looks like assembled into a **feature spec** — a non-trivial unit of work that decomposes into four task specs (one per milestone), each sized for a single session and PR per the [companion sizing guide](/blog/how-to-size-tasks-for-ai-coding-agents/):
 
 ````markdown
-## Task: Add Phone Number to User Registration
+## Feature Spec: Add Phone Number to User Registration
 
 ### Goal
 Add optional phone number support to the user registration flow.
@@ -207,7 +207,10 @@ the task complete:
     migrate -path migrations -database $DB_URL up
     migrate -path migrations -database $DB_URL down 1
 
-### Milestones (commit after each)
+### Task Specs (each is its own session and PR)
+This feature decomposes into four task specs. Each is independently
+verifiable, sized to roughly one PR, and run in a fresh session:
+
 1. **Migration** — Add the column, verify migrate up/down.
 2. **Model + sqlc** — Update the struct, sqlc queries, and
    regenerate. Verify `make sqlc` produces no diff.
