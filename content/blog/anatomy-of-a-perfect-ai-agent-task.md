@@ -135,57 +135,42 @@ The third is spec'd out in full below as the worked example. It's the strongest 
 ## Task Spec: Add E.164 phone validation to UserService
 
 ### Goal
-Add `ValidatePhone` to `UserService`, wrapping the internal
-`validate.PhoneE164` helper. Service-layer slice of the
-phone-number feature; handler and DB layers are separate tasks.
+Phone numbers submitted to user registration must be rejected at the service layer when they aren't valid E.164. This task delivers that check; handler wiring and DB persistence are separate tasks.
 
 ### Architectural Context
-- Go 1.22, layered: `handler → service → repository`.
-- Semantic validation lives in the service. The handler does
-  only null/shape checks.
-- `validate.PhoneE164(string) error` already exists in
-  `internal/pkg/validate/` and returns `*validate.Error`. No
-  third-party validation libraries.
-- Service tests use stdlib `testing` plus the existing
-  `internal/user/mocks` package — no testify, no ginkgo.
+- Semantic validation belongs in the service, not the handler. Handler does null/shape; service owns format and bounds.
+- `UserService.ValidateEmail` is the canonical example of this split — match its shape.
 
 ### Relevant Files
 - `internal/user/service.go` — add `ValidatePhone` here.
 - `internal/user/service_test.go` — add tests here.
-- `internal/pkg/validate/phone.go` — read-only reference for
-  `PhoneE164` and `validate.Error`.
+- `internal/pkg/validate/phone.go` — read-only reference for `PhoneE164` and `validate.Error`.
 
 ### Reference Implementation
 Mirror `UserService.ValidateEmail` in `service.go`:
 - Signature: `func (s *UserService) ValidatePhone(phone *string) error`.
 - Nil pointer → return nil. Empty string → return error.
-- Return the `*validate.Error` from `PhoneE164` unwrapped — no
-  `fmt.Errorf`.
-- Copy the table-driven layout from
-  `TestUserService_ValidateEmail`.
+- Return the `*validate.Error` from `PhoneE164` unwrapped — no `fmt.Errorf`.
+- Copy the table-driven layout from `TestUserService_ValidateEmail`.
 
 ### Constraints
 - Use `validate.PhoneE164`. No regex, no new dependencies.
 - Don't touch `UserRepository` or its mock — validation is pure.
-- Don't wrap the error; the handler relies on
-  `errors.As(&validate.Error{})` to map it to HTTP 422.
+- Don't wrap the error; the handler relies on `errors.As(&validate.Error{})` to map it to HTTP 422.
 
 ### Non-Goals
-No handler, migration, sqlc, or integration-test changes. No
-edits to `ValidateEmail` or other unrelated methods.
+No handler, migration, sqlc, or integration-test changes. No edits to `ValidateEmail` or other unrelated methods.
 
 ### Edge Cases
 - `phone == nil` → return nil (field not provided).
 - `*phone == ""` → return `validate.Error` (malformed input).
 - Strict E.164: `1234567890` (no leading `+`) must fail.
-- The handler already checks the JSON field is present and is a
-  string — don't re-check those concerns here.
+- The handler already checks the JSON field is present and is a string — don't re-check those concerns here.
 
 ### Acceptance Criteria
 1. `ValidatePhone(phone *string) error` on `UserService`.
 2. `nil` phone → returns nil.
-3. Empty or non-E.164 → returns `*validate.Error`
-   (verifiable via `errors.As`).
+3. Empty or non-E.164 → returns `*validate.Error` (verifiable via `errors.As`).
 4. Valid E.164 (e.g., `+14155552671`) → returns nil.
 5. At least four test cases: valid, invalid, nil, empty.
 6. Only `service.go` and `service_test.go` change.
