@@ -11,7 +11,7 @@ enableRobotsTXT = true
 
 [markup]
   [markup.highlight]
-    style = "monokai"
+    style = "catppuccin-mocha"
     lineNos = false
     codeFences = true
     guessSyntax = false
@@ -23,6 +23,3 @@ enableRobotsTXT = true
 [params]
   description = "Notes from John Young — engineering, AI systems, and DeFi infrastructure."
   author = "John Young"
-
-[permalinks]
-  blog = "/blog/:slug/"
