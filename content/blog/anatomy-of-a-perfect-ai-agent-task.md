@@ -13,7 +13,7 @@ A well-crafted task for an AI coding agent is essentially context engineering �
 
 ## When to Use This
 
-The eight elements below describe the upper-bound shape of a non-trivial task spec, not a baseline checklist. For trivial work — anything you could describe in a single sentence — skip the elaborate spec. The Claude Code best practices put it bluntly: "If you could describe the diff in one sentence, skip the plan" ([Claude Code Docs: Best Practices](https://code.claude.com/docs/en/best-practices)). Even for non-trivial tasks, treat these elements as a maximum rather than a minimum: frontier LLMs reliably follow only ~150–200 instructions before performance degrades, and every irrelevant detail dilutes the signal of the rest ([HumanLayer: Writing a Good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)).
+The seven elements below describe the upper-bound shape of a non-trivial task spec, not a baseline checklist. For trivial work — anything you could describe in a single sentence — skip the elaborate spec. The Claude Code best practices put it bluntly: "If you could describe the diff in one sentence, skip the plan" ([Claude Code Docs: Best Practices](https://code.claude.com/docs/en/best-practices)). Even for non-trivial tasks, treat these elements as a maximum rather than a minimum: frontier LLMs reliably follow only ~150–200 instructions before performance degrades, and every irrelevant detail dilutes the signal of the rest ([HumanLayer: Writing a Good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)).
 
 ---
 
@@ -102,16 +102,7 @@ Tell the agent exactly how to confirm its own work. This is the difference betwe
 
 ---
 
-## 7. Specify Commit Strategy and Milestones
-
-For anything non-trivial, break the work into verifiable checkpoints. This prevents the catastrophic scenario where a 500-line change has a subtle bug in step 2 and everything after it is wasted. At each milestone boundary in multi-milestone work, start a fresh session to avoid accumulating irrelevant context across the full feature ([Claude Code Docs: Best Practices](https://code.claude.com/docs/en/best-practices)).
-
-> *"When implementing large changes with an Agent, avoid accumulating review debt by reviewing changes after each sub-task."*
-> — [Augment Code: Best Practices](https://www.augmentcode.com/blog/best-practices-for-using-ai-coding-agents)
-
----
-
-## 8. Call Out Edge Cases and Known Pitfalls
+## 7. Call Out Edge Cases and Known Pitfalls
 
 You know things about your system the agent doesn't. If there's a footgun, flag it. If there's a non-obvious coupling between modules, say so.
 
@@ -129,7 +120,7 @@ A non-trivial feature decomposes into a handful of well-sized tasks. Take adding
 3. **Service + validation** — Add `ValidatePhone` to `UserService` using `validate.PhoneE164`, with unit tests.
 4. **Handler + integration** — Wire the field through `POST` and `GET /api/v1/users` and add integration tests.
 
-The third is spec'd out in full below as the worked example. It's the strongest illustration of the eight elements at the right scope: the diff fits in one sentence, it stays inside a single layer, the agent reads ~5 files, the change lands well under the 200 LOC ceiling, and it can be verified independently — passing every gate of the [companion sizing post's decision flowchart](/blog/how-to-size-tasks-for-ai-coding-agents/#sizing-decision-flowchart).
+The third is spec'd out in full below as the worked example. It's the strongest illustration of the seven elements at the right scope: the diff fits in one sentence, it stays inside a single layer, the agent reads ~5 files, the change lands well under the 200 LOC ceiling, and it can be verified independently — passing every gate of the [companion sizing post's decision flowchart](/blog/how-to-size-tasks-for-ai-coding-agents/#sizing-decision-flowchart).
 
 ````markdown
 ## Task Spec: Add E.164 phone validation to UserService
@@ -179,9 +170,6 @@ No handler, migration, sqlc, or integration-test changes. No edits to `ValidateE
     go test ./internal/user/... -v -run TestValidatePhone
     go vet ./...
     golangci-lint run ./internal/user/...
-
-### Commit Strategy
-Two commits, one PR: failing tests first, then implementation.
 ````
 
 ---
@@ -198,7 +186,6 @@ Two commits, one PR: failing tests first, then implementation.
 | **Edge cases**               | Surfaces domain knowledge only you have                                      |
 | **Acceptance criteria**      | Defines "done" in observable, testable terms                                 |
 | **Verification commands**    | Lets the agent self-check before declaring victory                           |
-| **Commit strategy**          | Creates safe rollback points within the task and forces incremental progress |
 
 ---
 
