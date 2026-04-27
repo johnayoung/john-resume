@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode | default "en" }}">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  {{- $title := .Title -}}
+  {{- $siteTitle := site.Title -}}
+  <title>{{ if .IsHome }}{{ $siteTitle }}{{ else }}{{ $title }} — {{ $siteTitle }}{{ end }}</title>
+
+  {{- $desc := .Description | default site.Params.description -}}
+  <meta name="description" content="{{ $desc }}" />
+  <meta name="author" content="{{ site.Params.author }}" />
+
+  <link rel="canonical" href="{{ .Permalink }}" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Inconsolata&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/blog.css" />
+
+  {{- range .AlternativeOutputFormats -}}
+    <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="{{ $siteTitle }}" />
+  {{- end }}
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="site-header__brand" href="/">John Young<span class="site-header__cursor">_</span></a>
+      <nav class="site-header__nav">
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {{- block "main" . }}{{- end }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; {{ now.Year }} John Young</p>
+    </div>
+  </footer>
+</body>
+</html>

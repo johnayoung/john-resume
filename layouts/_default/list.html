@@ -1,0 +1,19 @@
+{{ define "main" }}
+<section class="post-list">
+  <h1 class="post-list__title">{{ .Title }}_</h1>
+  {{ with .Content }}<div class="post-list__intro">{{ . }}</div>{{ end }}
+
+  {{ $pages := where .RegularPagesRecursive "Type" "blog" }}
+  {{ if not $pages }}{{ $pages = .RegularPagesRecursive }}{{ end }}
+
+  <ul class="post-list__items">
+    {{ range $pages.ByDate.Reverse }}
+    <li class="post-list__item">
+      <time datetime="{{ .Date.Format "2006-01-02" }}" class="post-list__date">{{ .Date.Format "Jan 2, 2006" }}</time>
+      <a class="post-list__link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      {{ with .Description }}<p class="post-list__desc">{{ . }}</p>{{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}

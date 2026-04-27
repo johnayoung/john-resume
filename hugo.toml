@@ -1,0 +1,28 @@
+baseURL = "https://jyoung.dev/"
+languageCode = "en-us"
+title = "John Young"
+
+# Homepage is served from static/index.html (the existing single-page site).
+# Disable Hugo's home, taxonomy, and sitemap generation so they don't collide
+# with or pollute the static homepage. Section RSS at /blog/index.xml still works.
+disableKinds = ["home", "taxonomy", "term"]
+
+enableRobotsTXT = true
+
+[markup]
+  [markup.highlight]
+    style = "monokai"
+    lineNos = false
+    codeFences = true
+    guessSyntax = false
+    noClasses = true
+    tabWidth = 2
+  [markup.goldmark.renderer]
+    unsafe = true
+
+[params]
+  description = "Notes from John Young — engineering, AI systems, and DeFi infrastructure."
+  author = "John Young"
+
+[permalinks]
+  blog = "/blog/:slug/"
