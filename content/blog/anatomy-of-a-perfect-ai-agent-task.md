@@ -43,7 +43,7 @@ Include things like:
 > *"Claude already knows what your project is after reading a few files. What it needs is information it can't derive from reading code."*
 > — [Claude Directory: Context Engineering](https://www.claudedirectory.org/blog/context-engineering-claude-code)
 
-That said, there's a discipline to this — more context is not always better. Research suggests frontier LLMs can reliably follow roughly 150–200 instructions before performance degrades. Every irrelevant detail you add dilutes the signal of the details that actually matter.
+That said, there's a discipline to this — more context is not always better. Research suggests frontier LLMs can reliably follow roughly 150–200 instructions before performance degrades, and broader context-rot studies show models attend to context less reliably as input grows ([Chroma: Context Rot — Hong et al., 2025](https://research.trychroma.com/context-rot)). Every irrelevant detail you add dilutes the signal of the details that actually matter.
 
 > *"Your CLAUDE.md file should contain as few instructions as possible — ideally only ones which are universally applicable. An LLM will perform better when its context window is full of focused, relevant context compared to when it has a lot of irrelevant context."*
 > — [HumanLayer: Writing a Good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)
@@ -253,3 +253,4 @@ verifiable, sized to roughly one PR, and run in a fresh session:
 5. [JetBrains — Coding Guidelines for Your AI Agents](https://blog.jetbrains.com/idea/2025/05/coding-guidelines-for-your-ai-agents/) — How missing constraints lead agents to skip pagination, misuse injection patterns, and ignore project conventions.
 6. [Google Cloud — Five Best Practices for AI Coding Assistants](https://cloud.google.com/blog/topics/developers-practitioners/five-best-practices-for-using-ai-coding-assistants) — Planning-first workflow and using tests as acceptance criteria for generated code.
 7. [HumanLayer — Writing a Good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) — Why fewer, focused instructions outperform instruction overload, and the ~150–200 instruction ceiling for frontier models.
+8. [Chroma — Context Rot (Hong et al., 2025)](https://research.trychroma.com/context-rot) — Empirical study across 18 LLMs showing that attention to context degrades non-uniformly as input length grows.
