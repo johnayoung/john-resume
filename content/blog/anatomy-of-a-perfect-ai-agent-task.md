@@ -104,7 +104,7 @@ Tell the agent exactly how to confirm its own work. This is the difference betwe
 
 ## 7. Specify Commit Strategy and Milestones
 
-For anything non-trivial, break the work into verifiable checkpoints. This prevents the catastrophic scenario where a 500-line change has a subtle bug in step 2 and everything after it is wasted.
+For anything non-trivial, break the work into verifiable checkpoints. This prevents the catastrophic scenario where a 500-line change has a subtle bug in step 2 and everything after it is wasted. At each milestone boundary in multi-milestone work, start a fresh session to avoid accumulating irrelevant context across the full feature ([Claude Code Docs: Best Practices](https://code.claude.com/docs/en/best-practices)).
 
 > *"When implementing large changes with an Agent, avoid accumulating review debt by reviewing changes after each sub-task."*
 > — [Augment Code: Best Practices](https://www.augmentcode.com/blog/best-practices-for-using-ai-coding-agents)
