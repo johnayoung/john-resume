@@ -11,6 +11,12 @@ A well-crafted task for an AI coding agent is essentially context engineering �
 
 ---
 
+## When to Use This
+
+The eight elements below describe the upper-bound shape of a non-trivial task spec, not a baseline checklist. For trivial work — anything you could describe in a single sentence — skip the elaborate spec. The Claude Code best practices put it bluntly: "If you could describe the diff in one sentence, skip the plan" ([Claude Code Docs: Best Practices](https://code.claude.com/docs/en/best-practices)). Even for non-trivial tasks, treat these elements as a maximum rather than a minimum: frontier LLMs reliably follow only ~150–200 instructions before performance degrades, and every irrelevant detail dilutes the signal of the rest ([HumanLayer: Writing a Good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)).
+
+---
+
 ## 1. State the Goal, Not the Steps
 
 Lead with the *outcome* you want, not a micro-managed sequence of instructions. Agents perform better when they understand the "why" and can plan their own approach.
