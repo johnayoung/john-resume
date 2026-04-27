@@ -23,3 +23,9 @@ enableRobotsTXT = true
 [params]
   description = "Notes from John Young — engineering, AI systems, and DeFi infrastructure."
   author = "John Young"
+  ogImage = "/img/headshot_new.png"
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5

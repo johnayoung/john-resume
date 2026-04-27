@@ -2,7 +2,9 @@
 title: "The Anatomy of a Perfect AI Agent Task"
 date: 2026-04-20
 draft: false
+author: "John Young"
 description: "Context engineering for AI coding agents — the elements that make a task succeed on the first try, with a fully worked example."
+keywords: ["AI coding agents", "context engineering", "Claude Code", "prompt engineering", "agentic workflows"]
 ---
 
 A well-crafted task for an AI coding agent is essentially context engineering — you're deliberately curating the minimum set of information the agent needs to produce the right output on the first try. Rather than pre-loading everything up front, the best approach combines focused instructions with enough pointers that the agent can pull in additional context just-in-time as it works ([Anthropic — Effective Context Engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)). Below is a breakdown of every element that matters, why it matters, and a full example at the end that ties it all together.
