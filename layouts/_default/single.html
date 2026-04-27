@@ -1,0 +1,20 @@
+{{ define "main" }}
+<article class="post">
+  <header class="post__header">
+    <h1 class="post__title">{{ .Title }}</h1>
+    <p class="post__meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+      {{ with .Params.author }} &middot; {{ . }}{{ end }}
+      {{ if .ReadingTime }} &middot; {{ .ReadingTime }} min read{{ end }}
+    </p>
+  </header>
+
+  <div class="post__content">
+    {{ .Content }}
+  </div>
+
+  <footer class="post__footer">
+    <a class="post__back" href="/blog/">&larr; All posts</a>
+  </footer>
+</article>
+{{ end }}

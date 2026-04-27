@@ -12,7 +12,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const RESUME_FILE = 'resume.md';
-const OUTPUT_DIR = 'output';
+const OUTPUT_DIR = path.join('static', 'output');
 
 // Colors for terminal output
 const colors = {
