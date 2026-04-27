@@ -35,6 +35,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: scripts/og-gen/go.mod
+          cache-dependency-path: scripts/og-gen/go.sum
+
+      - name: Generate OG cards
+        working-directory: scripts/og-gen
+        run: go run . -content ../../content/blog -out ../../static/og
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5

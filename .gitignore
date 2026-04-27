@@ -1,4 +1,11 @@
 # Hugo build artifacts
 /public/
 /resources/
+/static/og/
 .hugo_build.lock
+
+# Playwright MCP session artifacts
+/.playwright-mcp/
+
+# og-gen build binary
+/scripts/og-gen/og-gen

@@ -28,7 +28,20 @@
   <link rel="canonical" href="{{ .Permalink }}" />
   <link rel="shortcut icon" href="/favicon.ico" />
 
-  {{- $ogImage := .Params.image | default site.Params.ogImage -}}
+  {{- $ogImage := "" -}}
+  {{- with .Params.og_image -}}
+    {{- $ogImage = . -}}
+  {{- else -}}
+    {{- with .Params.image -}}
+      {{- $ogImage = . -}}
+    {{- else -}}
+      {{- if $isPost -}}
+        {{- $ogImage = printf "/og/%s.png" .File.ContentBaseName -}}
+      {{- else -}}
+        {{- $ogImage = site.Params.ogImage -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
   {{- $ogImageURL := absURL $ogImage -}}
   {{- $ogType := cond $isPost "article" "website" }}
 
