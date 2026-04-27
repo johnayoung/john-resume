@@ -247,16 +247,16 @@ This is one task and one PR; do not split further.
 
 ## Why This Works
 
-| Element                      | Purpose                                                      |
-| ---------------------------- | ------------------------------------------------------------ |
-| **Goal**                     | Anchors the agent on *what* and *why*, not *how*             |
-| **Architectural context**    | Provides knowledge the agent can't infer from code           |
-| **Relevant files**           | Eliminates unnecessary exploration and context burn          |
-| **Reference implementation** | "Do it like this" is worth 1,000 words of description        |
-| **Constraints + non-goals**  | Prevents scope creep and unsolicited refactors               |
-| **Edge cases**               | Surfaces domain knowledge only you have                      |
-| **Acceptance criteria**      | Defines "done" in observable, testable terms                 |
-| **Verification commands**    | Lets the agent self-check before declaring victory           |
+| Element                      | Purpose                                                                      |
+| ---------------------------- | ---------------------------------------------------------------------------- |
+| **Goal**                     | Anchors the agent on *what* and *why*, not *how*                             |
+| **Architectural context**    | Provides knowledge the agent can't infer from code                           |
+| **Relevant files**           | Eliminates unnecessary exploration and context burn                          |
+| **Reference implementation** | "Do it like this" is worth 1,000 words of description                        |
+| **Constraints + non-goals**  | Prevents scope creep and unsolicited refactors                               |
+| **Edge cases**               | Surfaces domain knowledge only you have                                      |
+| **Acceptance criteria**      | Defines "done" in observable, testable terms                                 |
+| **Verification commands**    | Lets the agent self-check before declaring victory                           |
 | **Commit strategy**          | Creates safe rollback points within the task and forces incremental progress |
 
 ---
