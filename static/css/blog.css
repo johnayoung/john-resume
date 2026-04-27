@@ -242,6 +242,20 @@ a:hover { text-decoration: underline; }
   font-size: 14px;
 }
 
+/* Prose-style fences (markdown) wrap; real code keeps h-scroll. */
+.post__content div.highlight:has(code.language-markdown),
+.post__content pre:has(> code.language-markdown) {
+  overflow-x: visible;
+}
+.post__content pre code.language-markdown {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+/* Chroma wraps each line in display:flex; override so text can wrap. */
+.post__content pre code.language-markdown > span {
+  display: inline !important;
+}
+
 @media (max-width: 540px) {
   .site-header__brand { font-size: 16px; }
   .site-header__nav a { margin-left: 14px; font-size: 12px; }
