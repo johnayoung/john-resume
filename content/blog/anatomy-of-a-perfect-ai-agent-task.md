@@ -122,7 +122,7 @@ A non-trivial feature decomposes into a handful of well-sized tasks. Take adding
 
 The third is spec'd out in full below as the worked example. It's the strongest illustration of the seven elements at the right scope: the diff fits in one sentence, it stays inside a single layer, the agent reads ~5 files, the change lands well under the 200 LOC ceiling, and it can be verified independently — passing every gate of the [companion sizing post's decision flowchart](/blog/how-to-size-tasks-for-ai-coding-agents/#sizing-decision-flowchart).
 
-````markdown
+```markdown
 ## Task Spec: Add E.164 phone validation to UserService
 
 ### Goal
@@ -170,7 +170,7 @@ No handler, migration, sqlc, or integration-test changes. No edits to `ValidateE
     go test ./internal/user/... -v -run TestValidatePhone
     go vet ./...
     golangci-lint run ./internal/user/...
-````
+```
 
 ---
 
