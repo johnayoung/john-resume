@@ -53,6 +53,44 @@ git push
 
 Watch the deploy in the **Actions** tab. Live in ~1–2 minutes.
 
+## Cross-post to dev.to
+
+`scripts/publish-to-devto.sh` republishes a Hugo post to dev.to with a canonical URL pointing back to `jyoung.dev`, so search engines credit this domain. It also wires the OG image from `static/og/<slug>.png` as the cover. Requires `curl` and `jq`.
+
+```bash
+export DEVTO_API_KEY=xxxxx   # dev.to → Settings → Extensions → DEV API Keys
+
+# Preview the payload without calling the API
+./scripts/publish-to-devto.sh content/blog/my-post-slug.md \
+  --tags ai,programming,devops,productivity --dry-run
+
+# Create as draft (review on dev.to before going live)
+./scripts/publish-to-devto.sh content/blog/my-post-slug.md \
+  --tags ai,programming,devops,productivity
+
+# Publish immediately
+./scripts/publish-to-devto.sh content/blog/my-post-slug.md \
+  --tags ai,programming,devops,productivity --publish
+
+# Update an existing dev.to article
+./scripts/publish-to-devto.sh content/blog/my-post-slug.md \
+  --tags ai,programming,devops,productivity --publish --update 1234567
+```
+
+Flags: `--tags` (required, max 4, lowercase alphanumeric), `--publish`, `--dry-run`, `--canonical URL`, `--cover URL`, `--no-cover`, `--site URL`, `--update ID`.
+
+Defaults derived from the filename: canonical `https://jyoung.dev/blog/<slug>/`, cover `https://jyoung.dev/og/<slug>.png` (skipped with a warning if the file isn't in `static/og/`).
+
+The body is sent as-is. **Forem only recognizes 3-backtick fences** — 4+ backticks and `~~~` tildes are rendered as literal text, which silently breaks the post (inner content escapes the code block). To show triple-backticks inside a code block on dev.to, use 4-space indentation for the inner block instead of nested fences.
+
+After publishing, verify on dev.to that `<link rel="canonical">` points at jyoung.dev and the rendered body matches the source. To check the live HTML:
+
+```bash
+curl -s https://dev.to/<username>/<article-slug> | grep -i 'rel="canonical"'
+```
+
+If you rename a post's slug on jyoung.dev, immediately PUT-update the dev.to article with the new `--canonical` URL — a canonical pointing at a 404 is worse than no canonical.
+
 ## Editing the homepage
 
 The homepage is plain HTML at `static/index.html`. Hugo doesn't process it — files in `static/` are copied verbatim to `public/`. CSS/JS/images live in `static/css/`, `static/js/`, `static/img/`.
