@@ -4,6 +4,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"image/color"
@@ -131,10 +132,83 @@ func render(p *post, outPath string) error {
 	return dc.SavePNG(outPath)
 }
 
+// researchData is the subset of data/research.json the card needs. Reading it
+// at build time keeps the card's counts in sync with the index's source of truth.
+type researchData struct {
+	Updated string `json:"updated"`
+	Pillars []struct {
+		ID int `json:"id"`
+	} `json:"pillars"`
+	Sources []struct {
+		Class string `json:"class"`
+	} `json:"sources"`
+}
+
+// renderResearch draws the /research/ card. It's stat-forward rather than
+// title-only so the card reads as a dataset, not another blog post.
+func renderResearch(rd *researchData, outPath string) error {
+	dc := gg.NewContext(cardW, cardH)
+	dc.SetColor(bgColor)
+	dc.Clear()
+
+	brand, err := loadFace(goregular.TTF, 32)
+	if err != nil {
+		return err
+	}
+	title, err := loadFace(gobold.TTF, 68)
+	if err != nil {
+		return err
+	}
+	sub, err := loadFace(goregular.TTF, 30)
+	if err != nil {
+		return err
+	}
+	meta, err := loadFace(goregular.TTF, 28)
+	if err != nil {
+		return err
+	}
+
+	dc.SetFontFace(brand)
+	dc.SetColor(accentColor)
+	dc.DrawStringAnchored("jyoung.dev", pad, pad, 0, 1)
+
+	dc.SetFontFace(title)
+	dc.SetColor(titleColor)
+	dc.DrawStringAnchored("The Research Index", float64(cardW)/2, 250, 0.5, 0.5)
+
+	dc.SetFontFace(sub)
+	dc.SetColor(bylineColor)
+	subtitle := fmt.Sprintf(
+		"%d verified primary sources on engineering practices for AI coding agents",
+		len(rd.Sources),
+	)
+	dc.DrawStringWrapped(subtitle, float64(cardW)/2, 340, 0.5, 0, float64(cardW-3*pad), 1.4, gg.AlignCenter)
+
+	dc.SetFontFace(meta)
+	dc.SetColor(bylineColor)
+	dc.DrawStringAnchored("John Young", pad, cardH-pad, 0, 0)
+	dc.SetColor(accentColor)
+	dc.DrawStringAnchored(
+		fmt.Sprintf("%d themes · updated %s", len(rd.Pillars), rd.Updated),
+		cardW-pad, cardH-pad, 1, 0,
+	)
+
+	if err := os.MkdirAll(filepath.Dir(outPath), 0o755); err != nil {
+		return err
+	}
+	return dc.SavePNG(outPath)
+}
+
 func main() {
 	contentDir := flag.String("content", "content/blog", "directory of blog post markdown files")
 	outDir := flag.String("out", "static/og", "directory to write generated PNGs into")
+	dataPath := flag.String("research-data", "", "path to data/research.json (default: derived from -content as <content>/../../data/research.json)")
 	flag.Parse()
+
+	researchJSON := *dataPath
+	if researchJSON == "" {
+		researchJSON = filepath.Join(*contentDir, "..", "..", "data", "research.json")
+	}
 
 	entries, err := os.ReadDir(*contentDir)
 	if err != nil {
@@ -161,5 +235,21 @@ func main() {
 		fmt.Printf("wrote %s\n", out)
 		count++
 	}
+
+	rdBytes, err := os.ReadFile(researchJSON)
+	if err != nil {
+		log.Fatalf("read research data %s: %v", researchJSON, err)
+	}
+	var rd researchData
+	if err := json.Unmarshal(rdBytes, &rd); err != nil {
+		log.Fatalf("parse research data %s: %v", researchJSON, err)
+	}
+	researchOut := filepath.Join(*outDir, "research.png")
+	if err := renderResearch(&rd, researchOut); err != nil {
+		log.Fatalf("render research card: %v", err)
+	}
+	fmt.Printf("wrote %s\n", researchOut)
+	count++
+
 	fmt.Printf("%d card(s) generated\n", count)
 }
