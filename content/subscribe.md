@@ -9,4 +9,4 @@ Subscribe and each new piece lands in your inbox the day it goes up. No news com
 
 {{< subscribe-form "full" >}}
 
-Every essay is also collected on the [blog](/blog/), and the primary research behind them lives in the [research index](/research/).
+New here? Start with [**The State of AI Coding Agent Engineering**](/state-of-ai-coding-agent-engineering/) — the synthesis behind everything I write, free by email. Every essay is also collected on the [blog](/blog/), and the primary research behind them lives in the [research index](/research/).

@@ -19,7 +19,7 @@
   <meta name="keywords" content="{{ delimit . ", " }}" />
   {{- end }}
 
-  {{- if .Draft }}
+  {{- if or .Draft .Params.private }}
   <meta name="robots" content="noindex, nofollow" />
   {{- else }}
   <meta name="robots" content="index, follow, max-image-preview:large" />

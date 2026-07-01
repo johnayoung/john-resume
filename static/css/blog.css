@@ -466,3 +466,72 @@ a:hover { text-decoration: underline; }
   .rsrc__stat { font-size: 16px; }
   .subscribe__btn { flex: 1 1 100%; }
 }
+
+/* ── Lead-magnet report (State of AI Coding Agent Engineering) ───────────── */
+.report__kicker {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+.report__meta {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+.report__meta a { color: var(--text-soft); }
+.report__content h2 {
+  margin-top: 2em;
+  padding-top: 1.2em;
+  border-top: 1px solid var(--border);
+}
+.report__content h2:first-of-type { border-top: none; padding-top: 0; }
+
+/* Email gate card */
+.report-gate {
+  margin: 2.5em 0;
+  padding: 28px 28px 24px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 6px;
+  background: var(--bg-soft);
+}
+.report-gate__kicker {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+.report-gate__lede {
+  font-size: 17px;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.report-gate .subscribe { margin: 1.2em 0 0; }
+.report-gate .subscribe__label {
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-soft);
+}
+
+/* Print / save-as-PDF: strip site chrome, format the report for paper */
+@media print {
+  .site-header,
+  .footer-subscribe,
+  .site-footer,
+  .report-gate { display: none !important; }
+  .container { max-width: 100%; padding: 0; }
+  body { font-size: 11pt; line-height: 1.5; color: #000; }
+  a { color: #000; text-decoration: none; }
+  .report__content a { text-decoration: underline; }
+  .report__content h2 { break-after: avoid; page-break-after: avoid; }
+  .report__content h2,
+  .report__content h3 { break-inside: avoid; }
+  .page__title { font-size: 22pt; }
+  .report__kicker { color: #000; }
+}

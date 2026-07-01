@@ -3,11 +3,23 @@
   (keyed only by the public username in site.Params.buttondownUser) — no API key,
   no client-side JS, no CORS. Renders nothing until buttondownUser is configured.
 
-  Usage:
-    {{ partial "subscribe-form.html" "full" }}      (landing page)
-    {{ partial "subscribe-form.html" "compact" }}   (global footer)
+  Accepts either a bare string (the variant) or a dict for tagged signups:
+    {{ partial "subscribe-form.html" "full" }}                             (landing page)
+    {{ partial "subscribe-form.html" "compact" }}                          (global footer)
+    {{ partial "subscribe-form.html" (dict "variant" "gate" "tag" "report") }}  (lead-magnet gate)
+
+  The optional `tag` emits a hidden <input name="tag"> so Buttondown auto-tags the
+  subscriber — that tag is what a Buttondown welcome automation keys off to deliver
+  the gated reward. Create the matching tag + automation in the Buttondown dashboard.
 */ -}}
-{{- $variant := . | default "full" -}}
+{{- $variant := "full" -}}
+{{- $tag := "" -}}
+{{- if reflect.IsMap . -}}
+  {{- $variant = .variant | default "full" -}}
+  {{- $tag = .tag -}}
+{{- else -}}
+  {{- $variant = . | default "full" -}}
+{{- end -}}
 {{- $user := site.Params.buttondownUser -}}
 {{- with $user -}}
 <form class="subscribe subscribe--{{ $variant }} embeddable-buttondown-form"
@@ -15,6 +27,8 @@
       method="post" target="_blank">
   {{- if eq $variant "full" }}
   <label class="subscribe__label" for="bd-email-{{ $variant }}">Get new essays by email</label>
+  {{- else if eq $variant "gate" }}
+  <label class="subscribe__label" for="bd-email-{{ $variant }}">Get the full report by email</label>
   {{- else }}
   <p class="subscribe__label">Engineering practices for AI coding agents — new essay, straight to your inbox.</p>
   {{- end }}
@@ -22,8 +36,15 @@
     <input class="subscribe__input" id="bd-email-{{ $variant }}" type="email" name="email"
            placeholder="you@example.com" autocomplete="email" required />
     <input type="hidden" name="embed" value="1" />
-    <button class="subscribe__btn" type="submit">Subscribe</button>
+    {{- with $tag }}
+    <input type="hidden" name="tag" value="{{ . }}" />
+    {{- end }}
+    <button class="subscribe__btn" type="submit">{{ if eq $variant "gate" }}Send me the report{{ else }}Subscribe{{ end }}</button>
   </div>
+  {{- if eq $variant "gate" }}
+  <p class="subscribe__note">Confirm the opt-in email and the report link lands in your inbox. No spam, unsubscribe anytime.</p>
+  {{- else }}
   <p class="subscribe__note">No spam. One email when I publish. Unsubscribe anytime.</p>
+  {{- end }}
 </form>
 {{- end -}}

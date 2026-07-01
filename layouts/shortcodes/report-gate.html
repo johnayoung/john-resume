@@ -1,0 +1,12 @@
+{{- /*
+  Lead-magnet email gate. Renders the tagged subscribe form (Buttondown `report`
+  tag) inside a framed card. Placement is controlled from the teaser markdown.
+  Usage: {{< report-gate >}}
+*/ -}}
+{{- with partial "subscribe-form.html" (dict "variant" "gate" "tag" (.Get "tag" | default "report")) -}}
+<aside class="report-gate">
+  <p class="report-gate__kicker">The full report</p>
+  <p class="report-gate__lede">All six pillars, the strongest findings behind each, and the judgment layer — one read, delivered to your inbox.</p>
+  {{ . }}
+</aside>
+{{- end -}}
