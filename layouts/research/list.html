@@ -1,0 +1,45 @@
+{{ define "main" }}
+<section class="research">
+  <h1 class="post-list__title">{{ .Title }}_</h1>
+  {{ with .Content }}<div class="post-list__intro">{{ . }}</div>{{ end }}
+
+  {{ $data := site.Data.research }}
+  {{ $sources := $data.sources }}
+  <p class="research__meta">{{ len $sources }} verified sources · {{ len $data.pillars }} themes · updated {{ $data.updated }}</p>
+
+  <nav class="research__toc">
+    {{ range $data.pillars }}
+    {{ $n := len (where $sources "pillars" "intersect" (slice .id)) }}
+    {{ if $n }}<a href="#pillar-{{ .id }}">{{ .name }} <span>({{ $n }})</span></a>{{ end }}
+    {{ end }}
+  </nav>
+
+  {{ range $data.pillars }}
+  {{ $inPillar := where $sources "pillars" "intersect" (slice .id) }}
+  {{ if $inPillar }}
+  <section class="research__pillar" id="pillar-{{ .id }}">
+    <h2 class="research__pillar-title">{{ .id }} · {{ .name }}</h2>
+    {{ with .blurb }}<p class="research__pillar-blurb">{{ . }}</p>{{ end }}
+    {{ range $inPillar }}
+    <article class="rsrc">
+      <blockquote class="rsrc__stat">{{ .stat }}</blockquote>
+      <p class="rsrc__proves">{{ .proves }}</p>
+      {{ with .secondary }}
+      <ul class="rsrc__more">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+      {{ end }}
+      <p class="rsrc__attr">
+        <a class="rsrc__src" href="{{ .url }}" target="_blank" rel="noopener">{{ .author }}: {{ .title }}</a>
+        {{ with .date }}{{ if ne . "undated" }}<span class="rsrc__date">{{ . }}</span>{{ end }}{{ end }}
+        <span class="rsrc__tag rsrc__tag--{{ .class }}">{{ if eq .class "research-data" }}data{{ else }}practitioner{{ end }}</span>
+        {{ if ne .verification "confirmed" }}<span class="rsrc__tag rsrc__tag--warn">{{ .verification }}</span>{{ end }}
+      </p>
+      {{ with .powers }}
+      <p class="rsrc__cited">Cited in {{ range $i, $slug := . }}{{ if $i }}, {{ end }}{{ $p := site.GetPage (printf "/blog/%s" $slug) }}{{ if $p }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ else }}{{ $slug }}{{ end }}{{ end }}</p>
+      {{ end }}
+    </article>
+    {{ end }}
+  </section>
+  {{ end }}
+  {{ end }}
+</section>
+{{ end }}

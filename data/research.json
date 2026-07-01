@@ -1,0 +1,2190 @@
+{
+  "updated": "2026-07-01",
+  "pillars": [
+    {
+      "id": 1,
+      "name": "Task Design & Decomposition",
+      "blurb": "Scoping, decomposing, and speccing work so an agent finishes it on the first try."
+    },
+    {
+      "id": 2,
+      "name": "Context Engineering",
+      "blurb": "What goes in the window and when — CLAUDE.md, just-in-time retrieval, the instruction ceiling."
+    },
+    {
+      "id": 3,
+      "name": "Evals & Verification",
+      "blurb": "Knowing an agent’s output is actually correct, beyond a green build."
+    },
+    {
+      "id": 4,
+      "name": "Production Operations",
+      "blurb": "Running agents in production: cost, permissions, failure modes, guardrails."
+    },
+    {
+      "id": 5,
+      "name": "Team & Process",
+      "blurb": "Reviewing AI diffs, reviewer capacity, and how teams absorb agent output."
+    },
+    {
+      "id": 6,
+      "name": "Architecture Decisions",
+      "blurb": "When agents help vs. hurt; single vs. multi-agent; build vs. buy."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Measuring AI agent autonomy in practice",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/news/measuring-agent-autonomy",
+      "date": "Feb 18, 2026",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "80% of tool calls come from agents that appear to have at least one kind of safeguard (like restricted permissions or human approval requirements), 73% appear to have a human in the loop in some way, and only 0.8% of actions appear to be irreversible",
+      "proves": "Irreversible agent actions are rare in real traffic, so oversight should concentrate on the small slice where a single error is costly.",
+      "verification": "confirmed",
+      "powers": [
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "such as sending an email to a customer",
+        "And while these higher-risk actions are rare as a share of overall traffic, the consequences of a single error can still be significant."
+      ]
+    },
+    {
+      "title": "How we built our multi-agent research system",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "date": "June 13, 2025",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Subagents facilitate compression by operating in parallel with their own context windows, exploring different aspects of the question simultaneously before condensing the most important tokens for the lead research agent.",
+      "proves": "Subagents earn their place by isolating and compressing context — separate windows, not raw speed, are the reason to split.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "agents typically use about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats",
+        "some domains that require all agents to share the same context or involve many dependencies between agents are not a good fit for multi-agent systems today",
+        "token usage by itself explains 80% of the variance"
+      ]
+    },
+    {
+      "title": "Introducing advanced tool use on the Claude Developer Platform",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/engineering/advanced-tool-use",
+      "date": "November 24, 2025",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "The most common failures are wrong tool selection and incorrect parameters, especially when tools have similar names like `notification-send-user` vs. `notification-send-channel`.",
+      "proves": "At scale, loading all tool definitions upfront is the failure driver; deferred tool loading cuts token cost and measurably raises tool-selection accuracy.",
+      "verification": "confirmed",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "At Anthropic, we've seen tool definitions consume 134K tokens before optimization.",
+        "Opus 4.5 improved from 79.5% to 88.1%",
+        "This represents an 85% reduction in token usage while maintaining access to your full tool library."
+      ]
+    },
+    {
+      "title": "Quantifying infrastructure noise in agentic coding evals",
+      "author": "Anthropic Research",
+      "url": "https://www.anthropic.com/engineering/infrastructure-noise",
+      "date": "February 05, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "A 2-point lead on a leaderboard might reflect a genuine capability difference, or it might reflect that one eval ran on beefier hardware, or even at a luckier time of day, or both.",
+      "proves": "Small benchmark-score gaps between models are dominated by infrastructure noise, so self-reported numbers can't be trusted at fine margins.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "gap between the most- and least-resourced setups on Terminal-Bench 2.0 was 6 percentage points (p < 0.01)",
+        "leaderboard differences below 3 percentage points deserve skepticism until the eval configuration is documented",
+        "Two agents with different resource budgets and time limits aren't taking the same test."
+      ]
+    },
+    {
+      "title": "Agentic Software Engineering: Foundational Pillars and a Research Roadmap",
+      "author": "arXiv (Ahmed E. Hassan, Hao Li, Dayi Lin, Bram Adams, Tse-Hsun Chen, Yutaro Kashiwa, Dong Qiu)",
+      "url": "https://arxiv.org/abs/2509.06216",
+      "date": "2025",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Their hyper-productivity is revealing a significant 'speed vs. trust' gap. Recent, deeper examinations of agent-generated code and agent-driven PRs reveal that a large percentage of agent efforts fail to meet the quality bar of being truly 'merge-ready,' often containing subtle regressions, superficial fixes, or a general lack of engineering hygiene.",
+      "proves": "Agent hyper-productivity creates a speed-vs-trust gap where most agent PRs aren't merge-ready, overwhelming review capacity.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "29.6% of 'plausible' fixes introduced behavioral regressions or were incorrect upon rigorous retesting",
+        "True solve rates for GPT-4 patches dropped from 12.47% to 3.97% after detailed manual audits",
+        "Over 68% of agent-generated pull requests reportedly face long delays or remain unreviewed, creating an urgent need for scalable review automation."
+      ]
+    },
+    {
+      "title": "Analyzing Message-Code Inconsistency in AI Coding Agent-Authored Pull Requests",
+      "author": "arXiv (Jingzhi Gong, Giovanni Pinna, Yixin Bian, Jie M. Zhang)",
+      "url": "https://arxiv.org/abs/2601.04886",
+      "date": "Submitted January 8, 2026; revised January 26, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "descriptions claim unimplemented changes\" was the most common issue (45.4%); high-MCI PRs had 51.7% lower acceptance rates (28.3% vs. 80.0%)",
+      "proves": "The most common defect in agent-authored PRs is a description claiming changes the code never made, and those PRs get accepted far less.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "23,247 agentic PRs analyzed across five agents",
+        "High-MCI PRs took 3.5 times longer to merge (55.8 vs. 16.0 hours)",
+        "406 PRs (1.7%) exhibited high PR-MCI"
+      ]
+    },
+    {
+      "title": "Do Autonomous Agents Contribute Test Code? A Study of Tests in Agentic Pull Requests",
+      "author": "arXiv (Sabrina Haque, Sarvesh Ingale, Christoph Csallner)",
+      "url": "https://arxiv.org/abs/2601.03556",
+      "date": "Submitted January 7-8, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Across agents, test-containing PRs are more common over time and tend to be larger and take longer to complete, while merge rates remain largely similar.",
+      "proves": "Whether an agent PR includes tests varies and doesn't correlate with merge outcomes, so test presence is a signal to read, not proof of quality.",
+      "verification": "partial",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "We observe variation across agents in both test adoption and the balance between test and production code within test PRs",
+        "Testing is a critical practice for ensuring software correctness and long-term maintainability"
+      ]
+    },
+    {
+      "title": "Debt Behind the AI Boom: A Large-Scale Empirical Study of AI-Generated Code in the Wild",
+      "author": "arXiv (Yue Liu, Ratnadira Widyasari, Yanjie Zhao, Ivana Clairine Irsan, Junkai Chen, David Lo)",
+      "url": "https://arxiv.org/abs/2603.28592",
+      "date": "Submitted 30 March 2026 (v2 revised 26 April 2026)",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "22.7% of tracked AI-introduced issues still survive at the latest version of the repository. These findings show that AI-generated code can introduce long-term maintenance costs into real software projects.",
+      "proves": "Over a fifth of AI-introduced issues survive at HEAD, so AI code accrues durable technical debt at scale unless verification catches it.",
+      "verification": "partial",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "302.6k verified AI-authored commits from 6,299 GitHub repositories",
+        "more than 15% of commits from every AI coding assistant introduce at least one issue",
+        "code smells are by far the most common type\" / \"89.3% of all issues"
+      ]
+    },
+    {
+      "title": "How We Broke Top AI Agent Benchmarks: And What Comes Next",
+      "author": "Berkeley RDI (Hao Wang, Qiuyang Mang, Alvin Cheung, Koushik Sen, Dawn Song)",
+      "url": "https://rdi.berkeley.edu/blog/trustworthy-benchmarks-cont",
+      "date": "April 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "We built an automated scanning agent that systematically audited eight among the most prominent AI agent benchmarks — SWE-bench, WebArena, OSWorld, GAIA, Terminal-Bench, FieldWorkArena, and CAR-bench — and discovered that every single one can be exploited to achieve near-perfect scores without solving a single task.",
+      "proves": "Every major agent benchmark can be gamed to near-perfect scores without solving anything, so self-reported benchmark performance is structurally untrustworthy.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "A conftest.py file with 10 lines of Python 'resolves' every instance on SWE-bench Verified.",
+        "SWE-bench Verified (500 tasks) — 100% score via pytest hooks",
+        "Benchmark scores are actively being gamed, inflated, or rendered meaningless, not in theory, but in practice."
+      ]
+    },
+    {
+      "title": "Why Do Multi-Agent LLM Systems Fail?",
+      "author": "Cemri, Pan, Yang, Agrawal, Chopra, Tiwari, Keutzer, Parameswaran, Klein, Ramchandran, Zaharia, Gonzalez, Stoica (UC Berkeley)",
+      "url": "https://arxiv.org/abs/2503.13657",
+      "date": "Submitted 17 Mar 2025; last revised 26 Oct 2025 (v3)",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "This process identifies 14 unique modes, clustered into 3 categories: (i) system design issues, (ii) inter-agent misalignment, and (iii) task verification.",
+      "proves": "Multi-agent failure is predominantly a system-design and coordination problem, not a model-quality problem — a readiness test, not a model upgrade.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "MAST-Data, a comprehensive dataset of 1600+ annotated traces collected across 7 popular MAS frameworks",
+        "We develop MAST through rigorous analysis of 150 traces, guided closely by expert human annotators and validated by high inter-annotator agreement (kappa = 0.88).",
+        "Despite enthusiasm for Multi-Agent LLM Systems (MAS), their performance gains on popular benchmarks are often minimal."
+      ]
+    },
+    {
+      "title": "From Industry Claims to Empirical Reality: An Empirical Study of Code Review Agents in Pull Requests",
+      "author": "Chowdhury, Banik, Ferdous, Shamim",
+      "url": "https://arxiv.org/abs/2604.03196",
+      "date": "April 3, 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "CRA-only reviewed PRs achieve a 45.20% merge rate, 23.17 percentage points lower than human-only PRs (68.37%)",
+      "proves": "Code-review agents left to review alone merge PRs at a far lower rate than humans, so removing human review capacity degrades outcomes.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"34.88%\" abandonment (CRA-only) vs \"21.60%\" (human-only) — outcome distribution across reviewed categories",
+        "\"60.2% of closed CRA-only PRs fall into the 0–30% signal range\" — signal-to-noise analysis of 98 closed CRA-only PRs",
+        "\"12 of 13 CRAs exhibit average signal ratios below 60%\" — quality assessment across 13 unique code review agents"
+      ]
+    },
+    {
+      "title": "State of AI vs. Human Code Generation Report",
+      "author": "CodeRabbit / The Register (Thomas Claburn)",
+      "url": "https://www.coderabbit.ai/whitepapers/state-of-AI-vs-human-code-generation-report (gated); figures via The Register https://www.theregister.com/2025/12/17/ai_code_bugs",
+      "date": "Report Dec 17, 2025; Register coverage Dec 17, 2025",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "The bots created more logic and correctness errors (1.75x), more code quality and maintainability errors (1.64x), more security findings (1.57x), and more performance issues (1.42x).",
+      "proves": "AI-authored PRs carry more defects than human ones in every category, concentrated in logic and security, so review depth should follow issue class.",
+      "verification": "partial",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "On average, AI-generated pull requests (PRs) include about 10.83 issues each, compared with 6.45 issues in human-generated PRs.",
+        "AI-authored PRs contain 1.4x more critical issues and 1.7x more major issues on average than human-written PRs.",
+        "The report examined 470 open source pull requests."
+      ]
+    },
+    {
+      "title": "How Many Instructions Can LLMs Follow at Once?",
+      "author": "Daniel Jaroslawicz, Brendan Whiting, Parth Shah, Karime Maamari (Distyl AI)",
+      "url": "https://arxiv.org/abs/2507.11538",
+      "date": "2025 (arXiv 2507.11538v1)",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Even the best frontier models only achieve 68% accuracy at the max density of 500 instructions.",
+      "proves": "Instruction-following accuracy degrades sharply with density — the best frontier models hit only 68% at 500 instructions — so packing rules in measurably erodes compliance.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-md-instruction-ceiling"
+      ],
+      "secondary": [
+        "At 500 instructions, llama-4-scout exhibits an extreme O:M ratio of 34.88, indicating omission errors are over 30 times more frequent",
+        "Threshold decay: \"Performance remains stable until a threshold, then transitions to a different (steeper) degradation slope\" — exhibited by gemini-2.5-pro, o3",
+        "Primacy effects display an interesting pattern across all models: they start low at minimal instruction densities indicating almost no bias for earlier instructions, peak around 150–200 instructions"
+      ]
+    },
+    {
+      "title": "The Buy-or-Build Decision, Revisited: How Agentic AI Changes the Economics of Enterprise Software",
+      "author": "David Klotz (IAAI, Media University Stuttgart)",
+      "url": "https://arxiv.org/abs/2604.26482",
+      "date": "April 29, 2026 (arXiv:2604.26482v1)",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Mission-critical systems of record: Retain Buy as the primary option. Consider Make selectively for peripheral modules, extensions, or integration layers where the core system's integrity is not at risk.",
+      "proves": "Agentic AI shifts make-vs-buy by application type: commodity and differentiating apps move toward build, while regulated and mission-critical systems stay buy.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "Commodity utilities: Default to Make. Evaluate Buy only where ecosystem integrations provide strong network value or where the firm's AI capability is below the viability threshold.",
+        "Where software development once required large teams working over months, small teams augmented by AI agents can now deliver functional applications in days or weeks.",
+        "AI-era Make demands skills in prompt engineering, agent orchestration, AI output validation, and governance of AI-generated artifacts."
+      ]
+    },
+    {
+      "title": "The 60/60 Rule (ch. 34, 97 Things Every Project Manager Should Know)",
+      "author": "David Wood (O'Reilly)",
+      "url": "https://www.oreilly.com/library/view/97-things-every/9780596805425/ch34.html",
+      "date": "August 2009 (book publication)",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Fully 60% of the life cycle costs of software systems come from maintenance, with a relatively measly 40% coming from development.",
+      "proves": "Maintenance dominates software lifecycle cost, and most of that maintenance is new enhancement work rather than bug-fixing.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "During maintenance, 60% of the costs on average relate to user-generated enhancements (changing requirements), 23% to migration activities, and 17% to bug fixes."
+      ]
+    },
+    {
+      "title": "Accelerate State of DevOps Report 2024",
+      "author": "DORA (Google Cloud)",
+      "url": "https://dora.dev/research/2024/dora-report",
+      "date": "2024 (page last updated April 13, 2026)",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "AI adoption significantly increases individual productivity, flow, and job satisfaction. However, it also negatively impacts software delivery stability and throughput",
+      "proves": "AI helps the individual developer but hurts system-level delivery stability and throughput.",
+      "verification": "partial",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "Unstable organizational priorities cause meaningful decreases in productivity and substantial increases in burnout."
+      ]
+    },
+    {
+      "title": "The hidden cost of AI code quality: Why senior engineers are paying the price",
+      "author": "Faros AI (Naomi Lurie)",
+      "url": "https://www.faros.ai/blog/ai-code-quality-senior-engineer-review-burden",
+      "date": "May 21, 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "Senior engineers become the verification layer for product ambiguity. They are no longer just checking implementation quality. They are reconstructing intent from generated code, thin specs, incomplete Jira tickets, and edge cases nobody wrote down.",
+      "proves": "The unbudgeted review burden concentrates on senior engineers as intent-reconstructors, creating retention risk that throughput dashboards never show.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"Replacement cost of a senior software engineer at $150,000 to $300,000 in 2026, including recruiting, ramp time, and lost institutional knowledge.\" — Industry benchmarks cited",
+        "\"25% of PRs are now reviewed by AI agents, up from 0% in 2025. But review times have increased nearly 200%.\" — AI Engineering Report 2026 caption",
+        "the burden \"does not get measured in PR throughput dashboards\""
+      ]
+    },
+    {
+      "title": "Ten takeaways from the AI Engineering Report 2026: The Acceleration Whiplash",
+      "author": "Faros Research",
+      "url": "https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways",
+      "date": "April 12, 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "Median time in review is up 441.5%",
+      "proves": "Telemetry across thousands of teams shows review time exploding under AI adoption while more PRs merge unreviewed and incidents rise.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"Code churn... has increased 861% under high AI adoption\" — Takeaway 3 (Faros telemetry)",
+        "\"Pull requests merged without any review... up 31.3%\" — Takeaway 8 (Faros telemetry)",
+        "\"Incidents-to-PR ratio is up 242.7%\" — Takeaway 4 (Faros telemetry)"
+      ]
+    },
+    {
+      "title": "FinOps for AI Overview",
+      "author": "FinOps Foundation (finops.org)",
+      "url": "https://www.finops.org/wg/finops-for-ai-overview",
+      "date": "Last updated February 17, 2026",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "More acute are the challenges of identifying the consumer of the model output, which is especially difficult when the consumers of the same model can be different interfaces/functional modules in the same user application (e.g., 'tech support chatbot' or 'new customer chatbot')",
+      "proves": "The hard, unsolved FinOps problem for AI is mapping model output back to the specific consumer; account-level billing is the wrong granularity and no accepted multi-agent allocation framework exists yet.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "\"Tokens! The meters, or elements of charge can be very different. For example, measuring the tokens at the user input vs. the compressed and semantic reduced or re-written actual prompt input token quantity that goes to the API endpoint that is charged.\"",
+        "\"Lack of generally accepted frameworks for cost allocation across multi-agent workloads\""
+      ]
+    },
+    {
+      "title": "AI Copilot Code Quality: 2025 Data Suggests 4x Growth in Code Clones",
+      "author": "GitClear",
+      "url": "https://www.gitclear.com/ai_assistant_code_quality_2025_research",
+      "date": "January 2026 (research notation on page)",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "the percentage of changed code lines (associated with refactoring) sunk from 25% of changed lines in 2021, to less than 10% in 2024, while lines classified as 'copy/pasted' (cloned) rose from 8.3% to 12.3%",
+      "proves": "AI-assisted development correlates with more code duplication and less refactoring, increasing long-term maintenance burden on code you own.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "211 million changed lines from repos owned by Google, Microsoft, Meta, and enterprise C-Corps",
+        "4x more code cloning",
+        "'copy/paste' exceeds 'moved' code for first time in history"
+      ]
+    },
+    {
+      "title": "When Agents Fail to Act: A Diagnostic Framework for Tool Invocation Reliability in Multi-Agent LLM Systems",
+      "author": "Huang et al. (arXiv)",
+      "url": "https://arxiv.org/abs/2601.16280",
+      "date": "Submitted 22 January 2026 (accepted at ICAIBD 2026)",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Procedural reliability, particularly tool initialization failures, constitutes the primary bottleneck for smaller models.",
+      "proves": "For smaller models, tool-invocation reliability (especially tool initialization) is the primary failure bottleneck, localizable via a 12-category taxonomy.",
+      "verification": "partial",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "1,980 deterministic test instances",
+        "12-category error taxonomy capturing failure modes across tool initialization, parameter handling, execution, and result interpretation",
+        "Mid-sized models (qwen2.5:14b) offer practical accuracy-efficiency trade-offs on commodity hardware (96.6% success rate, 7.3 s latency)"
+      ]
+    },
+    {
+      "title": "Context Rot: How Increasing Input Tokens Impacts LLM Performance",
+      "author": "Kelly Hong, Anton Troynikov, Jeff Huber (Chroma)",
+      "url": "https://www.trychroma.com/research/context-rot",
+      "date": "July 14, 2025",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "models do not use their context uniformly; instead, their performance grows increasingly unreliable as input length grows",
+      "proves": "Across 18 LLMs, models do not use context uniformly — reliability drops as input length grows — so a longer CLAUDE.md is not a neutral cost.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-md-instruction-ceiling",
+        "jit-context-retrieval-failure",
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "model performance degrades as input length increases, often in surprising and non-uniform ways",
+        "Even a single distractor reduces performance relative to the baseline (needle only).",
+        "Lower similarity needle-question pairs increases the rate of performance degradation",
+        "18 LLMs evaluated — Anthropic (Claude Opus 4, Sonnet 4, Sonnet 3.7, Sonnet 3.5, Haiku 3.5), OpenAI (o3, GPT-4.1 + mini/nano, GPT-4o, GPT-4 Turbo, GPT-3.5 Turbo), Google (Gemini 2.5 Pro/Flash, 2.0 Flash), Alibaba (Qwen3-235B-A22B, Qwen3-32B, Qwen3-8B)"
+      ]
+    },
+    {
+      "title": "Measuring AI Ability to Complete Long Software Tasks",
+      "author": "Kwa, West, Becker, et al. (METR)",
+      "url": "https://arxiv.org/abs/2503.14499",
+      "date": "submitted 2025-03-18",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "frontier AI time horizon has been doubling approximately every seven months since 2019, though the trend may have accelerated in 2024",
+      "proves": "The primary paper behind the autonomy trend confirms a ~7-month doubling of the 50%-task-completion time horizon since 2019, driven mainly by greater reliability and error-adaptation — the mechanism that inflates calls per task.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution",
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "\"Claude 3.7 Sonnet have a 50% time horizon of around 50 minutes\".",
+        "\"within 5 years, AI systems will be capable of automating many software tasks that currently take humans a month\".",
+        "\"The increase in AI models' time horizons seems to be primarily driven by greater reliability and ability to adapt to mistakes\"",
+        "50%-task-completion time horizon. This is the time humans typically take to complete tasks that AI models can complete with 50% success rate"
+      ]
+    },
+    {
+      "title": "Why AI coding tools shift the real bottleneck to review",
+      "author": "LogRocket Blog (Ikeh Akinyemi)",
+      "url": "https://blog.logrocket.com/ai-coding-tools-shift-bottleneck-to-review",
+      "date": "January 20, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "If your team adopts AI coding tools without restructuring how code review works, expect slower releases, not faster ones",
+      "proves": "AI moves the bottleneck from writing to reviewing, so teams that don't restructure review ship slower, not faster.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "98 percent increase in PR volume\" — attributed to Faros AI analysis of 10,000+ developers",
+        "PR review time went up 91 percent\" — same Faros AI study",
+        "68 percent of senior engineers report quality improvements from AI, but only 26 percent would ship AI-generated code without review"
+      ]
+    },
+    {
+      "title": "The End of Code Review: Coding Agents Supersede Human Inspection",
+      "author": "Martin Monperrus",
+      "url": "https://arxiv.org/abs/2606.13175",
+      "date": "11 Jun 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "the review queue becomes the binding constraint on their delivery pipeline",
+      "proves": "When agents raise output, the human review queue — not code generation — becomes the constraint that caps delivery.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"developers at large organisations spend between ten and fifteen percent of their working hours reading and commenting on others' code\" — attributed to Sadowski et al., Google study",
+        "\"review latency between submitting a pull request and receiving actionable feedback routinely stretches over twenty-four hours\" — Introduction",
+        "\"reviews of agent-generated code become rubber-stamps: the human approves because the code looks correct\""
+      ]
+    },
+    {
+      "title": "Measuring AI Ability to Complete Long Tasks",
+      "author": "METR",
+      "url": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks",
+      "date": "March 19, 2025",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "The length of tasks (measured by how long they take human professionals) that generalist frontier model agents can complete autonomously with 50% reliability has been doubling approximately every 7 months for the last 6 years.",
+      "proves": "The autonomous task length frontier agents can complete has doubled roughly every 7 months for 6 years, so autonomous runs — and the per-task call count behind them — keep growing.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution",
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "current models have almost 100% success rate on tasks taking humans less than 4 minutes, but succeed <10% of the time on tasks taking more than around 4 hours",
+        "\"If the measured trend from the past 6 years continues for 2-4 more years, generalist autonomous agents will be capable of performing a wide range of week-long tasks.\"",
+        "the best current models—such as Claude 3.7 Sonnet—are capable of some tasks that take even expert humans hours, but can only reliably complete tasks of up to a few minutes long",
+        "AI agents often seem to struggle with stringing together longer sequences of actions"
+      ]
+    },
+    {
+      "title": "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity",
+      "author": "METR (Becker, Rush, Barnes, Rein)",
+      "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study",
+      "date": "July 10, 2025",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "When developers are allowed to use AI tools, they take 19% longer to complete issues—a significant slowdown that goes against developer beliefs and expert forecasts.",
+      "proves": "Experienced developers were measurably slower with AI in codebases they know well, contradicting their own forecasts of a speedup.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai",
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "16 experienced developers from large open-source repositories (averaging 22k+ stars and 1M+ lines of code)",
+        "developers expected AI to speed them up by 24%",
+        "they still believed AI had sped them up by 20%",
+        "developers estimated that they were sped up by 20% on average when using AI—so they were mistaken"
+      ]
+    },
+    {
+      "title": "CR-Bench: Evaluating the Real-World Utility of AI Code Review Agents",
+      "author": "Pereira, Sinha, Ghosh, Dutta (Nutanix, Inc.)",
+      "url": "https://arxiv.org/abs/2603.11078",
+      "date": "10 Mar 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "code review agents can exhibit a low signal-to-noise ratio when designed to identify all hidden issues, obscuring true progress and developer productivity",
+      "proves": "\"Find everything\" review agents drown the signal, so resolution/merge rate is the wrong yardstick and signal-to-noise proxies developer trust.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"CR-Bench...584 high-fidelity PR tasks\" — Section 7.1",
+        "\"average PR comments 41.03\" per instance — Table 3",
+        "\"high SNR serves as a primary proxy for developer trust by quantifying the ratio of actionable signal to distracting hallucinations\""
+      ]
+    },
+    {
+      "title": "DORA Report 2024 – A Look at Throughput and Stability",
+      "author": "Rachel Stephens (RedMonk)",
+      "url": "https://redmonk.com/rstephens/2024/11/26/dora2024",
+      "date": "November 26, 2024",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "if AI adoption increases by 25%, estimated throughput delivery is expected to decrease by 1.5%",
+      "proves": "Individual AI productivity gains do not translate into system-level delivery throughput or stability, because code generation was never the bottleneck.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "estimated delivery stability is expected to decrease by 7.2%",
+        "75.9% of respondents (of roughly 3,000 people surveyed) are relying on AI for at least part of their job responsibilities",
+        "if AI adoption increases by 25%, time spent doing valuable work is estimated to decrease 2.6%"
+      ]
+    },
+    {
+      "title": "\"An Endless Stream of AI Slop\": How Developers Discuss the Burden of AI-Assisted Software Development",
+      "author": "Sebastian Baltes, Marc Cheong, Christoph Treude",
+      "url": "https://arxiv.org/abs/2603.27249",
+      "date": "09 Jun 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "The development time has been shortened but the team now needs to spend more time to review. Doesn't look like any benefit.",
+      "proves": "Individual AI speedups externalize review burden onto the team, making review a shared, exhaustible resource rather than a free step.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"30 PRs per day across 6 reviewers\" — [R07] reviewer-burden example",
+        "\"reviewer-burden\" ranked among top 3 most frequent codes (226 instances) — coding frequency",
+        "\"Individual developers and organizations benefit from AI-generated content, but the cumulative effect degrades the shared resources that collaborative development depends on.\""
+      ]
+    },
+    {
+      "title": "MIT report: 95% of generative AI pilots at companies are failing",
+      "author": "Sheryl Estrada (Fortune)",
+      "url": "https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo",
+      "date": "August 18, 2025, 6:54 AM ET",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Purchasing AI tools from specialized vendors and building partnerships succeed about 67% of the time, while internal builds succeed only one-third as often.",
+      "proves": "Most enterprise GenAI builds fail; buying and partnering succeeds roughly three times more often than building internally.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "95% failure rate for enterprise AI solutions",
+        "about 5% of AI pilot programs achieve rapid revenue acceleration",
+        "150 interviews with leaders, a survey of 350 employees, and an analysis of 300 public AI deployments"
+      ]
+    },
+    {
+      "title": "Agent READMEs: An Empirical Study of Context Files for Agentic Coding",
+      "author": "Worawalan Chatlatanagulchai et al.",
+      "url": "https://arxiv.org/abs/2511.12884",
+      "date": "17 Nov 2025 (submitted)",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "While developers use context files to make agents functional, they provide few guardrails to ensure that agent-written code is secure or performant",
+      "proves": "Empirically, teams pack context files with functional setup but almost no security or performance guardrails — the constraint side of CLAUDE.md is systematically under-specified.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-md-instruction-ceiling"
+      ],
+      "secondary": [
+        "2,303 agent context files across 1,925 repositories",
+        "Build and run commands: 62.3%, Implementation details: 69.9%, Architecture: 67.7%; Security: 14.5%, Performance: 14.5%",
+        "These files are not static documentation but complex, difficult-to-read artifacts that evolve like configuration code"
+      ]
+    },
+    {
+      "title": "Towards a Science of Scaling Agent Systems",
+      "author": "Yubin Kim, Ken Gu, Chanwoo Park, et al. (MIT / Google)",
+      "url": "https://arxiv.org/abs/2512.08296",
+      "date": "Submitted 9 Dec 2025",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Relative performance change compared to single-agent baseline ranges from +80.8% on decomposable financial reasoning to -70.0% on sequential planning, demonstrating that architecture-task alignment determines collaborative success.",
+      "proves": "Whether a multi-agent split helps or hurts is decided by task decomposability — decomposable tasks gain sharply, sequential ones degrade sharply.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "Across 260 configurations spanning six agentic benchmarks, five canonical architectures (Single-Agent and four Multi-Agent: Independent, Centralized, Decentralized, Hybrid), and three LLM families",
+        "The framework identifies the best-performing architecture for 87% of held-out configurations",
+        "architectures without centralized verification tend to propagate errors more than those with centralized coordination"
+      ]
+    },
+    {
+      "title": "Rethinking Agentic RAG: Toward LLM-Driven Logical Retrieval Beyond Embeddings",
+      "author": "Zeng et al. (arXiv)",
+      "url": "https://arxiv.org/abs/2605.27123",
+      "date": "Submitted 26 May 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "We attribute this improvement to the legibility of failed logical search. Repeated failures under explicit lexical constraints provide a clearer signal that required evidence may be absent, whereas Agentic Hybrid may still return semantically related but unsupported passages.",
+      "proves": "Logical/lexical retrieval can signal 'nothing found' where embedding search cannot, which measurably reduces hallucination on answer-unavailable questions.",
+      "verification": "confirmed",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "On average, its refusal rate increased from 0.767 to 0.828, while the hallucination rate decreased from 0.128 to 0.083.",
+        "anchoring the retrieval process in logical queries substantially reduces hallucinations in generated responses.",
+        "matches a strong agentic hybrid baseline, while substantially reducing construction and serving cost"
+      ]
+    },
+    {
+      "title": "The 80% Problem in Agentic Coding",
+      "author": "Addy Osmani",
+      "url": "https://addyo.substack.com/p/the-80-problem-in-agentic-coding",
+      "date": "Jan 28, 2026",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "only 48% of developers consistently check AI-assisted code before committing it, even though 38% find that reviewing AI-generated logic actually requires more effort than reviewing human-written code.",
+      "proves": "Most teams under-review AI code even though reviewing it costs more effort, so the last-mile verification tax is real and often unpaid.",
+      "verification": "partial",
+      "powers": [
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "AI gets you 80% to an MVP; the last 20% requires patience, learning deeply or hiring engineers."
+      ]
+    },
+    {
+      "title": "Code Review in the Age of AI",
+      "author": "Addy Osmani",
+      "url": "https://addyo.substack.com/p/code-review-in-the-age-of-ai",
+      "date": "January 5, 2026",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "AI writes faster. Humans still have to prove it works.",
+      "proves": "AI speeds up writing but shifts the constraint to verification; a human still owns proving the code works.",
+      "verification": "partial",
+      "powers": [
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "If your pull request doesn't contain evidence that it works, you're not shipping faster",
+        "45% of AI-generated code contains security flaws",
+        "Logic errors appear at 1.75× the rate of human-written code"
+      ]
+    },
+    {
+      "title": "Agentic Code Review (addyosmani.com)",
+      "author": "Addy Osmani",
+      "url": "https://addyosmani.com/blog/agentic-code-review",
+      "date": "June 15, 2026",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "Tier by risk, not by author. A config change earns a linter and a glance. A payments path earns the full stack",
+      "proves": "Review depth should be triaged by the risk class of the change, not by who authored it or the diff size.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"AI-written code produces 1.7x more issues than human code\" — CodeRabbit (470 OSS PRs, December 2025)",
+        "\"93.4% of findings caught by exactly one tool\" — dev.to engineer (4 parallel reviewers, 146 PRs, 679 findings)",
+        "\"A model cannot be paged and cannot be held responsible for what it shipped, so whoever clicks merge owns it\""
+      ]
+    },
+    {
+      "title": "The Code Agent Orchestra - what makes multi-agent coding work",
+      "author": "Addy Osmani",
+      "url": "https://addyosmani.com/blog/code-agent-orchestra",
+      "date": "March 26, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Three to five teammates is the sweet spot. Token costs scale linearly, and three focused teammates consistently outperform five scattered ones.",
+      "proves": "Fan-out has a practical ceiling around three to five focused agents; the real bottleneck becomes verification, not generation.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "The bottleneck is no longer generation. It's verification.",
+        "Three focused agents consistently outperform one generalist agent working three times as long.",
+        "One agent can only hold so much information. Large codebases overwhelm a single context window."
+      ]
+    },
+    {
+      "title": "Agentic Code Review",
+      "author": "Addy Osmani / O'Reilly Radar",
+      "url": "https://www.oreilly.com/radar/agentic-code-review",
+      "date": "June 26, 2026",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "We made writing cheap, and understanding stayed exactly as expensive as it has always been.",
+      "proves": "AI collapsed the cost of writing code but not the cost of understanding it, which is why review is now the ceiling.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"More than one in five reviews on the platform involves an agent\" — GitHub",
+        "\"4x the raw output of nonusers...only about 12% productivity gain\" — GitClear",
+        "\"The reasoning is usually thrown away rather than attached...reviewer has to reconstruct intent\""
+      ]
+    },
+    {
+      "title": "Your CLAUDE.md Instructions Are Being Ignored - Here's Why (and How to Fix It)",
+      "author": "Albert Nahas",
+      "url": "https://dev.to/albert_nahas_cdc8469a6ae8/your-claudemd-instructions-are-being-ignored-heres-why-and-how-to-fix-it-23p6",
+      "date": "Feb 17 (year not stated on page; brief lists 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "when the context window fills up and gets compacted, your CLAUDE.md values get summarized away with everything else",
+      "proves": "CLAUDE.md instructions decay mid-session — they get summarized away at compaction — so hook-based reinforcement is more reliable for must-follow standards.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-md-instruction-ceiling"
+      ],
+      "secondary": [
+        "hook output requires approximately 15 tokens per prompt reminder",
+        "Over 50-turn session, motto reminders total ~750 tokens against 200k context window",
+        "hook output arrives as clean system-reminder messages — no disclaimer, no 'may or may not be relevant' framing"
+      ]
+    },
+    {
+      "title": "How we built Claude Code auto mode: a safer way to skip permissions",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/engineering/claude-code-auto-mode",
+      "date": "Mar 25, 2026",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "A user asked to \"clean up old branches.\" The agent listed remote branches, constructed a pattern match, and issued a delete. This would be blocked since the request was vague, the action irreversible and destructive, and the user may have only meant to delete local branches.",
+      "proves": "Vague-plus-irreversible-plus-destructive is the dangerous combination to gate; a concrete incident shows why you don't delegate blast-radius actions blind.",
+      "verification": "confirmed",
+      "powers": [
+        "what-ai-agents-are-actually-good-for",
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Claude Code users approve 93% of permission prompts.",
+        "If a session accumulates 3 consecutive denials or 20 total, we stop the model and escalate to the human.",
+        "Destroy or exfiltrate. Cause irreversible loss by force-pushing over history, mass-deleting cloud storage, or sending internal data externally.",
+        "Instead, a false positive costs a single retry where the agent gets a nudge, reconsiders, and usually finds an alternative path."
+      ]
+    },
+    {
+      "title": "How we contain Claude across products",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/engineering/how-we-contain-claude",
+      "date": "2026-05-25",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Rather than supervising what the agent does, we supervise what it's able to do by enforcing access boundaries through, for example, sandboxes, virtual machines, and egress controls.",
+      "proves": "Safety comes from constraining what the agent can reach, not from watching what it does, because any model-layer check has a non-zero miss rate.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Any probabilistic defense has a non-zero miss rate.",
+        "Claude Code previously protected against agents taking unintended actions by asking users for permission at each turn... Our telemetry showed users approved roughly 93% of permission prompts.",
+        "The weakest layer is the one you built yourself"
+      ]
+    },
+    {
+      "title": "Effective context engineering for AI agents",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+      "date": "September 29, 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Of course, there's a trade-off: runtime exploration is slower than retrieving pre-computed data. Not only that, but opinionated and thoughtful engineering is required to ensure that an LLM has the right tools and heuristics for effectively navigating its information landscape.",
+      "proves": "Just-in-time context retrieval is not free: it trades latency for freshness and demands deliberate tool and heuristic design to work.",
+      "verification": "confirmed",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "agents built with the 'just in time' approach maintain lightweight identifiers (file paths, stored queries, web links, etc.) and use these references to dynamically load data into context at runtime using tools.",
+        "In certain settings, the most effective agents might employ a hybrid strategy, retrieving some data up front for speed, and pursuing further autonomous exploration at its discretion.",
+        "Context, therefore, must be treated as a finite resource with diminishing marginal returns."
+      ]
+    },
+    {
+      "title": "Best practices for Claude Code",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/best-practices",
+      "date": "2026 (undated on page; brief dates it 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "If Claude keeps doing something you don't want despite having a rule against it, the file is probably too long and the rule is getting lost. If Claude asks you questions that are answered in CLAUDE.md, the phrasing might be ambiguous. Treat CLAUDE.md like code: review it when things go wrong, prune it regularly, and test changes by observing whether Claude's behavior actually shifts.",
+      "proves": "Anthropic's own guidance says to maintain CLAUDE.md like code — prune it, and test rule changes by observing whether Claude's behavior actually shifts.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-md-instruction-ceiling",
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "Claude stops when the work looks done. Without a check it can run, 'looks done' is the only signal available, and you become the verification loop: every mistake waits for you to notice it.",
+        "Keep it concise. For each line, ask: 'Would removing this cause Claude to make mistakes?' If not, cut it. Bloated CLAUDE.md files cause Claude to ignore your actual instructions!",
+        "Ruthlessly prune. If Claude already does something correctly without the instruction, delete it or convert it to a hook.",
+        "Unlike CLAUDE.md instructions which are advisory, hooks are deterministic and guarantee the action happens."
+      ]
+    },
+    {
+      "title": "How Claude remembers your project",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/memory",
+      "date": "2026 (undated on page)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "CLAUDE.md content is delivered as a user message after the system prompt, not as part of the system prompt itself. Claude reads it and tries to follow it, but there's no guarantee of strict compliance, especially for vague or conflicting instructions.",
+      "proves": "CLAUDE.md is advisory context delivered as a user message, not enforced configuration — so strict compliance is not guaranteed, especially for vague or conflicting rules.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-md-instruction-ceiling"
+      ],
+      "secondary": [
+        "target under 200 lines per CLAUDE.md file. Longer files consume more context and reduce adherence.",
+        "Both are loaded at the start of every conversation. Claude treats them as context, not enforced configuration. To block an action regardless of what Claude decides, use a PreToolUse hook instead.",
+        "if two rules contradict each other, Claude may pick one arbitrarily."
+      ]
+    },
+    {
+      "title": "Create custom subagents",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/sub-agents",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Use one when a side task would flood your main conversation with search results, logs, or file contents you won't reference again: the subagent does that work in its own context and returns only the summary.",
+      "proves": "Isolate a polluting side-task in a subagent's own context — the operational test for when to split before splitting the whole job.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "Each subagent runs in its own context window with a custom system prompt, specific tool access, and independent permissions.",
+        "Preserve context by keeping exploration and implementation out of your main conversation",
+        "Enforce constraints by limiting which tools a subagent can use"
+      ]
+    },
+    {
+      "title": "Monitoring",
+      "author": "Anthropic (code.claude.com)",
+      "url": "https://code.claude.com/docs/en/monitoring-usage",
+      "date": "undated (references minimum version \"Claude Code v2.1.193 or later\")",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Attributing spend to specific skills, plugins, or subagent types via the `skill.name`, `plugin.name`, and `agent.name` attributes",
+      "proves": "Claude Code's OpenTelemetry export already emits per-skill, per-plugin, per-subagent, and per-prompt attribution attributes on every call, so an (agent, task, user) schema can be committed at the call level today.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "OpenTelemetry export to your backend is opt-in and requires explicit configuration.",
+        "`token.usage` `type` attribute allowed values: `\"input\"`, `\"output\"`, `\"cacheRead\"`, `\"cacheCreation\"`",
+        "`query_source` attribute allowed values: `\"main\"`, `\"subagent\"`, `\"auxiliary\"` — distinguishes main-loop calls from subagent/auxiliary calls.",
+        "`prompt.id`: \"UUID v4 correlating a user prompt with all subsequent events until next prompt\"."
+      ]
+    },
+    {
+      "title": "Building effective agents",
+      "author": "Anthropic (Erik Schluntz and Barry Zhang)",
+      "url": "https://www.anthropic.com/research/building-effective-agents",
+      "date": "Dec 19, 2024",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "When building applications with LLMs, we recommend finding the simplest solution possible, and only increasing complexity when needed. This might mean not building agentic systems at all.",
+      "proves": "The default should be the simplest solution; reaching for an agent is a decision to justify, not an assumption.",
+      "verification": "confirmed",
+      "powers": [
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "Code solutions are verifiable through automated tests; Agents can iterate on solutions using test results as feedback",
+        "The autonomous nature of agents means higher costs, and the potential for compounding errors.",
+        "Agentic systems often trade latency and cost for better task performance, and you should consider when this tradeoff makes sense."
+      ]
+    },
+    {
+      "title": "Analytics APIs",
+      "author": "Anthropic (platform.claude.com)",
+      "url": "https://platform.claude.com/docs/en/manage-claude/analytics-api",
+      "date": "undated (data available \"for dates on or after January 1, 2026\")",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Values for a given date can be revised for up to 30 days as late events arrive and reconciliation runs. For invoicing-grade totals, query dates at least 30 days in the past.",
+      "proves": "Provider analytics numbers are a post-hoc, reconciled reporting layer that keeps moving for up to 30 days and are attributed per-user, not per-request — useless as a real-time per-task control.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "Enterprise Analytics cost granularity: \"per-user and organization-level token usage and cost over time (usage-based Enterprise plans)\" — NOT per-request.",
+        "Cost data freshness: \"Data is typically available within four hours of the underlying usage but may take up to 24 hours.\"",
+        "\"Daily Claude Code metrics per user: sessions, lines of code, commits, pull requests, tool acceptance, and estimated cost by model\""
+      ]
+    },
+    {
+      "title": "Demystifying evals for AI agents",
+      "author": "Anthropic Engineering Blog (Mikaela Grace, Jeremy Hadfield, Rodrigo Olivares, Jiri De Jonghe)",
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "date": "January 9, 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "So as not to unnecessarily punish creativity, it's often better to grade what the agent produced, not the path it took.",
+      "proves": "Grade the agent on the outcome it produced, not the procedure it followed, or you punish valid solutions.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "As a rule, we do not take eval scores at face value until someone digs into the details of the eval and reads some transcripts.",
+        "CORE-Bench: \"Opus 4.5 initially scored 42%... After fixing bugs... score jumped to 95%\" — Anthropic's own eval-harness bug (Step 5)",
+        "Defining eval tasks is one of the best ways to stress-test whether the product requirements are concrete enough to start building"
+      ]
+    },
+    {
+      "title": "GENSEC05-BP01 Implement least privilege access and permissions boundaries for agentic workflows",
+      "author": "AWS",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/generative-ai-lens/gensec05-bp01.html",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Agents introduce a risk called *excessive agency*, where an agent determines the best solution to a problem is to take broader actions beyond its scope.",
+      "proves": "First-party cloud guidance names excessive agency as a High-risk gap and prescribes least-privilege boundaries plus user confirmation to contain it.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Level of risk exposed if this best practice is not established: High",
+        "Implement user confirmation for the agent, requiring users to confirm agent actions and mitigating the risk of excessive agency.",
+        "A permission boundary sets the maximum permissions which can be given to a role."
+      ]
+    },
+    {
+      "title": "Agentic Autonomy Is a Trust Score",
+      "author": "Barr Moses / Monte Carlo",
+      "url": "https://montecarlo.ai/blog-agentic-autonomy-is-a-trust-score",
+      "date": "2026-04-22",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Autonomy is not a configuration decision that's decided once. Rather, it is more like a score that goes up or down, and that your system earns through demonstrated reliability in your specific environment and workflows.",
+      "proves": "Agent autonomy should be an earned, revocable score tied to measured reliability, not a one-time day-one setting.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Expansion of autonomy should happen as a consequence of earned trust, not as a deployment decision we make on day one.",
+        "Named trust-score inputs: percentage of agent actions completed without human override (30-day window); false escalation rate; override-correctness rate; time-to-revert",
+        "Conservative defaults with clear, earned expansion paths are the right architecture as the fastest route to durable autonomy at scale."
+      ]
+    },
+    {
+      "title": "Amazon's AI deleted production. Then Amazon blamed the humans.",
+      "author": "Barrack AI",
+      "url": "https://blog.barrack.ai/amazon-ai-agents-deleting-production",
+      "date": "2026-02-22",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "This brief event was the result of user error — specifically misconfigured access controls — not AI.",
+      "proves": "Even vendors' own defense of an agent-caused deletion frames it as an access-control misconfiguration, corroborating that these are authorization failures, not model failures.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "The AI agent encountered a problem and determined that the optimal solution was to delete and recreate the entire environment.",
+        "Kiro requires two-person approval before pushing changes to production. But the deploying engineer had broader permissions than a typical employee, and Kiro inherited those elevated privileges."
+      ]
+    },
+    {
+      "title": "Agents Supersede the Reviewer, Not the Review",
+      "author": "Blake Crosley",
+      "url": "https://blakecrosley.com/blog/agents-supersede-the-reviewer",
+      "date": "June 24, 2026",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "The reviewer role is being automated. The review, understood as judgment about whether the software is correct for its purpose, is relocating to where the agent cannot follow.",
+      "proves": "Agents can take over diff inspection, but human judgment doesn't disappear — it relocates to intent specification up front and accountability at merge.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"An agent-assisted developer produces more pull requests per day than human review capacity can absorb.\" — Monperrus paper discussion",
+        "\"Automate the checkpoint and the judgment does not evaporate. It relocates to intent specification on the way in and accountability on the way out\"",
+        "\"The human does not leave the loop. The human moves from the end of it to the start.\""
+      ]
+    },
+    {
+      "title": "The real cost of build vs. buy for agentic AI in regulated industries",
+      "author": "Bryan Ross (GitLab, Field CTO)",
+      "url": "https://about.gitlab.com/the-source/ai/the-real-cost-of-build-vs-buy-for-agentic-ai-in-regulated-industries",
+      "date": "March 24, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "For a team of roughly 200 developers, an internal build typically costs around $1.4M in year one, requires 2–3 dedicated FTEs to maintain, and takes 12–18 months to reach a first real use case.",
+      "proves": "Building an internal agentic AI platform in regulated industries is a multi-year, multi-FTE commitment with governance surface most organizations underestimate.",
+      "verification": "partial",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "Every engineer building the platform is an engineer _not_ modernizing a legacy pipeline, remediating security debt, or accelerating a critical delivery program.",
+        "Building an internal agentic AI platform in banking or insurance is a multi-year platform engineering commitment with regulatory surface area most organizations underestimate"
+      ]
+    },
+    {
+      "title": "Least Privilege Access for AI Agents: The Control You're Missing",
+      "author": "Cequence Security",
+      "url": "https://www.cequence.ai/blog/ai/ai-agent-least-privilege-access",
+      "date": "2026-05-12",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Enforcing least privilege requires control at the point of tool invocation, in real time, against a defined scope that reflects the agent's function, not its operator's credentials.",
+      "proves": "Least privilege for agents must be enforced at tool-invocation time and scoped to the agent's function, not inherited from its operator's broad credentials.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Authentication tells you who the agent is. It tells you nothing about what the agent should be allowed to do.",
+        "Gartner identifies approximately 40 tool definitions as the threshold beyond which agent latency and token cost increase measurably."
+      ]
+    },
+    {
+      "title": "System Prompts Are Not Security Controls: A Deleted Production Database Proves It",
+      "author": "Chris Hughes / Zenity",
+      "url": "https://zenity.io/blog/current-events/ai-agent-database-deletion-pocketos",
+      "date": "2026-04-28",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Railway's CLI token created for managing custom domains had blanket permissions across the entire GraphQL API, including destructive operations on production volumes. There is no role-based access control (RBAC) for Railway API tokens.",
+      "proves": "The production database deletion happened because an over-broad, unscoped token authorized destructive operations, not because the model went rogue.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Tokens are not scoped by operation, by environment, or by resource. Every token is effectively root.",
+        "Soft guardrails are probabilistic controls that guess at intent instead of enforcing rules",
+        "The agent knew the rules, yet it violated every one of them"
+      ]
+    },
+    {
+      "title": "AI Is Breaking Code Review: How Engineering Teams Survive the PR Bottleneck",
+      "author": "Codacy",
+      "url": "https://blog.codacy.com/ai-breaking-code-review-how-engineering-teams-survive-pr-bottleneck",
+      "date": "24/06/2026",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "More code is entering the pipeline, but less of it is reaching production successfully. The bottleneck has moved from writing code to deciding whether code is safe to merge.",
+      "proves": "Third-party delivery data shows generation is not the wall — validation is, with feature throughput rising while main-branch throughput and success rates fall.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"feature branch throughput up 59% year over year, while main branch throughput for the median team actually fell\" — CircleCI 2026 State of Software Delivery report",
+        "\"main-branch throughput fell nearly 7%, and main-branch success rates dropped to 70.8%\" — CircleCI 2026",
+        "\"agentic AI PRs have a pickup time 5.3x longer than unassisted PRs. AI-assisted PRs wait 2.47x longer\" — LinearB 2026 Software Engineering Benchmarks Report"
+      ]
+    },
+    {
+      "title": "How to evaluate AI code review tools: A practical framework",
+      "author": "David Loker / CodeRabbit",
+      "url": "https://www.coderabbit.ai/blog/framework-for-evaluating-ai-code-review-tools",
+      "date": "January 09, 2026",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "Precision metrics degrade because even high‑quality comments may be ignored simply due to volume.",
+      "proves": "Comment volume stops mapping to value once reviewers skim or bulk-dismiss, so review agents must be measured by load removed, not comments posted.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"Human reviewers are overwhelmed with feedback and cognitive load spikes.\" — same section",
+        "\"Review behavior changes—comments are skimmed, bulk‑dismissed, or ignored\" — same section",
+        "\"You are no longer measuring how a tool performs in practice, but how reviewers cope with noise.\""
+      ]
+    },
+    {
+      "title": "AI Coding Agents Can Verify Some of Their Work Now. Here's What They Still Miss.",
+      "author": "DEV (Brad Kinnard)",
+      "url": "https://dev.to/moonrunnerkc/ai-coding-agents-can-verify-some-of-their-work-now-heres-what-they-still-miss-58mc",
+      "date": "April 9, 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "The agent runs the build, sees green, and moves on. But 'build passes' and 'the output is production-ready' are different bars.",
+      "proves": "Agent self-verification confirms compilation and tests but not production-readiness, so quality attributes must be checked explicitly.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "Developers consistently report agents declaring tasks complete while skipping accessibility attributes, test isolation, config externalization, dark mode, responsive layout, and meta tags.",
+        "The agent's own verification handles 'does it compile and do tests pass.' The orchestrator handles 'did it actually do what was asked, completely.'"
+      ]
+    },
+    {
+      "title": "How I Validate Quality When AI Agents Write My Code",
+      "author": "DEV (Teemu Piirainen)",
+      "url": "https://dev.to/teppana88/how-i-validate-quality-when-ai-agents-write-my-code-481c",
+      "date": "March 16, 2025",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Don't ask the same agent to write code and verify it. That's like having students grade their own exams...The separation is what makes the gates trustworthy.",
+      "proves": "The agent that writes the code must not be the one that grades it; separated validation gates are what make verification trustworthy.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "Eight quality gates required before production",
+        "Every commit is a known-good checkpoint. When something fails, the blast radius is one subtask, not an entire feature.",
+        "Agents are extremely literal. Give them vague instructions and they'll build something that technically matches what you said but misses what you meant."
+      ]
+    },
+    {
+      "title": "AI Coding Agents Move the Bottleneck to Review Queues",
+      "author": "Developers Digest",
+      "url": "https://www.developersdigest.tech/blog/ai-coding-agents-review-queues",
+      "date": "June 21, 2026",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "The bottleneck moves from generation to review queues, CI capacity, flaky environments, branch policy, cost ceilings, and the human attention needed to decide what should actually merge.",
+      "proves": "As agents get capable, the constraint shifts off code generation and onto the whole delivery surface — review bandwidth, CI, and human merge decisions.",
+      "verification": "confirmed",
+      "powers": [
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "\"The model matters, but the delivery surface matters just as much.\"",
+        "\"A team that cannot write crisp tasks will struggle to evaluate agents honestly.\"",
+        "\"Reviewers do not need another wall of generated explanation. They need the shortest path to deciding whether the change should merge.\""
+      ]
+    },
+    {
+      "title": "Build vs Buy: The 2026 Case for Custom AI Tools",
+      "author": "Digital Applied Team",
+      "url": "https://www.digitalapplied.com/blog/build-vs-buy-ai-custom-tools-vs-branded-saas-2026",
+      "date": "July 1, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "The 2026 build-vs-buy question is less _can we afford to build it_ and more _what happens to us if the vendor moves_.",
+      "proves": "Cheaper agentic builds plus rising SaaS lock-in and repricing risk tilt the case toward owning differentiating workflows.",
+      "verification": "partial",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "2,698 SaaS M&A transactions closed in 2025, up 28% year over year",
+        "68% of tech leaders plan vendor consolidation in 2026",
+        "organizations trapped in vendor lock-in face switching costs around 16 times higher"
+      ]
+    },
+    {
+      "title": "Managing agentic memory with Elasticsearch",
+      "author": "Elasticsearch Labs (Someshwaran Mohankumar)",
+      "url": "https://www.elastic.co/search-labs/blog/agentic-memory-management-elasticsearch",
+      "date": "January 16, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "the most important memory work isn't 'store more,' it's 'curate better': Retrieve selectively, prune aggressively, summarize carefully",
+      "proves": "Reliability comes from curating context (selective retrieval, aggressive pruning), and tool-count bloat degrades even capable models.",
+      "verification": "confirmed",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "once its context grew beyond a certain point (on the order of 100,000 tokens in an experiment), it began to fixate on repeating its past actions",
+        "failed a task when given 46 tools to consider but succeeded when given only 19 tools"
+      ]
+    },
+    {
+      "title": "MCP Tool Design: Why Your AI Agent Is Failing (And How to Fix It)",
+      "author": "Guy (AWS Heroes) / DEV Community",
+      "url": "https://dev.to/aws-heroes/mcp-tool-design-why-your-ai-agent-is-failing-and-how-to-fix-it-40fc",
+      "date": "Posted Mar 18 (Edited Apr 8), 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Tool descriptions are not documentation. They are the LLM's primary decision surface.",
+      "proves": "Tool descriptions are the agent's decision surface and must be audited like production code; nearly all of them carry quality defects.",
+      "verification": "confirmed",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "97.1% contain at least one quality issue",
+        "More than half (56%) have unclear purpose statements",
+        "augmented descriptions improved task success by 5.85 percentage points"
+      ]
+    },
+    {
+      "title": "Ask HN: How are you keeping AI coding agents from burning money?",
+      "author": "Hacker News (bhaviav100, OP)",
+      "url": "https://news.ycombinator.com/item?id=47559293",
+      "date": "2026-03-29 (created_at 2026-03-29T00:22:20Z)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "yes, compaction and smaller models help on cost per step. But my issue wasn't just inefficiency, it was agents retrying when they shouldn't. I needed visibility + limits per agent/task, and the ability to cut it off, not just optimize it.",
+      "proves": "Practitioners want per-agent/per-task limits and a hard cut-off, not just cost optimization — the wedge is attribute-and-enforce, not optimize.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution",
+        "claude-md-instruction-ceiling"
+      ],
+      "secondary": [
+        "My AGENTS.md is 845 lines and it only started getting good once it got that long\" (Sammi), directly contested by \"sweet spot is between 60 and 120 lines. With psuedo xml tags between sections\" (typpilol)",
+        "Budget alerts are not a kill switch. Credits are not protection.",
+        "Claude often ignores CLAUDE.md / The more information you have in the file the more it gets ignored",
+        "\"cost control is a policy problem - we certainly don't need to use opus 4.6 for a simple test refactor... we need a way to measure cost / performance for agents on individual repos, with individual types of tasks...\" (author bisonbear, id 47563774)"
+      ]
+    },
+    {
+      "title": "LLM Evals: Everything You Need to Know",
+      "author": "Hamel Husain and Shreya Shankar",
+      "url": "https://hamel.dev/blog/posts/evals-faq",
+      "date": "January 15, 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Generic evaluation metrics are everywhere...These metrics measure abstract qualities that may not matter for your use case. Good scores on them don't mean your system works.",
+      "proves": "Evals should be derived from error analysis of real traces, because good scores on generic metrics don't mean the system works.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "Error analysis helps you decide what evals to write in the first place. It allows you to identify failure modes unique to your application and data.",
+        "Spend 60-80% of our development time on error analysis and evaluation",
+        "Binary evaluations force clearer thinking and more consistent labeling. Likert scales introduce significant challenges."
+      ]
+    },
+    {
+      "title": "The Build vs Buy Framework in the Age of AI",
+      "author": "HatchWorks (Matt Paige)",
+      "url": "https://hatchworks.com/blog/gen-ai/build-vs-buy-framework",
+      "date": "January 28, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "AI has dramatically reduced the cost of creating software, but it hasn't eliminated the cost of owning software.",
+      "proves": "AI lowers the cost to build software but not the ongoing cost of owning and operating it, which is where build-vs-buy now turns.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "the last 20% (security, governance, observability, performance, reliability, data quality, change management) is still 80% of the effort",
+        "In 2026, most enterprises land on 'yes to both.' They buy the heavy core, build what differentiates, and use AI to accelerate the glue layer.",
+        "If the capability is your advantage, meaning revenue, margin, speed, or defensible differentiation (AI copilots, agentic workflows, decision support)"
+      ]
+    },
+    {
+      "title": "Creating the Perfect CLAUDE.md for Claude Code",
+      "author": "Ivan Kahl / Dometrain",
+      "url": "https://dometrain.com/blog/creating-the-perfect-claudemd-for-claude-code",
+      "date": "January 15, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "You cannot craft the perfect CLAUDE.md file immediately. Instead, treat it as a living document.",
+      "proves": "CLAUDE.md is a living document refined over time, not a one-shot artifact.",
+      "verification": "partial",
+      "powers": [
+        "claude-md-instruction-ceiling"
+      ],
+      "secondary": [
+        "Claude Code agents have a context window, and the CLAUDE.md file gets added to the agent's context. Any unnecessary instructions and wordy sentences will consume more of that context.",
+        "Always review the CLAUDE.md file and correct any assumptions or missing details related to project architecture."
+      ]
+    },
+    {
+      "title": "The Essential AI Agent Guardrails Framework for Autonomous Systems",
+      "author": "Jackson Wells / Galileo",
+      "url": "https://galileo.ai/blog/ai-agent-guardrails-framework",
+      "date": "2025-12-13",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Tier 1 systems handling information retrieval need automated monitoring. Tier 2 workflows with reversible actions require real-time guardrails. Tier 3 systems involving financial transactions demand human-in-the-loop for all decisions.",
+      "proves": "Controls should be tiered in proportion to an action's risk, from monitoring for retrieval up to human-in-the-loop for high-stakes transactions.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "15-20% of policy violations occur during tool execution before output generation",
+        "a single agent performing 1000+ actions per hour makes comprehensive human oversight untenable",
+        "Access control determines which resources your agents can touch, validation filters what they consume and produce, human oversight governs high-stakes decisions"
+      ]
+    },
+    {
+      "title": "In Defense of Not-Invented-Here Syndrome",
+      "author": "Joel Spolsky",
+      "url": "https://www.joelonsoftware.com/2001/10/14/in-defense-of-not-invented-here-syndrome",
+      "date": "October 14, 2001 (update noted December 5, 2016)",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "If it's a core business function — do it yourself, no matter what.",
+      "proves": "Core, business-specific functions should be built in-house because that is where control and competitive advantage live.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "There's no way it's going to be as flexible as what Amazon does with obidos, which they wrote themselves.",
+        "Pick your core business competencies and goals, and do those in house."
+      ]
+    },
+    {
+      "title": "Company Database Deleted by AI Agent: What Security Leaders Need to Know",
+      "author": "Jordyn Alger / Security Magazine",
+      "url": "https://www.securitymagazine.com/articles/102278-company-database-deleted-by-ai-agent-what-security-leaders-need-to-know",
+      "date": "2026-05-01",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Safety was retrofitted at the infrastructure layer. It should have been enforced at the identity and access layer from the start.",
+      "proves": "Bolting safety onto infrastructure after the fact fails; access limits must be enforced at the identity layer before the agent runs.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Cursor didn't hack the PocketOS environment, it was handed the keys that only a highly privileged user should have.",
+        "Many of the guardrails being marketed today are not guardrails at all. They are suggestions, enforced only insofar as the model chooses to comply.",
+        "The question isn't why Claude did this — it's why anyone gave an AI agent production credentials without a circuit breaker."
+      ]
+    },
+    {
+      "title": "AI Agent Permissions and Entitlements: Enforcing Least-Privilege Access in Regulated Enterprises",
+      "author": "KLA",
+      "url": "https://kla.digital/blog/ai-agent-permissions",
+      "date": "2026-03-10",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Least privilege does not mean making the agent weak. It means giving the agent exactly enough power to complete the approved task, for the approved time, in the approved context.",
+      "proves": "Least privilege scopes an agent to exactly the task, time, and context approved, which defines the axes of an authority-by-task-class table.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Static roles like 'claims analyst' or 'support ops' are often far wider than the exact permissions a single agent run should have.",
+        "Read access can still expose sensitive personal data, trade secrets, or protected records.",
+        "Shared service accounts destroy attribution: one API key used by multiple automations cannot prove who did what later"
+      ]
+    },
+    {
+      "title": "Writing a good CLAUDE.md",
+      "author": "Kyle (HumanLayer)",
+      "url": "https://www.humanlayer.dev/blog/writing-a-good-claude-md",
+      "date": "November 25, 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Frontier thinking LLMs can follow ~ 150-200 instructions with reasonable consistency.",
+      "proves": "There is a practical instruction ceiling — even frontier models only follow roughly 150-200 instructions consistently — so every line in CLAUDE.md competes for a finite budget.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-md-instruction-ceiling"
+      ],
+      "secondary": [
+        "Claude Code's system prompt contains ~50 individual instructions",
+        "Smaller models get MUCH worse, MUCH more quickly",
+        "LLMs bias towards instructions that are on the peripheries of the prompt"
+      ]
+    },
+    {
+      "title": "Budgets, Rate Limits",
+      "author": "LiteLLM (docs.litellm.ai)",
+      "url": "https://docs.litellm.ai/docs/proxy/users",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "After the key crosses it's `max_budget`, requests fail",
+      "proves": "A proxy can enforce multi-level budgets by validating spend before a request is admitted and hard-failing over the ceiling, i.e. terminate before the next call rather than alert after the invoice.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "\"validates spend against the authoritative database before being admitted (covering key, team, user, organization, end-user, tag, and per-window budgets)\"",
+        "\"`fail_closed_budget_enforcement`\" enables a hard ceiling \"even while Redis is degraded\"",
+        "Exceeded-budget response body: `\"ExceededTokenBudget: Current spend for token: 7.2e-05; Max Budget for Token: 2e-07\"`."
+      ]
+    },
+    {
+      "title": "Agent Iteration Budgets",
+      "author": "LiteLLM (docs.litellm.ai)",
+      "url": "https://docs.litellm.ai/docs/a2a_iteration_budgets",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "When agents run agentic loops, they can make unbounded LLM calls, causing unexpected costs.",
+      "proves": "Agentic loops make unbounded LLM calls by default, so the ceiling must be set per session — a hard iteration cap and a per-session dollar cap keyed to a trace/session id.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "Control 1 — \"Max Iterations\": \"Hard cap on the number of LLM calls per session\".",
+        "Control 2 — \"Max Budget Per Session\": \"Dollar cap per session (identified by `x-litellm-trace-id`)\".",
+        "\"When the counter exceeds `max_iterations`, the request receives a **429 Too Many Requests**\"."
+      ]
+    },
+    {
+      "title": "How to Verify What Your AI Coding Agent Actually Built",
+      "author": "LoadSys (Lee Forkenbrock)",
+      "url": "https://www.loadsys.com/blog/agentic-context-engineering-verification-practice",
+      "date": "April 27, 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "on a real build, structured verification consistently found 30-40% of the specification unimplemented after the agent reported 'complete.' Not broken code. Missing code.",
+      "proves": "Agents routinely report 'complete' while 30-40% of the spec is unbuilt, a gap code review can't see because there is no diff.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "Code review examines what was built...But if a feature wasn't built at all, there's no diff to review.",
+        "Verification works forward from the spec: 'given what was specified, was it built?'",
+        "5-6 passes to full completion is consistent enough to plan around"
+      ]
+    },
+    {
+      "title": "The $400M AI FinOps Gap: Why Cost Visibility Isn't the Same as Cost Control",
+      "author": "Logan Kelly, Waxell",
+      "url": "https://www.waxell.ai/blog/ai-agent-finops-cost-enforcement",
+      "date": "April 9, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Cost visibility tells you what your agents spent — through dashboards, cost traces, and budget alerts. Cost governance controls what they are permitted to spend, by enforcing per-session ceilings that terminate sessions before a threshold is exceeded.",
+      "proves": "Cost visibility (dashboards, alerts) is not cost control; governance means enforcing per-session ceilings that terminate the session before the threshold is crossed, and provider caps operate at the wrong (account/key) granularity.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "\"only 44% of organizations have adopted financial guardrails or AI FinOps practices\" — attributed to Gartner, March 2026",
+        "\"A 10-step agent with an average cost of $0.02 per step looks inexpensive in planning. That same agent entering a retry loop and executing 2,000 steps doesn't — that's $40 from a session that was supposed to cost $0.20.\"",
+        "\"Provider-level controls operate at the API key or account level, not the individual session level. They cannot distinguish a single runaway session from many well-behaved sessions using the same key.\""
+      ]
+    },
+    {
+      "title": "Utility Vs Strategic Dichotomy",
+      "author": "Martin Fowler",
+      "url": "https://martinfowler.com/bliki/UtilityVsStrategicDichotomy.html",
+      "date": "July 29, 2010 (updated April 7, 2016)",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "for a strategic function you don't want the same software as your competitors because that would cripple your ability to differentiate.",
+      "proves": "Strategic, differentiating software should be built while commodity utility software should be bought, and the two demand different postures.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "The 80/20 rule applies, except it may be more like 95/5",
+        "This is not a static dichotomy. Business activities that are strategic can become a utility as time passes.",
+        "For a utility function you buy the package and adjust your business process to match the software."
+      ]
+    },
+    {
+      "title": "Agent Runaway Costs: How to Set LLM Budget Limits Before Costs Spiral",
+      "author": "Matt Turley, RelayPlane",
+      "url": "https://relayplane.com/blog/agent-runaway-costs-2026",
+      "date": "March 24, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Every request passes through it, which means budget enforcement happens in one place, consistently, regardless of which agent sent the request.",
+      "proves": "Infrastructure-level (proxy) budget enforcement is the only reliable guard against runaway costs because it enforces at one chokepoint, whereas application-level checks can be forgotten in a new agent.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "\"agent that takes 50 turns on a complex task hits 100,000 input tokens and 40,000 output tokens, costing roughly $0.90 per session. Run 100 of those sessions per hour, and you are looking at $90/hour, or over $2,100/day\".",
+        "\"developer on r/AI_Agents recently described watching their agent rack up $15 in API costs in under 10 minutes\".",
+        "\"If a developer forgets to add the check in a new agent, there is no safety net.\""
+      ]
+    },
+    {
+      "title": "Why AI Agents Keep Failing in Production",
+      "author": "Medium (Paolo Perrone / Data Science Collective)",
+      "url": "https://medium.com/data-science-collective/why-ai-agents-keep-failing-in-production-cdd335b22219",
+      "date": "April 12, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "This isn't a hallucination. The retrieval worked perfectly. It just retrieved garbage.",
+      "proves": "Bad retrieval is a distinct silent failure mode from hallucination and has no built-in flag, so leaders must add one.",
+      "verification": "confirmed",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "Silent retrieval failure. There's no mechanism to flag 'this retrieval returned low-confidence or low-credibility results.'",
+        "For 28 minutes, 55% of API requests to the platform failed",
+        "An agent with 85% accuracy per step only completes a 10-step workflow successfully 20% of the time"
+      ]
+    },
+    {
+      "title": "What Is Progressive Autonomy for AI Agents? How to Safely Expand Agent Permissions",
+      "author": "MindStudio Team",
+      "url": "https://www.mindstudio.ai/blog/progressive-autonomy-ai-agents",
+      "date": "2026-03-19",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "AI agents earn expanded permissions over time based on observed performance, confidence scores, and defined risk thresholds",
+      "proves": "Agents should earn wider permissions incrementally against a measured performance threshold rather than getting full access at launch.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Expansion typically based on \"100–500 instances\" of task completion below error threshold",
+        "Sub-agents should never receive permissions their parent agent doesn't have",
+        "Three-tier action categorization: low-risk (auto-execute), medium-risk (log/alert), high-risk (require approval)"
+      ]
+    },
+    {
+      "title": "Setting Permissions for AI Agents",
+      "author": "Oso",
+      "url": "https://www.osohq.com/learn/ai-agent-permissions-delegated-access",
+      "date": "2025-10-28 (updated 2025-11-25)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Your employees ignore 96% of their permissions. Agents won't.",
+      "proves": "A broad permission grant is more dangerous for an agent than a human, because the agent will actually exercise every permission it holds.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Without mirroring these same permissions, an AI agent could expose protected data.",
+        "Developers should consider to use just-in-time access, human-in-the-loop verification",
+        "An agent that holds one of those tokens will keep answering requests even when the system has revoked"
+      ]
+    },
+    {
+      "title": "Your next big AI decision isn't build vs. buy — It's how to combine the two",
+      "author": "Pat Brans (CIO.com)",
+      "url": "https://www.cio.com/article/4097339/your-next-big-ai-decision-isnt-build-vs-buy-its-how-to-combine-the-two.html",
+      "date": "December 11, 2025",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "With such a layer in place, the build-versus-buy question fragments, and CIOs might buy a vendor's persona agent, build a specialized risk-management agent, purchase the foundation model, and orchestrate everything through a platform they control.",
+      "proves": "The industry consensus has shifted to hybrid: assemble build and buy across the AI stack under an orchestration layer you control.",
+      "verification": "partial",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "Six months ago many were experimenting, but now they're scaling.",
+        "including cases where a senior executive's data surfaced in a junior employee's query."
+      ]
+    },
+    {
+      "title": "Implementing Agent-Level Cost Attribution",
+      "author": "Prefactor",
+      "url": "https://prefactor.tech/learn/agent-level-cost-attribution",
+      "date": "Updated 9 April 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Agent-level cost attribution starts with identity. When every agent has a unique, registered identity, every API call, token consumption event, and tool invocation can be tagged to that identity.",
+      "proves": "Agent-level cost attribution requires giving every agent a registered identity so every token and tool call can be tagged to it — but the field's default stops at alerts, not termination.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "\"Per-agent budgets define expected spend. Alerts fire when an agent approaches or exceeds its budget.\"",
+        "\"Cloud cost management tools track compute and API spend at the account or service level — not at the agent level.\""
+      ]
+    },
+    {
+      "title": "FinOps for AI Workloads in 2026: Why Traditional Cloud FinOps Practices Fail On LLMs",
+      "author": "Ravi Kanani, LeanOps Technologies",
+      "url": "https://leanopstech.com/blog/finops-for-ai-2026",
+      "date": "May 19, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "OpenAI and Anthropic API calls show up as a single line item per provider. There's no native breakdown by your customer, your feature, or your workflow.",
+      "proves": "Cloud FinOps tooling structurally fails on LLM workloads because cloud tags don't propagate to the API call and provider billing arrives as one line item — attribution must be a schema on the call itself.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "\"the company spent $87,000/month on Anthropic API calls that arrived as a single line item\".",
+        "\"two enterprise customers were responsible for 78% of LLM costs while paying for 12% of revenue\".",
+        "\"Tagging doesn't propagate to OpenAI/Anthropic API calls. The tag lives on the EC2 instance making the API call, not on the API call itself.\""
+      ]
+    },
+    {
+      "title": "Anthropic Shipped An Enterprise Analytics API. We Shipped the Claude Adapter Today.",
+      "author": "Scott Castle, Chief Product Officer at CloudZero",
+      "url": "https://www.cloudzero.com/blog/anthropic-analytics-api-adapter",
+      "date": "May 15, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Consumption dimensions tell you what was used, not who in your business used it. Allocation is the work of mapping that usage back to teams, budgets, and cost centers.",
+      "proves": "Aggregate token counts tell you what was used but not who used it; allocation to teams, budgets, and cost centers is the actual work, and centralized billing traded away the per-team visibility seats used to provide.",
+      "verification": "confirmed",
+      "powers": [
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "\"Aggregate token counts don't tell you which teams are driving spend.\"",
+        "\"Centralized billing simplified procurement and security, but it traded away the per-user and per-team visibility teams used to get from individual seats.\"",
+        "\"AI cost also scales differently than cloud cost. It moves with prompt size, fanout, retries, and agentic loops.\""
+      ]
+    },
+    {
+      "title": "How I use LLMs as a staff engineer in 2026",
+      "author": "Sean Goedecke",
+      "url": "https://www.seangoedecke.com/how-i-use-llms-in-2026",
+      "date": "May 17, 2026",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "For difficult tasks, I'll often reject five or six (or more!) agent attempts before accepting one as good enough to work with, or giving up and making the change by hand.",
+      "proves": "Getting value from agents on hard tasks means aggressively rejecting weak attempts and keeping judgment work human.",
+      "verification": "confirmed",
+      "powers": [
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "able to correctly diagnose 80% of issues on its own",
+        "The current core AI skill is shifting as much work onto AI agents as possible, without going too far.",
+        "I still don't use LLMs to write Slack messages, ADRs, issues and so forth."
+      ]
+    },
+    {
+      "title": "How I use LLMs as a staff engineer",
+      "author": "Sean Goedecke",
+      "url": "https://www.seangoedecke.com/how-i-use-llms",
+      "date": "February 4, 2025",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "LLMs excel at writing code that works that doesn't have to be maintained.",
+      "proves": "Agents are best on throwaway and research code, not the maintained business logic and judgment writing you own long-term.",
+      "verification": "confirmed",
+      "powers": [
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "I would say that my use of LLMs here meant I got this done 2x-4x faster",
+        "It's rare that I let Copilot produce business logic for me",
+        "I **never** allow the LLM to write these for me"
+      ]
+    },
+    {
+      "title": "If you are good at code review, you will be good at using AI agents",
+      "author": "Sean Goedecke",
+      "url": "https://www.seangoedecke.com/ai-agents-and-code-review",
+      "date": "September 20, 2025",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "the biggest mistake engineers make in code review: only thinking about the code that was written, not the code that could have been written.",
+      "proves": "The core reviewer skill for agent output is architectural judgment about unwritten alternatives, not line-level nitpicking.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "about once an hour I notice that the agent is doing something that looks suspicious, and when I dig deeper I'm able to set it on the right track and save hours of wasted effort.",
+        "If you're a nitpicky code reviewer, I think you will struggle to use AI tooling effectively.",
+        "Trying to make a badly-designed solution work costs time, tokens, and codebase complexity."
+      ]
+    },
+    {
+      "title": "Vibe engineering",
+      "author": "Simon Willison",
+      "url": "https://simonwillison.net/2025/Oct/7/vibe-engineering",
+      "date": "7th October 2025",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "If your project has a robust, comprehensive and stable test suite agentic coding tools can _fly_ with it.",
+      "proves": "A strong automated test suite is the single biggest enabler of agent productivity on a codebase.",
+      "verification": "confirmed",
+      "powers": [
+        "what-ai-agents-are-actually-good-for"
+      ],
+      "secondary": [
+        "what should we call the other end of the spectrum, where seasoned professionals accelerate their work with LLMs while staying proudly and confidently accountable for the software they produce?",
+        "Automated testing / Planning in advance / Comprehensive documentation / Good version control habits / Effective automation / Culture of code review / Manual QA / Research skills / Ship to preview environment"
+      ]
+    },
+    {
+      "title": "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity",
+      "author": "Simon Willison",
+      "url": "https://simonwillison.net/2025/Jul/12/ai-open-source-productivity",
+      "date": "12th July 2025",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "The factor that stands out most to me is that these developers were all working in repositories they have a deep understanding of already, presumably on non-trivial issues since any trivial issues are likely to have been resolved in the past.",
+      "proves": "AI's edge is smallest exactly where you own and deeply understand a mature codebase long-term.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "56% had never used Cursor before the study",
+        "Developers accepted less than 44% of AI generations",
+        "A quarter of the participants saw increased performance, 3/4 saw reduced performance"
+      ]
+    },
+    {
+      "title": "Here's how I use LLMs to help me write code",
+      "author": "Simon Willison",
+      "url": "https://simonwillison.net/2025/Mar/11/using-llms-for-code",
+      "date": "11th March 2025",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "it's not about getting work done faster, it's about being able to ship projects that I wouldn't have been able to justify spending time on at all.",
+      "proves": "AI's clearest payoff is enabling marginal projects that were never worth building before, not accelerating core work.",
+      "verification": "confirmed",
+      "powers": [
+        "build-vs-buy-agentic-ai"
+      ],
+      "secondary": [
+        "I'm certain it would have taken me significantly longer without LLM assistance—to the point that I probably wouldn't have bothered to build it at all."
+      ]
+    },
+    {
+      "title": "Agentic manual testing",
+      "author": "Simon Willison",
+      "url": "https://simonwillison.net/guides/agentic-engineering-patterns/agentic-manual-testing",
+      "date": "6th March 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Never assume that code generated by an LLM works until that code has been executed.",
+      "proves": "No agent-written code should be trusted until it has actually been run, because passing tests and plausibility are not proof.",
+      "verification": "confirmed",
+      "powers": [
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "Just because code passes tests doesn't mean it works as intended.",
+        "I've found that getting agents to manually test code is valuable as well, frequently revealing issues that weren't spotted by the automated tests.",
+        "Automated tests are no replacement for manual testing."
+      ]
+    },
+    {
+      "title": "Embracing the parallel coding agent lifestyle",
+      "author": "Simon Willison",
+      "url": "https://simonw.substack.com/p/embracing-the-parallel-coding-agent",
+      "date": "October 6, 2025",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "I can only focus on reviewing and landing one significant change at a time, but I'm finding an increasing number of tasks that can still be fired off in parallel without adding too much cognitive overhead to my primary work.",
+      "proves": "Human review-and-land throughput — one significant change at a time — is the real ceiling on how far parallel agents scale.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "Code that started from your own specification is a lot less effort to review."
+      ]
+    },
+    {
+      "title": "Context engineering",
+      "author": "Simon Willison's Weblog",
+      "url": "https://simonwillison.net/2025/Jun/27/context-engineering",
+      "date": "27th June 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "context engineering is the delicate art and science of filling the context window with just the right information for the next step...task descriptions and explanations, few shot examples, RAG, related (possibly multimodal) data, tools, state and history",
+      "proves": "Context engineering, not prompt engineering, is the real discipline: filling the window with the right information environment for the next step.",
+      "verification": "confirmed",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "the art of providing all the context for the task to be plausibly solvable by the LLM"
+      ]
+    },
+    {
+      "title": "Why Agentic AI Forces a Rethink of Least Privilege",
+      "author": "Strata Identity / Eric Olden",
+      "url": "https://www.strata.io/blog/why-agentic-ai-forces-a-rethink-of-least-privilege",
+      "date": "2026-05-11 (updated)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Identity logic doesn't belong in prompts or agent code. It belongs in a control plane.",
+      "proves": "Access enforcement belongs in a runtime control plane, not in prompts or agent code, because a bigger prompt cannot enforce permissions.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "Designing least privilege up front for an agent is an exercise in guesswork",
+        "Overpermissioning isn't a failure of discipline. It's a predictable outcome",
+        "If access is static, privilege is wrong"
+      ]
+    },
+    {
+      "title": "Gone in 9 seconds: AI agent deletes company database",
+      "author": "Tom Williams / Information Age (ACS)",
+      "url": "https://ia.acs.org.au/article/2026/gone-in-9-seconds-ai-agent-deletes-company-database.html",
+      "date": "2026-05-05",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "No confirmation step. No 'type DELETE to confirm.' No 'this volume contains production data, are you sure?' No environment scoping. Nothing.",
+      "proves": "The incident was a permission-architecture gap: no confirmation step and no environment scoping stood between the agent and irreversible destruction.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-permission-tiering"
+      ],
+      "secondary": [
+        "I violated every principle I was given: I guessed instead of verifying, I ran a destructive action without being asked, I didn't understand what I was doing before doing it.",
+        "86% of IT leaders expect agents to outpace security guardrails within one year"
+      ]
+    },
+    {
+      "title": "Agentic RAG Failure Modes: Retrieval Thrash, Tool Storms, and Context Bloat (and How to Spot Them Early)",
+      "author": "Towards Data Science (Mostafa Ibrahim)",
+      "url": "https://towardsdatascience.com/agentic-rag-failure-modes-retrieval-thrash-tool-storms-and-context-bloat-and-how-to-spot-them-early",
+      "date": "March 20, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "The agent optimises locally. At each step, it asks, 'Do I have enough?' and when the answer is uncertain, it defaults to 'get more'. Without hard stopping rules, the default spirals.",
+      "proves": "Without a hard stop rule, an agent's local 'get more' default turns retrieval into an unbounded budget fire; capping cycles and abstaining is the control.",
+      "verification": "confirmed",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "Three cap retrieval cycles. After three failed passes, return a best-effort answer with a confidence disclaimer.",
+        "agents making 200 LLM calls in 10 minutes, burning $50–$200 before anyone noticed",
+        "costs spike 1,700% during a provider outage as retry logic spiralled out of control"
+      ]
+    },
+    {
+      "title": "JIT Context: Why the Best Agents Load Late and Load Little",
+      "author": "TrueFoundry",
+      "url": "https://www.truefoundry.com/pt/blog/jit-context-just-in-time-context-agents",
+      "date": "June 18, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "The honest column in the ledger: JIT buys these at the price of retrieval latency on the steps that load (usually trivial next to a model call, but nonzero), a new failure mode (an unresolvable reference must surface as an honest error, not a hallucinated payload), and a dependency on description quality — the agent loads from the catalog's one-liners, so a bad stub hides a good payload.",
+      "proves": "JIT context introduces two specific liabilities leaders must design for: unresolvable references must fail loud as honest errors, and retrieval quality is capped by the quality of catalog descriptions.",
+      "verification": "confirmed",
+      "powers": [
+        "jit-context-retrieval-failure"
+      ],
+      "secondary": [
+        "in a loop, the window is re-sent every step, so a preloaded handbook isn't one payment but thirty",
+        "a preloaded copy is a snapshot that ages as the run proceeds, while a reference resolves to the current state of the file, the ticket, the database at the moment of use",
+        "long-context research and practitioner experience agree that models degrade as windows fill with low-relevance text"
+      ]
+    },
+    {
+      "title": "Don't Build Multi-Agents",
+      "author": "Walden Yan (Cognition)",
+      "url": "https://cognition.com/blog/dont-build-multi-agents",
+      "date": "06.12.25",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Actions carry implicit decisions, and conflicting decisions carry bad results.",
+      "proves": "When a parallel split backfires it is conflicting implicit decisions between agents, not weak model quality, that causes it.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "Share context, and share full agent traces, not just individual messages",
+        "At the core of reliability is Context Engineering",
+        "The simplest way to follow the principles is to just use a single-threaded linear agent"
+      ]
+    },
+    {
+      "title": "Multi-Agents: What's Actually Working",
+      "author": "Walden Yan (Cognition)",
+      "url": "https://cognition.com/blog/multi-agents-working",
+      "date": "04.22.26",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "multi-agent systems work best today when writes stay single-threaded and the additional agents contribute intelligence rather than actions",
+      "proves": "Only split once writes can stay single-threaded and added agents are read-only intelligence — parallel-writer swarms still fail.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "most multi-agent setups in the world are limited to 'readonly' subagents",
+        "The practical shape is map-reduce-and-manage: a manager splits work, children execute, the manager synthesizes",
+        "an average of 2 bugs per PR, of which roughly 58% are severe"
+      ]
+    },
+    {
+      "title": "The Pink Elephant Problem: Why 'Don't Do That' Fails with LLMs",
+      "author": "Zhu Liang",
+      "url": "https://eval.16x.engineer/blog/the-pink-elephant-negative-instructions-llms-effectiveness-analysis",
+      "date": "August 5, 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "negative instructions can be unreliable as user prompts",
+      "proves": "Negative 'don't do that' rules are unreliable in a user message like CLAUDE.md, so positive, runnable framing is preferable — reserving DO-NOT for hard safety boundaries.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-md-instruction-ceiling"
+      ],
+      "secondary": [
+        "Reddit user reported Claude Code created duplicate files despite explicit 'NEVER create duplicate files' rule",
+        "Gemini models have 'hit-or-miss' performance with negative commands",
+        "They are effective at preventing unethical or harmful behavior, especially when used in system prompts"
+      ]
+    }
+  ]
+}
