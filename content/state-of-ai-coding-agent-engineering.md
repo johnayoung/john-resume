@@ -5,7 +5,7 @@ type: report
 layout: single
 kicker: "Field report"
 meta: "The synthesis behind 11 essays and 101 primary sources · read time ~25 min"
-draft: true
+draft: false
 keywords:
   - "AI coding agents"
   - "agentic engineering"

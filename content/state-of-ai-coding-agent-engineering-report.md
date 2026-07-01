@@ -7,7 +7,7 @@ url: "/state-of-ai-coding-agent-engineering/read/"
 kicker: "Field report · the full synthesis"
 meta: "Grounded in 101 verified primary sources · read time ~25 min · [the evidence index is public](/research/)"
 private: true
-draft: true
+draft: false
 keywords:
   - "AI coding agents"
   - "agentic engineering"
