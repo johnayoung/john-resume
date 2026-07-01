@@ -1,7 +1,7 @@
 ---
 title: "You Can't Cap What You Can't Attribute: Per-Task Cost"
 date: 2026-06-29
-draft: true
+draft: false
 author: "John Young"
 description: "A cost dashboard is a lagging report, not a guardrail. Per-task cost attribution is the schema that makes an agent budget ceiling enforceable before the next call."
 keywords: ["AI agent cost attribution", "agent budget guardrails", "per-session ceiling", "LLM FinOps", "prompt.id"]

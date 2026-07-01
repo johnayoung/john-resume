@@ -1,7 +1,7 @@
 ---
 title: "When One Agent Stops Being Enough: The Isolation Gate"
 date: 2026-06-15
-draft: true
+draft: false
 author: "John Young"
 description: "The trigger for going multi-agent isn't parallel speed — it's context isolation, and the split costs about 15x the tokens. Two gates decide whether it's worth it."
 keywords: ["when to use multi-agent", "context isolation", "multi-agent AI", "context rot", "single-threaded writes"]

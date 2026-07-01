@@ -1,7 +1,7 @@
 ---
 title: "Tier Your AI Agent's Production Authority by Task Risk"
 date: 2026-05-25
-draft: true
+draft: false
 author: "John Young"
 description: "An AI agent deleted a production database in nine seconds. The fix was never a better prompt — it was a permission tier the token should never have crossed."
 keywords: ["AI agent permissions production", "least privilege", "excessive agency", "agent authorization", "progressive autonomy"]

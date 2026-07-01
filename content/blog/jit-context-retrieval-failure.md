@@ -1,7 +1,7 @@
 ---
 title: "Where Just-in-Time Context Retrieval Silently Breaks"
 date: 2026-06-22
-draft: true
+draft: false
 author: "John Young"
 description: "JIT context retrieval isn't free — it's slower and only as good as your tooling. A ledger of where runtime retrieval breaks and how to design the fallback."
 keywords: ["just-in-time context retrieval", "context engineering", "agentic RAG failure modes", "tool description design", "context rot"]

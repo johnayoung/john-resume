@@ -1,7 +1,7 @@
 ---
 title: "How to Verify AI Coding Agent Output: A Reviewer's Framework"
 date: 2026-06-01
-draft: true
+draft: false
 author: "John Young"
 description: "Generation got cheap and verification didn't. Six per-task moves for reviewing an agent's diff — from distrusting its self-report to calibrating by blast radius."
 keywords: ["verify AI coding agent output", "AI code review", "agent PR review", "code review AI agents", "blast radius"]
