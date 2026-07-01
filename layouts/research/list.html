@@ -3,18 +3,18 @@
   <h1 class="post-list__title">{{ .Title }}_</h1>
   {{ with .Content }}<div class="post-list__intro">{{ . }}</div>{{ end }}
 
-  {{ $data := site.Data.research }}
-  {{ $sources := $data.sources }}
-  <p class="research__meta">{{ len $sources }} verified sources · {{ len $data.pillars }} themes · updated {{ $data.updated }}</p>
+  {{ with site.Data.research }}
+  {{ $sources := .sources }}
+  <p class="research__meta">{{ len $sources }} verified sources · {{ len .pillars }} themes · updated {{ .updated }} · <a href="/research.json">download JSON</a></p>
 
   <nav class="research__toc">
-    {{ range $data.pillars }}
+    {{ range .pillars }}
     {{ $n := len (where $sources "pillars" "intersect" (slice .id)) }}
     {{ if $n }}<a href="#pillar-{{ .id }}">{{ .name }} <span>({{ $n }})</span></a>{{ end }}
     {{ end }}
   </nav>
 
-  {{ range $data.pillars }}
+  {{ range .pillars }}
   {{ $inPillar := where $sources "pillars" "intersect" (slice .id) }}
   {{ if $inPillar }}
   <section class="research__pillar" id="pillar-{{ .id }}">
@@ -39,6 +39,7 @@
     </article>
     {{ end }}
   </section>
+  {{ end }}
   {{ end }}
   {{ end }}
 </section>

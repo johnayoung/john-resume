@@ -100,14 +100,30 @@
     {{- end }}
   <script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
   {{- else if eq .Kind "section" }}
-    {{- $ld := dict
-      "@context" "https://schema.org"
-      "@type" "Blog"
-      "name" (printf "%s — %s" $siteTitle $title)
-      "description" $desc
-      "url" .Permalink
-      "author" (dict "@type" "Person" "name" site.Params.author "url" site.BaseURL)
-    -}}
+    {{- $ld := dict }}
+    {{- if eq .Section "research" }}
+      {{- $ld = dict
+        "@context" "https://schema.org"
+        "@type" "Dataset"
+        "name" $pageTitle
+        "description" $desc
+        "url" .Permalink
+        "creator" (dict "@type" "Person" "name" site.Params.author "url" site.BaseURL)
+        "isAccessibleForFree" true
+        "keywords" (slice "AI coding agents" "agentic AI" "software engineering" "code review" "context engineering" "LLM evaluation")
+        "distribution" (slice (dict "@type" "DataDownload" "encodingFormat" "application/json" "contentUrl" (absURL "research.json")))
+      -}}
+      {{- with site.Data.research }}{{- with .updated }}{{- $ld = merge $ld (dict "dateModified" .) -}}{{- end }}{{- end }}
+    {{- else }}
+      {{- $ld = dict
+        "@context" "https://schema.org"
+        "@type" "Blog"
+        "name" (printf "%s — %s" $siteTitle $title)
+        "description" $desc
+        "url" .Permalink
+        "author" (dict "@type" "Person" "name" site.Params.author "url" site.BaseURL)
+      -}}
+    {{- end }}
   <script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
   {{- end }}
 </head>
