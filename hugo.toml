@@ -30,6 +30,11 @@ ignoreFiles = ['/_research/', '/_outlines/', '/_polish/', '/_atomizations/', '/_
   description = "Notes from John Young — engineering, AI systems, and DeFi infrastructure."
   author = "John Young"
   ogImage = "/img/headshot_new.png"
+  # Buttondown newsletter handle (Settings → Embedding → the username in the Form URL).
+  # The subscribe form + footer capture render only when this is set.
+  buttondownUser = "johnantoyoung"
+  # Booking link for the /work-with-me CTA. Falls back to a mailto when empty.
+  calendlyUrl = "https://calendar.app.google/96uXGZz2WFnvgUrv7"
 
 [sitemap]
   changefreq = "weekly"

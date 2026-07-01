@@ -135,6 +135,8 @@
         <a href="/">Home</a>
         <a href="/blog/">Blog</a>
         <a href="/research/">Research</a>
+        <a href="/subscribe/">Subscribe</a>
+        <a href="/work-with-me/">Work With Me</a>
       </nav>
     </div>
   </header>
@@ -142,6 +144,14 @@
   <main class="container">
     {{- block "main" . }}{{- end }}
   </main>
+
+  {{- if ne .RelPermalink "/subscribe/" }}
+  {{- with partial "subscribe-form.html" "compact" }}
+  <aside class="footer-subscribe">
+    <div class="container">{{ . }}</div>
+  </aside>
+  {{- end }}
+  {{- end }}
 
   <footer class="site-footer">
     <div class="container">

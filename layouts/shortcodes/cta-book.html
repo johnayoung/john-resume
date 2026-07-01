@@ -1,0 +1,13 @@
+{{- /*
+  Booking CTA. Uses site.Params.calendlyUrl when set (opens in a new tab);
+  otherwise falls back to a real mailto so the page is never a dead end.
+*/ -}}
+{{- $cal := site.Params.calendlyUrl -}}
+{{- $email := site.Params.contactEmail | default "john.anto.young@gmail.com" -}}
+<p class="cta-book">
+{{- if $cal -}}
+  <a class="cta-book__btn" href="{{ $cal }}" target="_blank" rel="noopener">Book a call</a>
+{{- else -}}
+  <a class="cta-book__btn" href="mailto:{{ $email }}?subject=Working%20together">Email me</a>
+{{- end -}}
+</p>

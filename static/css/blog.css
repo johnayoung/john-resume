@@ -338,12 +338,131 @@ a:hover { text-decoration: underline; }
 .rsrc__cited { margin: 0; font-family: 'Inconsolata', monospace; font-size: 12px; color: var(--text-muted); }
 .rsrc__cited a { color: var(--text-soft); }
 
+/* Standalone pages (/subscribe, /work-with-me) */
+.page__header {
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.page__title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 30px;
+  letter-spacing: 1px;
+  margin: 0;
+  line-height: 1.25;
+}
+.page__lede { color: var(--text-muted); font-size: 15px; margin: 10px 0 0; }
+.page__content { font-size: 17px; }
+.page__content h2 {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 22px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  margin: 2em 0 0.6em;
+}
+.page__content h3 {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  margin: 1.6em 0 0.5em;
+}
+.page__content p { margin: 1em 0; color: var(--text-soft); }
+.page__content ul, .page__content ol { padding-left: 22px; color: var(--text-soft); }
+.page__content li { margin-bottom: 6px; }
+.page__content a { color: var(--accent); }
+
+/* Subscribe form */
+.subscribe { margin: 1.8em 0; }
+.subscribe__label {
+  display: block;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+.subscribe__row { display: flex; flex-wrap: wrap; gap: 10px; }
+.subscribe__input {
+  flex: 1 1 260px;
+  min-width: 0;
+  font-size: 16px;
+  font-family: inherit;
+  padding: 11px 14px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.subscribe__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(224, 58, 62, 0.15);
+}
+.subscribe__btn {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 11px 22px;
+  cursor: pointer;
+}
+.subscribe__btn:hover { background: #c22f33; border-color: #c22f33; }
+.subscribe__note {
+  font-family: 'Inconsolata', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 10px 0 0;
+}
+
+/* Booking CTA (/work-with-me) */
+.cta-book { margin: 2em 0 0.5em; }
+/* Wrapper-scoped so it outranks `.page__content a` (which also sets color). */
+.cta-book .cta-book__btn {
+  display: inline-block;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 13px 28px;
+}
+.cta-book .cta-book__btn:hover { background: #c22f33; border-color: #c22f33; color: #fff; text-decoration: none; }
+
+/* Global footer capture */
+.footer-subscribe {
+  margin-top: 80px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+.footer-subscribe .container { padding-top: 32px; padding-bottom: 32px; }
+.footer-subscribe + .site-footer { margin-top: 0; }
+.footer-subscribe .subscribe { margin: 0; }
+.footer-subscribe .subscribe__label {
+  font-family: inherit;
+  font-size: 15px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-soft);
+}
+
 @media (max-width: 540px) {
   .site-header__brand { font-size: 16px; }
   .site-header__nav a { margin-left: 14px; font-size: 12px; }
   .post__title { font-size: 24px; }
   .post-list__title { font-size: 22px; }
   .post__content { font-size: 16px; }
+  .page__title { font-size: 24px; }
+  .page__content { font-size: 16px; }
   .research__pillar-title { font-size: 16px; }
   .rsrc__stat { font-size: 16px; }
+  .subscribe__btn { flex: 1 1 100%; }
 }
