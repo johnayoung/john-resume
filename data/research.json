@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01",
+  "updated": "2026-07-02",
   "pillars": [
     {
       "id": 1,
@@ -2143,6 +2143,202 @@
         "Reddit user reported Claude Code created duplicate files despite explicit 'NEVER create duplicate files' rule",
         "Gemini models have 'hit-or-miss' performance with negative commands",
         "They are effective at preventing unethical or harmful behavior, especially when used in system prompts"
+      ]
+    },
+    {
+      "title": "Time Horizon 1.1",
+      "author": "METR",
+      "url": "https://metr.org/blog/2026-1-29-time-horizon-1-1/",
+      "date": "January 29, 2026",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "The post-2023 doubling-time is 131 days under TH1.1, compared to 165 days under TH1, meaning progress is estimated to be 20% more rapid under TH1.1.",
+      "proves": "The capability curve is accelerating: the ~7-month long-run doubling (196 days, 2019-2025) holds while post-2023 doubling falls to ~4.3 months and since-2024 to ~3 months under METR's updated methodology.",
+      "verification": "confirmed",
+      "secondary": [
+        "We also report below the doubling time since 2024: this was at 109 days under TH1, and falls to 89 days under TH1.1.",
+        "This hybrid trend shows exactly the same doubling time as the TH1 trend, of 196 days (7 months)"
+      ]
+    },
+    {
+      "title": "We are Changing our Developer Productivity Experiment Design",
+      "author": "METR",
+      "url": "https://metr.org/blog/2026-02-24-uplift-update/",
+      "date": "February 24, 2026",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "we believe that the data from our new experiment gives us an unreliable signal of the current productivity effect of AI tools",
+      "proves": "METR itself now treats the 19% slowdown as a point-in-time early-2025 finding: the newly-recruited-developer estimate is -4% (CI -15% to +9%) and selection effects bias the returning-developer data.",
+      "verification": "confirmed",
+      "secondary": [
+        "Among newly-recruited developers the estimated speedup is -4%, with a confidence interval between -15% and +9%.",
+        "Our early 2025 study found the use of AI causes tasks to take 19% longer, with a confidence interval between +2% and +39%"
+      ]
+    },
+    {
+      "title": "This is the most misunderstood graph in AI",
+      "author": "Grace Huckins (MIT Technology Review)",
+      "url": "https://www.technologyreview.com/2026/02/05/1132254/this-is-the-most-misunderstood-graph-in-ai/",
+      "date": "February 5, 2026",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "One common misapprehension is that the numbers on the plot's y-axis—around five hours for Claude Opus 4.5, for example—represent the length of time that the models can operate independently. They do not. They represent how long it takes humans to complete tasks that a model can successfully perform.",
+      "proves": "The METR time-horizon curve measures human task-time at ~50% model success, not autonomous runtime — the phrasing discipline required to cite it honestly.",
+      "verification": "confirmed"
+    },
+    {
+      "title": "On METR's AI Coding RCT",
+      "author": "Zvi Mowshowitz",
+      "url": "https://thezvi.substack.com/p/on-metrs-ai-coding-rct",
+      "date": "July 18, 2025",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "Deeply understood open source repos are close to a worst-case scenario for AI tools, because they require bespoke outputs in various ways and the coder has lots of detailed local knowledge of the codebase that the AI lacks.",
+      "proves": "The strongest fair critique of the 19% RCT: the setting was near-worst-case for AI, which bounds how far the result generalizes without overturning its rigor.",
+      "verification": "confirmed"
+    },
+    {
+      "title": "Announcing the 2025 DORA Report (State of AI-assisted Software Development)",
+      "author": "DORA (Google Cloud)",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report",
+      "date": "September 23, 2025",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Unlike last year, we observe a positive relationship between AI adoption on both software delivery throughput and product performance. However, AI adoption does continue to have a negative relationship with software delivery stability.",
+      "proves": "DORA 2025 (~5,000 respondents) flips the 2024 throughput finding positive while instability persists — AI amplifies the delivery system around it rather than fixing it.",
+      "verification": "confirmed",
+      "secondary": [
+        "AI doesn't fix a team; it amplifies what's already there."
+      ]
+    },
+    {
+      "title": "The ROI of AI-assisted Software Development",
+      "author": "DORA (Google Cloud)",
+      "url": "https://dora.dev/ai/roi/report/",
+      "date": "v. 2026.1 (landing page updated April 22, 2026)",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "The verification tax: Developers invest time reviewing generated code due to concerns about the trustworthiness of output and hallucinations. Furthermore, the tools increase the sheer volume of code produced, which expands the overall review burden required to meet internal security and architectural standards.",
+      "proves": "DORA formally names the verification tax (and an instability tax) as J-Curve costs of AI adoption — time saved in generation is re-spent on auditing and on dealing with increased instability.",
+      "verification": "confirmed",
+      "secondary": [
+        "the time saved in creation is frequently re-allocated to auditing and verification (DORA, Balancing AI tensions, March 10, 2026)"
+      ]
+    },
+    {
+      "title": "2026 State of AI Coding Report",
+      "author": "New Relic (Hanover Research survey, n=200)",
+      "url": "https://newrelic.com/blog/ai/state-of-ai-coding-2026",
+      "date": "June 10, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "94% of technology leaders rate AI-generated code as higher quality than human-authored code at the moment it is reviewed",
+      "proves": "Vendor-commissioned perception survey: AI code looks best exactly where it is checked — the same leaders report 1.7x more critical runtime issues and 78% see production-incident spikes tied to AI code.",
+      "verification": "confirmed",
+      "secondary": [
+        "AI-generated code introduces roughly 1.7 times more critical runtime issues",
+        "78% of organizations report a measurable spike in production incidents directly tied to AI code"
+      ]
+    },
+    {
+      "title": "Early-Stage Prediction of Review Effort in AI-Generated Pull Requests",
+      "author": "Dao Sy Duy Minh et al. (arXiv 2601.00753)",
+      "url": "https://arxiv.org/abs/2601.00753",
+      "date": "Submitted January 2, 2026 (v2 January 27, 2026)",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "Analyzing 33,707 agent-authored PRs, we uncover a stark two-regime reality: agents excel at narrow automation (28.3% of PRs merge instantly), but frequently fail at iterative refinement, leading to \"ghosting\" (abandonment) when faced with subjective feedback",
+      "proves": "Agent PRs split into an instant-merge regime and an expensive tail that imposes a hidden attention tax on maintainers — the review burden is concentrated, not uniform.",
+      "verification": "confirmed",
+      "secondary": [
+        "human maintainers must now manage complex interaction loops rather than just reviewing code... This creates a hidden \"attention tax\" on maintainers"
+      ]
+    },
+    {
+      "title": "SWE-PRBench: Benchmarking AI Code Review Quality Against Pull Request Feedback",
+      "author": "Deepak Kumar (arXiv 2603.26130)",
+      "url": "https://arxiv.org/abs/2603.26130",
+      "date": "Submitted March 27, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "8 frontier models detect only 15-31% of human-flagged issues on the diff-only configuration, demonstrating that AI code review remains far below human expert performance despite strong results on code generation benchmarks.",
+      "proves": "\"Have the agents review the agents\" is not yet an out — frontier models catch a small fraction of what human reviewers flag, and more context makes them worse.",
+      "verification": "confirmed"
+    },
+    {
+      "title": "2025 Developer Survey — AI (Sentiment and usage)",
+      "author": "Stack Overflow",
+      "url": "https://survey.stackoverflow.co/2025/ai",
+      "date": "July 29, 2025",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "More developers actively distrust the accuracy of AI tools (46%) than trust it (33%)",
+      "proves": "Adoption climbs (84% using or planning to use) while trust in accuracy falls — the field has already priced in that AI output requires verification.",
+      "verification": "confirmed"
+    },
+    {
+      "title": "Agentic Engineering Patterns",
+      "author": "Simon Willison",
+      "url": "https://simonw.substack.com/p/agentic-engineering-patterns",
+      "date": "February 27, 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "I'm using Agentic Engineering to refer to building software using coding agents - tools like Claude Code and OpenAI Codex, where the defining feature is that they can both generate and execute code - allowing them to test that code and iterate on it independently of turn-by-turn guidance from their human supervisor.",
+      "proves": "The defining feature of a coding agent is the generate-and-execute loop — verification via execution is the discipline, named as such by its leading practitioner.",
+      "verification": "confirmed"
+    },
+    {
+      "title": "Loop Engineering",
+      "author": "Addy Osmani",
+      "url": "https://addyo.substack.com/p/loop-engineering",
+      "date": "June 8, 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "The most useful structural thing in a loop, by far, is splitting the one who writes from the one who checks.",
+      "proves": "Even with a verifier sub-agent split from the maker, verification is not fully delegable — \"done\" remains a claim, not a proof.",
+      "verification": "confirmed",
+      "secondary": [
+        "Even then 'done' is a claim and not a proof."
+      ]
+    },
+    {
+      "title": "Programming (with AI agents) as theory building",
+      "author": "Sean Goedecke",
+      "url": "https://www.seangoedecke.com/programming-with-ai-agents-as-theory-building/",
+      "date": "April 3, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "According to Naur - and I agree with him - the core output of software engineers is not the program itself, but the theory of how the program works.",
+      "proves": "The ownership tail is a knowledge problem: agents can build theories of a codebase in-session but cannot retain them, so the human's retained theory is what you are paying to keep.",
+      "verification": "confirmed",
+      "secondary": [
+        "one big problem with AI agents is that they can't retain theories of the codebase. They have to build their theory from scratch every time"
       ]
     }
   ]
