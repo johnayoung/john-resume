@@ -128,20 +128,21 @@
   {{- end }}
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header">
     <div class="container">
       <a class="site-header__brand" href="/">John Young<span class="site-header__cursor">_</span></a>
-      <nav class="site-header__nav">
-        <a href="/">Home</a>
-        <a href="/blog/">Blog</a>
-        <a href="/research/">Research</a>
-        <a href="/subscribe/">Subscribe</a>
-        <a href="/work-with-me/">Work With Me</a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="/"{{ if .IsHome }} aria-current="page"{{ end }}>Home</a>
+        <a href="/blog/"{{ if eq .Section "blog" }} aria-current="page"{{ end }}>Blog</a>
+        <a href="/research/"{{ if eq .Section "research" }} aria-current="page"{{ end }}>Research</a>
+        <a href="/subscribe/"{{ if eq .RelPermalink "/subscribe/" }} aria-current="page"{{ end }}>Subscribe</a>
+        <a href="/work-with-me/"{{ if eq .RelPermalink "/work-with-me/" }} aria-current="page"{{ end }}>Work With Me</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container" id="main-content">
     {{- block "main" . }}{{- end }}
   </main>
 

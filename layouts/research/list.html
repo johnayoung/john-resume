@@ -5,42 +5,126 @@
 
   {{ with site.Data.research }}
   {{ $sources := .sources }}
-  <p class="research__meta">{{ len $sources }} verified sources · {{ len .pillars }} themes · updated {{ .updated }} · <a href="/research.json">download JSON</a></p>
+  {{ $pillars := .pillars }}
+  {{ $nData := len (where $sources "class" "research-data") }}
+  {{ $nPrac := sub (len $sources) $nData }}
+  {{ $chipLabels := dict "1" "Task Design" "2" "Context" "3" "Evals" "4" "Production" "5" "Team" "6" "Architecture" }}
 
-  <nav class="research__toc">
-    {{ range .pillars }}
-    {{ $n := len (where $sources "pillars" "intersect" (slice .id)) }}
-    {{ if $n }}<a href="#pillar-{{ .id }}">{{ .name }} <span>({{ $n }})</span></a>{{ end }}
-    {{ end }}
-  </nav>
+  <div class="stats" role="group" aria-label="Dataset summary">
+    <div class="stat">
+      <div class="stat__value">{{ len $sources }}</div>
+      <div class="stat__label">Verified sources</div>
+    </div>
+    <div class="stat">
+      <div class="stat__value">{{ len $pillars }}</div>
+      <div class="stat__label">Themes</div>
+    </div>
+    <div class="stat">
+      <div class="stat__value stat__value--pair">{{ $nData }}<span> / {{ $nPrac }}</span></div>
+      <div class="stat__label">Data / practitioner</div>
+    </div>
+    <div class="stat">
+      <div class="stat__value stat__value--date">{{ .updated }}</div>
+      <div class="stat__label">Last verified</div>
+    </div>
+  </div>
+  <p class="stats-meta">Every entry checked against its live source · dataset: <a href="/research.json">research.json</a></p>
 
-  {{ range .pillars }}
-  {{ $inPillar := where $sources "pillars" "intersect" (slice .id) }}
-  {{ if $inPillar }}
-  <section class="research__pillar" id="pillar-{{ .id }}">
-    <h2 class="research__pillar-title">{{ .id }} · {{ .name }}</h2>
-    {{ with .blurb }}<p class="research__pillar-blurb">{{ . }}</p>{{ end }}
-    {{ range $inPillar }}
-    <article class="rsrc">
-      <blockquote class="rsrc__stat">{{ .stat }}</blockquote>
-      <p class="rsrc__proves">{{ .proves }}</p>
-      {{ with .secondary }}
-      <ul class="rsrc__more">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+  <aside class="report-cta">
+    <div>
+      <p class="report-cta__kicker">The synthesis</p>
+      <p class="report-cta__lede"><strong>The State of AI Coding Agent Engineering</strong> — the argument these {{ len $sources }} sources add up to, across all six themes. Free by email.</p>
+    </div>
+    <a class="report-cta__btn" href="/state-of-ai-coding-agent-engineering/">Read the report</a>
+  </aside>
+
+  <div id="toolbar-sentinel" aria-hidden="true"></div>
+  <div class="toolbar" id="toolbar">
+    <div class="toolbar__row" role="search">
+      <div class="toolbar__search">
+        <span class="toolbar__prompt" aria-hidden="true">&gt;</span>
+        <label class="visually-hidden" for="source-search">Filter sources by keyword, author, or claim</label>
+        <input class="toolbar__input" id="source-search" type="search" placeholder="filter by keyword, author, claim…" title="Press / to focus" autocomplete="off" />
+        <button class="toolbar__clear" id="search-clear" type="button" aria-label="Clear search">✕</button>
+      </div>
+      <fieldset class="seg">
+        <legend class="visually-hidden">Filter by source class</legend>
+        <span class="seg__opt">
+          <input type="radio" name="class-filter" value="all" id="cf-all" checked />
+          <label for="cf-all">All</label>
+        </span>
+        <span class="seg__opt">
+          <input type="radio" name="class-filter" value="data" id="cf-data" />
+          <label for="cf-data">Data</label>
+        </span>
+        <span class="seg__opt">
+          <input type="radio" name="class-filter" value="practitioner" id="cf-prac" />
+          <label for="cf-prac">Practitioner</label>
+        </span>
+      </fieldset>
+      <span class="toolbar__count" id="result-count" aria-live="polite">{{ len $sources }} / {{ len $sources }} sources</span>
+    </div>
+    <nav class="toolbar__themes" aria-label="Themes">
+      {{ range $pillars }}
+      {{ $n := len (where $sources "pillars" "intersect" (slice .id)) }}
+      {{ if $n }}<a class="theme-chip" href="#pillar-{{ .id }}" data-pillar="{{ .id }}" title="{{ .name }}">{{ index $chipLabels (printf "%d" (int .id)) | default .name }} <span>{{ $n }}</span></a>{{ end }}
       {{ end }}
-      <p class="rsrc__attr">
-        <a class="rsrc__src" href="{{ .url }}" target="_blank" rel="noopener">{{ .author }}: {{ .title }}</a>
-        {{ with .date }}{{ if ne . "undated" }}<span class="rsrc__date">{{ . }}</span>{{ end }}{{ end }}
-        <span class="rsrc__tag rsrc__tag--{{ .class }}">{{ if eq .class "research-data" }}data{{ else }}practitioner{{ end }}</span>
-        {{ if ne .verification "confirmed" }}<span class="rsrc__tag rsrc__tag--warn">{{ .verification }}</span>{{ end }}
-      </p>
-      {{ with .powers }}
-      <p class="rsrc__cited">Cited in {{ range $i, $slug := . }}{{ if $i }}, {{ end }}{{ $p := site.GetPage (printf "/blog/%s" $slug) }}{{ if $p }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ else }}{{ $slug }}{{ end }}{{ end }}</p>
+    </nav>
+  </div>
+
+  <div id="sources">
+    {{ range $p := $pillars }}
+    {{ $inPillar := where $sources "pillars" "intersect" (slice $p.id) }}
+    {{ if $inPillar }}
+    <section class="pillar" id="pillar-{{ $p.id }}" data-pillar="{{ $p.id }}" aria-labelledby="pillar-title-{{ $p.id }}">
+      <div class="pillar__head">
+        <span class="pillar__num" aria-hidden="true">{{ printf "%02d" (int $p.id) }}</span>
+        <h2 class="pillar__title" id="pillar-title-{{ $p.id }}">{{ $p.name }}</h2>
+        <span class="pillar__count">{{ len $inPillar }} sources</span>
+      </div>
+      {{ with $p.blurb }}<p class="pillar__blurb">{{ . }}</p>{{ end }}
+      {{ range $inPillar }}
+      {{ $isData := eq .class "research-data" }}
+      {{ $searchable := printf "%s %s %s %s %s %s" .author .title .stat .proves (delimit (.secondary | default (slice)) " ") $p.name | lower }}
+      <article class="rsrc{{ if $isData }} rsrc--data{{ end }}"
+               id="src-{{ printf "%d-%s" (int $p.id) (.title | anchorize) }}"
+               data-class="{{ if $isData }}data{{ else }}practitioner{{ end }}"
+               data-pillar="{{ $p.id }}"
+               data-search="{{ $searchable }}">
+        <p class="rsrc__head">
+          <span class="rsrc__author">{{ .author }}</span>
+          {{ with .date }}{{ if ne . "undated" }}<span class="rsrc__date">{{ . }}</span>{{ end }}{{ end }}
+          <span class="rsrc__tag{{ if $isData }} rsrc__tag--data{{ end }}">{{ if $isData }}data{{ else }}practitioner{{ end }}</span>
+          {{ if ne .verification "confirmed" }}<span class="rsrc__tag rsrc__tag--warn" title="Source page changed since capture; quote could not be fully re-verified">{{ .verification }}</span>{{ end }}
+          <button class="rsrc__anchor" type="button" aria-label="Copy link to this source">#</button>
+        </p>
+        <blockquote class="rsrc__stat">{{ .stat }}</blockquote>
+        <p class="rsrc__proves">{{ .proves }}</p>
+        {{ with .secondary }}
+        <details class="rsrc__more">
+          <summary>{{ len . }} more excerpt{{ if gt (len .) 1 }}s{{ end }}</summary>
+          <ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+        </details>
+        {{ end }}
+        <p class="rsrc__foot">
+          <a class="rsrc__src" href="{{ .url }}" target="_blank" rel="noopener">{{ .title }} ↗</a>{{ with .powers }}<span class="rsrc__foot-sep">·</span><span class="rsrc__cited">Cited in {{ range $i, $slug := . }}{{ if $i }}, {{ end }}{{ $pg := site.GetPage (printf "/blog/%s" $slug) }}{{ if $pg }}<a href="{{ $pg.RelPermalink }}">{{ $pg.Title }}</a>{{ else }}{{ $slug }}{{ end }}{{ end }}</span>{{ end }}
+        </p>
+      </article>
       {{ end }}
-    </article>
+    </section>
     {{ end }}
-  </section>
-  {{ end }}
-  {{ end }}
+    {{ end }}
+  </div>
+
+  <div class="empty" id="empty-state">
+    <p class="empty__msg">no sources match your filters</p>
+    <button class="empty__reset" id="empty-reset" type="button">Clear filters</button>
+  </div>
+
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">↑ Top</button>
+
+  <noscript><style>.toolbar__search, .seg, .toolbar__count, .rsrc__anchor, .to-top { display: none !important; }</style></noscript>
+  <script src="/js/research.js" defer></script>
   {{ end }}
 </section>
 {{ end }}
