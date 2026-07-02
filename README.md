@@ -11,29 +11,14 @@ Personal site (`static/index.html`) + Hugo blog at `/blog`.
 ## Run locally
 
 ```bash
-hugo serve -D               # http://localhost:1313 — live reload, includes drafts
+hugo serve                  # http://localhost:1313 — live reload
 ```
 
-`-D` shows posts where `draft: true`. Drop it to preview exactly what production will publish.
+`scripts/dev.sh` does the same but regenerates the OG cards first (needs Go).
 
-## Write a new blog post
+## Publish a blog post
 
-```bash
-hugo new content/blog/my-post-slug.md
-```
-
-This creates a file from `archetypes/default.md` with `draft: true`. Edit it, then flip the front matter:
-
-```yaml
----
-title: "My Post"
-date: 2026-04-27
-draft: false        # <- set to false to publish
-description: "Short summary used in the post list and RSS."
----
-```
-
-The slug in the filename becomes the URL: `/blog/my-post-slug/`.
+Posts are authored in the private `john-content-engine` repo and land here as finished markdown: copy the draft to `content/blog/<slug>.md` with `draft: false`, commit, push. The slug in the filename becomes the URL: `/blog/my-post-slug/`.
 
 Code blocks use Chroma (Catppuccin Mocha). Use fenced blocks with a language tag:
 
@@ -74,7 +59,6 @@ The download link in `static/index.html` points at `output/John_Young_Resume.doc
 ├── static/                 # served at / verbatim (homepage, css, js, img, output, CNAME)
 ├── content/blog/           # blog posts (markdown)
 ├── layouts/_default/       # blog templates (baseof, list, single)
-├── archetypes/default.md   # template for `hugo new`
 ├── hugo.toml               # Hugo config
 └── .github/workflows/      # CI deploy
 ```
