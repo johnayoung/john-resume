@@ -9,12 +9,6 @@ disableKinds = ["home", "taxonomy", "term"]
 
 enableRobotsTXT = true
 
-# Blog-pipeline artifacts live under content/blog/ (so the slash-command tools can
-# read/write them next to each post) but are NOT content. Exclude them from the
-# build so they don't render as stray blog entries. _index.md is intentionally
-# not matched (it is the /blog/ list page).
-ignoreFiles = ['/_research/', '/_outlines/', '/_polish/', '/_atomizations/', '/_ideas\.md$']
-
 [markup]
   [markup.highlight]
     style = "catppuccin-mocha"

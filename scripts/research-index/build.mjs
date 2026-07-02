@@ -3,7 +3,8 @@
 //
 //   Source of truth : scripts/research-index/extracted.json
 //                     (array of { slug, sources: [...] }, one object per blog post,
-//                      produced by deep-reading each post's _outlines/<slug>-sources.md dossier)
+//                      produced by deep-reading each post's source dossier at
+//                      john-content-engine/pipeline/outlines/<slug>-sources.md)
 //   Generated       : data/research.json      (Hugo reads this as site.Data.research)
 //                     static/research.json     (served publicly at /research.json; the Dataset distribution)
 //
