@@ -1,0 +1,20 @@
+{{- /*
+  Plain-language (ELI5) companion for a post. Collapsed by default, native
+  <details> so it needs zero JS. Lives on the SAME URL as the full post —
+  additive content at a different altitude, not a duplicate page. The inner
+  block is authored as markdown.
+
+  Usage, near the top of a post body:
+    {{< eli5 hint="no jargon, ~4 min" >}}
+    ...plain-language markdown...
+    {{< /eli5 >}}
+*/ -}}
+<details class="eli5">
+  <summary class="eli5__summary">
+    <span class="eli5__label">Explain this in plain language</span>
+    <span class="eli5__hint">{{ .Get "hint" | default "no background needed" }}</span>
+  </summary>
+  <div class="eli5__body">
+    {{ .Inner | markdownify }}
+  </div>
+</details>

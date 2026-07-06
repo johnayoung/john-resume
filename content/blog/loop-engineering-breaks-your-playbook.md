@@ -5,7 +5,81 @@ draft: false
 author: "John Young"
 description: "A loop was always the agent primitive. The CLAUDE.md budget and JIT retrieval you tuned for one invocation don't fail louder in a loop — they fail quieter."
 keywords: ["loop engineering", "context engineering", "agentic loops", "unattended coding agents", "context rot"]
+tldr:
+  - "A loop was always the agent primitive — gather, act, verify, repeat — so \"loop engineering\" isn't a new discipline; it's your single-invocation habits run many times, unattended, and the breakage lives in those habits, not in the one line of loop syntax."
+  - "The CLAUDE.md budget and just-in-time retrieval you scoped to one context window now re-pay on every iteration: context accumulates and rots each turn, and the model conditions on its own earlier mistakes — so a bad call at iteration 12 gets read as established fact and built on for thirty turns while the terminal shows steady, confident progress."
+  - "A clean one-shot demo is the weakest evidence you have, because a loop is a different reliability regime — single-shot accuracy doesn't predict loop reliability — so before running unattended, add the two things a single prompt never needed, an explicit stop (max-iterations, no-progress, spend cap) and externalized state (a progress file), then re-check every single-shot assumption for turn fifty."
 ---
+{{< eli5 hint="no background needed · 7 min" >}}
+There's a new buzzword for setting an AI coding helper loose to work by itself. This is about why that job is trickier than it looks — and why the tricks you learned for handing it one task at a time quietly stop working.
+
+## The big idea
+
+Picture a capable helper who forgets everything the moment they finish a task. Hand them one job, they do it, they check it, and then their memory wipes clean. To keep going, they start fresh and read only what's been written down.
+
+For a while, people used these helpers one job at a time: you give a task, you check the result. The new buzzword — call it "running the helper on its own" — just means you stop standing over their shoulder pressing "go" between tasks. You leave a note, walk away for the evening, and let them work task after task all night.
+
+Nothing about the helper changed. What changed is that every shortcut you picked up while handing over one task at a time now has to survive being repeated fifty times in a row, unattended — and some of them don't.
+
+## It isn't a new skill — it's the same helper, run many times
+
+The helper doing a task, checking its work, and going again was always the basic idea. The buzzword is new; the thing it names isn't. So the smart move is to treat this as *moving your existing habits over*, not learning something from scratch — which tells you exactly where things break: not in the setup (that part's easy), but in every assumption you made back when the helper did one task and then forgot it.
+
+One thing worth keeping straight: this is one helper doing round after round, reading its own trail of work. That's a different situation from a whole crowd of helpers working side by side, which has its own separate headaches.
+
+Why care now? The length of job these helpers can finish on their own — and get right about *half* the time — has been roughly doubling every seven months for years. Note the "half the time": that's how far they can stretch, not a promise the work is safe to ship. But the runs are getting longer, so a bad assumption that barely stung on the first round gets expensive by the fiftieth.
+
+## Your instructions file costs you on every round, and it gets buried
+
+Most people leave the helper a standing note of rules and preferences. When the helper does a single task, that note is a one-time cost: it reads it once. But in an all-night run, it re-reads the *whole* note at the start of every round — and every round piles its own paperwork on top.
+
+Here's the catch, and it's measured, not guessed: as a helper's working space fills up with paper, it uses that paper less and less reliably. So a rule that was easy to spot at 9 p.m. can be buried under the night's own output by 3 a.m. And it's not just whether the rule is technically written down somewhere — how the note is laid out matters more than the fact that it's present. The fix is to trim the note for how it will read deep into the night, and move the rules that truly matter up to the top.
+
+For a sense of how big an always-there block can get: one company found that just the *list of tools* their helper could reach for was eating an enormous amount of space before they trimmed it. That was the tool list, not anyone's instructions note — but it's the same shape of problem: a block that rides along on every single round whether that round needs it or not.
+
+## A clean demo is the weakest evidence you have
+
+When someone shows you one flawless run, that's actually the *worst* thing to judge reliability on. And here's the careful part, because it's easy to get wrong:
+
+The point is **not** that smarter helpers get dumb when they work in a loop. On the test that measured this, smarter helpers actually kept going correctly for *more* rounds than weaker ones. The real finding is narrower and harder to wriggle out of: how well a helper does on a *single* task tells you almost nothing about how many tasks it can string together. And the reason the string snaps is specific — the helper starts treating its *own* earlier mistakes as if they were established fact, and builds on them.
+
+Keep the fine print, because the honest version is more useful than the scary one. This came from a controlled counting test, not a real coding run. Letting the helper think things through first reduces the effect. And, oddly, *bigger* helpers fall into this one particular trap more, not less — but that's a narrow point about this specific trap, not "bigger is worse in general."
+
+Here's how it plays out. Around round 12, the helper misreads how a piece of the code works, makes a wrong edit, and saves it. Every round after that starts fresh, reads the code as it now stands, and finds that wrong edit sitting there looking like the truth. So it doesn't fix the mistake — it builds on it. By 3 a.m. it has spent thirty rounds making everything line up with a decision it never should have made, and the screen showed steady, confident progress the entire time. One bad call stops being a single slip you could catch; it becomes every round that reads it.
+
+(The author is careful here: that a run like this fails *more quietly* than a demo — not just more often — is his own reasoning from the findings above, not something a study measured directly.)
+
+## A single job comes with an ending and a memory; an all-night run doesn't
+
+Handing over one task quietly gave you two free things: a natural finish line, and a memory that lasted exactly as long as the task. When the task was done, it was done, and the helper's memory cleared on its own. An all-night run inherits neither. So before you walk away, you have to build both yourself.
+
+- **A stopping rule.** A hard cap on how many rounds it can run, a check that quits if a round changed nothing, and a spending limit that kills the run. Left alone, the loop has no reason to ever stop.
+- **A written record on disk.** Since the helper forgets between rounds, keep the run's progress in a file it re-reads each round. The helper forgets; the written record doesn't.
+
+One caveat so you don't over-learn the "forgets everything" picture: on newer helpers, the memory wipe is gentler than it sounds — they can automatically sum up earlier work when they're about to run out of room. But the habit holds no matter what: write the progress file either way, because it's what survives when the memory resets.
+
+## What this means for you
+
+If you're going to leave one of these helpers working on its own, don't just write it a better set of instructions and hope. Walk through every assumption you built back when it did one task at a time, and ask whether it still holds on round fifty: Did you trim the instructions for how they'll read hours in? Have you planned for the helper building on its own 2 a.m. mistake, not just the clean demo you were shown? Is there a hard stop and a written progress file?
+
+The old way of working wasn't wrong — it was just built for one task at a time. Doing this well is simply redoing that thinking for the way you're actually using the helper now.
+
+---
+
+**The technical terms, in plain words**
+- Loop engineering / agentic loop = setting the helper to do its cycle — do a task, check it, go again — by itself, instead of you pressing "go" each round
+- Agent = a computer helper that can use tools and take steps on its own toward a goal
+- CLAUDE.md = the standing note of rules and preferences you leave for the helper
+- Context window = the helper's working space for one round — what it can see and hold at once
+- Context rot = as that working space fills up, the helper uses it less and less reliably
+- Tokens = units of text the helper reads; more text means more space used up
+- Self-conditioning = the helper treating its own earlier mistakes as if they were correct, and repeating the pattern
+- Externalized state / progress file = keeping the run's memory in a file on disk, since the helper forgets between rounds
+- Compaction = the helper automatically summarizing earlier work when it's about to run out of room
+- Stopping conditions = rules that end a run: a max number of rounds, a "nothing changed" check, a spending cap
+
+**The full version, with the research and sources:** [Loop Engineering Breaks Your Single-Shot Context Playbook](/blog/loop-engineering-breaks-your-playbook/)
+{{< /eli5 >}}
 
 An agent was "just an LLM using tools based on environmental feedback in a loop" a year and a half before anyone sold you "loop engineering" ([Anthropic: Building Effective AI Agents](https://www.anthropic.com/research/building-effective-agents)). The term is new; the primitive isn't — and neither is the trap. The CLAUDE.md budget and just-in-time retrieval you spent last quarter tuning for a single invocation don't fail louder when the unit of work becomes many. They fail quieter, and pointing more autonomy at the same bloated context makes it worse, not better.
 

@@ -9,6 +9,19 @@
     </p>
   </header>
 
+  {{ with .Params.tldr }}
+  <aside class="post__tldr" aria-label="Summary">
+    <p class="post__tldr-label">TL;DR</p>
+    {{ if reflect.IsSlice . }}
+    <ul>
+      {{ range . }}<li>{{ . | markdownify }}</li>{{ end }}
+    </ul>
+    {{ else }}
+    <div class="post__tldr-body">{{ . | markdownify }}</div>
+    {{ end }}
+  </aside>
+  {{ end }}
+
   <div class="post__content">
     {{ .Content }}
   </div>
