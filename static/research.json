@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-02",
+  "updated": "2026-07-01",
   "pillars": [
     {
       "id": 1,
@@ -87,9 +87,11 @@
       "proves": "At scale, loading all tool definitions upfront is the failure driver; deferred tool loading cuts token cost and measurably raises tool-selection accuracy.",
       "verification": "confirmed",
       "powers": [
-        "jit-context-retrieval-failure"
+        "jit-context-retrieval-failure",
+        "loop-engineering-breaks-your-playbook"
       ],
       "secondary": [
+        "When using natural language tool calling, each invocation requires a full inference pass, and intermediate results pile up in context whether they're useful or not.",
         "At Anthropic, we've seen tool definitions consume 134K tokens before optimization.",
         "Opus 4.5 improved from 79.5% to 88.1%",
         "This represents an 85% reduction in token usage while maintaining access to your full tool library."
@@ -460,6 +462,7 @@
       "verification": "confirmed",
       "powers": [
         "claude-md-instruction-ceiling",
+        "loop-engineering-breaks-your-playbook",
         "jit-context-retrieval-failure",
         "multi-agent-context-isolation"
       ],
@@ -549,6 +552,7 @@
       "verification": "confirmed",
       "powers": [
         "per-task-cost-attribution",
+        "loop-engineering-breaks-your-playbook",
         "what-ai-agents-are-actually-good-for"
       ],
       "secondary": [
@@ -663,6 +667,26 @@
         "95% failure rate for enterprise AI solutions",
         "about 5% of AI pilot programs achieve rapid revenue acceleration",
         "150 interviews with leaders, a survey of 350 employees, and an analysis of 300 public AI deployments"
+      ]
+    },
+    {
+      "title": "The Illusion of Diminishing Returns: Measuring Long Horizon Execution in LLMs",
+      "author": "Sinha, Arun, Goel, Staab, Geiping",
+      "url": "https://arxiv.org/abs/2509.09677",
+      "date": "Sept 2025 (rev. Mar 13, 2026)",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "the per-step accuracy of models degrades as the number of steps increases. This is not just due to long-context limitations -- curiously, we observe a self-conditioning effect -- models become more likely to make mistakes when the context contains their errors from prior turns.",
+      "proves": "Long-horizon reliability is a different quantity from single-turn accuracy; models self-condition on their own prior errors and scaling does not fix it.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": [
+        "larger models can correctly execute significantly more turns even when small models have near-perfect single-turn accuracy",
+        "measured on a synthetic running-sum task; thinking mitigates self-conditioning; larger models are more prone, not less"
       ]
     },
     {
@@ -832,6 +856,25 @@
       ]
     },
     {
+      "title": "Loop Engineering",
+      "author": "Addy Osmani",
+      "url": "https://addyosmani.com/blog/loop-engineering",
+      "date": "June 7, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.",
+      "proves": "Loop engineering shifts leverage from writing prompts to designing the loop that prompts the agent.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": [
+        "The hard part is not autonomy itself. It is verification, stopping conditions, and Human in the Loop escalation."
+      ]
+    },
+    {
       "title": "Agentic Code Review",
       "author": "Addy Osmani / O'Reilly Radar",
       "url": "https://www.oreilly.com/radar/agentic-code-review",
@@ -930,12 +973,89 @@
       "proves": "Just-in-time context retrieval is not free: it trades latency for freshness and demands deliberate tool and heuristic design to work.",
       "verification": "confirmed",
       "powers": [
-        "jit-context-retrieval-failure"
+        "jit-context-retrieval-failure",
+        "loop-engineering-breaks-your-playbook"
       ],
       "secondary": [
+        "An agent running in a loop generates more and more data that could be relevant for the next turn of inference, and this information must be cyclically refined.",
         "agents built with the 'just in time' approach maintain lightweight identifiers (file paths, stored queries, web links, etc.) and use these references to dynamically load data into context at runtime using tools.",
         "In certain settings, the most effective agents might employ a hybrid strategy, retrieving some data up front for speed, and pursuing further autonomous exploration at its discretion.",
         "Context, therefore, must be treated as a finite resource with diminishing marginal returns."
+      ]
+    },
+    {
+      "title": "Context windows",
+      "author": "Anthropic",
+      "url": "https://docs.anthropic.com/en/docs/build-with-claude/context-windows",
+      "date": "2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "As token count grows, accuracy and recall degrade, a phenomenon known as context rot. This makes curating what's in context just as important as how much space is available.",
+      "proves": "Curating what's in the context window matters as much as how much space is available - official-docs corroboration of context rot.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": []
+    },
+    {
+      "title": "Effective harnesses for long-running agents",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+      "date": "Nov 26, 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "The core challenge of long-running agents is that they must work in discrete sessions, and each new session begins with no memory of what came before.",
+      "proves": "A high-level prompt alone fails a long-running loop; cross-session state must be externalized to disk.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": [
+        "even a frontier coding model like Opus 4.5 running on the Claude Agent SDK in a loop across multiple context windows will fall short of building a production-quality web app if it's only given a high-level prompt",
+        "memoryless-session framing is softened by Opus 4.5+ auto-compaction per Anthropic's March 2026 follow-up - the externalized-state lesson persists, the mechanism is version-dependent"
+      ]
+    },
+    {
+      "title": "Scaling Managed Agents",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/engineering/managed-agents",
+      "date": "Apr 8, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "getEvents(), allows the brain to interrogate context by selecting positional slices of the event stream",
+      "proves": "Cross-iteration retrieval - pulling the right slice of past sessions into a fresh window - is its own discipline, distinct from single-shot JIT retrieval.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": [
+        "a context object that lives outside Claude's context window"
+      ]
+    },
+    {
+      "title": "Building agents with the Claude Agent SDK",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk",
+      "date": "Sept 29, 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "gather context -> take action -> verify work -> repeat",
+      "proves": "The agent loop is a repeated four-step cycle; managing context across iterations (compaction) is a loop-only concern with no single-task analog.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": [
+        "The Claude Agent SDK's compact feature automatically summarizes previous messages when the context limit approaches, so your agent won't run out of context."
       ]
     },
     {
@@ -1038,9 +1158,11 @@
       "proves": "The default should be the simplest solution; reaching for an agent is a decision to justify, not an assumption.",
       "verification": "confirmed",
       "powers": [
-        "what-ai-agents-are-actually-good-for"
+        "what-ai-agents-are-actually-good-for",
+        "loop-engineering-breaks-your-playbook"
       ],
       "secondary": [
+        "They are typically just LLMs using tools based on environmental feedback in a loop.",
         "Code solutions are verifiable through automated tests; Agents can iterate on solutions using test results as feedback",
         "The autonomous nature of agents means higher costs, and the potential for compounding errors.",
         "Agentic systems often trade latency and cost for better task performance, and you should consider when this tradeoff makes sense."
@@ -1375,6 +1497,25 @@
       "secondary": [
         "once its context grew beyond a certain point (on the order of 100,000 tokens in an experiment), it began to fixate on repeating its past actions",
         "failed a task when given 46 tools to consider but succeeded when given only 19 tools"
+      ]
+    },
+    {
+      "title": "Ralph Wiggum as a \"software engineer\"",
+      "author": "Geoffrey Huntley",
+      "url": "https://ghuntley.com/ralph",
+      "date": "July 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "verify success programmatically rather than relying on the model to self-assess",
+      "proves": "The unattended overnight loop works only with programmatic verification; without it, runs go off track silently and can produce a broken codebase.",
+      "verification": "partial",
+      "powers": [
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": [
+        "fresh context every iteration, with state externalized to files"
       ]
     },
     {
@@ -2001,6 +2142,25 @@
       ]
     },
     {
+      "title": "Designing agentic loops",
+      "author": "Simon Willison",
+      "url": "https://simonwillison.net/2025/Sep/30/designing-agentic-loops",
+      "date": "Sept 30, 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "A critical new skill to develop is designing agentic loops.",
+      "proves": "Designing the loop an agent runs in is a distinct skill that predates the 'loop engineering' label by nine months.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": [
+        "My preferred definition of an LLM agent is something that runs tools in a loop to achieve a goal."
+      ]
+    },
+    {
       "title": "Context engineering",
       "author": "Simon Willison's Weblog",
       "url": "https://simonwillison.net/2025/Jun/27/context-engineering",
@@ -2083,6 +2243,25 @@
       ]
     },
     {
+      "title": "The Agentic Loop / Loop Engineering: A Practical Field Guide",
+      "author": "Truong Phung (DEV Community)",
+      "url": "https://dev.to/truongpx396/the-agentic-loop-a-practical-field-guide-mnc",
+      "date": "Jun 25, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "The model forgets everything between runs, so state must live on disk, not in the context window. The agent forgets; the repo doesn't.",
+      "proves": "Cross-iteration state must live on disk, and every unattended loop needs three hard stops: max iterations, no-progress detection, and a spend budget.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": [
+        "Bake all three into every loop: 1. Max iteration count 2. No-progress detection 3. A token or dollar budget"
+      ]
+    },
+    {
       "title": "Don't Build Multi-Agents",
       "author": "Walden Yan (Cognition)",
       "url": "https://cognition.com/blog/dont-build-multi-agents",
@@ -2143,202 +2322,6 @@
         "Reddit user reported Claude Code created duplicate files despite explicit 'NEVER create duplicate files' rule",
         "Gemini models have 'hit-or-miss' performance with negative commands",
         "They are effective at preventing unethical or harmful behavior, especially when used in system prompts"
-      ]
-    },
-    {
-      "title": "Time Horizon 1.1",
-      "author": "METR",
-      "url": "https://metr.org/blog/2026-1-29-time-horizon-1-1/",
-      "date": "January 29, 2026",
-      "class": "research-data",
-      "pillars": [
-        1
-      ],
-      "stat": "The post-2023 doubling-time is 131 days under TH1.1, compared to 165 days under TH1, meaning progress is estimated to be 20% more rapid under TH1.1.",
-      "proves": "The capability curve is accelerating: the ~7-month long-run doubling (196 days, 2019-2025) holds while post-2023 doubling falls to ~4.3 months and since-2024 to ~3 months under METR's updated methodology.",
-      "verification": "confirmed",
-      "secondary": [
-        "We also report below the doubling time since 2024: this was at 109 days under TH1, and falls to 89 days under TH1.1.",
-        "This hybrid trend shows exactly the same doubling time as the TH1 trend, of 196 days (7 months)"
-      ]
-    },
-    {
-      "title": "We are Changing our Developer Productivity Experiment Design",
-      "author": "METR",
-      "url": "https://metr.org/blog/2026-02-24-uplift-update/",
-      "date": "February 24, 2026",
-      "class": "research-data",
-      "pillars": [
-        1
-      ],
-      "stat": "we believe that the data from our new experiment gives us an unreliable signal of the current productivity effect of AI tools",
-      "proves": "METR itself now treats the 19% slowdown as a point-in-time early-2025 finding: the newly-recruited-developer estimate is -4% (CI -15% to +9%) and selection effects bias the returning-developer data.",
-      "verification": "confirmed",
-      "secondary": [
-        "Among newly-recruited developers the estimated speedup is -4%, with a confidence interval between -15% and +9%.",
-        "Our early 2025 study found the use of AI causes tasks to take 19% longer, with a confidence interval between +2% and +39%"
-      ]
-    },
-    {
-      "title": "This is the most misunderstood graph in AI",
-      "author": "Grace Huckins (MIT Technology Review)",
-      "url": "https://www.technologyreview.com/2026/02/05/1132254/this-is-the-most-misunderstood-graph-in-ai/",
-      "date": "February 5, 2026",
-      "class": "practitioner",
-      "pillars": [
-        1
-      ],
-      "stat": "One common misapprehension is that the numbers on the plot's y-axis—around five hours for Claude Opus 4.5, for example—represent the length of time that the models can operate independently. They do not. They represent how long it takes humans to complete tasks that a model can successfully perform.",
-      "proves": "The METR time-horizon curve measures human task-time at ~50% model success, not autonomous runtime — the phrasing discipline required to cite it honestly.",
-      "verification": "confirmed"
-    },
-    {
-      "title": "On METR's AI Coding RCT",
-      "author": "Zvi Mowshowitz",
-      "url": "https://thezvi.substack.com/p/on-metrs-ai-coding-rct",
-      "date": "July 18, 2025",
-      "class": "practitioner",
-      "pillars": [
-        1
-      ],
-      "stat": "Deeply understood open source repos are close to a worst-case scenario for AI tools, because they require bespoke outputs in various ways and the coder has lots of detailed local knowledge of the codebase that the AI lacks.",
-      "proves": "The strongest fair critique of the 19% RCT: the setting was near-worst-case for AI, which bounds how far the result generalizes without overturning its rigor.",
-      "verification": "confirmed"
-    },
-    {
-      "title": "Announcing the 2025 DORA Report (State of AI-assisted Software Development)",
-      "author": "DORA (Google Cloud)",
-      "url": "https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report",
-      "date": "September 23, 2025",
-      "class": "research-data",
-      "pillars": [
-        6
-      ],
-      "stat": "Unlike last year, we observe a positive relationship between AI adoption on both software delivery throughput and product performance. However, AI adoption does continue to have a negative relationship with software delivery stability.",
-      "proves": "DORA 2025 (~5,000 respondents) flips the 2024 throughput finding positive while instability persists — AI amplifies the delivery system around it rather than fixing it.",
-      "verification": "confirmed",
-      "secondary": [
-        "AI doesn't fix a team; it amplifies what's already there."
-      ]
-    },
-    {
-      "title": "The ROI of AI-assisted Software Development",
-      "author": "DORA (Google Cloud)",
-      "url": "https://dora.dev/ai/roi/report/",
-      "date": "v. 2026.1 (landing page updated April 22, 2026)",
-      "class": "research-data",
-      "pillars": [
-        3
-      ],
-      "stat": "The verification tax: Developers invest time reviewing generated code due to concerns about the trustworthiness of output and hallucinations. Furthermore, the tools increase the sheer volume of code produced, which expands the overall review burden required to meet internal security and architectural standards.",
-      "proves": "DORA formally names the verification tax (and an instability tax) as J-Curve costs of AI adoption — time saved in generation is re-spent on auditing and on dealing with increased instability.",
-      "verification": "confirmed",
-      "secondary": [
-        "the time saved in creation is frequently re-allocated to auditing and verification (DORA, Balancing AI tensions, March 10, 2026)"
-      ]
-    },
-    {
-      "title": "2026 State of AI Coding Report",
-      "author": "New Relic (Hanover Research survey, n=200)",
-      "url": "https://newrelic.com/blog/ai/state-of-ai-coding-2026",
-      "date": "June 10, 2026",
-      "class": "research-data",
-      "pillars": [
-        3
-      ],
-      "stat": "94% of technology leaders rate AI-generated code as higher quality than human-authored code at the moment it is reviewed",
-      "proves": "Vendor-commissioned perception survey: AI code looks best exactly where it is checked — the same leaders report 1.7x more critical runtime issues and 78% see production-incident spikes tied to AI code.",
-      "verification": "confirmed",
-      "secondary": [
-        "AI-generated code introduces roughly 1.7 times more critical runtime issues",
-        "78% of organizations report a measurable spike in production incidents directly tied to AI code"
-      ]
-    },
-    {
-      "title": "Early-Stage Prediction of Review Effort in AI-Generated Pull Requests",
-      "author": "Dao Sy Duy Minh et al. (arXiv 2601.00753)",
-      "url": "https://arxiv.org/abs/2601.00753",
-      "date": "Submitted January 2, 2026 (v2 January 27, 2026)",
-      "class": "research-data",
-      "pillars": [
-        5
-      ],
-      "stat": "Analyzing 33,707 agent-authored PRs, we uncover a stark two-regime reality: agents excel at narrow automation (28.3% of PRs merge instantly), but frequently fail at iterative refinement, leading to \"ghosting\" (abandonment) when faced with subjective feedback",
-      "proves": "Agent PRs split into an instant-merge regime and an expensive tail that imposes a hidden attention tax on maintainers — the review burden is concentrated, not uniform.",
-      "verification": "confirmed",
-      "secondary": [
-        "human maintainers must now manage complex interaction loops rather than just reviewing code... This creates a hidden \"attention tax\" on maintainers"
-      ]
-    },
-    {
-      "title": "SWE-PRBench: Benchmarking AI Code Review Quality Against Pull Request Feedback",
-      "author": "Deepak Kumar (arXiv 2603.26130)",
-      "url": "https://arxiv.org/abs/2603.26130",
-      "date": "Submitted March 27, 2026",
-      "class": "research-data",
-      "pillars": [
-        3
-      ],
-      "stat": "8 frontier models detect only 15-31% of human-flagged issues on the diff-only configuration, demonstrating that AI code review remains far below human expert performance despite strong results on code generation benchmarks.",
-      "proves": "\"Have the agents review the agents\" is not yet an out — frontier models catch a small fraction of what human reviewers flag, and more context makes them worse.",
-      "verification": "confirmed"
-    },
-    {
-      "title": "2025 Developer Survey — AI (Sentiment and usage)",
-      "author": "Stack Overflow",
-      "url": "https://survey.stackoverflow.co/2025/ai",
-      "date": "July 29, 2025",
-      "class": "research-data",
-      "pillars": [
-        3
-      ],
-      "stat": "More developers actively distrust the accuracy of AI tools (46%) than trust it (33%)",
-      "proves": "Adoption climbs (84% using or planning to use) while trust in accuracy falls — the field has already priced in that AI output requires verification.",
-      "verification": "confirmed"
-    },
-    {
-      "title": "Agentic Engineering Patterns",
-      "author": "Simon Willison",
-      "url": "https://simonw.substack.com/p/agentic-engineering-patterns",
-      "date": "February 27, 2026",
-      "class": "practitioner",
-      "pillars": [
-        3
-      ],
-      "stat": "I'm using Agentic Engineering to refer to building software using coding agents - tools like Claude Code and OpenAI Codex, where the defining feature is that they can both generate and execute code - allowing them to test that code and iterate on it independently of turn-by-turn guidance from their human supervisor.",
-      "proves": "The defining feature of a coding agent is the generate-and-execute loop — verification via execution is the discipline, named as such by its leading practitioner.",
-      "verification": "confirmed"
-    },
-    {
-      "title": "Loop Engineering",
-      "author": "Addy Osmani",
-      "url": "https://addyo.substack.com/p/loop-engineering",
-      "date": "June 8, 2026",
-      "class": "practitioner",
-      "pillars": [
-        3
-      ],
-      "stat": "The most useful structural thing in a loop, by far, is splitting the one who writes from the one who checks.",
-      "proves": "Even with a verifier sub-agent split from the maker, verification is not fully delegable — \"done\" remains a claim, not a proof.",
-      "verification": "confirmed",
-      "secondary": [
-        "Even then 'done' is a claim and not a proof."
-      ]
-    },
-    {
-      "title": "Programming (with AI agents) as theory building",
-      "author": "Sean Goedecke",
-      "url": "https://www.seangoedecke.com/programming-with-ai-agents-as-theory-building/",
-      "date": "April 3, 2026",
-      "class": "practitioner",
-      "pillars": [
-        6
-      ],
-      "stat": "According to Naur - and I agree with him - the core output of software engineers is not the program itself, but the theory of how the program works.",
-      "proves": "The ownership tail is a knowledge problem: agents can build theories of a codebase in-session but cannot retain them, so the human's retained theory is what you are paying to keep.",
-      "verification": "confirmed",
-      "secondary": [
-        "one big problem with AI agents is that they can't retain theories of the codebase. They have to build their theory from scratch every time"
       ]
     }
   ]

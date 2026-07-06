@@ -2124,5 +2124,242 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "loop-engineering-breaks-your-playbook",
+    "sources": [
+      {
+        "title": "Building effective agents",
+        "author": "Anthropic (Erik Schluntz and Barry Zhang)",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "date": "Dec 19, 2024",
+        "class": "practitioner",
+        "pillars": [
+          6,
+          2
+        ],
+        "stat": "They are typically just LLMs using tools based on environmental feedback in a loop.",
+        "proves": "An agent is an LLM running tools in a loop; 'loop engineering' renames a primitive that predates the term by ~18 months.",
+        "verification": "confirmed",
+        "secondary": [
+          "The autonomous nature of agents means higher costs, and the potential for compounding errors.",
+          "The task often terminates upon completion, but it's also common to include stopping conditions (such as a maximum number of iterations) to maintain control."
+        ]
+      },
+      {
+        "title": "Designing agentic loops",
+        "author": "Simon Willison",
+        "url": "https://simonwillison.net/2025/Sep/30/designing-agentic-loops/",
+        "date": "Sept 30, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          6
+        ],
+        "stat": "A critical new skill to develop is designing agentic loops.",
+        "proves": "Designing the loop an agent runs in is a distinct skill that predates the 'loop engineering' label by nine months.",
+        "verification": "confirmed",
+        "secondary": [
+          "My preferred definition of an LLM agent is something that runs tools in a loop to achieve a goal."
+        ]
+      },
+      {
+        "title": "Loop Engineering",
+        "author": "Addy Osmani",
+        "url": "https://addyosmani.com/blog/loop-engineering/",
+        "date": "June 7, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead.",
+        "proves": "Loop engineering shifts leverage from writing prompts to designing the loop that prompts the agent.",
+        "verification": "confirmed",
+        "secondary": [
+          "The hard part is not autonomy itself. It is verification, stopping conditions, and Human in the Loop escalation."
+        ]
+      },
+      {
+        "title": "Effective context engineering for AI agents",
+        "author": "Anthropic (Applied AI: Prithvi Rajasekaran, Ethan Dixon, Carly Ryan, Jeremy Hadfield)",
+        "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+        "date": "Sept 29, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "An agent running in a loop generates more and more data that could be relevant for the next turn of inference, and this information must be cyclically refined.",
+        "proves": "Context accumulates across a loop's iterations by default and must be actively curated - a discipline distinct from one-shot prompt engineering.",
+        "verification": "confirmed",
+        "secondary": [
+          "as the number of tokens in the context window increases, the model's ability to accurately recall information from that context decreases"
+        ]
+      },
+      {
+        "title": "Context Rot: How Increasing Input Tokens Impacts LLM Performance",
+        "author": "Chroma (Kelly Hong, Anton Troynikov, Jeff Huber)",
+        "url": "https://www.trychroma.com/research/context-rot",
+        "date": "July 14, 2025",
+        "class": "research-data",
+        "pillars": [
+          2
+        ],
+        "stat": "models do not use their context uniformly; instead, their performance grows increasingly unreliable as input length grows",
+        "proves": "Reliability degrades as input length grows (context rot), so a loop's accumulating context gets less reliable at scale, not more.",
+        "verification": "confirmed",
+        "secondary": [
+          "Whether relevant information is present in a model's context is not all that matters; what matters more is how that information is presented.",
+          "18 models, 194,480 LLM calls"
+        ]
+      },
+      {
+        "title": "Context windows",
+        "author": "Anthropic",
+        "url": "https://docs.anthropic.com/en/docs/build-with-claude/context-windows",
+        "date": "2026",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "As token count grows, accuracy and recall degrade, a phenomenon known as context rot. This makes curating what's in context just as important as how much space is available.",
+        "proves": "Curating what's in the context window matters as much as how much space is available - official-docs corroboration of context rot.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "Introducing advanced tool use on the Claude Developer Platform",
+        "author": "Anthropic",
+        "url": "https://www.anthropic.com/engineering/advanced-tool-use",
+        "date": "Nov 24, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "When using natural language tool calling, each invocation requires a full inference pass, and intermediate results pile up in context whether they're useful or not.",
+        "proves": "In a loop, context grows by default because every tool call is a full inference pass whose results accumulate whether useful or not.",
+        "verification": "confirmed",
+        "secondary": [
+          "we've seen tool definitions consume 134K tokens before optimization (this figure is tool definitions, not CLAUDE.md - an analog for always-on context bloat)"
+        ]
+      },
+      {
+        "title": "The Illusion of Diminishing Returns: Measuring Long Horizon Execution in LLMs",
+        "author": "Sinha, Arun, Goel, Staab, Geiping",
+        "url": "https://arxiv.org/abs/2509.09677",
+        "date": "Sept 2025 (rev. Mar 13, 2026)",
+        "class": "research-data",
+        "pillars": [
+          3,
+          2
+        ],
+        "stat": "the per-step accuracy of models degrades as the number of steps increases. This is not just due to long-context limitations -- curiously, we observe a self-conditioning effect -- models become more likely to make mistakes when the context contains their errors from prior turns.",
+        "proves": "Long-horizon reliability is a different quantity from single-turn accuracy; models self-condition on their own prior errors and scaling does not fix it.",
+        "verification": "confirmed",
+        "secondary": [
+          "larger models can correctly execute significantly more turns even when small models have near-perfect single-turn accuracy",
+          "measured on a synthetic running-sum task; thinking mitigates self-conditioning; larger models are more prone, not less"
+        ]
+      },
+      {
+        "title": "Effective harnesses for long-running agents",
+        "author": "Anthropic",
+        "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+        "date": "Nov 26, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "The core challenge of long-running agents is that they must work in discrete sessions, and each new session begins with no memory of what came before.",
+        "proves": "A high-level prompt alone fails a long-running loop; cross-session state must be externalized to disk.",
+        "verification": "confirmed",
+        "secondary": [
+          "even a frontier coding model like Opus 4.5 running on the Claude Agent SDK in a loop across multiple context windows will fall short of building a production-quality web app if it's only given a high-level prompt",
+          "memoryless-session framing is softened by Opus 4.5+ auto-compaction per Anthropic's March 2026 follow-up - the externalized-state lesson persists, the mechanism is version-dependent"
+        ]
+      },
+      {
+        "title": "Scaling Managed Agents",
+        "author": "Anthropic",
+        "url": "https://www.anthropic.com/engineering/managed-agents",
+        "date": "Apr 8, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "getEvents(), allows the brain to interrogate context by selecting positional slices of the event stream",
+        "proves": "Cross-iteration retrieval - pulling the right slice of past sessions into a fresh window - is its own discipline, distinct from single-shot JIT retrieval.",
+        "verification": "confirmed",
+        "secondary": [
+          "a context object that lives outside Claude's context window"
+        ]
+      },
+      {
+        "title": "Building agents with the Claude Agent SDK",
+        "author": "Anthropic",
+        "url": "https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk",
+        "date": "Sept 29, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          6
+        ],
+        "stat": "gather context -> take action -> verify work -> repeat",
+        "proves": "The agent loop is a repeated four-step cycle; managing context across iterations (compaction) is a loop-only concern with no single-task analog.",
+        "verification": "confirmed",
+        "secondary": [
+          "The Claude Agent SDK's compact feature automatically summarizes previous messages when the context limit approaches, so your agent won't run out of context."
+        ]
+      },
+      {
+        "title": "Ralph Wiggum as a \"software engineer\"",
+        "author": "Geoffrey Huntley",
+        "url": "https://ghuntley.com/ralph/",
+        "date": "July 2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "verify success programmatically rather than relying on the model to self-assess",
+        "proves": "The unattended overnight loop works only with programmatic verification; without it, runs go off track silently and can produce a broken codebase.",
+        "verification": "partial",
+        "secondary": [
+          "fresh context every iteration, with state externalized to files"
+        ]
+      },
+      {
+        "title": "The Agentic Loop / Loop Engineering: A Practical Field Guide",
+        "author": "Truong Phung (DEV Community)",
+        "url": "https://dev.to/truongpx396/the-agentic-loop-a-practical-field-guide-mnc",
+        "date": "Jun 25, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "The model forgets everything between runs, so state must live on disk, not in the context window. The agent forgets; the repo doesn't.",
+        "proves": "Cross-iteration state must live on disk, and every unattended loop needs three hard stops: max iterations, no-progress detection, and a spend budget.",
+        "verification": "confirmed",
+        "secondary": [
+          "Bake all three into every loop: 1. Max iteration count 2. No-progress detection 3. A token or dollar budget"
+        ]
+      },
+      {
+        "title": "Measuring AI Ability to Complete Long Tasks",
+        "author": "METR (Thomas Kwa, Ben West, Joel Becker, et al.)",
+        "url": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/",
+        "date": "March 19, 2025",
+        "class": "research-data",
+        "pillars": [
+          3,
+          1
+        ],
+        "stat": "the length of tasks (measured by how long they take human professionals) that generalist frontier model agents can complete autonomously with 50% reliability has been doubling approximately every 7 months for the last 6 years",
+        "proves": "Autonomous task-length is doubling roughly every 7 months - the 'why now' for treating loops as their own discipline.",
+        "verification": "confirmed",
+        "secondary": []
+      }
+    ]
   }
 ]
