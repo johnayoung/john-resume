@@ -2,6 +2,7 @@
 title: "CLAUDE.md Instruction Ceiling: Maintained Config, Not a README"
 date: 2026-05-18
 draft: false
+pillar: context-engineering
 author: "John Young"
 description: "Your CLAUDE.md doesn't have a length problem, it has a discipline problem. Budget it against a hard instruction ceiling and maintain it like config, not a README."
 keywords: ["CLAUDE.md instruction ceiling", "CLAUDE.md best practices", "context engineering", "Claude Code", "AI coding agents"]

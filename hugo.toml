@@ -29,6 +29,10 @@ enableRobotsTXT = true
   buttondownUser = "johnantoyoung"
   # Booking link for the /work-with-me CTA. Falls back to a mailto when empty.
   calendlyUrl = "https://calendar.app.google/96uXGZz2WFnvgUrv7"
+  # Cloudflare Web Analytics beacon token (dashboard -> Analytics & Logs -> Web Analytics
+  # -> add jyoung.dev -> copy the token out of the JS snippet). Privacy-first, no cookie
+  # banner needed. The beacon renders only when this is set.
+  cloudflareAnalyticsToken = "835621ce854e4c4c9482b9092b27f1f1"
 
 [sitemap]
   changefreq = "weekly"

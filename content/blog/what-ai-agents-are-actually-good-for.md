@@ -2,6 +2,7 @@
 title: "What AI Coding Agents Are Actually Good For (And When to Skip)"
 date: 2026-05-04
 draft: false
+pillar: architecture-decisions
 author: "John Young"
 description: "The internet ranks AI coding agents endlessly and never answers the only question that matters: can you verify the output, and can you undo it if you can't?"
 keywords: ["AI coding agents", "verification cost", "agent reliability", "blast radius", "when to use AI agents"]

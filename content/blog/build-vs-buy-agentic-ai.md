@@ -2,6 +2,7 @@
 title: "Build vs. Buy Agentic AI: Ownership Is the New Decision"
 date: 2026-05-11
 draft: false
+pillar: architecture-decisions
 author: "John Young"
 description: "Agentic AI cut the cost of building software, not owning it. Build-vs-buy is now a five-year ownership call — priced on the maintenance tail, gated on verification."
 keywords: ["build vs buy agentic AI", "ownership cost", "maintenance tail", "verification gate", "differentiation"]

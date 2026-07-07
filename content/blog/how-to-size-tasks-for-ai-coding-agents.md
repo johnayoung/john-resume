@@ -2,6 +2,7 @@
 title: "How to Size Tasks for AI Coding Agents"
 date: 2026-04-27
 draft: false
+pillar: task-design
 author: "John Young"
 description: "The real constraint is context, not lines of code. Six heuristics for sizing tasks so AI coding agents ship clean code on the first try, grounded in PR sizing and context-rot research."
 keywords: ["AI coding agents", "task sizing", "context engineering", "context rot", "PR sizing", "Claude Code"]

@@ -2,6 +2,7 @@
 title: "The Anatomy of a Perfect AI Agent Task"
 date: 2026-04-20
 draft: false
+pillar: task-design
 author: "John Young"
 description: "Context engineering for AI coding agents — the elements that make a task succeed on the first try, with a fully worked example."
 keywords: ["AI coding agents", "context engineering", "Claude Code", "prompt engineering", "agentic workflows"]

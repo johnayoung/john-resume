@@ -2,6 +2,7 @@
 title: "Loop Engineering Breaks Your Single-Shot Context Playbook"
 date: 2026-07-06
 draft: false
+pillar: context-engineering
 author: "John Young"
 description: "A loop was always the agent primitive. The CLAUDE.md budget and JIT retrieval you tuned for one invocation don't fail louder in a loop — they fail quieter."
 keywords: ["loop engineering", "context engineering", "agentic loops", "unattended coding agents", "context rot"]

@@ -2,6 +2,7 @@
 title: "Review Capacity Is the Real Ceiling on Your Agents"
 date: 2026-06-08
 draft: false
+pillar: team-process
 author: "John Young"
 description: "The ceiling on how many AI coding agents your team can run is reviewer-hours, not agent output — and that number is already in your telemetry. Here's how to size it."
 keywords: ["review capacity AI coding agents", "reviewer throughput", "AI code review", "code review bottleneck", "review load per reviewer"]
