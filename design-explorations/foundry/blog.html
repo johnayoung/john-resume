@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Essays — John Young</title>
+<meta name="description" content="All research-backed essays on running AI coding agents in production — filter by pillar, every claim traced to a primary source.">
+<meta name="theme-color" content="#FCFCFA">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0F0F0E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%232545FF'/%3E%3Cpath d='M16 16h32v8H24v24h-8z' fill='%23FCFCFA'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..650&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#FCFCFA;
+  --surface:#FFFFFF;
+  --ink:#111213;
+  --secondary:#5E605C;
+  --hairline:#E6E6E1;
+  --accent:#2545FF;
+  --accent-strong:#1F38DB;
+  --on-accent:#FFFFFF;
+  --code-bg:#111213;
+  --code-ink:#ECECEA;
+  --code-muted:#9C9C94;
+  --code-hair:#2E2E2C;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --ratio:1.25;
+  --text-0:1.0625rem;                            /* 17px body */
+  --text--1:calc(var(--text-0)/var(--ratio));    /* 13.6px */
+  --text-1:calc(var(--text-0)*var(--ratio));     /* 21.25px */
+  --text-2:calc(var(--text-1)*var(--ratio));     /* 26.6px */
+  --text-3:calc(var(--text-2)*var(--ratio));     /* 33.2px */
+  --label:0.6875rem;                             /* 11px mono uppercase labels */
+  --meta:0.75rem;                                /* 12px mono meta and dates */
+  --display:clamp(2.1rem,1.4rem + 3.5vw,3.25rem);
+  --title:clamp(1.75rem,1.3rem + 2.8vw,2.5rem);
+  --track:0.08em;
+  --sp-1:0.5rem;  /* 8  */
+  --sp-2:1rem;    /* 16 */
+  --sp-3:1.5rem;  /* 24 */
+  --sp-4:2rem;    /* 32 */
+  --sp-5:2.5rem;  /* 40 */
+  --sp-6:3rem;    /* 48 */
+  --sp-7:3.5rem;  /* 56 */
+  --sp-8:4rem;    /* 64 */
+  --sp-10:5rem;   /* 80 */
+  --sp-12:6rem;   /* 96 */
+  --measure:40rem;   /* 640px, ~72ch at 17px Inter */
+  --notecol:220px;
+  --wrap:1120px;
+  --radius:2px;
+  --lh-body:1.6;
+  --lh-tight:1.1;
+  --dur:160ms;
+  --ease:cubic-bezier(0,0,0.2,1);
+  --target:2.75rem; /* 44px touch target */
+  --figcol:6rem;
+  --datecol:7rem;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0F0F0E;
+    --surface:#161616;
+    --ink:#ECECEA;
+    --secondary:#9C9C94;
+    --hairline:#262626;
+    --accent:#7B8CFF;
+    --accent-strong:#98A5FF;
+    --on-accent:#0F0F0E;
+    --code-bg:#161616;
+    --code-ink:#ECECEA;
+    --code-muted:#9C9C94;
+    --code-hair:#262626;
+  }
+}
+
+/* ============ BASE ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:var(--text-0);
+  line-height:var(--lh-body);
+  -webkit-font-smoothing:antialiased;
+  font-optical-sizing:auto;
+}
+::selection{background:var(--accent);color:var(--on-accent)}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  a,button,summary{transition:color var(--dur) var(--ease),background-color var(--dur) var(--ease),border-color var(--dur) var(--ease),background-size var(--dur) var(--ease)}
+  .btn:active{transform:translateY(1px)}
+}
+a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.2em}
+a:hover{color:var(--accent-strong)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:var(--sp-2);top:-100%;z-index:10;background:var(--accent);color:var(--on-accent);font-family:var(--mono);font-size:var(--meta);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);padding:var(--sp-1) var(--sp-2);text-decoration:none;border-radius:var(--radius)}
+.skip-link:focus{top:var(--sp-2)}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--sp-2)}
+@media (min-width:700px){.wrap{padding-inline:var(--sp-4)}}
+.double-rule{border-top:1px solid var(--hairline)}
+.mono-label{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track)}
+
+/* underline sweep (structure links) */
+.site-nav a,.intro-links a,.foot-links a,.more-link,.quiet-link,.back-link a,.sys-meta a{
+  text-decoration:none;
+  background-image:linear-gradient(currentColor,currentColor);
+  background-repeat:no-repeat;
+  background-size:0 1px;
+  background-position:0 calc(50% + 0.5em);
+}
+.site-nav a:hover,.site-nav a:focus-visible,.site-nav a[aria-current=page],
+.intro-links a:hover,.intro-links a:focus-visible,
+.foot-links a:hover,.foot-links a:focus-visible,
+.more-link:hover,.more-link:focus-visible,
+.quiet-link:hover,.quiet-link:focus-visible,
+.back-link a:hover,.back-link a:focus-visible,
+.sys-meta a:hover,.sys-meta a:focus-visible{background-size:100% 1px}
+
+/* ============ MASTHEAD ============ */
+.masthead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:var(--sp-3);padding-block:var(--sp-2)}
+.wordmark{font-family:var(--sans);font-weight:650;font-size:var(--text-0);letter-spacing:-0.02em;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:var(--target)}
+.wordmark:hover{color:var(--accent)}
+.site-nav ul{display:flex;flex-wrap:wrap;align-items:center;list-style:none}
+.site-nav a{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--secondary);display:inline-flex;align-items:center;min-height:var(--target);padding-inline:var(--sp-1)}
+.site-nav a:hover,.site-nav a[aria-current=page]{color:var(--ink)}
+.site-nav .dot{color:var(--secondary);font-family:var(--mono);font-size:var(--label)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:var(--target);padding:0 var(--sp-3);background:var(--accent);color:var(--on-accent);font-family:var(--mono);font-weight:500;font-size:var(--meta);text-transform:uppercase;letter-spacing:var(--track);text-decoration:none;border:1px solid var(--accent);border-radius:var(--radius);cursor:pointer}
+.btn:hover{background:var(--accent-strong);border-color:var(--accent-strong);color:var(--on-accent);text-decoration:none}
+
+/* ============ MOBILE NAV ============ */
+@media (max-width:699px){
+  .site-nav .dot,.intro-links .dot,.foot-links .dot{display:none}
+  .page-meta > span[aria-hidden]{display:none}
+  .site-nav ul{column-gap:var(--sp-1)}
+}
+
+/* ============ CROP MARKS ============ */
+.crop-marks{display:none}
+@media (min-width:900px){
+  .crop-marks{display:block;position:fixed;inset:var(--sp-2);pointer-events:none;z-index:5}
+  .crop-marks span{position:absolute;width:12px;height:12px;border:0 solid var(--hairline)}
+  .crop-marks span:nth-child(1){top:0;left:0;border-top-width:1px;border-left-width:1px;border-color:var(--accent)}
+  .crop-marks span:nth-child(2){top:0;right:0;border-top-width:1px;border-right-width:1px}
+  .crop-marks span:nth-child(3){bottom:0;left:0;border-bottom-width:1px;border-left-width:1px}
+  .crop-marks span:nth-child(4){bottom:0;right:0;border-bottom-width:1px;border-right-width:1px}
+}
+
+/* ============ SECTION CONVENTION ============ */
+.sec-head{display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-5)}
+.sec-head::before{content:"";width:14px;height:14px;flex-shrink:0;background:linear-gradient(var(--accent),var(--accent)) top left/10px 2px no-repeat,linear-gradient(var(--accent),var(--accent)) top left/2px 10px no-repeat,linear-gradient(var(--accent),var(--accent)) bottom right/10px 2px no-repeat,linear-gradient(var(--accent),var(--accent)) bottom right/2px 10px no-repeat}
+.sec-head span{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--secondary);white-space:nowrap}
+.sec-head::after{content:"";flex:1;border-top:1px solid var(--hairline)}
+
+/* ============ ESSAYS PAGE HEAD ============ */
+.essays-page{padding-block:var(--sp-8) 0}
+@media (min-width:700px){.essays-page{padding-block:var(--sp-10) 0}}
+.essays-page h1{font-size:var(--display);font-weight:600;line-height:var(--lh-tight);letter-spacing:-0.03em;margin-bottom:var(--sp-4)}
+
+/* ============ ESSAYS META ============ */
+.page-meta{font-family:var(--mono);font-size:var(--label);font-weight:500;letter-spacing:var(--track);text-transform:uppercase;color:var(--secondary);margin-bottom:var(--sp-4);display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2)}
+.badge{display:inline-flex;align-items:center;gap:0.55em;font-family:var(--mono);font-size:var(--label);font-weight:500;letter-spacing:var(--track);text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);padding:0.25rem var(--sp-1)}
+.badge::before{content:"";width:6px;height:6px;background:var(--accent);flex-shrink:0}
+.tag{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--secondary);white-space:nowrap}
+
+/* ============ FILTERS ============ */
+.filters{display:flex;flex-wrap:wrap;gap:var(--sp-1);padding-block:var(--sp-3);border-block:1px solid var(--hairline)}
+.filters button{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--secondary);background:transparent;border:1px solid var(--hairline);border-radius:var(--radius);min-height:var(--target);padding:0 var(--sp-2);cursor:pointer}
+.filters button:hover{color:var(--ink);border-color:var(--secondary)}
+.filters button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.filters button::after{content:attr(data-count);margin-left:0.6em;opacity:0.6;font-variant-numeric:tabular-nums}
+.filter-status{margin-left:auto;align-self:center;font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--secondary)}
+
+/* ============ ESSAY LEDGER ============ */
+.essay-list{list-style:none;counter-reset:essay}
+.essay-row{position:relative;counter-increment:essay;padding-block:var(--sp-4);border-bottom:1px solid var(--hairline);display:grid;grid-template-columns:minmax(0,1fr);row-gap:var(--sp-1)}
+.essay-row::before{content:"";position:absolute;top:-1px;left:0;width:10px;height:10px;border-top:2px solid var(--accent);border-left:2px solid var(--accent);opacity:0;pointer-events:none}
+.essay-row:hover::before,.essay-row:focus-within::before{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  .essay-row::before{transition:opacity var(--dur) var(--ease)}
+  .essay-row.reveal{animation:rowIn 200ms var(--ease)}
+  @keyframes rowIn{from{opacity:0;transform:translateY(4px)}}
+}
+@media (min-width:700px){
+  .essay-row{grid-template-columns:var(--datecol) minmax(0,1fr) auto;column-gap:var(--sp-3);row-gap:0.25rem}
+  .essay-row .essay-date{padding-top:0.45rem}
+  .essay-row .tag{grid-column:3;grid-row:1/3;justify-self:end;align-self:stretch;border-left:1px solid var(--hairline);padding-left:var(--sp-3);padding-top:0.55rem}
+  .essay-row .essay-desc{grid-column:2}
+}
+.essay-date{font-family:var(--mono);font-size:var(--meta);color:var(--secondary);font-variant-numeric:tabular-nums}
+.essay-date::before{content:counter(essay,decimal-leading-zero);color:var(--accent);font-weight:500;margin-right:0.7em}
+.essay-title{font-size:var(--text-1);font-weight:600;letter-spacing:-0.01em;line-height:1.3;text-wrap:balance}
+.essay-title a{color:var(--ink);text-decoration:none}
+.essay-title a::after{content:"\2192";content:"\2192" / "";display:inline-block;margin-left:0.45em;font-family:var(--mono);font-weight:400;font-size:0.7em;color:var(--secondary);transform:translateX(0)}
+.essay-title a:hover{color:var(--accent-strong)}
+.essay-row:hover .essay-title a::after,.essay-title a:focus-visible::after{transform:translateX(4px);color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){
+  .essay-title a::after{transition:transform var(--dur) var(--ease),color var(--dur) var(--ease)}
+}
+.essay-desc{color:var(--secondary);font-size:var(--text--1);max-width:34rem}
+.essay-row[hidden]{display:none}
+
+/* ============ COLOPHON ============ */
+.colophon{margin-top:var(--sp-8)}
+.colophon .double-rule{border-top:2px solid var(--ink)}
+.colophon .double-rule::after{content:"";display:block;border-top:1px solid var(--hairline);margin-top:3px}
+.colophon-inner{padding-block:var(--sp-8)}
+.foot-mark{font-family:var(--sans);font-weight:650;font-size:var(--text-0);letter-spacing:-0.02em}
+.subscribe{display:flex;flex-wrap:wrap;gap:var(--sp-1);margin-top:var(--sp-3)}
+.subscribe input[type=email]{font-family:var(--mono);font-size:max(1rem,var(--text--1));color:var(--ink);background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);min-height:var(--target);padding:0 var(--sp-2);width:min(100%,20rem)}
+.subscribe input[type=email]::placeholder{color:var(--secondary)}
+.subscribe input[type=email]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+.sub-note{color:var(--secondary);font-size:var(--text--1);margin-top:var(--sp-2)}
+.sub-note em{font-style:normal}
+.foot-links{list-style:none;display:flex;flex-wrap:wrap;align-items:center;margin-top:var(--sp-5);margin-left:calc(-1*var(--sp-1))}
+.foot-links a{font-family:var(--mono);font-size:var(--label);font-weight:500;letter-spacing:var(--track);text-transform:uppercase;color:var(--secondary);display:inline-flex;align-items:center;min-height:var(--target);padding-inline:var(--sp-1)}
+.foot-links a:hover{color:var(--ink)}
+.foot-links .dot{color:var(--secondary);font-family:var(--mono);font-size:var(--label)}
+.foot-last{font-family:var(--mono);font-size:var(--label);letter-spacing:var(--track);color:var(--secondary);margin-top:var(--sp-5)}
+.foot-last .cursor{color:var(--accent);font-weight:500}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="crop-marks" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+<header class="wrap">
+  <div class="masthead">
+    <a class="wordmark" href="index.html">John Young</a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="blog.html" aria-current="page">essays</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="about.html">about</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="https://jyoung.dev/research/">research</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="#subscribe">subscribe</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="mailto:john.anto.young@gmail.com?subject=Working%20together">work with me</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="double-rule"></div>
+</header>
+
+<main id="main" class="wrap">
+
+  <!-- ESSAYS -->
+  <section class="essays-page" aria-labelledby="essays-title">
+    <h1 id="essays-title">Essays</h1>
+    <p class="page-meta sec-head">
+      <span>12 essays</span><span aria-hidden="true">·</span>
+      <span>6 pillars</span><span aria-hidden="true">·</span>
+      <span class="badge">Evidence base verified 2026-07-01</span>
+    </p>
+
+    <div class="filters" role="group" aria-label="Filter essays by pillar">
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="task-design" aria-pressed="false">Task Design</button>
+      <button type="button" data-filter="context-engineering" aria-pressed="false">Context Engineering</button>
+      <button type="button" data-filter="evals-verification" aria-pressed="false">Evals &amp; Verification</button>
+      <button type="button" data-filter="production-operations" aria-pressed="false">Production Operations</button>
+      <button type="button" data-filter="team-process" aria-pressed="false">Team &amp; Process</button>
+      <button type="button" data-filter="architecture-decisions" aria-pressed="false">Architecture Decisions</button>
+      <p class="filter-status" role="status" aria-live="polite" id="filter-status"></p>
+    </div>
+
+    <ul class="essay-list" id="essays">
+      <li class="essay-row" data-pillar="context-engineering">
+        <span class="essay-date">2026-07-06</span>
+        <span class="essay-title"><a href="post.html">Loop Engineering Breaks Your Single-Shot Context Playbook</a></span>
+        <span class="tag">Context Engineering</span>
+        <span class="essay-desc">A loop was always the agent primitive. The CLAUDE.md budget and JIT retrieval you tuned for one invocation don&rsquo;t fail louder in a loop — they fail quieter.</span>
+      </li>
+      <li class="essay-row" data-pillar="production-operations">
+        <span class="essay-date">2026-06-29</span>
+        <span class="essay-title"><a href="post.html">You Can&rsquo;t Cap What You Can&rsquo;t Attribute: Per-Task Cost</a></span>
+        <span class="tag">Production Operations</span>
+        <span class="essay-desc">A cost dashboard is a lagging report, not a guardrail. Per-task cost attribution is the schema that makes an agent budget ceiling enforceable before the next call.</span>
+      </li>
+      <li class="essay-row" data-pillar="context-engineering">
+        <span class="essay-date">2026-06-22</span>
+        <span class="essay-title"><a href="post.html">Where Just-in-Time Context Retrieval Silently Breaks</a></span>
+        <span class="tag">Context Engineering</span>
+        <span class="essay-desc">JIT context retrieval isn&rsquo;t free — it&rsquo;s slower and only as good as your tooling. A ledger of where runtime retrieval breaks and how to design the fallback.</span>
+      </li>
+      <li class="essay-row" data-pillar="architecture-decisions">
+        <span class="essay-date">2026-06-15</span>
+        <span class="essay-title"><a href="post.html">When One Agent Stops Being Enough: The Isolation Gate</a></span>
+        <span class="tag">Architecture Decisions</span>
+        <span class="essay-desc">The trigger for going multi-agent isn&rsquo;t parallel speed — it&rsquo;s context isolation, and the split costs about 15x the tokens. Two gates decide whether it&rsquo;s worth it.</span>
+      </li>
+      <li class="essay-row" data-pillar="team-process">
+        <span class="essay-date">2026-06-08</span>
+        <span class="essay-title"><a href="post.html">Review Capacity Is the Real Ceiling on Your Agents</a></span>
+        <span class="tag">Team &amp; Process</span>
+        <span class="essay-desc">The ceiling on how many AI coding agents your team can run is reviewer-hours, not agent output — and that number is already in your telemetry.</span>
+      </li>
+      <li class="essay-row" data-pillar="evals-verification">
+        <span class="essay-date">2026-06-01</span>
+        <span class="essay-title"><a href="post.html">How to Verify AI Coding Agent Output: A Reviewer&rsquo;s Framework</a></span>
+        <span class="tag">Evals &amp; Verification</span>
+        <span class="essay-desc">Generation got cheap and verification didn&rsquo;t. Six per-task moves for reviewing an agent&rsquo;s diff — from distrusting its self-report to calibrating by blast radius.</span>
+      </li>
+      <li class="essay-row" data-pillar="production-operations">
+        <span class="essay-date">2026-05-25</span>
+        <span class="essay-title"><a href="post.html">Tier Your AI Agent&rsquo;s Production Authority by Task Risk</a></span>
+        <span class="tag">Production Operations</span>
+        <span class="essay-desc">An AI agent deleted a production database in nine seconds. The fix was never a better prompt — it was a permission tier the token should never have crossed.</span>
+      </li>
+      <li class="essay-row" data-pillar="context-engineering">
+        <span class="essay-date">2026-05-18</span>
+        <span class="essay-title"><a href="post.html">CLAUDE.md Instruction Ceiling: Maintained Config, Not a README</a></span>
+        <span class="tag">Context Engineering</span>
+        <span class="essay-desc">Your CLAUDE.md doesn&rsquo;t have a length problem, it has a discipline problem. Budget it against a hard instruction ceiling and maintain it like config, not a README.</span>
+      </li>
+      <li class="essay-row" data-pillar="architecture-decisions">
+        <span class="essay-date">2026-05-11</span>
+        <span class="essay-title"><a href="post.html">Build vs. Buy Agentic AI: Ownership Is the New Decision</a></span>
+        <span class="tag">Architecture Decisions</span>
+        <span class="essay-desc">Agentic AI cut the cost of building software, not owning it. Build-vs-buy is now a five-year ownership call — priced on the maintenance tail, gated on verification.</span>
+      </li>
+      <li class="essay-row" data-pillar="architecture-decisions">
+        <span class="essay-date">2026-05-04</span>
+        <span class="essay-title"><a href="post.html">What AI Coding Agents Are Actually Good For (And When to Skip)</a></span>
+        <span class="tag">Architecture Decisions</span>
+        <span class="essay-desc">The internet ranks AI coding agents endlessly and never answers the only question that matters: can you verify the output, and can you undo it if you can&rsquo;t?</span>
+      </li>
+      <li class="essay-row" data-pillar="task-design">
+        <span class="essay-date">2026-04-27</span>
+        <span class="essay-title"><a href="post.html">How to Size Tasks for AI Coding Agents</a></span>
+        <span class="tag">Task Design</span>
+        <span class="essay-desc">The real constraint is context, not lines of code. Six heuristics for sizing tasks so AI coding agents ship clean code on the first try, grounded in PR sizing and context-rot research.</span>
+      </li>
+      <li class="essay-row" data-pillar="task-design">
+        <span class="essay-date">2026-04-20</span>
+        <span class="essay-title"><a href="post.html">The Anatomy of a Perfect AI Agent Task</a></span>
+        <span class="tag">Task Design</span>
+        <span class="essay-desc">Context engineering for AI coding agents — the elements that make a task succeed on the first try, with a fully worked example.</span>
+      </li>
+    </ul>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon wrap">
+  <div class="double-rule"></div>
+  <div class="colophon-inner">
+    <p class="foot-mark">John Young</p>
+    <form class="subscribe" id="subscribe" action="#">
+      <label class="visually-hidden" for="sub-email">Email address</label>
+      <input type="email" id="sub-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      <button class="btn" type="submit">Subscribe</button>
+    </form>
+    <p class="sub-note"><em>One research-backed essay a week. Unsubscribe anytime.</em></p>
+    <ul class="foot-links">
+      <li><a href="https://github.com/johnayoung">GitHub</a></li>
+      <li aria-hidden="true"><span class="dot">·</span></li>
+      <li><a href="https://www.linkedin.com/in/jyoung1985">LinkedIn</a></li>
+      <li aria-hidden="true"><span class="dot">·</span></li>
+      <li><a href="mailto:john.anto.young@gmail.com">Email</a></li>
+      <li aria-hidden="true"><span class="dot">·</span></li>
+      <li><a href="https://jyoung.dev/blog/index.xml">RSS</a></li>
+    </ul>
+    <p class="foot-last">john young<span class="cursor">_</span> · &copy; 2026</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var buttons=document.querySelectorAll('.filters button');
+  var rows=document.querySelectorAll('#essays .essay-row');
+  var status=document.getElementById('filter-status');
+  function pad(n){return n<10?'0'+n:''+n;}
+  buttons.forEach(function(btn){
+    var filter=btn.getAttribute('data-filter');
+    var count=0;
+    rows.forEach(function(row){
+      if(filter==='all'||row.getAttribute('data-pillar')===filter){count++;}
+    });
+    btn.setAttribute('data-count',pad(count));
+  });
+  buttons.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      buttons.forEach(function(b){b.setAttribute('aria-pressed',b===btn?'true':'false');});
+      var filter=btn.getAttribute('data-filter');
+      var shown=0;
+      rows.forEach(function(row){
+        var match=filter==='all'||row.getAttribute('data-pillar')===filter;
+        row.classList.remove('reveal');
+        row.hidden=!match;
+        if(match){void row.offsetHeight;row.classList.add('reveal');shown++;}
+      });
+      status.textContent=shown+' of '+rows.length+' essays shown.';
+    });
+  });
+})();
+</script>
+</body>
+</html>

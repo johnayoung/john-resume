@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>John Young — CTO &amp; Head of Engineering</title>
+<meta name="description" content="Fifteen years shipping financial infrastructure. Two exits. Now building the agent layer — trading systems, DeFi routing, and multi-agent platforms.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#FAFAF7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D1117">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='4' fill='%231A7F37'/%3E%3Ccircle cx='8' cy='8' r='6.5' fill='none' stroke='%231A7F37' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --bg:#FAFAF7;
+  --surface:#FFFFFF;
+  --surface-hi:#F1F7F1;
+  --ink:#191B14;
+  --secondary:#5F645A;
+  --hairline:#E2E4DC;
+  --accent:#1A7F37;
+  --accent-hover:#166B2F;
+  --accent-contrast:#FFFFFF;
+  --accent-tint:rgba(26,127,55,.06);
+  --accent-under:rgba(26,127,55,.4);
+  --merge:#8250DF;
+  --dot-grid:rgba(25,27,20,.05);
+  --head-bg:rgba(250,250,247,.96);
+  --lang-python:#3572A5;
+  --lang-go:#00ADD8;
+  --lang-rust:#DEA584;
+  --font-sans:"Space Grotesk",system-ui,-apple-system,sans-serif;
+  --font-mono:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* modular scale 1.25, base 17px */
+  --fs--2:.68rem;
+  --fs--1:.85rem;
+  --fs-0:1.0625rem;
+  --fs-1:1.328rem;
+  --fs-2:1.66rem;
+  --fs-3:2.075rem;
+  --fs-4:2.594rem;
+  --fs-graph:11px;
+  --lh-body:1.6;
+  /* 8px grid */
+  --sp-05:4px; --sp-1:8px; --sp-2:16px; --sp-3:24px; --sp-4:32px;
+  --sp-5:40px; --sp-6:48px; --sp-8:64px; --sp-10:80px; --sp-12:96px;
+  --r-sm:4px; --r-md:8px; --r-full:999px;
+  --bw:1px; --bw-2:2px;
+  --t-1:150ms; --t-2:200ms; --t-3:250ms;
+  --ease:cubic-bezier(.33,1,.68,1);
+  --head-h:64px;
+  --wrap:1080px;
+  --measure:66ch;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0D1117; --surface:#161B22; --surface-hi:#152119;
+    --ink:#E6EDF3; --secondary:#8D96A0; --hairline:#262C36;
+    --accent:#3FB950; --accent-hover:#4AC26B; --accent-contrast:#0D1117;
+    --accent-tint:rgba(63,185,80,.08); --accent-under:rgba(63,185,80,.45);
+    --merge:#A371F7; --dot-grid:rgba(230,237,243,.05); --head-bg:rgba(13,17,23,.96);
+  }
+}
+/* ---------- base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:radial-gradient(circle,var(--dot-grid) var(--bw),transparent var(--bw));
+  background-size:var(--sp-3) var(--sp-3);
+  color:var(--ink);
+  font:400 var(--fs-0)/var(--lh-body) var(--font-sans);
+}
+h1,h2,h3,p,ul,ol,figure,blockquote{margin:0}
+a{color:inherit}
+svg{display:block;max-width:100%}
+::selection{background:var(--accent);color:var(--accent-contrast)}
+:focus-visible{outline:var(--bw-2) solid var(--accent);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:var(--sp-2);top:-100%;z-index:100;padding:var(--sp-1) var(--sp-2);background:var(--accent);color:var(--accent-contrast);font:700 var(--fs--1) var(--font-mono);border-radius:var(--r-sm);text-decoration:none}
+.skip-link:focus-visible{top:var(--sp-2)}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--sp-3)}
+/* ---------- header ---------- */
+.site-head{position:sticky;top:0;z-index:20;min-height:var(--head-h);display:flex;align-items:center;background:var(--head-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:var(--bw) solid var(--hairline)}
+.head-in{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);width:100%}
+.wordmark{display:inline-flex;align-items:center;min-height:44px;font:700 var(--fs-0) var(--font-mono);color:var(--ink);text-decoration:none}
+.wordmark .cursor{color:var(--accent)}
+.site-nav{display:flex;align-items:center;gap:var(--sp-1)}
+.nav-link{display:inline-flex;align-items:center;min-height:44px;padding:0 var(--sp-1);font:400 var(--fs--1) var(--font-mono);color:var(--secondary);text-decoration:none;transition:color var(--t-1) var(--ease)}
+.nav-link:hover{color:var(--accent)}
+.nav-link[aria-current="page"]{color:var(--ink)}
+@media (max-width:640px){.hide-sm{display:none}}
+@media (max-width:480px){
+  .wrap{padding-inline:var(--sp-2)}
+  .head-in{flex-wrap:wrap}
+  .site-nav{gap:0}
+  .btn{padding:0 var(--sp-2)}
+}
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-1);min-height:44px;padding:0 var(--sp-3);border-radius:var(--r-sm);border:var(--bw) solid transparent;font:700 var(--fs--1) var(--font-mono);white-space:nowrap;text-decoration:none;cursor:pointer;transition:background-color var(--t-2) var(--ease),border-color var(--t-2) var(--ease),color var(--t-2) var(--ease)}
+.btn-solid{background:var(--accent);color:var(--accent-contrast)}
+.btn-solid:hover{background:var(--accent-hover)}
+.btn-ghost{border-color:var(--hairline);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+/* ---------- sections ---------- */
+.sec{margin-top:var(--sp-12)}
+.sec-head{display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-5);font:400 var(--fs--1) var(--font-mono);color:var(--secondary);font-weight:400}
+.sec-head .p{color:var(--accent)}
+.sec-head::after{content:"";flex:1;height:var(--bw);background:var(--hairline)}
+/* ---------- hero ---------- */
+.hero{padding-top:var(--sp-12)}
+.kicker{font:400 var(--fs--1) var(--font-mono);color:var(--secondary)}
+.kicker .sl{color:var(--accent)}
+.hero h1{margin-top:var(--sp-3);max-width:24ch;font-size:clamp(2.4rem,6vw,4rem);font-weight:700;line-height:1.05;letter-spacing:-.02em}
+.hero-sub{margin-top:var(--sp-4);max-width:56ch;color:var(--secondary)}
+.hero-cta{margin-top:var(--sp-5);display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.hero-contact{margin-top:var(--sp-5);display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-1) var(--sp-2);font:400 var(--fs--1) var(--font-mono);color:var(--secondary)}
+.hero-contact a{display:inline-flex;align-items:center;min-height:44px;color:var(--secondary);text-decoration:none;transition:color var(--t-1) var(--ease)}
+.hero-contact a:hover{color:var(--accent)}
+.hero-contact .dot-sep{color:var(--hairline)}
+@media (max-width:640px){.hero{padding-top:var(--sp-8)}}
+/* ---------- git graph ---------- */
+.graph{width:100%;height:auto}
+.graph text{font:400 var(--fs-graph)/1 var(--font-mono)}
+.g-line{stroke:var(--hairline);stroke-width:var(--bw-2);fill:none}
+.g-line-now{stroke:var(--accent);stroke-width:var(--bw-2);fill:none}
+.g-dot{fill:var(--accent);stroke:var(--bg);stroke-width:var(--bw-2);transform-box:fill-box;transform-origin:center;transition:transform var(--t-2) var(--ease)}
+.g-dot-merge{fill:var(--merge)}
+.g-head-ring{fill:none;stroke:var(--accent);stroke-width:var(--bw-2)}
+.g-label{fill:var(--secondary);transition:fill var(--t-1) var(--ease)}
+.g-label-acq{fill:var(--merge)}
+.g-tag{fill:var(--accent);font-weight:700}
+.g-link{cursor:pointer;text-decoration:none}
+.g-link:hover .g-label,.g-link:focus-visible .g-label{fill:var(--accent)}
+.g-link:hover .g-dot,.g-link:focus-visible .g-dot{transform:scale(1.3)}
+.g-link:focus-visible{outline:var(--bw-2) solid var(--accent);outline-offset:4px;border-radius:var(--r-sm)}
+.graph-v{display:none}
+@media (max-width:699px){
+  .graph-h{display:none}
+  .graph-v{display:block;max-width:360px;margin-inline:auto}
+}
+@media (prefers-reduced-motion:no-preference){
+  .wordmark .cursor{animation:blink 1.2s steps(2,jump-none) infinite}
+  .g-draw{stroke-dasharray:1;animation:draw .8s var(--ease) backwards}
+  .g-d2{animation-delay:var(--t-3)}
+  .g-fade{animation:fadein .4s var(--ease) .6s backwards}
+  .g-link:hover .g-dot,.g-link:focus-visible .g-dot{animation:pulse .9s var(--ease) infinite}
+}
+@keyframes blink{50%{opacity:0}}
+@keyframes draw{from{stroke-dashoffset:1}}
+@keyframes fadein{from{opacity:0}}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.45)}100%{transform:scale(1)}}
+/* ---------- commit cards ---------- */
+.commits{margin-top:var(--sp-6);display:grid;gap:var(--sp-3)}
+.commit{background:var(--surface);border:var(--bw) solid var(--hairline);border-radius:var(--r-md);padding:var(--sp-4);scroll-margin-top:calc(var(--head-h) + var(--sp-3));transition:border-color var(--t-2) var(--ease),background-color var(--t-2) var(--ease)}
+.commit:target,.commit.is-hi{border-color:var(--accent);background:var(--surface-hi)}
+@media (max-width:640px){.commit{padding:var(--sp-3)}}
+.commit-ref{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-1) var(--sp-2);font:400 var(--fs--1) var(--font-mono)}
+.commit-ref .ref{color:var(--accent)}
+.commit-ref .when{color:var(--secondary)}
+.chip-acq{font:400 var(--fs--2) var(--font-mono);color:var(--merge);border:var(--bw) solid var(--merge);border-radius:var(--r-full);padding:var(--bw) var(--sp-1)}
+.commit h3{margin-top:var(--sp-2);font-size:var(--fs-1);font-weight:600;line-height:1.25}
+.commit .scope{margin-top:var(--sp-1);color:var(--secondary)}
+.metrics{list-style:none;margin:var(--sp-3) 0 0;padding:0;display:grid;gap:var(--sp-1)}
+.metrics li{position:relative;padding-left:var(--sp-3)}
+.metrics li::before{content:"+";position:absolute;left:0;top:0;font:700 var(--fs--1)/var(--lh-body) var(--font-mono);color:var(--accent)}
+.fig{font-family:var(--font-mono);font-weight:700;font-size:var(--fs--1);color:var(--accent)}
+/* ---------- systems ---------- */
+.repos{display:grid;gap:var(--sp-3);grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.repo{display:flex;flex-direction:column;gap:var(--sp-2);background:var(--surface);border:var(--bw) solid var(--hairline);border-radius:var(--r-md);padding:var(--sp-3);transition:border-color var(--t-2) var(--ease)}
+.repo:hover{border-color:var(--accent)}
+.repo h3{font:700 var(--fs-0) var(--font-mono)}
+.repo p{flex:1;color:var(--secondary);font-size:var(--fs--1)}
+.repo-meta{display:flex;align-items:center;flex-wrap:wrap;gap:var(--sp-2);font:400 var(--fs--2) var(--font-mono);color:var(--secondary)}
+.lang{display:inline-flex;align-items:center;gap:var(--sp-1)}
+.lang-dot{width:var(--sp-1);height:var(--sp-1);border-radius:var(--r-full)}
+.lang-dot.py{background:var(--lang-python)}
+.lang-dot.go{background:var(--lang-go)}
+.lang-dot.rs{background:var(--lang-rust)}
+.repo-link{margin-left:auto;display:inline-flex;align-items:center;min-height:44px;color:var(--secondary);text-decoration:none;transition:color var(--t-1) var(--ease)}
+.repo-link:hover{color:var(--accent)}
+/* ---------- writing log ---------- */
+.taillog{border-top:var(--bw) solid var(--hairline)}
+.post-row{display:grid;grid-template-columns:1fr;gap:var(--sp-05) var(--sp-3);align-items:baseline;padding-block:var(--sp-3);border-bottom:var(--bw) solid var(--hairline);text-decoration:none}
+@media (min-width:720px){.post-row{grid-template-columns:120px 1fr auto}}
+.post-row time{font:400 var(--fs--1) var(--font-mono);color:var(--secondary)}
+.post-row .t{font-weight:600;transition:color var(--t-1) var(--ease)}
+.post-row:hover .t{color:var(--accent)}
+.tag{justify-self:start;font:400 var(--fs--2) var(--font-mono);color:var(--secondary);border:var(--bw) solid var(--hairline);border-radius:var(--r-full);padding:var(--sp-05) var(--sp-1);white-space:nowrap}
+.log-foot{margin-top:var(--sp-3);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--sp-2)}
+.view-all{display:inline-flex;align-items:center;min-height:44px;font:700 var(--fs--1) var(--font-mono);color:var(--accent);text-decoration:none;transition:color var(--t-1) var(--ease)}
+.view-all:hover{color:var(--accent-hover)}
+.evidence{font:400 var(--fs--1)/var(--lh-body) var(--font-mono);color:var(--secondary)}
+.evidence a{color:var(--secondary);text-decoration:underline;text-decoration-color:var(--accent-under);text-underline-offset:3px;transition:color var(--t-1) var(--ease)}
+.evidence a:hover{color:var(--accent)}
+/* ---------- education ---------- */
+.edu{display:grid;gap:var(--sp-3);grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:640px){.edu{grid-template-columns:1fr}}
+.edu-item h3{font-size:var(--fs-0);font-weight:600}
+.edu-item p{margin-top:var(--sp-05);font:400 var(--fs--1)/var(--lh-body) var(--font-mono);color:var(--secondary)}
+/* ---------- footer ---------- */
+.site-foot{margin-top:var(--sp-12);border-top:var(--bw) solid var(--hairline);padding-block:var(--sp-8) var(--sp-5)}
+.sub{display:flex;flex-wrap:wrap;gap:var(--sp-2);max-width:560px}
+.sub-input{flex:1;min-width:220px;min-height:44px;padding:0 var(--sp-2);font:400 var(--fs--1) var(--font-mono);color:var(--ink);background:var(--surface);border:var(--bw) solid var(--hairline);border-radius:var(--r-sm);transition:border-color var(--t-2) var(--ease)}
+.sub-input::placeholder{color:var(--secondary)}
+.sub-input:hover{border-color:var(--secondary)}
+.sub-cap{margin-top:var(--sp-2);font:400 var(--fs--1)/var(--lh-body) var(--font-mono);color:var(--secondary)}
+.foot-line{margin-top:var(--sp-6);padding-top:var(--sp-4);border-top:var(--bw) solid var(--hairline);font:400 var(--fs--1) var(--font-mono);color:var(--secondary)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">skip to content</a>
+
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="wordmark" href="index.html">jyoung.dev<span class="cursor" aria-hidden="true">_</span></a>
+    <nav class="site-nav" aria-label="Site">
+      <a class="nav-link" href="blog.html">writing</a>
+      <a class="nav-link hide-sm" href="#">research</a>
+      <a class="nav-link hide-sm" href="#subscribe">subscribe</a>
+      <a class="btn btn-solid" href="#">book a call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- hero -->
+  <section class="hero wrap" aria-label="Introduction">
+    <p class="kicker"><span class="sl">//</span> cto @ combine capital &middot; head of eng @ infrared</p>
+    <h1>Fifteen years shipping financial infrastructure. Two exits. Now building the agent layer.</h1>
+    <p class="hero-sub">I build trading systems, DeFi routing, and multi-agent platforms &mdash; and publish research-backed essays on running AI coding agents in production. Every claim traced to a primary source.</p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="#">Book a call</a>
+      <a class="btn btn-ghost" href="#">Download resume</a>
+    </div>
+    <p class="hero-contact">
+      <a href="mailto:john.anto.young@gmail.com">john.anto.young@gmail.com</a>
+      <span class="dot-sep" aria-hidden="true">&middot;</span>
+      <a href="https://github.com/johnayoung">github.com/johnayoung</a>
+      <span class="dot-sep" aria-hidden="true">&middot;</span>
+      <a href="https://www.linkedin.com/in/jyoung1985">linkedin.com/in/jyoung1985</a>
+    </p>
+  </section>
+
+  <!-- career graph -->
+  <section class="sec wrap" aria-labelledby="career-h">
+    <h2 class="sec-head" id="career-h" aria-label="Career"><span aria-hidden="true"><span class="p">$</span> git log --graph --career</span></h2>
+
+    <!-- desktop / horizontal -->
+    <svg class="graph graph-h" viewBox="0 0 1000 280" width="1000" height="280" aria-label="Career as a git graph, 2010 to now. Ventures branch off main; acquisitions merge back in.">
+      <line class="g-line g-draw" x1="48" y1="140" x2="750" y2="140" pathLength="1"/>
+      <line class="g-line-now g-draw g-d2" x1="750" y1="140" x2="920" y2="140" pathLength="1"/>
+      <path class="g-line g-draw g-d2" d="M372 140 C372 112 384 76 416 76 L490 76 C522 76 534 112 534 140" pathLength="1"/>
+      <path class="g-line g-draw g-d2" d="M480 140 C480 168 492 204 524 204 L598 204 C630 204 642 168 642 140" pathLength="1"/>
+
+      <a class="g-link" href="#exp-capitalone" data-exp="exp-capitalone" aria-label="Capital One, Principal Financial Analyst, 2010 to 2017. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-dot" cx="48" cy="140" r="4"/>
+          <circle class="g-dot" cx="210" cy="140" r="4"/>
+          <text class="g-label" x="48" y="176" aria-hidden="true">capital-one &#183; 2010&#8211;2017</text>
+        </g>
+      </a>
+
+      <a class="g-link" href="#exp-spreadstreet" data-exp="exp-spreadstreet" aria-label="Spreadstreet, founded 2016, merged back 2019, acquired. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-dot" cx="372" cy="140" r="4"/>
+          <text class="g-label" x="380" y="60" aria-hidden="true">spreadstreet &#183; 2016&#8211;2019</text>
+          <circle class="g-dot g-dot-merge" cx="534" cy="140" r="4.5"/>
+          <text class="g-label g-label-acq" x="546" y="126" aria-hidden="true">acquired</text>
+        </g>
+      </a>
+
+      <a class="g-link" href="#exp-cryptosheets" data-exp="exp-cryptosheets" aria-label="Cryptosheets, founded 2018, acquired 2019, merged back 2021. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-dot" cx="480" cy="140" r="4"/>
+          <text class="g-label" x="488" y="232" aria-hidden="true">cryptosheets &#183; 2018&#8211;2021</text>
+          <circle class="g-dot g-dot-merge" cx="642" cy="140" r="4.5"/>
+          <text class="g-label g-label-acq" x="654" y="126" aria-hidden="true">acquired</text>
+        </g>
+      </a>
+
+      <a class="g-link" href="#exp-fractal" data-exp="exp-fractal" aria-label="FRACTAL, Software Engineer, 2021 to 2022. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-dot" cx="696" cy="140" r="4"/>
+          <text class="g-label" x="650" y="176" aria-hidden="true">fractal &#183; 2021&#8211;2022</text>
+        </g>
+      </a>
+
+      <a class="g-link" href="#exp-branched" data-exp="exp-branched" aria-label="Branched Services, 2023 to now. HEAD: CTO at Combine Capital and Head of Engineering at Infrared. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-dot" cx="750" cy="140" r="4"/>
+          <circle class="g-dot" cx="858" cy="140" r="4"/>
+          <text class="g-label" x="920" y="176" text-anchor="end" aria-hidden="true">branched &#183; 2023&#8211;now</text>
+          <circle class="g-head-ring" cx="920" cy="140" r="10"/>
+          <circle class="g-dot" cx="920" cy="140" r="4.5"/>
+          <text class="g-tag" x="964" y="100" text-anchor="end" aria-hidden="true">HEAD &#8594; cto @ combine</text>
+          <text class="g-tag" x="964" y="118" text-anchor="end" aria-hidden="true">eng @ infrared</text>
+        </g>
+      </a>
+    </svg>
+
+    <!-- mobile / vertical -->
+    <svg class="graph graph-v" viewBox="0 0 360 640" width="360" height="640" aria-label="Career as a git graph, newest at top. Ventures branch off main; acquisitions merge back in.">
+      <line class="g-line-now g-draw" x1="72" y1="48" x2="72" y2="136" pathLength="1"/>
+      <line class="g-line g-draw" x1="72" y1="136" x2="72" y2="584" pathLength="1"/>
+      <path class="g-line g-draw g-d2" d="M72 428 C72 414 124 418 124 402 L124 326 C124 310 72 314 72 300" pathLength="1"/>
+      <path class="g-line g-draw g-d2" d="M72 356 C72 342 176 346 176 328 L176 252 C176 236 72 240 72 224" pathLength="1"/>
+
+      <a class="g-link" href="#exp-branched" data-exp="exp-branched" aria-label="Branched Services, 2023 to now. HEAD: CTO at Combine Capital and Head of Engineering at Infrared. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-head-ring" cx="72" cy="48" r="10"/>
+          <circle class="g-dot" cx="72" cy="48" r="4.5"/>
+          <text class="g-tag" x="92" y="44" aria-hidden="true">HEAD &#8594; cto @ combine</text>
+          <text class="g-tag" x="92" y="62" aria-hidden="true">eng @ infrared</text>
+          <circle class="g-dot" cx="72" cy="136" r="4"/>
+          <text class="g-label" x="88" y="140" aria-hidden="true">branched &#183; 2023&#8211;now</text>
+        </g>
+      </a>
+
+      <a class="g-link" href="#exp-fractal" data-exp="exp-fractal" aria-label="FRACTAL, Software Engineer, 2021 to 2022. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-dot" cx="72" cy="188" r="4"/>
+          <text class="g-label" x="88" y="192" aria-hidden="true">fractal &#183; 2021&#8211;2022</text>
+        </g>
+      </a>
+
+      <a class="g-link" href="#exp-cryptosheets" data-exp="exp-cryptosheets" aria-label="Cryptosheets, founded 2018, acquired 2019, merged back 2021. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-dot g-dot-merge" cx="72" cy="224" r="4.5"/>
+          <text class="g-label g-label-acq" x="60" y="228" text-anchor="end" aria-hidden="true">acquired</text>
+          <circle class="g-dot" cx="72" cy="356" r="4"/>
+          <text class="g-label" x="190" y="294" aria-hidden="true">cryptosheets &#183; 2018&#8211;2021</text>
+        </g>
+      </a>
+
+      <a class="g-link" href="#exp-spreadstreet" data-exp="exp-spreadstreet" aria-label="Spreadstreet, founded 2016, merged back 2019, acquired. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-dot g-dot-merge" cx="72" cy="300" r="4.5"/>
+          <text class="g-label g-label-acq" x="60" y="304" text-anchor="end" aria-hidden="true">acquired</text>
+          <circle class="g-dot" cx="72" cy="428" r="4"/>
+          <text class="g-label" x="138" y="392" aria-hidden="true">spreadstreet &#183; 2016&#8211;2019</text>
+        </g>
+      </a>
+
+      <a class="g-link" href="#exp-capitalone" data-exp="exp-capitalone" aria-label="Capital One, Principal Financial Analyst, 2010 to 2017. Jump to entry.">
+        <g class="g-fade">
+          <circle class="g-dot" cx="72" cy="512" r="4"/>
+          <text class="g-label" x="88" y="516" aria-hidden="true">capital-one &#183; 2010&#8211;2017</text>
+          <circle class="g-dot" cx="72" cy="584" r="4"/>
+        </g>
+      </a>
+    </svg>
+
+    <!-- commit cards -->
+    <div class="commits">
+      <article class="commit" id="exp-branched">
+        <p class="commit-ref"><span class="ref">branched/main</span><span class="when">&middot; 2023&ndash;now</span></p>
+        <h3>CTO &amp; Head of Engineering &middot; Branched Services</h3>
+        <p class="scope">CTO at Combine Capital (2023&ndash;now) and Head of Engineering at Infrared (2025&ndash;now) &mdash; multi-agent platforms, DeFi routing, and market-data infrastructure.</p>
+        <ul class="metrics">
+          <li><span class="fig">75%</span> cut in analysis time from a production multi-agent system</li>
+          <li><span class="fig">65%</span> faster compliance investigation via fine-tuned LLMs explaining DeFi transactions</li>
+          <li><span class="fig">100K+</span> daily events processed across EVM chains and CEXs</li>
+          <li><span class="fig">sub-100ms</span> MIMO route computation across <span class="fig">50+</span> liquidity sources at <span class="fig">&lt;1%</span> slippage estimation error</li>
+        </ul>
+      </article>
+
+      <article class="commit" id="exp-fractal">
+        <p class="commit-ref"><span class="ref">fractal/main</span><span class="when">&middot; 2021&ndash;2022</span></p>
+        <h3>Software Engineer &middot; FRACTAL</h3>
+        <p class="scope">Algorithmic trading systems for digital-asset strategies.</p>
+        <ul class="metrics">
+          <li>Backtesting framework over <span class="fig">5+ years</span> of historical data</li>
+          <li><span class="fig">40%</span> reduction in potential losses via dynamic position sizing</li>
+        </ul>
+      </article>
+
+      <article class="commit" id="exp-cryptosheets">
+        <p class="commit-ref"><span class="ref">cryptosheets/founder</span><span class="when">&middot; 2018&ndash;2021</span><span class="chip-acq">acquired 2019</span></p>
+        <h3>Founder &amp; CTO &middot; Cryptosheets</h3>
+        <p class="scope">Real-time market data platform streaming crypto, equities, and derivatives data into Excel.</p>
+        <ul class="metrics">
+          <li><span class="fig">30,000+</span> active users on a real-time Excel data platform</li>
+          <li><span class="fig">1M+</span> daily API requests on architecture I designed</li>
+          <li>Acquired by a private buyer within the first year</li>
+        </ul>
+      </article>
+
+      <article class="commit" id="exp-spreadstreet">
+        <p class="commit-ref"><span class="ref">spreadstreet/founder</span><span class="when">&middot; 2016&ndash;2019</span><span class="chip-acq">exited 2019</span></p>
+        <h3>Founder &amp; Chief Software Architect &middot; Spreadstreet.io</h3>
+        <p class="scope">Cryptocurrency data feeds delivered inside Google Sheets, sold as recurring subscriptions.</p>
+        <ul class="metrics">
+          <li><span class="fig">500+</span> cryptocurrencies with real-time Google Sheets feeds</li>
+          <li><span class="fig">5,000+</span> recurring-revenue subscribers; exit to a strategic buyer</li>
+        </ul>
+      </article>
+
+      <article class="commit" id="exp-capitalone">
+        <p class="commit-ref"><span class="ref">capital-one/main</span><span class="when">&middot; 2010&ndash;2017</span></p>
+        <h3>Principal Financial Analyst &middot; Capital One</h3>
+        <p class="scope">Credit-card portfolio modeling and reporting automation.</p>
+        <ul class="metrics">
+          <li><span class="fig">$1B+</span> credit-card portfolio modeled with cross-functional teams</li>
+          <li><span class="fig">70%</span> of manual reporting automated away</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- systems -->
+  <section class="sec wrap" aria-labelledby="systems-h">
+    <h2 class="sec-head" id="systems-h" aria-label="Selected systems"><span aria-hidden="true"><span class="p">$</span> ls ./systems</span></h2>
+    <div class="repos">
+      <article class="repo">
+        <h3>flywheel</h3>
+        <p>Control plane for AI coding agents: concurrent agents in isolated worktrees, grader-gated landing.</p>
+        <div class="repo-meta">
+          <span class="lang"><span class="lang-dot py" aria-hidden="true"></span>python</span>
+          <a class="repo-link" href="#">github &#8599;</a>
+        </div>
+      </article>
+      <article class="repo">
+        <h3>go-gas</h3>
+        <p>~69&micro;s Ethereum gas estimation for HFT/MEV; zero-copy uint256.</p>
+        <div class="repo-meta">
+          <span class="lang"><span class="lang-dot go" aria-hidden="true"></span>go</span>
+          <a class="repo-link" href="#">github &#8599;</a>
+        </div>
+      </article>
+      <article class="repo">
+        <h3>tycho-bridge</h3>
+        <p>5&ndash;3000&micro;s zero-network DeFi swap simulation; Rust core, C FFI + gRPC.</p>
+        <div class="repo-meta">
+          <span class="lang"><span class="lang-dot rs" aria-hidden="true"></span>rust</span>
+          <span class="lang"><span class="lang-dot go" aria-hidden="true"></span>go</span>
+          <a class="repo-link" href="#">github &#8599;</a>
+        </div>
+      </article>
+      <article class="repo">
+        <h3>go-weiroll</h3>
+        <p>Atomic multi-call transaction planner for the EVM.</p>
+        <div class="repo-meta">
+          <span class="lang"><span class="lang-dot go" aria-hidden="true"></span>go</span>
+          <a class="repo-link" href="#">github &#8599;</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- writing -->
+  <section class="sec wrap" aria-labelledby="writing-h">
+    <h2 class="sec-head" id="writing-h" aria-label="Latest writing"><span aria-hidden="true"><span class="p">$</span> tail -n 3 ./writing</span></h2>
+    <div class="taillog">
+      <a class="post-row" href="post.html">
+        <time datetime="2026-07-06">2026-07-06</time>
+        <span class="t">Loop Engineering Breaks Your Single-Shot Context Playbook</span>
+        <span class="tag">context-engineering</span>
+      </a>
+      <a class="post-row" href="post.html">
+        <time datetime="2026-06-29">2026-06-29</time>
+        <span class="t">You Can&rsquo;t Cap What You Can&rsquo;t Attribute: Per-Task Cost</span>
+        <span class="tag">production-operations</span>
+      </a>
+      <a class="post-row" href="post.html">
+        <time datetime="2026-06-22">2026-06-22</time>
+        <span class="t">Where Just-in-Time Context Retrieval Silently Breaks</span>
+        <span class="tag">context-engineering</span>
+      </a>
+    </div>
+    <div class="log-foot">
+      <a class="view-all" href="blog.html">view all &#8594;</a>
+      <p class="evidence">Evidence base: <a href="#">a verified index of primary sources</a> behind every essay &mdash; updated 2026-07-01.</p>
+    </div>
+  </section>
+
+  <!-- education -->
+  <section class="sec wrap" aria-labelledby="edu-h">
+    <h2 class="sec-head" id="edu-h" aria-label="Education and certifications"><span aria-hidden="true"><span class="p">$</span> cat ./education-certs</span></h2>
+    <div class="edu">
+      <div class="edu-item">
+        <h3>Towson University</h3>
+        <p>BS Finance &amp; Economics &middot; 2008&ndash;2010</p>
+      </div>
+      <div class="edu-item">
+        <h3>Thinkful</h3>
+        <p>Engineering Immersion &middot; 2018&ndash;2019</p>
+      </div>
+      <div class="edu-item">
+        <h3>Hummingbot Foundation</h3>
+        <p>StrategyV2 Developer &middot; MVP at demo day &middot; 2024</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot" id="subscribe">
+  <div class="wrap">
+    <h2 class="sec-head" aria-label="Subscribe"><span aria-hidden="true"><span class="p">$</span> subscribe --weekly</span></h2>
+    <form class="sub" action="#" method="post">
+      <label class="sr-only" for="email">Email address</label>
+      <input class="sub-input" id="email" name="email" type="email" required placeholder="you@company.com" autocomplete="email">
+      <button class="btn btn-solid" type="submit">Subscribe</button>
+    </form>
+    <p class="sub-cap">One research-backed essay a week. Unsubscribe anytime.</p>
+    <p class="foot-line">&copy; 2026 john young &middot; jyoung.dev</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var links = document.querySelectorAll("a[data-exp]");
+  links.forEach(function (a) {
+    var card = document.getElementById(a.getAttribute("data-exp"));
+    if (!card) return;
+    var on = function () { card.classList.add("is-hi"); };
+    var off = function () { card.classList.remove("is-hi"); };
+    a.addEventListener("mouseenter", on);
+    a.addEventListener("mouseleave", off);
+    a.addEventListener("focus", on);
+    a.addEventListener("blur", off);
+  });
+})();
+</script>
+</body>
+</html>

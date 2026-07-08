@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B0E13">
+<meta name="description" content="Research-backed essays on running AI coding agents in production — twelve posts across six pillars.">
+<title>blog — John Young</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230B0E13'/%3E%3Crect x='3' y='11' width='10' height='2' fill='%23E8A33D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --bg:#0B0E13;
+  --panel:#12161D;
+  --panel-2:#171C25;
+  --line:#222A36;
+  --line-2:#2E3947;
+  --text:#D5DCE4;
+  --muted:#8B95A3;
+  --faint:#5C6673;
+  --amber:#E8A33D;
+  --amber-hi:#F0B155;
+  --amber-dim:#C9963F;
+  --green:#57C489;
+  --ink:#0B0E13;
+  --mono:'JetBrains Mono',ui-monospace,'Cascadia Mono',Menlo,monospace;
+  --sans:'Inter','Helvetica Neue',Arial,sans-serif;
+  --w-max:1080px;
+  --measure:68ch;
+  --fs-label:0.6875rem;   /* 11 */
+  --fs-meta:0.75rem;      /* 12 */
+  --fs-ui:0.8125rem;      /* 13 */
+  --fs-base:0.9375rem;    /* 15 */
+  --fs-body:1.0625rem;    /* 17 */
+  --track:0.1em;
+}
+
+/* ---------- base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{color-scheme:dark;scroll-padding-top:24px}
+body{
+  margin:0;min-height:100vh;display:flex;flex-direction:column;
+  background-color:var(--bg);
+  background-image:radial-gradient(rgba(213,220,228,0.04) 1px,transparent 1px);
+  background-size:26px 26px;
+  color:var(--text);
+  font-family:var(--sans);font-size:var(--fs-body);line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+main{flex:1;width:100%}
+h1,h2,h3{font-family:var(--mono);line-height:1.3;margin:0;font-weight:500}
+p{margin:0}
+svg{display:block;max-width:100%}
+a{color:var(--amber);text-decoration:none}
+button{font:inherit}
+::selection{background:var(--amber);color:var(--ink)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.wrap{max-width:var(--w-max);margin:0 auto;padding-left:24px;padding-right:24px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-999px;top:0;z-index:99;font-family:var(--mono);font-size:var(--fs-ui);background:var(--amber);color:var(--ink);padding:10px 16px;border-radius:2px}
+.skip:focus{left:8px;top:8px}
+
+/* ---------- top bar ---------- */
+.topbar{border-bottom:1px solid var(--line);background-color:var(--bg)}
+.topbar .wrap{display:flex;align-items:baseline;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding-top:22px;padding-bottom:22px}
+.brand{font-family:var(--mono);font-size:0.9375rem;font-weight:500;color:var(--text);letter-spacing:0.02em;white-space:nowrap}
+.brand:hover{color:var(--text)}
+.brand .cursor{color:var(--amber);font-weight:700}
+.nav{display:flex;gap:12px 24px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+.nav a{font-family:var(--mono);font-size:var(--fs-ui);color:var(--muted)}
+.nav a:hover{color:var(--text)}
+.nav a[aria-current="page"]{color:var(--amber)}
+
+/* ---------- log rows ---------- */
+.log{border:1px solid var(--line);border-top:0;border-radius:2px}
+.log-row{display:grid;grid-template-columns:11ch minmax(0,1fr) auto;column-gap:28px;padding:20px 24px;border-top:1px solid var(--line);color:inherit}
+.log-row time{grid-column:1;grid-row:1;font-family:var(--mono);font-size:var(--fs-meta);color:var(--muted);padding-top:4px}
+.log-row .tag{grid-column:2;grid-row:1;font-family:var(--mono);font-size:var(--fs-label);letter-spacing:0.05em;color:var(--amber-dim);padding-top:5px}
+.log-row .title{grid-column:2;grid-row:2;font-size:var(--fs-base);font-weight:500;line-height:1.5;color:var(--text);margin:6px 0}
+.log-row .desc{grid-column:2;grid-row:3;font-size:0.90625rem;line-height:1.65;color:var(--muted);max-width:64ch}
+.log-row .arr{grid-column:3;grid-row:1 / span 3;align-self:center;font-family:var(--mono);color:var(--faint)}
+.log-row:hover{background:var(--panel);box-shadow:inset 2px 0 0 var(--amber)}
+.log-row:hover .title,.log-row:hover .arr{color:var(--amber)}
+.log-row:focus-visible{outline-offset:-2px}
+.log-row[hidden]{display:none}
+
+/* ---------- page head + filters ---------- */
+.page-head{padding-top:64px}
+.page-title{font-size:2rem;letter-spacing:-0.01em}
+.page-title .mark{color:var(--amber)}
+.page-count{font-family:var(--mono);font-size:var(--fs-ui);color:var(--muted);margin-top:12px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 20px}
+.filters button{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:0.04em;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:2px;padding:7px 10px;cursor:pointer}
+.filters button:hover{color:var(--text);border-color:var(--line-2)}
+.filters button[aria-pressed="true"]{color:var(--amber);border-color:rgba(232,163,61,0.55)}
+.listing{padding-bottom:88px}
+
+/* ---------- status bar ---------- */
+.statusbar{border-top:1px solid var(--line)}
+.statusbar .wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;padding-top:18px;padding-bottom:18px;font-family:var(--mono);font-size:var(--fs-label);letter-spacing:0.02em;color:var(--muted)}
+.statusbar .sep{color:var(--faint)}
+.statusbar .ok{color:var(--green)}
+.statusbar .copy{margin-left:auto}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: no-preference){
+  .cursor{animation:blink 1.1s steps(1) infinite}
+  a,button,input,.log-row{transition:color 140ms ease-out,border-color 140ms ease-out,background-color 140ms ease-out,box-shadow 140ms ease-out}
+  .log-row .arr{transition:color 140ms ease-out,transform 140ms ease-out}
+  .log-row:hover .arr{transform:translateX(2px)}
+  @keyframes blink{50%{opacity:0}}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:620px){
+  .wrap{padding-left:20px;padding-right:20px}
+  .page-head{padding-top:48px}
+  .log-row{display:block;padding:18px}
+  .log-row time{display:inline;padding:0;margin-right:14px}
+  .log-row .tag{display:inline;padding:0}
+  .log-row .title{display:block;margin:8px 0 6px}
+  .log-row .desc{display:block}
+  .log-row .arr{display:none}
+  .listing{padding-bottom:64px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">skip to content</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">john young<span class="cursor">_</span></a>
+    <nav aria-label="primary">
+      <ul class="nav">
+        <li><a href="blog.html" aria-current="page">blog</a></li>
+        <li><a href="#">research</a></li>
+        <li><a href="#">subscribe</a></li>
+        <li><a href="#">work-with-me</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap page-head">
+    <h1 class="page-title">blog<span class="mark">_</span></h1>
+    <p class="page-count">12 posts &middot; 6 pillars</p>
+
+    <div class="filters" role="group" aria-label="filter posts by pillar">
+      <button type="button" data-filter="all" aria-pressed="true">[all]</button>
+      <button type="button" data-filter="task-design" aria-pressed="false">[task-design]</button>
+      <button type="button" data-filter="context-engineering" aria-pressed="false">[context-engineering]</button>
+      <button type="button" data-filter="evals-verification" aria-pressed="false">[evals-verification]</button>
+      <button type="button" data-filter="production-operations" aria-pressed="false">[production-operations]</button>
+      <button type="button" data-filter="team-process" aria-pressed="false">[team-process]</button>
+      <button type="button" data-filter="architecture-decisions" aria-pressed="false">[architecture-decisions]</button>
+    </div>
+    <p class="sr-only" aria-live="polite" id="filter-status"></p>
+  </div>
+
+  <div class="wrap listing">
+    <div class="log">
+
+      <a class="log-row" href="post.html" data-pillar="context-engineering">
+        <time datetime="2026-07-06">2026-07-06</time>
+        <span class="tag">[context-engineering]</span>
+        <h2 class="title">Loop Engineering Breaks Your Single-Shot Context Playbook</h2>
+        <span class="desc">A loop was always the agent primitive. The CLAUDE.md budget and JIT retrieval you tuned for one invocation don&rsquo;t fail louder in a loop &mdash; they fail quieter.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="production-operations">
+        <time datetime="2026-06-29">2026-06-29</time>
+        <span class="tag">[production-operations]</span>
+        <h2 class="title">You Can&rsquo;t Cap What You Can&rsquo;t Attribute: Per-Task Cost</h2>
+        <span class="desc">A cost dashboard is a lagging report, not a guardrail. Per-task cost attribution is the schema that makes an agent budget ceiling enforceable before the next call.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="context-engineering">
+        <time datetime="2026-06-22">2026-06-22</time>
+        <span class="tag">[context-engineering]</span>
+        <h2 class="title">Where Just-in-Time Context Retrieval Silently Breaks</h2>
+        <span class="desc">JIT context retrieval isn&rsquo;t free &mdash; it&rsquo;s slower and only as good as your tooling. A ledger of where runtime retrieval breaks and how to design the fallback.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="architecture-decisions">
+        <time datetime="2026-06-15">2026-06-15</time>
+        <span class="tag">[architecture-decisions]</span>
+        <h2 class="title">When One Agent Stops Being Enough: The Isolation Gate</h2>
+        <span class="desc">The trigger for going multi-agent isn&rsquo;t parallel speed &mdash; it&rsquo;s context isolation, and the split costs about 15x the tokens. Two gates decide whether it&rsquo;s worth it.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="team-process">
+        <time datetime="2026-06-08">2026-06-08</time>
+        <span class="tag">[team-process]</span>
+        <h2 class="title">Review Capacity Is the Real Ceiling on Your Agents</h2>
+        <span class="desc">The ceiling on how many AI coding agents your team can run is reviewer-hours, not agent output &mdash; and that number is already in your telemetry.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="evals-verification">
+        <time datetime="2026-06-01">2026-06-01</time>
+        <span class="tag">[evals-verification]</span>
+        <h2 class="title">How to Verify AI Coding Agent Output: A Reviewer&rsquo;s Framework</h2>
+        <span class="desc">Generation got cheap and verification didn&rsquo;t. Six per-task moves for reviewing an agent&rsquo;s diff &mdash; from distrusting its self-report to calibrating by blast radius.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="production-operations">
+        <time datetime="2026-05-25">2026-05-25</time>
+        <span class="tag">[production-operations]</span>
+        <h2 class="title">Tier Your AI Agent&rsquo;s Production Authority by Task Risk</h2>
+        <span class="desc">An AI agent deleted a production database in nine seconds. The fix was never a better prompt &mdash; it was a permission tier the token should never have crossed.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="context-engineering">
+        <time datetime="2026-05-18">2026-05-18</time>
+        <span class="tag">[context-engineering]</span>
+        <h2 class="title">CLAUDE.md Instruction Ceiling: Maintained Config, Not a README</h2>
+        <span class="desc">Your CLAUDE.md doesn&rsquo;t have a length problem, it has a discipline problem. Budget it against a hard instruction ceiling and maintain it like config, not a README.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="architecture-decisions">
+        <time datetime="2026-05-11">2026-05-11</time>
+        <span class="tag">[architecture-decisions]</span>
+        <h2 class="title">Build vs. Buy Agentic AI: Ownership Is the New Decision</h2>
+        <span class="desc">Agentic AI cut the cost of building software, not owning it. Build-vs-buy is now a five-year ownership call &mdash; priced on the maintenance tail, gated on verification.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="architecture-decisions">
+        <time datetime="2026-05-04">2026-05-04</time>
+        <span class="tag">[architecture-decisions]</span>
+        <h2 class="title">What AI Coding Agents Are Actually Good For (And When to Skip)</h2>
+        <span class="desc">The internet ranks AI coding agents endlessly and never answers the only question that matters: can you verify the output, and can you undo it if you can&rsquo;t?</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="task-design">
+        <time datetime="2026-04-27">2026-04-27</time>
+        <span class="tag">[task-design]</span>
+        <h2 class="title">How to Size Tasks for AI Coding Agents</h2>
+        <span class="desc">The real constraint is context, not lines of code. Six heuristics for sizing tasks so AI coding agents ship clean code on the first try, grounded in PR sizing and context-rot research.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+      <a class="log-row" href="post.html" data-pillar="task-design">
+        <time datetime="2026-04-20">2026-04-20</time>
+        <span class="tag">[task-design]</span>
+        <h2 class="title">The Anatomy of a Perfect AI Agent Task</h2>
+        <span class="desc">Context engineering for AI coding agents &mdash; the elements that make a task succeed on the first try, with a fully worked example.</span>
+        <span class="arr" aria-hidden="true">&rarr;</span>
+      </a>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="statusbar">
+    <div class="wrap">
+      <span>research-index: <span class="ok">verified</span> 2026-07-01</span>
+      <span class="sep" aria-hidden="true">&middot;</span>
+      <span>posts: 12</span>
+      <span class="sep" aria-hidden="true">&middot;</span>
+      <span>rss: /blog/index.xml</span>
+      <span class="copy">&copy; 2026 john young</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var buttons = document.querySelectorAll('.filters button');
+  var rows = document.querySelectorAll('.log-row');
+  var status = document.getElementById('filter-status');
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = btn.getAttribute('data-filter');
+      buttons.forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      var n = 0;
+      rows.forEach(function (r) {
+        var show = f === 'all' || r.getAttribute('data-pillar') === f;
+        r.hidden = !show;
+        if (show) n++;
+      });
+      status.textContent = n + (n === 1 ? ' post' : ' posts') + (f === 'all' ? ' shown' : ' tagged [' + f + ']');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

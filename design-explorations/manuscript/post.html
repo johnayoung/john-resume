@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F3EB">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171310">
+<meta name="description" content="A loop was always the agent primitive. The CLAUDE.md budget and JIT retrieval you tuned for one invocation don’t fail louder in a loop — they fail quieter.">
+<title>Loop Engineering Breaks Your Single-Shot Context Playbook — John Young</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%23F7F3EB'/%3E%3Crect%20x='14'%20y='27'%20width='36'%20height='3'%20fill='%2393321F'/%3E%3Crect%20x='14'%20y='35'%20width='36'%20height='3'%20fill='%2393321F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ==================== MANUSCRIPT — design tokens ==================== */
+:root{
+  --paper:#F7F3EB; --surface:#FDFBF5; --leaf:#F1E9D8;
+  --ink:#1D1A16; --muted:#5C554B; --hairline:#E0D8C8; --accent:#93321F;
+  --code-bg:#241D16; --code-ink:#F2E9D8; --code-cmt:#BDAD97;
+  --serif:"Newsreader","Iowan Old Style",Georgia,"Times New Roman",serif;
+  --mono:"Spline Sans Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --fs-display:clamp(2.4rem,5.5vw,4.2rem);
+  --fs-h1:clamp(2.1rem,4vw,2.9rem);
+  --fs-h2:1.625rem;
+  --fs-title:1.375rem;
+  --fs-body:1.1875rem;
+  --fs-small:1.0625rem;
+  --fs-mono:0.8125rem;
+  --fs-label:0.75rem;
+  --track:0.08em;
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:40px; --s6:48px;
+  --s8:64px; --s10:80px; --s12:96px; --s16:128px;
+  --measure:660px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#171310; --surface:#1E1915; --leaf:#1D1813;
+    --ink:#EDE5D6; --muted:#A69C8A; --hairline:#2E2820; --accent:#D57A55;
+    --code-bg:#221B14; --code-ink:#EDE5D6; --code-cmt:#9E9179;
+  }
+}
+
+/* ==================== base ==================== */
+*,*::before,*::after{ box-sizing:border-box; }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--serif); font-size:var(--fs-body); font-weight:400;
+  line-height:1.68; font-optical-sizing:auto; text-rendering:optimizeLegibility;
+}
+h1,h2,h3{ margin:0; font-weight:400; text-wrap:balance; }
+p{ margin:0 0 var(--s3); text-wrap:pretty; }
+strong{ font-weight:600; }
+em{ font-style:italic; }
+::selection{ background:var(--accent); color:var(--paper); }
+a{
+  color:inherit; text-decoration:underline;
+  text-decoration-color:var(--accent); text-decoration-thickness:1px;
+  text-underline-offset:3px;
+}
+a:hover{ color:var(--accent); text-decoration-thickness:2px; }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+[hidden]{ display:none !important; }
+@media (prefers-reduced-motion:no-preference){
+  a, .subscribe button{ transition:color .12s ease, background-color .12s ease, text-decoration-color .12s ease; }
+  .eli5-marker::after{ transition:transform .15s ease; }
+}
+
+/* ==================== utilities ==================== */
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+.skip-link{
+  position:absolute; left:-9999px; top:0; z-index:10;
+  background:var(--surface); color:var(--ink); border:1px solid var(--hairline);
+  padding:10px 16px; font-family:var(--mono); font-size:var(--fs-mono); text-decoration:none;
+}
+.skip-link:focus{ left:16px; top:16px; }
+.shell{ max-width:1080px; margin-inline:auto; padding-inline:clamp(20px,5vw,48px); }
+.mono-label{
+  font-family:var(--mono); font-size:var(--fs-label); font-weight:500;
+  letter-spacing:var(--track); text-transform:uppercase;
+}
+.mono-meta{
+  font-family:var(--mono); font-size:var(--fs-label); font-weight:500;
+  letter-spacing:var(--track);
+}
+.rule-dbl{ height:5px; border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); }
+
+/* ==================== masthead ==================== */
+.masthead{ text-align:center; padding:var(--s5) 0 var(--s3); }
+.wordmark{
+  display:inline-block; font-family:var(--serif); font-size:1.0625rem; font-weight:400;
+  letter-spacing:0.32em; padding-left:0.32em; text-transform:uppercase;
+  color:var(--ink); text-decoration:none;
+}
+.wordmark:hover{ color:var(--accent); text-decoration:none; }
+.site-nav{
+  margin-top:14px; display:flex; flex-wrap:wrap; justify-content:center;
+  column-gap:14px; row-gap:6px;
+  font-size:0.8125rem; letter-spacing:0.16em; text-transform:uppercase;
+}
+.site-nav a{ color:var(--muted); text-decoration:none; padding:2px; }
+.site-nav a:hover{ color:var(--accent); text-decoration:underline; text-decoration-thickness:1px; }
+.site-nav a[aria-current="page"]{ color:var(--accent); }
+.site-nav .sep{ color:var(--muted); opacity:.45; user-select:none; }
+
+/* ==================== section heads ==================== */
+.section-head{
+  display:flex; align-items:center; gap:var(--s2);
+  margin:0 0 var(--s4); color:var(--accent);
+}
+.section-head::after{ content:""; flex:1; border-top:1px solid var(--hairline); }
+
+/* ==================== article layout: content column + margin notes ==================== */
+.article{ max-width:var(--measure); margin:var(--s8) auto 0; }
+@media (min-width:1200px){
+  .article{
+    display:grid;
+    grid-template-columns:var(--measure) 220px;
+    column-gap:56px;
+    max-width:936px;
+  }
+  .article > *{ grid-column:1; min-width:0; }
+  .article > .post-header{ grid-column:1 / -1; }
+  .article > .sidenote{ grid-column:2; align-self:start; }
+}
+
+/* ==================== post header ==================== */
+.post-header{ border-bottom:1px solid var(--hairline); padding-bottom:var(--s4); margin-bottom:var(--s5); }
+.post-kicker{ color:var(--accent); margin:0 0 var(--s2); }
+.post-title{ font-size:var(--fs-display); line-height:1.12; letter-spacing:-0.018em; margin:0 0 var(--s3); }
+.post-meta{ color:var(--muted); margin:0; }
+
+/* ==================== abstract ==================== */
+.abstract{
+  border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);
+  padding:var(--s4) 0; margin-bottom:var(--s4);
+}
+.abstract-label{ color:var(--accent); margin:0 0 var(--s3); }
+.abstract ol{ list-style:none; margin:0; padding:0; counter-reset:abs; }
+.abstract li{
+  counter-increment:abs; position:relative; padding-left:34px;
+  font-size:var(--fs-small); line-height:1.62; margin-bottom:var(--s2);
+}
+.abstract li:last-child{ margin-bottom:0; }
+.abstract li::before{
+  content:counter(abs); position:absolute; left:0; top:3px;
+  font-family:var(--mono); font-size:var(--fs-mono); font-weight:500; color:var(--accent);
+}
+
+/* ==================== ELI5 tipped-in leaf ==================== */
+.eli5{ background:var(--leaf); border:1px solid var(--hairline); margin:0 0 var(--s6); }
+.eli5 summary{
+  list-style:none; display:flex; flex-wrap:wrap; align-items:center;
+  gap:var(--s1) var(--s2); padding:18px 22px; cursor:pointer;
+}
+.eli5 summary::-webkit-details-marker{ display:none; }
+.eli5-title{ font-style:italic; font-size:var(--fs-body); }
+.eli5-hint{ color:var(--muted); margin-left:auto; white-space:nowrap; }
+.eli5-marker{ position:relative; width:13px; height:13px; flex:none; }
+.eli5-marker::before,
+.eli5-marker::after{ content:""; position:absolute; background:var(--accent); }
+.eli5-marker::before{ left:0; right:0; top:6px; height:1px; }
+.eli5-marker::after{ top:0; bottom:0; left:6px; width:1px; }
+.eli5[open] .eli5-marker::after{ transform:scaleY(0); }
+.eli5-body{ padding:18px 22px 6px; border-top:1px solid var(--hairline); }
+.eli5-body p{ font-size:var(--fs-small); line-height:1.65; margin-bottom:var(--s2); }
+.eli5-body p:last-child{ margin-bottom:var(--s2); }
+
+/* ==================== article body ==================== */
+.body-h2{ font-size:var(--fs-h2); font-weight:500; line-height:1.28; letter-spacing:-0.01em; margin:var(--s5) 0 var(--s3); }
+.opening::first-letter{
+  float:left; color:var(--accent);
+  font-size:5.2em; line-height:0.76; font-weight:400;
+  padding:0.06em 0.12em 0 0;
+}
+@media (max-width:560px){
+  .opening::first-letter{ font-size:3.8em; line-height:0.8; }
+}
+code{ font-family:var(--mono); font-size:0.85em; letter-spacing:0; }
+b.src{ font-weight:600; }
+sup.ref{ line-height:0; }
+sup.ref a{
+  font-family:var(--mono); font-size:0.72em; font-weight:500;
+  color:var(--accent); text-decoration:none; padding:0 1px;
+}
+sup.ref a:hover{ text-decoration:underline; text-decoration-thickness:1px; }
+
+/* margin notes */
+.sidenote{
+  display:none;
+  font-family:var(--mono); font-size:var(--fs-label); font-weight:400;
+  line-height:1.6; letter-spacing:0.01em; color:var(--muted);
+  border-top:1px solid var(--hairline); padding-top:8px; margin-bottom:var(--s3);
+}
+@media (min-width:1200px){ .sidenote{ display:block; } }
+.sidenote .sn-num{ font-weight:500; color:var(--accent); }
+
+/* code block — paper-inverse */
+.codeblock{ margin:var(--s2) 0 var(--s4); background:var(--code-bg); border:1px solid var(--hairline); }
+.codeblock pre{ margin:0; padding:20px 24px; overflow-x:auto; }
+.codeblock code{
+  font-family:var(--mono); font-size:var(--fs-mono); line-height:1.75;
+  color:var(--code-ink); letter-spacing:0.01em;
+}
+.codeblock .cmt{ color:var(--code-cmt); }
+
+/* quotation */
+.pullquote{ margin:var(--s5) 0; padding:2px 0 2px var(--s3); border-left:1px solid var(--accent); }
+.pullquote p{
+  font-size:1.375rem; line-height:1.45; font-style:italic;
+  letter-spacing:-0.005em; margin-bottom:var(--s2);
+}
+.pullquote footer{ font-family:var(--mono); font-size:var(--fs-mono); color:var(--muted); }
+.pullquote footer b.src{ font-weight:500; color:var(--ink); }
+
+/* audit ledger */
+.audit{ list-style:none; margin:0 0 var(--s4); padding:0; }
+.audit li{ border-top:1px solid var(--hairline); padding:14px 0; line-height:1.62; }
+.audit li:last-child{ border-bottom:1px solid var(--hairline); }
+.audit b{ font-weight:600; }
+
+/* author's judgment panel */
+.judgment{ background:var(--surface); border:1px solid var(--hairline); padding:var(--s3) var(--s4); margin:var(--s5) 0; }
+.judgment-label{ color:var(--accent); margin:0 0 10px; }
+.judgment p{ margin:0; font-size:var(--fs-small); line-height:1.65; }
+
+/* ==================== sources ==================== */
+.sources{ margin-top:var(--s8); }
+.source-list{ list-style:none; margin:0; padding:0; counter-reset:src; }
+.source-list li{
+  counter-increment:src; position:relative;
+  padding:12px 0 12px 40px; border-bottom:1px solid var(--hairline);
+  font-size:var(--fs-small); line-height:1.5; scroll-margin-top:var(--s4);
+}
+.source-list li:first-child{ border-top:1px solid var(--hairline); }
+.source-list li::before{
+  content:counter(src); position:absolute; left:0; top:16px;
+  font-family:var(--mono); font-size:var(--fs-mono); font-weight:500; color:var(--accent);
+}
+.source-list li:target{ background:var(--surface); box-shadow:0 0 0 8px var(--surface); }
+.source-list a{ font-weight:500; }
+.src-url{
+  display:block; margin-top:2px;
+  font-family:var(--mono); font-size:var(--fs-label); letter-spacing:0.02em;
+  color:var(--muted); overflow-wrap:anywhere;
+}
+.back-link{ margin:var(--s6) 0 0; }
+.back-link a{ color:var(--accent); text-decoration:none; }
+.back-link a:hover{ text-decoration:underline; text-decoration-thickness:1px; }
+
+/* ==================== colophon footer ==================== */
+.colophon{ margin-top:var(--s16); padding-bottom:var(--s10); }
+.colophon-inner{ text-align:center; padding-top:var(--s6); }
+.wordmark-sm{ font-size:0.875rem; letter-spacing:0.3em; padding-left:0.3em; }
+.subscribe{ margin:var(--s4) auto 0; display:flex; justify-content:center; gap:var(--s1); max-width:420px; }
+.subscribe input{
+  flex:1; min-width:0; background:var(--surface); color:var(--ink);
+  border:1px solid var(--hairline); border-radius:0;
+  font-family:var(--serif); font-size:1rem; padding:10px 14px;
+}
+.subscribe input::placeholder{ color:var(--muted); opacity:.75; }
+.subscribe button{
+  font-family:var(--mono); font-size:var(--fs-label); font-weight:500;
+  letter-spacing:var(--track); text-transform:uppercase;
+  color:var(--accent); background:transparent;
+  border:1px solid var(--accent); border-radius:0;
+  padding:10px 18px; cursor:pointer;
+}
+.subscribe button:hover{ background:var(--accent); color:var(--paper); }
+@media (max-width:430px){
+  .subscribe{ flex-direction:column; }
+  .subscribe button{ padding:12px 18px; }
+}
+.subscribe-note{ margin:12px 0 0; font-size:0.9375rem; font-style:italic; color:var(--muted); }
+.colophon-links{ margin:var(--s4) 0 0; display:flex; flex-wrap:wrap; justify-content:center; align-items:baseline; gap:6px 12px; color:var(--muted); }
+.colophon-links a{ color:var(--muted); text-decoration:none; text-transform:uppercase; }
+.colophon-links a:hover{ color:var(--accent); text-decoration:underline; text-decoration-thickness:1px; }
+.colophon-links .sep{ opacity:.45; user-select:none; }
+.colophon-meta{ margin:var(--s2) 0 0; color:var(--muted); text-transform:uppercase; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="shell">
+    <div class="masthead">
+      <a class="wordmark" href="index.html">John Young</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="blog.html">Writing</a><span class="sep" aria-hidden="true">·</span>
+        <a href="#">Research</a><span class="sep" aria-hidden="true">·</span>
+        <a href="#">Subscribe</a><span class="sep" aria-hidden="true">·</span>
+        <a href="#">Work with me</a>
+      </nav>
+    </div>
+    <div class="rule-dbl" role="presentation"></div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="shell">
+    <article class="article">
+
+      <header class="post-header">
+        <p class="post-kicker mono-label">Context Engineering</p>
+        <h1 class="post-title">Loop Engineering Breaks Your Single-Shot Context Playbook</h1>
+        <p class="post-meta mono-meta"><time datetime="2026-07-06">JULY 6, 2026</time> · 14 MIN READ</p>
+      </header>
+
+      <section class="abstract" aria-labelledby="abstract-label">
+        <h2 class="abstract-label mono-label" id="abstract-label">Abstract</h2>
+        <ol>
+          <li>A loop was always the agent primitive — gather, act, verify, repeat — so “loop engineering” isn’t a new discipline; it’s your single-invocation habits run many times, unattended, and the breakage lives in those habits, not in the one line of loop syntax.</li>
+          <li>The CLAUDE.md budget and just-in-time retrieval you scoped to one context window now re-pay on every iteration: context accumulates and rots each turn, and the model conditions on its own earlier mistakes — so a bad call at iteration 12 gets read as established fact and built on for thirty turns while the terminal shows steady, confident progress.</li>
+          <li>A clean one-shot demo is the weakest evidence you have, because a loop is a different reliability regime — single-shot accuracy doesn’t predict loop reliability — so before running unattended, add the two things a single prompt never needed: an explicit stop (max-iterations, no-progress, spend cap) and externalized state (a progress file).</li>
+        </ol>
+      </section>
+
+      <details class="eli5">
+        <summary>
+          <span class="eli5-title">The plain-language edition</span>
+          <span class="eli5-hint mono-label">No background needed · 7 min</span>
+          <span class="eli5-marker" aria-hidden="true"></span>
+        </summary>
+        <div class="eli5-body">
+          <p>Picture a capable helper who forgets everything the moment they finish a task. Hand them one job, they do it, they check it, and then their memory wipes clean. To keep going, they start fresh and read only what’s been written down.</p>
+          <p>For a while, people used these helpers one job at a time: you give a task, you check the result. The new buzzword — call it “running the helper on its own” — just means you stop standing over their shoulder pressing “go” between tasks. You leave a note, walk away for the evening, and let them work task after task all night.</p>
+          <p>Nothing about the helper changed. What changed is that every shortcut you picked up while handing over one task at a time now has to survive being repeated fifty times in a row, unattended — and some of them don’t.</p>
+        </div>
+      </details>
+
+      <p class="opening">An agent was “just an LLM using tools based on environmental feedback in a loop” a year and a half before anyone sold you “loop engineering” (<b class="src">Anthropic: Building Effective AI Agents</b><sup class="ref"><a href="#src-1" aria-label="Source 1">1</a></sup>). The term is new; the primitive isn’t — and neither is the trap. The CLAUDE.md budget and just-in-time retrieval you spent last quarter tuning for a single invocation don’t fail louder when the unit of work becomes many. They fail quieter, and pointing more autonomy at the same bloated context makes it worse, not better.</p>
+
+      <aside class="sidenote" aria-hidden="true"><b class="sn-num">1</b>&nbsp;Anthropic, “Building Effective AI Agents” — the December 2024 definition: an LLM using tools in a loop.</aside>
+
+      <h2 class="body-h2">Stop Shopping for a New Skill — “Loop Engineering” Is the Agent Primitive You Already Had, Run Many Times</h2>
+
+      <p>Before you buy loop engineering as a greenfield discipline, look at what the loop actually is: the thing an agent already was. Anthropic’s definition has not moved since December 2024 — agents “are typically just LLMs using tools based on environmental feedback in a loop”. <b class="src">Simon Willison</b><sup class="ref"><a href="#src-2" aria-label="Source 2">2</a></sup> was calling the design of that loop “a critical new skill to develop” nine months before the label caught on. The <b class="src">Claude Agent SDK</b> draws the identical cycle as four steps — “gather context → take action → verify work → repeat”.</p>
+
+      <aside class="sidenote" aria-hidden="true"><b class="sn-num">2</b>&nbsp;Simon Willison, “Designing agentic loops” — named loop design “a critical new skill” in September 2025.</aside>
+
+      <p>So when <b class="src">Addy Osmani</b><sup class="ref"><a href="#src-3" aria-label="Source 3">3</a></sup> defines the new term — “Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead” — read it as a shift in who runs the loop, not the arrival of a new mechanism. The concrete version of “stop pressing enter” is the artifact this whole post keeps returning to: the unattended overnight loop.</p>
+
+      <aside class="sidenote" aria-hidden="true"><b class="sn-num">3</b>&nbsp;Addy Osmani, “Loop Engineering” — origin of the term: design the system that prompts the agent for you.</aside>
+
+      <figure class="codeblock">
+        <pre><code><span class="cmt"># The Ralph loop — a fresh context every iteration, state on disk.</span>
+while :; do cat PROMPT.md | agent; done</code></pre>
+      </figure>
+
+      <p>You point it at a <code>PROMPT.md</code>, walk away in the evening, and read what it built in the morning — the technique <b class="src">Geoffrey Huntley</b><sup class="ref"><a href="#src-4" aria-label="Source 4">4</a></sup> popularized as “Ralph”. Nothing in that line is new. It is your single-invocation agent, wrapped in <code>while :; do ... done</code> and handed the keys. The frame is therefore a migration, not a blank slate: <strong>treat loop engineering as your single-invocation habits run many times, not a discipline you learn from zero.</strong></p>
+
+      <aside class="sidenote" aria-hidden="true"><b class="sn-num">4</b>&nbsp;Geoffrey Huntley, “Ralph” — the overnight while-loop: fresh context per pass, state kept on disk.</aside>
+
+      <p>Why it matters now is measurable — the length of tasks agents can complete autonomously “with 50% reliability has been doubling approximately every 7 months for the last 6 years” (<b class="src">METR</b><sup class="ref"><a href="#src-5" aria-label="Source 5">5</a></sup>). The loops are getting longer, so an assumption that was merely wrong on turn one gets expensive by turn fifty.</p>
+
+      <aside class="sidenote" aria-hidden="true"><b class="sn-num">5</b>&nbsp;METR, “Measuring AI Ability to Complete Long Tasks” — autonomous task length doubles about every 7 months.</aside>
+
+      <h2 class="body-h2">Audit Your CLAUDE.md as a Per-Iteration Tax, Not a One-Time Cost</h2>
+
+      <blockquote class="pullquote">
+        <p>“An agent running in a loop generates more and more data that could be relevant for the next turn of inference, and this information must be cyclically refined.”</p>
+        <footer>— <b class="src">Anthropic: Effective context engineering for AI agents</b><sup class="ref"><a href="#src-7" aria-label="Source 7">7</a></sup></footer>
+      </blockquote>
+
+      <p><em>Refined</em> is the operative word — the context does not refine itself. Left alone it grows by default. The scale that always-on context can reach is easy to underestimate: <b class="src">Anthropic</b><sup class="ref"><a href="#src-8" aria-label="Source 8">8</a></sup> reports having “seen tool definitions consume 134K tokens before optimization”. That figure is tool definitions, not your CLAUDE.md — but it is the same shape of problem, an always-on block riding every inference pass whether or not this turn needs it. Here is the audit, applied line by line to the file your overnight loop is pointed at:</p>
+
+      <ul class="audit">
+        <li><b>When a line is architecture the agent can read from the repo → cut it.</b> It is context burn re-paid every iteration for something a grep would surface on demand.</li>
+        <li><b>When a line is a “just in case” preference no real failure ever earned → cut it.</b> In one invocation it was one distractor; across fifty iterations it is fifty.</li>
+        <li><b>When a line is a genuine constraint that must hold → keep it,</b> phrase it as a runnable check, and move it as high in the file as it will go, because position decays.</li>
+        <li><b>When a line is a hard safety boundary → it does not belong in an advisory file at all;</b> a loop with no human at the keyboard is exactly the run where “the agent usually respects this” is not good enough.</li>
+      </ul>
+
+      <p>The reliability cost of skipping that audit is measured, not asserted. <b class="src">Chroma</b><sup class="ref"><a href="#src-6" aria-label="Source 6">6</a></sup>’s study across 18 models and 194,480 calls found that “models do not use their context uniformly; instead, their performance grows increasingly unreliable as input length grows”. <strong>A single invocation pays context rot once; a loop pays it on every turn, and the bill compounds with the output the loop keeps adding.</strong></p>
+
+      <aside class="sidenote" aria-hidden="true"><b class="sn-num">6</b>&nbsp;Chroma, “Context Rot” — 18 models, 194,480 calls: performance grows unreliable as input length grows.</aside>
+
+      <aside class="judgment">
+        <p class="judgment-label mono-label">Author’s judgment</p>
+        <p>That a loop fails quieter than the demo — not just more often — is my inference, not a measured result. It follows from two sourced premises: models self-condition on their own prior errors (<b class="src">Sinha et al.</b><sup class="ref"><a href="#src-9" aria-label="Source 9">9</a></sup>), and autonomous runs carry “the potential for compounding errors” (<b class="src">Anthropic</b><sup class="ref"><a href="#src-1" aria-label="Source 1">1</a></sup>). The clean first turn is the least informative data point you have about the fiftieth.</p>
+      </aside>
+
+      <p>Here is that mechanism on the running artifact. The overnight loop makes a bad call at iteration 12 — say it edits <code>auth.go</code> against a misread of the token-refresh flow and commits it. Every iteration after 12 opens a fresh context, reads the repo as it now stands, and finds that wrong <code>auth.go</code> sitting there as established fact. The loop is no longer debugging its mistake; it is building on it. By 3 a.m. it has spent thirty iterations making the codebase consistent with a decision it never should have made — and the terminal shows steady, confident progress the whole time.</p>
+
+      <section class="sources" aria-labelledby="sources-title">
+        <h2 class="section-head mono-label" id="sources-title"><span>Sources</span></h2>
+        <ol class="source-list">
+          <li id="src-1"><a href="https://www.anthropic.com/research/building-effective-agents">Anthropic — Building Effective AI Agents</a><span class="src-url">anthropic.com/research/building-effective-agents</span></li>
+          <li id="src-2"><a href="https://simonwillison.net/2025/Sep/30/designing-agentic-loops/">Simon Willison — Designing agentic loops</a><span class="src-url">simonwillison.net</span></li>
+          <li id="src-3"><a href="https://addyosmani.com/blog/loop-engineering/">Addy Osmani — Loop Engineering</a><span class="src-url">addyosmani.com</span></li>
+          <li id="src-4"><a href="https://ghuntley.com/ralph">Geoffrey Huntley — Ralph Wiggum as a “software engineer”</a><span class="src-url">ghuntley.com/ralph</span></li>
+          <li id="src-5"><a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">METR — Measuring AI Ability to Complete Long Tasks</a><span class="src-url">metr.org</span></li>
+          <li id="src-6"><a href="https://research.trychroma.com/context-rot">Chroma — Context Rot</a><span class="src-url">trychroma.com/research/context-rot</span></li>
+          <li id="src-7"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic — Effective context engineering for AI agents</a><span class="src-url">anthropic.com/engineering/effective-context-engineering-for-ai-agents</span></li>
+          <li id="src-8"><a href="https://www.anthropic.com/engineering/advanced-tool-use">Anthropic — Advanced tool use</a><span class="src-url">anthropic.com/engineering/advanced-tool-use</span></li>
+          <li id="src-9"><a href="https://arxiv.org/abs/2509.09677">Sinha et al. — The Illusion of Diminishing Returns</a><span class="src-url">arxiv.org/abs/2509.09677</span></li>
+        </ol>
+      </section>
+
+      <p class="back-link mono-label"><a href="blog.html">← All essays</a></p>
+
+    </article>
+  </div>
+</main>
+
+<footer class="colophon">
+  <div class="shell">
+    <div class="rule-dbl" role="presentation"></div>
+    <div class="colophon-inner">
+      <a class="wordmark wordmark-sm" href="index.html">John Young</a>
+      <form class="subscribe" action="#" method="post">
+        <label class="sr-only" for="subscribe-email">Email address</label>
+        <input type="email" id="subscribe-email" name="email" autocomplete="email" required placeholder="you@example.com">
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="subscribe-note">One essay a week, research-backed. Unsubscribe anytime.</p>
+      <p class="colophon-links mono-meta">
+        <a href="https://github.com/johnayoung">GitHub</a><span class="sep" aria-hidden="true">·</span><a href="https://linkedin.com/in/jyoung1985">LinkedIn</a><span class="sep" aria-hidden="true">·</span><a href="mailto:john.anto.young@gmail.com">Email</a>
+      </p>
+      <p class="colophon-meta mono-meta">© 2026 John Young · Set in Newsreader &amp; Spline Sans Mono</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

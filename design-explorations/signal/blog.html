@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Research-backed notes on agentic engineering, AI systems, and DeFi infrastructure. Twelve essays across six pillars.">
+<title>Writing — John Young</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%232545FF'/%3E%3Cpath%20d='M20%2016h8v24a8%208%200%200%201-8%208h-4v-8h4z'%20fill='%23fff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ---------- Tokens ---------- */
+:root{
+  --bg:#FBFBF9;
+  --ink:#101010;
+  --sec:#63635E;
+  --rule:#E3E3DC;
+  --rule-strong:#C9C9BD;
+  --card:#FFFFFF;
+  --accent:#2545FF;
+  --accent-down:#1F38DB;
+  --on-accent:#FFFFFF;
+  --band-bg:#101010;
+  --band-ink:#F2F2EF;
+  --band-sec:#A6A69D;
+  --band-rule:#2C2C2C;
+  --band-accent:#7B8CFF;
+  --display:"Inter Tight","Inter",system-ui,sans-serif;
+  --body:"Inter",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --pad:clamp(20px,4vw,48px);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0F0F0E;
+    --ink:#ECECEA;
+    --sec:#9C9C94;
+    --rule:#262626;
+    --rule-strong:#414141;
+    --card:#161616;
+    --accent:#7B8CFF;
+    --accent-down:#94A2FF;
+    --on-accent:#0F0F0E;
+    --band-bg:#050505;
+  }
+}
+
+/* ---------- Base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  font-weight:400;
+  line-height:1.65;
+}
+::selection{background:var(--accent);color:var(--on-accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3,p{margin:0}
+a{color:inherit}
+[hidden]{display:none !important}
+
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{
+  position:absolute;left:16px;top:-100px;z-index:100;
+  background:var(--ink);color:var(--bg);
+  padding:10px 16px;text-decoration:none;
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.skip-link:focus{top:16px}
+
+/* ---------- Ruled grid ---------- */
+.container{
+  width:min(1120px,calc(100% - 48px));
+  margin-inline:auto;
+  border-inline:1px solid var(--rule);
+  padding-inline:var(--pad);
+}
+.block{border-top:1px solid var(--rule)}
+
+/* ---------- Type helpers ---------- */
+.mono{
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* ---------- Links ---------- */
+.sweep{
+  text-decoration:none;
+  background-image:linear-gradient(currentColor,currentColor);
+  background-repeat:no-repeat;
+  background-size:0 1px;
+  background-position:0 100%;
+  padding-bottom:2px;
+}
+.sweep:hover{background-size:100% 1px}
+
+/* ---------- Header ---------- */
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px 24px;padding-block:20px;
+}
+.wordmark{
+  font-family:var(--display);font-size:21px;font-weight:700;
+  letter-spacing:-.02em;line-height:1;
+  color:var(--ink);text-decoration:none;
+}
+.wordmark:hover{color:var(--accent)}
+.site-nav{display:flex;flex-wrap:wrap;gap:12px 24px}
+.nav-link{
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
+}
+.nav-link[aria-current=page]{background-size:100% 1px}
+
+/* ---------- Page hero ---------- */
+.page-hero{padding-block:clamp(64px,9vw,112px) clamp(48px,6vw,72px)}
+.page-title{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(3rem,7vw,5rem);
+  line-height:1.04;letter-spacing:-.03em;
+  margin-bottom:24px;
+}
+.page-sub{max-width:58ch;color:var(--sec);margin-bottom:28px}
+.page-meta{
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--sec);
+}
+
+/* ---------- Filters ---------- */
+.filter-bar{padding-block:20px}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.chip-btn{
+  appearance:none;background:transparent;
+  border:1px solid var(--rule);border-radius:0;
+  color:var(--sec);padding:9px 14px;cursor:pointer;
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.chip-btn:hover{border-color:var(--ink);color:var(--ink)}
+.chip-btn.is-active{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* ---------- Rows ---------- */
+.list-pad{padding-block:32px 72px}
+.rows{
+  list-style:none;margin:0;padding:0;
+  margin-inline:calc(-1 * var(--pad));
+  border-bottom:1px solid var(--rule);
+}
+.row{
+  display:grid;
+  grid-template-columns:56px 1fr max-content;
+  gap:8px 28px;align-items:start;
+  padding:30px var(--pad);
+  border-top:1px solid var(--rule);
+  text-decoration:none;color:inherit;
+}
+.row:hover{background:var(--card)}
+.row:focus-visible{outline-offset:-2px}
+.row-idx{
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.08em;color:var(--sec);padding-top:8px;
+}
+.row-title{
+  font-family:var(--display);font-weight:600;
+  font-size:1.5rem;line-height:1.25;letter-spacing:-.02em;
+  margin-bottom:8px;
+}
+.row-desc{font-size:15px;line-height:1.6;color:var(--sec);max-width:58ch;margin-bottom:16px}
+.chip{
+  display:inline-block;border:1px solid var(--rule);
+  padding:5px 9px;
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--sec);
+}
+.row-side{
+  display:flex;flex-direction:column;align-items:flex-end;
+  justify-content:space-between;align-self:stretch;gap:16px;
+  padding-top:8px;
+}
+.row-side time{
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.08em;color:var(--sec);white-space:nowrap;
+}
+.arrow{font-family:var(--mono);font-size:16px;line-height:1;color:var(--sec)}
+.row:hover .arrow{color:var(--accent)}
+
+/* ---------- Footer ---------- */
+.footer-inner{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;
+  padding-block:26px;
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--sec);
+}
+
+/* ---------- Motion ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .sweep{transition:background-size 160ms ease-out}
+  .wordmark,.nav-link{transition:color 160ms ease-out}
+  .row{transition:background-color 160ms ease-out}
+  .arrow{transition:transform 160ms ease-out,color 160ms ease-out}
+  .row:hover .arrow{transform:translateX(4px)}
+  .chip-btn{transition:background-color 160ms ease-out,border-color 160ms ease-out,color 160ms ease-out}
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:700px){
+  .container{width:100%;border-inline:0;padding-inline:20px}
+  .row{grid-template-columns:2.5rem 1fr}
+  .row-title{font-size:1.25rem}
+  .row-side{
+    grid-column:2;flex-direction:row;align-items:center;
+    justify-content:space-between;padding-top:2px;
+  }
+}
+@media (max-width:560px){
+  .header-inner{flex-direction:column;align-items:flex-start;gap:14px}
+  .site-nav{gap:10px 18px}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="container header-inner">
+    <a class="wordmark" href="index.html" aria-label="John Young — home">JY&#8212;</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a class="nav-link sweep" href="blog.html" aria-current="page">Writing</a>
+      <a class="nav-link sweep" href="#">Research</a>
+      <a class="nav-link sweep" href="index.html#subscribe">Subscribe</a>
+      <a class="nav-link sweep" href="#">Work with me</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Page hero -->
+  <section class="block" aria-labelledby="page-title">
+    <div class="container page-hero">
+      <h1 class="page-title" id="page-title">Writing</h1>
+      <p class="page-sub">Research-backed notes on agentic engineering, AI systems, and DeFi infrastructure.</p>
+      <p class="page-meta">12 essays &#183; 6 pillars &#183; Since April 2026</p>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section class="block" aria-label="Filter essays">
+    <div class="container filter-bar">
+      <div class="filters" role="group" aria-label="Filter essays by pillar">
+        <button class="chip-btn is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip-btn" type="button" data-filter="task-design" aria-pressed="false">Task Design</button>
+        <button class="chip-btn" type="button" data-filter="context-engineering" aria-pressed="false">Context Engineering</button>
+        <button class="chip-btn" type="button" data-filter="evals-verification" aria-pressed="false">Evals &amp; Verification</button>
+        <button class="chip-btn" type="button" data-filter="production-operations" aria-pressed="false">Production Operations</button>
+        <button class="chip-btn" type="button" data-filter="team-process" aria-pressed="false">Team &amp; Process</button>
+        <button class="chip-btn" type="button" data-filter="architecture-decisions" aria-pressed="false">Architecture Decisions</button>
+      </div>
+      <p class="visually-hidden" id="filter-status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- All essays -->
+  <section class="block" aria-label="All essays">
+    <div class="container list-pad">
+      <ul class="rows" id="essay-list">
+        <li data-pillar="context-engineering">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">01</span>
+            <div class="row-main">
+              <h2 class="row-title">Loop Engineering Breaks Your Single-Shot Context Playbook</h2>
+              <p class="row-desc">A loop was always the agent primitive. The CLAUDE.md budget and JIT retrieval you tuned for one invocation don&#8217;t fail louder in a loop &#8212; they fail quieter.</p>
+              <span class="chip">Context Engineering</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-07-06">Jul 6, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="production-operations">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">02</span>
+            <div class="row-main">
+              <h2 class="row-title">You Can&#8217;t Cap What You Can&#8217;t Attribute: Per-Task Cost</h2>
+              <p class="row-desc">A cost dashboard is a lagging report, not a guardrail. Per-task cost attribution is the schema that makes an agent budget ceiling enforceable before the next call.</p>
+              <span class="chip">Production Operations</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-06-29">Jun 29, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="context-engineering">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">03</span>
+            <div class="row-main">
+              <h2 class="row-title">Where Just-in-Time Context Retrieval Silently Breaks</h2>
+              <p class="row-desc">JIT context retrieval isn&#8217;t free &#8212; it&#8217;s slower and only as good as your tooling. A ledger of where runtime retrieval breaks and how to design the fallback.</p>
+              <span class="chip">Context Engineering</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-06-22">Jun 22, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="architecture-decisions">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">04</span>
+            <div class="row-main">
+              <h2 class="row-title">When One Agent Stops Being Enough: The Isolation Gate</h2>
+              <p class="row-desc">The trigger for going multi-agent isn&#8217;t parallel speed &#8212; it&#8217;s context isolation, and the split costs about 15x the tokens. Two gates decide whether it&#8217;s worth it.</p>
+              <span class="chip">Architecture Decisions</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-06-15">Jun 15, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="team-process">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">05</span>
+            <div class="row-main">
+              <h2 class="row-title">Review Capacity Is the Real Ceiling on Your Agents</h2>
+              <p class="row-desc">The ceiling on how many AI coding agents your team can run is reviewer-hours, not agent output &#8212; and that number is already in your telemetry.</p>
+              <span class="chip">Team &amp; Process</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-06-08">Jun 8, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="evals-verification">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">06</span>
+            <div class="row-main">
+              <h2 class="row-title">How to Verify AI Coding Agent Output: A Reviewer&#8217;s Framework</h2>
+              <p class="row-desc">Generation got cheap and verification didn&#8217;t. Six per-task moves for reviewing an agent&#8217;s diff &#8212; from distrusting its self-report to calibrating by blast radius.</p>
+              <span class="chip">Evals &amp; Verification</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-06-01">Jun 1, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="production-operations">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">07</span>
+            <div class="row-main">
+              <h2 class="row-title">Tier Your AI Agent&#8217;s Production Authority by Task Risk</h2>
+              <p class="row-desc">An AI agent deleted a production database in nine seconds. The fix was never a better prompt &#8212; it was a permission tier the token should never have crossed.</p>
+              <span class="chip">Production Operations</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-05-25">May 25, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="context-engineering">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">08</span>
+            <div class="row-main">
+              <h2 class="row-title">CLAUDE.md Instruction Ceiling: Maintained Config, Not a README</h2>
+              <p class="row-desc">Your CLAUDE.md doesn&#8217;t have a length problem, it has a discipline problem. Budget it against a hard instruction ceiling and maintain it like config, not a README.</p>
+              <span class="chip">Context Engineering</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-05-18">May 18, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="architecture-decisions">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">09</span>
+            <div class="row-main">
+              <h2 class="row-title">Build vs. Buy Agentic AI: Ownership Is the New Decision</h2>
+              <p class="row-desc">Agentic AI cut the cost of building software, not owning it. Build-vs-buy is now a five-year ownership call &#8212; priced on the maintenance tail, gated on verification.</p>
+              <span class="chip">Architecture Decisions</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-05-11">May 11, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="architecture-decisions">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">10</span>
+            <div class="row-main">
+              <h2 class="row-title">What AI Coding Agents Are Actually Good For (And When to Skip)</h2>
+              <p class="row-desc">The internet ranks AI coding agents endlessly and never answers the only question that matters: can you verify the output, and can you undo it if you can&#8217;t?</p>
+              <span class="chip">Architecture Decisions</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-05-04">May 4, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="task-design">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">11</span>
+            <div class="row-main">
+              <h2 class="row-title">How to Size Tasks for AI Coding Agents</h2>
+              <p class="row-desc">The real constraint is context, not lines of code. Six heuristics for sizing tasks so AI coding agents ship clean code on the first try, grounded in PR sizing and context-rot research.</p>
+              <span class="chip">Task Design</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-04-27">Apr 27, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+        <li data-pillar="task-design">
+          <a class="row" href="post.html">
+            <span class="row-idx" aria-hidden="true">12</span>
+            <div class="row-main">
+              <h2 class="row-title">The Anatomy of a Perfect AI Agent Task</h2>
+              <p class="row-desc">Context engineering for AI coding agents &#8212; the elements that make a task succeed on the first try, with a fully worked example.</p>
+              <span class="chip">Task Design</span>
+            </div>
+            <span class="row-side">
+              <time datetime="2026-04-20">Apr 20, 2026</time>
+              <span class="arrow" aria-hidden="true">&#8594;</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="block">
+  <div class="container footer-inner">
+    <p>&#169; 2026 John Young</p>
+    <p>jyoung.dev</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var chips = document.querySelectorAll(".chip-btn");
+  var items = document.querySelectorAll("#essay-list > li");
+  var status = document.getElementById("filter-status");
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      chips.forEach(function (c) {
+        var on = c === chip;
+        c.classList.toggle("is-active", on);
+        c.setAttribute("aria-pressed", String(on));
+      });
+      var filter = chip.getAttribute("data-filter");
+      var shown = 0;
+      items.forEach(function (item) {
+        var hide = filter !== "all" && item.getAttribute("data-pillar") !== filter;
+        item.hidden = hide;
+        if (!hide) shown++;
+      });
+      status.textContent = shown + " of " + items.length + " essays shown";
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

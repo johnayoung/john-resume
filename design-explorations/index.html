@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>jyoung.dev — design explorations</title>
+<style>
+  :root {
+    --bg: #111113;
+    --panel: #19191c;
+    --line: #2a2a2e;
+    --ink: #e8e8e4;
+    --muted: #9a9a92;
+    --accent: #d8d8d0;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.6 ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    padding: 64px 24px 96px;
+  }
+  main { max-width: 880px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.02em; }
+  .sub { color: var(--muted); margin: 8px 0 48px; }
+  .direction { border: 1px solid var(--line); background: var(--panel); margin-bottom: 28px; }
+  .direction__head { padding: 20px 24px 16px; border-bottom: 1px solid var(--line); }
+  .direction__num { color: var(--muted); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .direction__name { font-size: 17px; font-weight: 600; margin-top: 4px; }
+  .direction__desc { color: var(--muted); font-size: 13.5px; margin-top: 8px; max-width: 60ch; }
+  .direction__links { display: flex; }
+  .direction__links a {
+    flex: 1; padding: 14px 24px; color: var(--ink); text-decoration: none;
+    border-right: 1px solid var(--line); font-size: 13.5px;
+  }
+  .direction__links a:last-child { border-right: none; }
+  .direction__links a:hover, .direction__links a:focus-visible { background: #222226; }
+  .direction__links a span { color: var(--muted); display: block; font-size: 11px; margin-top: 2px; letter-spacing: 0.08em; text-transform: uppercase; }
+  footer { color: var(--muted); font-size: 12px; margin-top: 48px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>jyoung.dev — design explorations</h1>
+  <p class="sub">Six full-site directions. Each includes a homepage, blog index, and the loop-engineering post, built with real site content. Round two (D–F) homepages are resume-first: full employment record, metrics, education, and one primary CTA.</p>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">Direction A</p>
+      <h2 class="direction__name">Manuscript</h2>
+      <p class="direction__desc">A typeset research journal. Warm paper, Newsreader serif, margin-note citations, an Abstract in place of TL;DR. Credibility through typography — almost zero motion.</p>
+    </div>
+    <nav class="direction__links" aria-label="Manuscript pages">
+      <a href="manuscript/index.html">Homepage<span>index.html</span></a>
+      <a href="manuscript/blog.html">Blog index<span>blog.html</span></a>
+      <a href="manuscript/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">Direction B</p>
+      <h2 class="direction__name">Operator</h2>
+      <p class="direction__desc">A dark instrument panel for the man who runs the loops. JetBrains Mono structure, Inter prose, amber accent, an animated gather–act–verify–repeat dial, post metadata as a run manifest.</p>
+    </div>
+    <nav class="direction__links" aria-label="Operator pages">
+      <a href="terminal/index.html">Homepage<span>index.html</span></a>
+      <a href="terminal/blog.html">Blog index<span>blog.html</span></a>
+      <a href="terminal/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">Direction C</p>
+      <h2 class="direction__name">Signal</h2>
+      <p class="direction__desc">Swiss grid meets modern product. Inter Tight display type, exposed hairline grid, one electric blue, numbered sections, kinetic-but-restrained hover states.</p>
+    </div>
+    <nav class="direction__links" aria-label="Signal pages">
+      <a href="signal/index.html">Homepage<span>index.html</span></a>
+      <a href="signal/blog.html">Blog index<span>blog.html</span></a>
+      <a href="signal/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">Direction D — resume-first</p>
+      <h2 class="direction__name">Datasheet</h2>
+      <p class="direction__desc">The resume as an engineering spec sheet. IBM Plex, numbered sections with 2px rules, tabular roles with right-aligned metrics, a revision line. Deliberate density done with discipline.</p>
+    </div>
+    <nav class="direction__links" aria-label="Datasheet pages">
+      <a href="datasheet/index.html">Homepage<span>index.html</span></a>
+      <a href="datasheet/blog.html">Blog index<span>blog.html</span></a>
+      <a href="datasheet/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">Direction E — resume-first</p>
+      <h2 class="direction__name">Pipeline</h2>
+      <p class="direction__desc">Career as a git graph: ventures branch, acquisitions merge, HEAD points at the current roles. Space Grotesk and Space Mono, commit-green accent, dot-grid paper.</p>
+    </div>
+    <nav class="direction__links" aria-label="Pipeline pages">
+      <a href="pipeline/index.html">Homepage<span>index.html</span></a>
+      <a href="pipeline/blog.html">Blog index<span>blog.html</span></a>
+      <a href="pipeline/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">Direction F — resume-first</p>
+      <h2 class="direction__name">Sidecar</h2>
+      <p class="direction__desc">Split-pane workspace: fixed identity rail with scrollspy on the left, scrolling record on the right. Dark graphite, Geist, and a refined coral evolution of the legacy brand red.</p>
+    </div>
+    <nav class="direction__links" aria-label="Sidecar pages">
+      <a href="sidecar/index.html">Homepage<span>index.html</span></a>
+      <a href="sidecar/blog.html">Blog index<span>blog.html</span></a>
+      <a href="sidecar/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">The Final — synthesis of all six</p>
+      <h2 class="direction__name">Ledger</h2>
+      <p class="direction__desc">Writer-first: photo intro and the essays front and center on the homepage; the full record (career git graph, experience, systems, education) lives on About. Newsreader serif and IBM Plex Mono on warm paper, oxblood primary, green only for verified/current states. Near-zero motion.</p>
+    </div>
+    <nav class="direction__links" aria-label="Ledger pages">
+      <a href="final/index.html">Homepage<span>index.html</span></a>
+      <a href="final/blog.html">Blog index<span>blog.html</span></a>
+      <a href="final/about.html">About<span>about.html</span></a>
+      <a href="final/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">Candidate — final structure</p>
+      <h2 class="direction__name">Foundry</h2>
+      <p class="direction__desc">Cool Swiss/product light: Inter display and prose, JetBrains Mono structure, near-white neutrals, one electric blue. Corner-bracket registration mark as the recurring signature.</p>
+    </div>
+    <nav class="direction__links" aria-label="Foundry pages">
+      <a href="foundry/index.html">Homepage<span>index.html</span></a>
+      <a href="foundry/blog.html">Blog index<span>blog.html</span></a>
+      <a href="foundry/about.html">About<span>about.html</span></a>
+      <a href="foundry/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">Candidate — final structure</p>
+      <h2 class="direction__name">Nightshift</h2>
+      <p class="direction__desc">Dark-first writer's site: Geist and Geist Mono on warm graphite, coral accent evolving the legacy brand red, green held strictly to verified/current states. Soft radii, coral-ringed avatar, John Young_ wordmark.</p>
+    </div>
+    <nav class="direction__links" aria-label="Nightshift pages">
+      <a href="nightshift/index.html">Homepage<span>index.html</span></a>
+      <a href="nightshift/blog.html">Blog index<span>blog.html</span></a>
+      <a href="nightshift/about.html">About<span>about.html</span></a>
+      <a href="nightshift/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <section class="direction">
+    <div class="direction__head">
+      <p class="direction__num">Candidate — final structure</p>
+      <h2 class="direction__name">Fieldnotes</h2>
+      <p class="direction__desc">Light mono-led engineer's notebook: IBM Plex Mono headings over Plex Sans prose, warm paper with a faint dot grid, commit-green accent, bracketed tags, and a consistent markdown-flavored section convention.</p>
+    </div>
+    <nav class="direction__links" aria-label="Fieldnotes pages">
+      <a href="fieldnotes/index.html">Homepage<span>index.html</span></a>
+      <a href="fieldnotes/blog.html">Blog index<span>blog.html</span></a>
+      <a href="fieldnotes/about.html">About<span>about.html</span></a>
+      <a href="fieldnotes/post.html">Post<span>post.html</span></a>
+    </nav>
+  </section>
+
+  <footer>Static prototypes — every page is a single self-contained HTML file. Open any of them directly in a browser.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>John Young — Essays on running AI coding agents in production</title>
+<meta name="description" content="Research-backed essays on running AI coding agents in production — every claim traced to a primary source.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="John Young">
+<meta property="og:url" content="https://jyoung.dev/">
+<meta property="og:title" content="John Young — Essays on running AI coding agents in production">
+<meta property="og:description" content="Research-backed essays on running AI coding agents in production — every claim traced to a primary source.">
+<meta property="og:image" content="https://jyoung.dev/img/headshot_new.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="John Young — Essays on running AI coding agents in production">
+<meta name="twitter:description" content="Research-backed essays on running AI coding agents in production — every claim traced to a primary source.">
+<meta name="twitter:image" content="https://jyoung.dev/img/headshot_new.png">
+<meta name="theme-color" content="#F8F7F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101311" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23F8F7F2'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%2324774A' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%2324774A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#F8F7F2;
+  --surface:#FFFFFF;
+  --ink:#1B1D1A;
+  --secondary:#5D6157;
+  --hairline:#E1E0D6;
+  --line:#C9C8BC;
+  --accent:#24774A;
+  --accent-hover:#1B5A38;
+  --on-accent:#FFFFFF;
+  --dot:rgba(27,29,26,0.07);
+  --shadow:0 1px 3px rgba(27,29,26,0.08);
+  --code-bg:#14171A;
+  --code-ink:#ECE9DF;
+  --code-muted:#9BA29A;
+  --code-hairline:#2B3035;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ratio:1.25;
+  --text-0:1.0625rem;                              /* 17px body */
+  --text--1:calc(var(--text-0)/var(--ratio));      /* 13.6px */
+  --text-1:calc(var(--text-0)*var(--ratio));       /* 21.25px */
+  --text-2:calc(var(--text-1)*var(--ratio));       /* 26.6px */
+  --text-3:calc(var(--text-2)*var(--ratio));       /* 33.2px */
+  --label:0.75rem;                                 /* 12px mono labels */
+  --text-05:0.9375rem;                             /* 15px abstract/claims */
+  --display:clamp(1.7rem,4.5vw,2.1rem);
+  --display-xl:clamp(2rem,5vw,2.6rem);
+  --title:clamp(1.45rem,3.8vw,1.85rem);
+  --sp-1:0.5rem;  /* 8  */
+  --sp-2:1rem;    /* 16 */
+  --sp-3:1.5rem;  /* 24 */
+  --sp-4:2rem;    /* 32 */
+  --sp-5:2.5rem;  /* 40 */
+  --sp-6:3rem;    /* 48 */
+  --sp-7:3.5rem;  /* 56 */
+  --sp-8:4rem;    /* 64 */
+  --sp-10:5rem;   /* 80 */
+  --sp-12:6rem;   /* 96 */
+  --measure:620px;
+  --wrap:1080px;
+  --radius:2px;
+  --lh-body:1.6;
+  --lh-tight:1.25;
+  --dur:160ms;
+  --target:2.75rem; /* 44px touch target */
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#101311;
+    --surface:#1A201C;
+    --ink:#E4E8E1;
+    --secondary:#98A093;
+    --hairline:#262B26;
+    --line:#3A423C;
+    --accent:#52B788;
+    --accent-hover:#6BC79A;
+    --on-accent:#101311;
+    --dot:rgba(228,232,225,0.07);
+    --shadow:0 0 0 1px #2A322C,0 1px 3px rgba(0,0,0,0.5);
+    --code-bg:#0B0E0C;
+    --code-hairline:#2A322C;
+  }
+}
+
+/* ============ BASE ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background-color:var(--bg);
+  background-image:radial-gradient(circle,var(--dot) 1.25px,transparent 1.25px);
+  background-size:24px 24px;
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:var(--text-0);
+  line-height:var(--lh-body);
+}
+h1,h2,h3{font-family:var(--mono);font-weight:600}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  a,button{transition:color var(--dur) ease,background-color var(--dur) ease,border-color var(--dur) ease,text-decoration-thickness var(--dur) ease}
+  .avatar-link{transition:outline-offset var(--dur) ease}
+  .essay-row{transition:background-color var(--dur) ease,box-shadow var(--dur) ease;animation:row-in 240ms ease backwards;animation-delay:calc(var(--i,0)*25ms)}
+  @keyframes row-in{from{opacity:0;translate:0 4px}}
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  .foot-last .cursor{animation:blink 1.1s steps(1) infinite}
+}
+a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.15em}
+a:hover{text-decoration-thickness:2px}
+::selection{background:var(--accent);color:var(--on-accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:var(--sp-2);top:-100%;z-index:10;background:var(--accent);color:var(--on-accent);font-family:var(--mono);font-size:var(--text--1);padding:var(--sp-1) var(--sp-2);text-decoration:none;border-radius:var(--radius)}
+.skip-link:focus{top:var(--sp-2)}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--sp-2)}
+@media (min-width:700px){.wrap{padding-inline:var(--sp-4)}}
+.rule{border-top:1px solid var(--line)}
+
+/* ============ MASTHEAD ============ */
+.masthead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:var(--sp-3);padding-block:var(--sp-2)}
+.wordmark{font-family:var(--mono);font-weight:600;font-size:var(--text-0);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:var(--target)}
+.wordmark:hover{color:var(--accent)}
+.site-nav ul{display:flex;flex-wrap:wrap;align-items:center;list-style:none}
+.site-nav a{font-family:var(--mono);font-size:var(--text--1);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:var(--target);padding-inline:var(--sp-1)}
+.site-nav a:hover,.site-nav a[aria-current=page]{color:var(--accent);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.25em}
+.site-nav li{display:flex;align-items:center}
+.site-nav li:last-child a{color:var(--accent);font-weight:500}
+@media (max-width:479.98px){.site-nav a{padding-inline:0.4rem}}
+@media (min-width:700px){
+  .site-nav li:not(:last-child)::after{content:"·";content:"·" / "";color:var(--secondary);padding-inline:var(--sp-1)}
+}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:var(--target);padding:0 var(--sp-3);background:var(--accent);color:var(--on-accent);font-family:var(--mono);font-weight:500;font-size:var(--text--1);text-decoration:none;border:1px solid var(--accent);border-radius:var(--radius);cursor:pointer}
+.btn:hover{background:var(--accent-hover);border-color:var(--accent-hover);text-decoration:none}
+
+/* ============ SECTION CONVENTION ============ */
+.section{margin-block:var(--sp-8)}
+@media (min-width:700px){.section{margin-block:var(--sp-10)}}
+main > .section:first-of-type{margin-top:var(--sp-6)}
+main > :last-child{margin-bottom:0}
+.sec-head{display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-5)}
+.sec-head::after{content:"";flex:1;border-top:1px solid var(--line)}
+.sec-label{font-family:var(--mono);font-size:var(--text--1);font-weight:500;text-transform:lowercase;color:var(--ink);white-space:nowrap}
+.sec-label::before{content:"## ";content:"## " / "";color:var(--secondary);font-weight:400}
+
+/* ============ INTRO ============ */
+.intro{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-4);padding-block:var(--sp-8) 0}
+@media (min-width:700px){.intro{flex-direction:row;gap:var(--sp-5);padding-block:var(--sp-10) 0}}
+.avatar-link{display:inline-flex;flex-shrink:0;border-radius:50%;outline:2px solid var(--accent);outline-offset:4px}
+.avatar-link:hover{outline:2px solid var(--accent);outline-offset:2px}
+.avatar-link:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.avatar{width:176px;height:176px;border-radius:50%;object-fit:cover;object-position:50% 25%;border:1px solid var(--hairline);display:block;background:var(--surface)}
+.intro-text h1{font-size:var(--display-xl);line-height:var(--lh-tight);letter-spacing:-0.01em}
+.intro-text .bio{max-width:var(--measure);margin-top:var(--sp-2);font-size:var(--text-1);line-height:1.5;text-wrap:pretty}
+.more-link{display:inline-flex;align-items:center;min-height:var(--target);font-family:var(--mono);font-size:var(--text--1);font-weight:500}
+.intro-links{font-family:var(--mono);font-size:var(--label);display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--sp-3);margin-top:var(--sp-1)}
+.intro-links a{color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;min-height:var(--target)}
+.intro-links a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.25em}
+.intro-meta{display:none}
+@media (min-width:1100px){
+  .intro-meta{display:grid;row-gap:0.35rem;align-self:flex-start;flex-shrink:0;margin-left:auto;border-top:1px solid var(--line);padding-top:var(--sp-1);margin-top:var(--sp-1);font:500 var(--label)/1.5 var(--mono);color:var(--secondary);font-variant-numeric:tabular-nums;min-width:14.5rem}
+  .intro-meta span{display:flex;justify-content:space-between;column-gap:var(--sp-3)}
+  .intro-meta .v{color:var(--ink)}
+}
+
+/* ============ ESSAY TAGS ============ */
+.tag{font-family:var(--mono);font-size:var(--label);font-weight:500;color:var(--secondary);white-space:nowrap}
+.essay-row .tag{position:relative;z-index:1;justify-self:start;align-self:start;text-decoration:none;padding:1rem 0.75rem;margin:-1rem -0.75rem}
+.essay-row .tag:hover,.essay-row .tag:focus-visible{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.25em}
+@media (max-width:699.98px){.essay-row .tag{padding:0.5rem 0.75rem;margin:-0.5rem -0.75rem}}
+
+/* ============ ESSAY LEDGER ============ */
+.essay-list{list-style:none}
+.essay-row{position:relative;padding:var(--sp-3) var(--sp-2);margin-inline:calc(-1*var(--sp-2));border-bottom:1px solid var(--hairline);border-radius:var(--radius);display:grid;grid-template-columns:minmax(0,1fr);row-gap:var(--sp-1)}
+.essay-row:hover{background-color:var(--surface);box-shadow:var(--shadow)}
+@media (min-width:700px){
+  .essay-row{grid-template-columns:7rem minmax(0,1fr) auto;column-gap:var(--sp-3);row-gap:var(--sp-1)}
+  .essay-row .essay-date{padding-top:0.3rem}
+  .essay-row .tag{margin-top:calc(0.35rem - 1rem)}
+  .essay-row .essay-desc{grid-column:2}
+}
+.essay-date{font-family:var(--mono);font-size:var(--text--1);color:var(--secondary);font-variant-numeric:tabular-nums}
+.head-mark{position:absolute;top:var(--sp-2);left:var(--sp-2);font-size:var(--label);color:var(--accent);font-weight:600}
+.essay-row--head{padding-top:calc(var(--sp-3) + 1.15rem)}
+.essay-title{font-family:var(--mono);font-weight:600;font-size:var(--text-1);line-height:1.35;text-wrap:balance}
+.essay-title a{color:var(--ink);text-decoration:none}
+.essay-title a::after{content:"";position:absolute;inset:0}
+.essay-row:hover .essay-title a{color:var(--accent)}
+.essay-row:has(.tag:hover){background-color:transparent;box-shadow:none}
+.essay-row:has(.tag:hover) .essay-title a{color:var(--ink)}
+.essay-title a:hover{text-decoration:underline;text-decoration-thickness:2px}
+.essay-desc{color:var(--secondary);font-size:var(--text--1);max-width:var(--measure);text-wrap:pretty}
+.all-link{margin-top:var(--sp-3)}
+
+/* ============ COLOPHON ============ */
+.colophon{margin-top:var(--sp-12)}
+.colophon-inner{padding-block:var(--sp-2) var(--sp-6)}
+.colophon .sec-head{margin-bottom:var(--sp-4)}
+.colophon-grid{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:var(--sp-3) var(--sp-6)}
+.colophon-sub{flex:1 1 26rem}
+.subscribe{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.subscribe .btn{text-transform:lowercase}
+.sub-field{position:relative;width:min(100%,18rem)}
+.sub-field::before{content:"> ";position:absolute;left:var(--sp-2);top:50%;translate:0 -50%;font-family:var(--mono);font-weight:600;color:var(--accent);pointer-events:none}
+.subscribe input[type=email]{font-family:var(--mono);font-size:var(--text--1);color:var(--ink);background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);min-height:var(--target);padding:0 var(--sp-2) 0 2rem;width:100%;caret-color:var(--accent)}
+.subscribe input[type=email]::placeholder{color:var(--secondary)}
+.subscribe input[type=email]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+.sub-note{font-style:italic;color:var(--secondary);font-size:var(--text--1);margin-top:var(--sp-2)}
+.foot-links{list-style:none;display:flex;flex-wrap:wrap;align-items:center;margin-left:calc(-1*var(--sp-1))}
+.foot-links a{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:lowercase;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:var(--target);padding-inline:var(--sp-1)}
+.foot-links a:hover{color:var(--accent);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.25em}
+.foot-links li{display:flex;align-items:center}
+@media (min-width:700px){
+  .foot-links li:not(:last-child)::after{content:"·";content:"·" / "";color:var(--secondary);padding-inline:var(--sp-1)}
+}
+.foot-last{font-family:var(--mono);font-size:var(--label);color:var(--secondary);margin-top:var(--sp-5)}
+.foot-last .cursor{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="wrap">
+  <div class="masthead">
+    <a class="wordmark" href="index.html">John Young</a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="blog.html">essays</a></li>
+        <li><a href="about.html">about</a></li>
+        <li><a href="https://jyoung.dev/research/">research</a></li>
+        <li><a href="#subscribe">subscribe</a></li>
+        <li><a href="mailto:john.anto.young@gmail.com?subject=Working%20together">work with me</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="rule"></div>
+</header>
+
+<main id="main" class="wrap">
+
+  <!-- INTRO -->
+  <section class="intro" aria-label="Introduction">
+    <a class="avatar-link" href="about.html" aria-label="About John Young"><img class="avatar" src="headshot.png" alt="" width="176" height="176"></a>
+    <div class="intro-text">
+      <h1>I&rsquo;m John Young.</h1>
+      <p class="bio">I run engineering at Combine Capital and Infrared, and write research-backed essays on running AI coding agents in production — every claim traced to a primary source.</p>
+      <p><a class="more-link" href="about.html">More about me &rarr;</a></p>
+      <p class="intro-links">
+        <a href="https://github.com/johnayoung">github.com/johnayoung</a>
+        <a href="https://www.linkedin.com/in/jyoung1985">linkedin.com/in/jyoung1985</a>
+        <a href="mailto:john.anto.young@gmail.com">john.anto.young@gmail.com</a>
+        <a href="https://jyoung.dev/blog/index.xml">rss</a>
+      </p>
+    </div>
+    <aside class="intro-meta" aria-label="Site log">
+      <span>last_commit <span class="v">2026-07-06</span></span>
+      <span>essays <span class="v">12</span></span>
+      <span>pillars <span class="v">6</span></span>
+      <span>evidence_verified <span class="v">2026-07-01</span></span>
+    </aside>
+  </section>
+
+  <!-- ESSAYS -->
+  <section class="section" aria-labelledby="essays-label">
+    <h2 class="sec-head" id="essays-label"><span class="sec-label">Recent essays</span></h2>
+
+    <ul class="essay-list" id="essays">
+      <li class="essay-row essay-row--head" data-pillar="context-engineering" style="--i:1">
+        <span class="essay-date"><span class="head-mark" aria-hidden="true">HEAD &rarr;</span>2026-07-06</span>
+        <span class="essay-title"><a href="post.html">Loop Engineering Breaks Your Single-Shot Context Playbook</a></span>
+        <a class="tag" href="blog.html#context-engineering">[context-engineering]</a>
+        <span class="essay-desc">A loop was always the agent primitive. The CLAUDE.md budget and JIT retrieval you tuned for one invocation don&rsquo;t fail louder in a loop — they fail quieter.</span>
+      </li>
+      <li class="essay-row" data-pillar="production-operations" style="--i:2">
+        <span class="essay-date">2026-06-29</span>
+        <span class="essay-title"><a href="post.html">You Can&rsquo;t Cap What You Can&rsquo;t Attribute: Per-Task Cost</a></span>
+        <a class="tag" href="blog.html#production-operations">[production-operations]</a>
+        <span class="essay-desc">A cost dashboard is a lagging report, not a guardrail. Per-task cost attribution is the schema that makes an agent budget ceiling enforceable before the next call.</span>
+      </li>
+      <li class="essay-row" data-pillar="context-engineering" style="--i:3">
+        <span class="essay-date">2026-06-22</span>
+        <span class="essay-title"><a href="post.html">Where Just-in-Time Context Retrieval Silently Breaks</a></span>
+        <a class="tag" href="blog.html#context-engineering">[context-engineering]</a>
+        <span class="essay-desc">JIT context retrieval isn&rsquo;t free — it&rsquo;s slower and only as good as your tooling. A ledger of where runtime retrieval breaks and how to design the fallback.</span>
+      </li>
+      <li class="essay-row" data-pillar="architecture-decisions" style="--i:4">
+        <span class="essay-date">2026-06-15</span>
+        <span class="essay-title"><a href="post.html">When One Agent Stops Being Enough: The Isolation Gate</a></span>
+        <a class="tag" href="blog.html#architecture-decisions">[architecture-decisions]</a>
+        <span class="essay-desc">The trigger for going multi-agent isn&rsquo;t parallel speed — it&rsquo;s context isolation, and the split costs about 15x the tokens. Two gates decide whether it&rsquo;s worth it.</span>
+      </li>
+      <li class="essay-row" data-pillar="team-process" style="--i:5">
+        <span class="essay-date">2026-06-08</span>
+        <span class="essay-title"><a href="post.html">Review Capacity Is the Real Ceiling on Your Agents</a></span>
+        <a class="tag" href="blog.html#team-process">[team-process]</a>
+        <span class="essay-desc">The ceiling on how many AI coding agents your team can run is reviewer-hours, not agent output — and that number is already in your telemetry.</span>
+      </li>
+    </ul>
+
+    <p class="all-link"><a class="more-link" href="blog.html">[all essays] &rarr;</a></p>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon wrap">
+  <div class="colophon-inner">
+    <h2 class="sec-head" id="subscribe-label"><span class="sec-label">Subscribe</span></h2>
+    <div class="colophon-grid">
+      <div class="colophon-sub">
+        <form class="subscribe" id="subscribe" action="https://buttondown.com/api/emails/embed-subscribe/johnantoyoung" method="post">
+          <label class="visually-hidden" for="sub-email">Email address</label>
+          <span class="sub-field"><input type="email" id="sub-email" name="email" placeholder="you@example.com" autocomplete="email" required></span>
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+        <p class="sub-note"><em>One research-backed essay a week. Unsubscribe anytime.</em></p>
+      </div>
+      <ul class="foot-links">
+        <li><a href="https://github.com/johnayoung">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/jyoung1985">LinkedIn</a></li>
+        <li><a href="mailto:john.anto.young@gmail.com">Email</a></li>
+        <li><a href="https://jyoung.dev/blog/index.xml">RSS</a></li>
+      </ul>
+    </div>
+    <p class="foot-last">john young<span class="cursor">_</span> · &copy; 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>

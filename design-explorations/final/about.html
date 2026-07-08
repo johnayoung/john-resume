@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — John Young</title>
+<meta name="description" content="Fifteen years shipping financial infrastructure. Two exits. Now building the agent layer at Combine Capital and Infrared.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23F7F3EB'/%3E%3Crect x='14' y='42' width='36' height='9' fill='%2393321F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&amp;display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --paper:#F7F3EB;
+  --surface:#FDFBF5;
+  --ink:#1D1A16;
+  --secondary:#5C554B;
+  --hairline:#E0D8C8;
+  --rule:#1D1A16;
+  --accent:#93321F;
+  --accent-hover:#7A2817;
+  --verified:#2F6B45;
+  --leaf:#F1EBDD;
+  --graph-line:#C3B7A0;
+  --code-bg:#241E17;
+  --code-ink:#EDE5D6;
+  --code-muted:#A69C8A;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ratio:1.25;
+  --text-0:1.1875rem;                              /* 19px body */
+  --text--1:calc(var(--text-0)/var(--ratio));      /* 15.2px */
+  --text--2:calc(var(--text--1)/var(--ratio));     /* 12.2px */
+  --text-1:calc(var(--text-0)*var(--ratio));       /* 23.75px */
+  --text-2:calc(var(--text-1)*var(--ratio));       /* 29.7px */
+  --text-3:calc(var(--text-2)*var(--ratio));       /* 37.1px */
+  --label:0.6875rem;                               /* 11px mono labels */
+  --display:clamp(2.2rem,5vw,3.6rem);
+  --title:clamp(1.9rem,4vw,2.8rem);
+  --track:0.08em;
+  --track-wide:0.18em;
+  --sp-1:0.5rem;  /* 8  */
+  --sp-2:1rem;    /* 16 */
+  --sp-3:1.5rem;  /* 24 */
+  --sp-4:2rem;    /* 32 */
+  --sp-5:2.5rem;  /* 40 */
+  --sp-6:3rem;    /* 48 */
+  --sp-7:3.5rem;  /* 56 */
+  --sp-8:4rem;    /* 64 */
+  --sp-10:5rem;   /* 80 */
+  --sp-12:6rem;   /* 96 */
+  --measure:660px;
+  --notecol:220px;
+  --wrap:1080px;
+  --radius:2px;
+  --lh-body:1.6;
+  --lh-tight:1.15;
+  --dur:180ms;
+  --target:2.75rem; /* 44px touch target */
+  --figcol:6rem;
+  --datecol:8.5rem;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#171310;
+    --surface:#1E1915;
+    --ink:#EDE5D6;
+    --secondary:#A69C8A;
+    --hairline:#2E2820;
+    --rule:#EDE5D6;
+    --accent:#D57A55;
+    --accent-hover:#E19271;
+    --verified:#6FAE85;
+    --leaf:#231B12;
+    --graph-line:#4B4335;
+    --code-bg:#241E17;
+    --code-ink:#EDE5D6;
+    --code-muted:#A69C8A;
+  }
+}
+
+/* ============ BASE ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:var(--text-0);
+  line-height:var(--lh-body);
+  font-optical-sizing:auto;
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+@media (prefers-color-scheme:dark){body::before{opacity:.045}}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  a,button{transition:color var(--dur) ease,background-color var(--dur) ease,border-color var(--dur) ease,text-decoration-thickness var(--dur) ease}
+  @keyframes blink{50%{opacity:0}}
+  .foot-last .cursor{animation:blink 1.2s steps(2) infinite}
+  @keyframes slipsettle{from{border-color:var(--accent)}}
+  .sub-slip:target{animation:slipsettle 1.8s ease-out 1}
+}
+a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.15em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:var(--sp-2);top:-100%;z-index:10;background:var(--accent);color:var(--paper);font-family:var(--mono);font-size:var(--text--1);padding:var(--sp-1) var(--sp-2);text-decoration:none}
+.skip-link:focus{top:var(--sp-2)}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--sp-2)}
+@media (min-width:700px){.wrap{padding-inline:var(--sp-4)}}
+.double-rule{height:3px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+
+/* ============ MASTHEAD ============ */
+.masthead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:var(--sp-3);padding-block:var(--sp-2)}
+.wordmark{font-family:var(--serif);font-weight:500;font-size:var(--text-0);color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:var(--track-wide);display:inline-flex;align-items:center;min-height:var(--target)}
+.wordmark:hover{color:var(--accent)}
+.site-nav ul{display:flex;flex-wrap:wrap;align-items:center;list-style:none;column-gap:var(--sp-1);margin-right:calc(-1*var(--sp-1))}
+.site-nav a{font-family:var(--mono);font-size:var(--text--1);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:var(--target);padding-inline:var(--sp-1)}
+.site-nav a:hover,.site-nav a[aria-current=page]{color:var(--accent);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.25em}
+.site-nav .dot{color:var(--secondary);font-family:var(--mono);font-size:var(--text--1)}
+.mono-label{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track)}
+
+/* ============ SECTION CONVENTION ============ */
+.section{margin-block:var(--sp-8) var(--sp-10)}
+@media (min-width:700px){.section{margin-block:var(--sp-10) var(--sp-12)}}
+.sec-head{display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-5)}
+.sec-head span{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--ink);white-space:nowrap}
+.sec-head::after{content:"";flex:1;border-top:1px solid var(--hairline)}
+
+/* ============ ABOUT HEAD ============ */
+.about-head{padding-block:var(--sp-8) 0}
+@media (min-width:700px){.about-head{padding-block:var(--sp-10) 0}}
+.about-head h1{font-size:var(--display);font-weight:500;line-height:var(--lh-tight);letter-spacing:-0.015em}
+.about-intro{margin-top:var(--sp-5);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sp-4)}
+@media (min-width:700px){.about-intro{grid-template-columns:280px minmax(0,1fr);column-gap:var(--sp-6);align-items:start}}
+.portrait{width:280px;max-width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:50% 25%;border:1px solid var(--hairline);border-radius:var(--radius)}
+.about-prose{max-width:var(--measure)}
+.about-prose p + p{margin-top:var(--sp-3)}
+
+/* ============ CTA (work with me) ============ */
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-3);margin-top:var(--sp-4)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:var(--target);padding:0 var(--sp-3);background:var(--accent);color:var(--paper);font-family:var(--mono);font-weight:500;font-size:var(--text--1);text-decoration:none;border:1px solid var(--accent);border-radius:var(--radius);cursor:pointer}
+.btn:hover{background:var(--accent-hover);border-color:var(--accent-hover);text-decoration:none}
+.quiet-link{font-family:var(--mono);font-size:var(--text--1);display:inline-flex;align-items:center;min-height:var(--target)}
+
+/* ============ CAREER GRAPH ============ */
+.career-graph{margin-bottom:var(--sp-6)}
+.graph{display:block;width:100%;height:auto}
+.graph-h{display:none}
+.graph-v{max-width:380px}
+@media (min-width:700px){.graph-h{display:block}.graph-v{display:none}}
+.t-hair{stroke:var(--graph-line);stroke-width:2;fill:none}
+.t-trunk{stroke-width:2.5}
+.t-green{stroke:var(--verified);stroke-width:2.5;fill:none}
+.dot{fill:var(--ink);stroke:var(--paper);stroke-width:2}
+.dot-plain{fill:var(--ink);stroke:var(--paper);stroke-width:2}
+.dot-merge{fill:var(--accent);stroke:var(--paper);stroke-width:2}
+.dot-head{fill:var(--verified);stroke:var(--paper);stroke-width:2}
+.head-ring{fill:none;stroke:var(--verified);stroke-width:1.5}
+.g-label{font-family:var(--mono);font-size:12px;fill:var(--secondary)}
+.graph-v .g-label{font-size:11px}
+.g-head{fill:var(--verified);font-weight:500}
+.graph a{text-decoration:none}
+.graph a .hit{fill:transparent;stroke:none}
+@media (prefers-reduced-motion:no-preference){
+  .graph a circle{transition:transform var(--dur) ease;transform-box:fill-box;transform-origin:center}
+  .graph a:hover circle:not(.hit),.graph a:focus-visible circle:not(.hit){transform:scale(1.25)}
+}
+.g-legend{font-family:var(--mono);font-size:var(--label);font-weight:500;letter-spacing:var(--track);text-transform:uppercase;color:var(--secondary);margin-top:var(--sp-1)}
+.g-legend .lg-merge{color:var(--accent)}
+.g-legend .lg-head{color:var(--verified)}
+
+/* ============ EXPERIENCE ENTRIES ============ */
+.entries{list-style:none}
+.entry{padding-block:var(--sp-4);border-top:1px solid var(--hairline);scroll-margin-top:var(--sp-4)}
+.entry:target{background:var(--surface);box-shadow:0 0 0 var(--sp-2) var(--surface)}
+@media (prefers-reduced-motion:no-preference){
+  @keyframes targetsettle{from{background:var(--leaf);box-shadow:0 0 0 var(--sp-2) var(--leaf)}}
+  .entry:target{background:transparent;box-shadow:none;animation:targetsettle 1.8s ease-out 1}
+}
+@media (min-width:700px){
+  .entry{display:grid;grid-template-columns:var(--datecol) minmax(0,1fr);column-gap:var(--sp-4)}
+}
+.entry-date{font-family:var(--mono);font-size:var(--text--2);font-weight:500;letter-spacing:var(--track);color:var(--secondary);text-transform:uppercase;padding-top:0.4rem}
+.now{color:var(--verified)}
+.entry h3{font-family:var(--serif);font-weight:600;font-size:var(--text-1);line-height:1.3;margin-top:var(--sp-1)}
+@media (min-width:700px){.entry h3{margin-top:0}}
+.entry .co{font-weight:400;color:var(--secondary)}
+.entry .scope{color:var(--secondary);font-size:var(--text--1);margin-top:var(--sp-1);max-width:var(--measure)}
+.claims{list-style:none;margin-top:var(--sp-3);display:grid;row-gap:var(--sp-2)}
+.claims li{display:grid;grid-template-columns:var(--figcol) minmax(0,1fr);column-gap:var(--sp-2);max-width:var(--measure)}
+.claims .fig{font-family:var(--mono);font-weight:500;font-size:var(--text--1);color:var(--accent);text-align:right;padding-top:0.15rem;font-variant-numeric:tabular-nums}
+.claims .claim{font-size:var(--text--1);color:var(--ink);text-wrap:pretty}
+
+/* ============ SYSTEMS ============ */
+.sys-list{list-style:none;border-top:1px solid var(--hairline)}
+.sys{padding-block:var(--sp-3);border-bottom:1px solid var(--hairline)}
+@media (min-width:800px){
+  .sys{display:grid;grid-template-columns:12rem minmax(0,1fr) auto;column-gap:var(--sp-4);align-items:baseline}
+}
+.sys-name{font-family:var(--mono);font-weight:600;font-size:var(--text--1);letter-spacing:0.02em}
+.sys-spec{font-size:var(--text--1);color:var(--ink);max-width:var(--measure);margin-top:var(--sp-1)}
+@media (min-width:800px){.sys-spec{margin-top:0}}
+.sys-meta{display:flex;align-items:center;gap:var(--sp-2);margin-top:var(--sp-1);font-family:var(--mono);font-size:var(--label)}
+@media (min-width:800px){.sys-meta{margin-top:0;justify-content:flex-end}}
+.tag{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--secondary);white-space:nowrap}
+.sys-meta a{font-family:var(--mono);font-size:var(--label);letter-spacing:var(--track);text-transform:lowercase;display:inline-flex;align-items:center;min-height:var(--target)}
+.sys-private{font-family:var(--mono);font-size:var(--label);letter-spacing:var(--track);text-transform:lowercase;color:var(--secondary);display:inline-flex;align-items:center;min-height:var(--target)}
+
+/* ============ MOBILE SEPARATORS ============ */
+@media (max-width:699px){
+  .site-nav li[aria-hidden=true],.foot-links li[aria-hidden=true]{display:none}
+  .site-nav ul{column-gap:var(--sp-2);margin-left:calc(-1*var(--sp-1))}
+}
+
+/* ============ STACK + EDUCATION ============ */
+.two-col{display:grid;grid-template-columns:1fr;gap:var(--sp-6)}
+@media (min-width:900px){.two-col{grid-template-columns:1fr 1fr;column-gap:var(--sp-8)}}
+.subhead{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--secondary);margin-bottom:var(--sp-3)}
+.stack-matrix{display:grid;row-gap:var(--sp-3)}
+.stack-matrix dt{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--accent)}
+.stack-matrix dd{font-family:var(--mono);font-size:var(--text--1);color:var(--ink);margin-top:var(--sp-1);line-height:1.7}
+.edu-list{list-style:none;display:grid;row-gap:var(--sp-3)}
+.edu-list li{text-wrap:pretty}
+.edu-list .edu-name{font-family:var(--serif);font-weight:600;font-size:var(--text-0)}
+.edu-list .edu-detail{color:var(--secondary);font-size:var(--text--1);text-wrap:pretty}
+.edu-list .edu-date{font-family:var(--mono);font-size:var(--text--2);color:var(--secondary);margin-top:0.125rem;display:block}
+
+/* ============ WORK WITH ME ============ */
+.engage{max-width:var(--measure)}
+
+/* ============ COLOPHON ============ */
+.colophon{margin-top:var(--sp-12)}
+.colophon-inner{padding-block:var(--sp-6) var(--sp-8);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sp-5)}
+@media (min-width:700px){.colophon-inner{grid-template-columns:minmax(0,1fr) auto;align-items:start;column-gap:var(--sp-8)}}
+.foot-mark{font-family:var(--serif);font-weight:500;font-size:var(--text-1);text-transform:uppercase;letter-spacing:var(--track-wide)}
+.colophon-note{font-family:var(--mono);font-size:var(--text--2);letter-spacing:0.02em;color:var(--secondary);margin-top:var(--sp-2)}
+.sub-slip{background:var(--leaf);border:1px solid var(--hairline);border-radius:var(--radius);padding:var(--sp-3);max-width:26rem;scroll-margin-top:var(--sp-6)}
+.sub-slip > .mono-label{display:block;color:var(--accent);margin-bottom:var(--sp-2)}
+.subscribe{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.subscribe input[type=email]{font-family:var(--mono);font-size:var(--text--1);color:var(--ink);background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);min-height:var(--target);padding:0 var(--sp-2);width:min(100%,15rem)}
+.subscribe input[type=email]::placeholder{color:var(--secondary)}
+.subscribe input[type=email]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+@media (prefers-color-scheme:dark){.subscribe input[type=email]{background:#100D0A;border-color:#4B4335}}
+.sub-note{font-style:italic;color:var(--secondary);font-size:var(--text--2);margin-top:var(--sp-2);text-wrap:pretty}
+.foot-links{list-style:none;display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--sp-1);margin-top:var(--sp-3);margin-left:calc(-1*var(--sp-1))}
+.foot-links a{font-family:var(--mono);font-size:var(--label);font-weight:500;letter-spacing:var(--track);text-transform:uppercase;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:var(--target);padding-inline:var(--sp-1)}
+.foot-links a:hover{color:var(--accent);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.25em}
+.foot-links .dot{color:var(--secondary);font-family:var(--mono);font-size:var(--label)}
+.foot-last{font-family:var(--mono);font-size:var(--label);letter-spacing:var(--track);color:var(--secondary);margin-top:var(--sp-2)}
+.foot-last .cursor{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="wrap">
+  <div class="masthead">
+    <a class="wordmark" href="index.html">John Young</a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="blog.html">essays</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="about.html" aria-current="page">about</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="https://jyoung.dev/research/">research</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="#subscribe">subscribe</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="mailto:john.anto.young@gmail.com?subject=Working%20together">work with me</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="double-rule"></div>
+</header>
+
+<main id="main" class="wrap">
+
+  <!-- ABOUT -->
+  <section class="about-head" aria-label="About John Young">
+    <h1>About</h1>
+    <div class="about-intro">
+      <img class="portrait" src="headshot.png" alt="John Young" width="280" height="210">
+      <div class="about-prose">
+        <p>I started in finance — modeling risk on a $1B+ credit-card portfolio at Capital One — then taught myself to code and never looked back. Since then I&rsquo;ve founded two data platforms, both acquired, and built systems that clear 1M+ API requests a day.</p>
+        <p>Today I run engineering across Combine Capital and Infrared under Branched Services: multi-agent workflows that cut analysis time 75%, data infrastructure processing 100K+ daily events across EVM chains, and a MIMO token router that solves DeFi routing as a single min-cost-flow problem — sub-100ms across 50+ liquidity sources.</p>
+        <p>I publish research-backed essays on running AI coding agents in production. Every claim is traced to a primary source in a verified <a href="https://jyoung.dev/research/">research index</a>, updated 2026-07-01.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAREER -->
+  <section class="section" aria-labelledby="career-label">
+    <h2 class="sec-head" id="career-label"><span>Career</span></h2>
+
+    <figure class="career-graph">
+      <!-- Horizontal graph (>=700px) -->
+      <svg class="graph graph-h" viewBox="0 0 1000 280" width="1000" height="280" aria-label="Career drawn as a git graph, 2010 to now. Ventures branch, acquisitions merge back, HEAD points at today.">
+        <!-- trunk -->
+        <path class="t-hair t-trunk" d="M60 170 H775"/>
+        <path class="t-green" d="M775 170 H940"/>
+        <!-- spreadstreet branch (above) -->
+        <path class="t-hair" d="M390 170 C420 170 425 100 465 100 H505 C530 100 535 170 555 170"/>
+        <!-- cryptosheets branch (below) -->
+        <path class="t-hair" d="M500 170 C525 170 530 245 565 245 H610 C640 245 645 170 665 170"/>
+        <!-- plain commit dots -->
+        <circle class="dot-plain" cx="60" cy="170" r="3.5"/>
+        <circle class="dot-plain" cx="140" cy="170" r="3"/>
+        <circle class="dot-plain" cx="330" cy="170" r="3"/>
+        <!-- segment labels -->
+        <text class="g-label" x="250" y="196" text-anchor="middle" aria-hidden="true">capital-one · 2010–2017</text>
+        <text class="g-label" x="692" y="196" text-anchor="middle" aria-hidden="true">fractal · 2021–2022</text>
+        <text class="g-label" x="857" y="196" text-anchor="middle" aria-hidden="true">branched · 2023–now</text>
+        <!-- branch labels -->
+        <text class="g-label" x="472" y="78" text-anchor="middle" aria-hidden="true">spreadstreet · 2016–2019</text>
+        <text class="g-label" x="588" y="272" text-anchor="middle" aria-hidden="true">cryptosheets · 2018–2021</text>
+        <!-- merge dots (oxblood = acquisition; see legend) -->
+        <circle class="dot-merge" cx="555" cy="170" r="4.5"/>
+        <circle class="dot-merge" cx="665" cy="170" r="4.5"/>
+        <!-- HEAD tags -->
+        <text class="g-label g-head" x="948" y="126" text-anchor="end" aria-hidden="true">HEAD → combine-capital</text>
+        <text class="g-label g-head" x="948" y="143" text-anchor="end" aria-hidden="true">infrared</text>
+        <!-- linked nodes -->
+        <a href="#exp-capitalone" aria-label="Capital One, 2010 to 2017 — jump to entry">
+          <circle class="hit" cx="250" cy="170" r="16" fill="transparent" stroke="none"/>
+          <circle class="dot" cx="250" cy="170" r="4.5"/>
+        </a>
+        <a href="#exp-spreadstreet" aria-label="Spreadstreet, 2016 to 2019, acquired — jump to entry">
+          <circle class="hit" cx="485" cy="100" r="16" fill="transparent" stroke="none"/>
+          <circle class="dot" cx="485" cy="100" r="4.5"/>
+        </a>
+        <a href="#exp-cryptosheets" aria-label="Cryptosheets, 2018 to 2021, acquired — jump to entry">
+          <circle class="hit" cx="588" cy="245" r="16" fill="transparent" stroke="none"/>
+          <circle class="dot" cx="588" cy="245" r="4.5"/>
+        </a>
+        <a href="#exp-fractal" aria-label="Fractal, 2021 to 2022 — jump to entry">
+          <circle class="hit" cx="692" cy="170" r="16" fill="transparent" stroke="none"/>
+          <circle class="dot" cx="692" cy="170" r="4.5"/>
+        </a>
+        <a href="#exp-branched" aria-label="Branched Services: Combine Capital and Infrared, 2023 to now — jump to entry">
+          <circle class="hit" cx="940" cy="170" r="16" fill="transparent" stroke="none"/>
+          <circle class="head-ring" cx="940" cy="170" r="9"/>
+          <circle class="dot-head" cx="940" cy="170" r="4.5"/>
+        </a>
+      </svg>
+
+      <!-- Vertical graph (<700px) -->
+      <svg class="graph graph-v" viewBox="0 0 380 580" width="380" height="580" aria-label="Career drawn as a git graph, newest at top. Ventures branch, acquisitions merge back, HEAD points at today.">
+        <!-- trunk -->
+        <path class="t-green" d="M190 48 V163"/>
+        <path class="t-hair t-trunk" d="M190 163 V572"/>
+        <!-- cryptosheets branch (right) -->
+        <path class="t-hair" d="M190 354 C232 354 270 342 270 314 V276 C270 251 236 239 190 239"/>
+        <!-- spreadstreet branch (left) -->
+        <path class="t-hair" d="M190 430 C148 430 110 418 110 390 V356 C110 331 144 316 190 316"/>
+        <!-- plain dots -->
+        <circle class="dot-plain" cx="190" cy="570" r="3.5"/>
+        <circle class="dot-plain" cx="190" cy="545" r="3"/>
+        <!-- labels -->
+        <text class="g-label g-head" x="212" y="44" aria-hidden="true">HEAD → combine-capital</text>
+        <text class="g-label g-head" x="212" y="60" aria-hidden="true">infrared</text>
+        <text class="g-label" x="212" y="116" aria-hidden="true">branched · 2023–now</text>
+        <text class="g-label" x="212" y="224" aria-hidden="true">fractal · 2021–2022</text>
+        <text class="g-label" x="282" y="291" aria-hidden="true">cryptosheets</text>
+        <text class="g-label" x="282" y="307" aria-hidden="true">2018–2021</text>
+        <text class="g-label" x="98" y="369" text-anchor="end" aria-hidden="true">spreadstreet</text>
+        <text class="g-label" x="98" y="385" text-anchor="end" aria-hidden="true">2016–2019</text>
+        <text class="g-label" x="212" y="530" aria-hidden="true">capital-one · 2010–2017</text>
+        <!-- merge dots -->
+        <circle class="dot-merge" cx="190" cy="239" r="4.5"/>
+        <circle class="dot-merge" cx="190" cy="316" r="4.5"/>
+        <!-- linked nodes -->
+        <a href="#exp-branched" aria-label="Branched Services: Combine Capital and Infrared, 2023 to now — jump to entry">
+          <circle class="hit" cx="190" cy="48" r="22" fill="transparent" stroke="none"/>
+          <circle class="head-ring" cx="190" cy="48" r="9"/>
+          <circle class="dot-head" cx="190" cy="48" r="4.5"/>
+        </a>
+        <a href="#exp-fractal" aria-label="Fractal, 2021 to 2022 — jump to entry">
+          <circle class="hit" cx="190" cy="220" r="22" fill="transparent" stroke="none"/>
+          <circle class="dot" cx="190" cy="220" r="4.5"/>
+        </a>
+        <a href="#exp-cryptosheets" aria-label="Cryptosheets, 2018 to 2021, acquired — jump to entry">
+          <circle class="hit" cx="270" cy="295" r="22" fill="transparent" stroke="none"/>
+          <circle class="dot" cx="270" cy="295" r="4.5"/>
+        </a>
+        <a href="#exp-spreadstreet" aria-label="Spreadstreet, 2016 to 2019, acquired — jump to entry">
+          <circle class="hit" cx="110" cy="373" r="22" fill="transparent" stroke="none"/>
+          <circle class="dot" cx="110" cy="373" r="4.5"/>
+        </a>
+        <a href="#exp-capitalone" aria-label="Capital One, 2010 to 2017 — jump to entry">
+          <circle class="hit" cx="190" cy="526" r="22" fill="transparent" stroke="none"/>
+          <circle class="dot" cx="190" cy="526" r="4.5"/>
+        </a>
+      </svg>
+      <p class="g-legend" aria-hidden="true"><span class="lg-merge">&#9679;</span> merge = acquired &middot; <span class="lg-head">&#9679;</span> head = current</p>
+      <figcaption class="visually-hidden">Career history, 2010 to now: Capital One on the trunk; Spreadstreet and Cryptosheets branch off and merge back as acquisitions; Fractal on the trunk; HEAD points at Combine Capital and Infrared.</figcaption>
+    </figure>
+
+    <ol class="entries">
+      <li>
+        <article class="entry" id="exp-branched">
+          <p class="entry-date">2023 — <span class="now">Now</span></p>
+          <div class="entry-body">
+            <h3>CTO, Combine Capital &amp; Head of Engineering, Infrared <span class="co">— Branched Services</span></h3>
+            <p class="scope">Trading infrastructure, DeFi routing, AI-agent workflows.</p>
+            <ul class="claims">
+              <li><span class="fig">75%</span><span class="claim">reduction in analysis time from a production multi-agent data-processing system</span></li>
+              <li><span class="fig">65%</span><span class="claim">faster DeFi compliance investigation via fine-tuned LLMs that explain transactions in plain English</span></li>
+              <li><span class="fig">100K+</span><span class="claim">daily events processed across EVM chains and CEXs</span></li>
+              <li><span class="fig">sub-100ms</span><span class="claim">MIMO route computation across 50+ liquidity sources at less than 1% slippage estimation error</span></li>
+            </ul>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="entry" id="exp-fractal">
+          <p class="entry-date">2021 — 2022</p>
+          <div class="entry-body">
+            <h3>Software Engineer <span class="co">— FRACTAL (Fractal Wealth)</span></h3>
+            <p class="scope">Automated crypto and DeFi trading strategies.</p>
+            <ul class="claims">
+              <li><span class="fig">5+ yrs</span><span class="claim">of historical data processed by a backtesting framework built for strategy validation</span></li>
+              <li><span class="fig">40%</span><span class="claim">reduction in potential losses from risk systems with dynamic position sizing</span></li>
+            </ul>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="entry" id="exp-cryptosheets">
+          <p class="entry-date">2018 — 2021</p>
+          <div class="entry-body">
+            <h3>Founder &amp; CTO <span class="co">— Cryptosheets</span></h3>
+            <p class="scope">Real-time cryptocurrency data platform for Microsoft Excel. Acquired 2019.</p>
+            <ul class="claims">
+              <li><span class="fig">30,000+</span><span class="claim">active users</span></li>
+              <li><span class="fig">1M+</span><span class="claim">daily API requests on architecture I designed and scaled</span></li>
+              <li><span class="fig">Exit</span><span class="claim">acquired by a private buyer within the first year of operation</span></li>
+            </ul>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="entry" id="exp-spreadstreet">
+          <p class="entry-date">2016 — 2019</p>
+          <div class="entry-body">
+            <h3>Founder &amp; Chief Software Architect <span class="co">— Spreadstreet.io</span></h3>
+            <p class="scope">Google Sheets integration for cryptocurrency market data. Exited to a strategic buyer.</p>
+            <ul class="claims">
+              <li><span class="fig">500+</span><span class="claim">cryptocurrencies with real-time feeds and custom functions</span></li>
+              <li><span class="fig">5,000+</span><span class="claim">subscribers on a recurring-revenue model</span></li>
+            </ul>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="entry" id="exp-capitalone">
+          <p class="entry-date">2010 — 2017</p>
+          <div class="entry-body">
+            <h3>Principal Financial Analyst <span class="co">— Capital One</span></h3>
+            <p class="scope">Progressive analyst roles on a $1B+ credit-card portfolio.</p>
+            <ul class="claims">
+              <li><span class="fig">$1B+</span><span class="claim">portfolio covered by financial models I led cross-functional teams to build</span></li>
+              <li><span class="fig">70%</span><span class="claim">reduction in manual reporting via automated systems</span></li>
+            </ul>
+          </div>
+        </article>
+      </li>
+    </ol>
+  </section>
+
+  <!-- SYSTEMS -->
+  <section class="section" aria-labelledby="systems-label">
+    <h2 class="sec-head" id="systems-label"><span>Systems</span></h2>
+    <ul class="sys-list">
+      <li class="sys">
+        <h3 class="sys-name">Flywheel</h3>
+        <p class="sys-spec">Control plane for AI coding agents: concurrent agents in isolated git worktrees, dependency-aware scheduling, grader-gated landing.</p>
+        <p class="sys-meta"><span class="tag">Python</span><a href="https://github.com/johnayoung/flywheel">github &nearr;</a></p>
+      </li>
+      <li class="sys">
+        <h3 class="sys-name">go-gas</h3>
+        <p class="sys-spec">Ultra low-latency Ethereum gas estimation, ~69&micro;s per calculation, zero-copy uint256 math.</p>
+        <p class="sys-meta"><span class="tag">Go</span><span class="sys-private">private repo</span></p>
+      </li>
+      <li class="sys">
+        <h3 class="sys-name">tycho-bridge</h3>
+        <p class="sys-spec">Zero-network local DeFi swap simulation, 5&ndash;3000&micro;s via cached state; C FFI and gRPC interfaces.</p>
+        <p class="sys-meta"><span class="tag">Rust · Go</span><span class="sys-private">private repo</span></p>
+      </li>
+      <li class="sys">
+        <h3 class="sys-name">go-weiroll</h3>
+        <p class="sys-spec">Weiroll command planner for atomic multi-call Ethereum transactions.</p>
+        <p class="sys-meta"><span class="tag">Go</span><span class="sys-private">private repo</span></p>
+      </li>
+      <li class="sys">
+        <h3 class="sys-name">eth-finetuning-cookbook</h3>
+        <p class="sys-spec">QLoRA fine-tuning pipeline extracting structured intents from Ethereum transactions at 90%+ accuracy.</p>
+        <p class="sys-meta"><span class="tag">PyTorch</span><a href="https://github.com/johnayoung/eth-finetuning-cookbook">github &nearr;</a></p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- STACK + EDUCATION -->
+  <section class="section" aria-labelledby="stack-label">
+    <h2 class="sec-head" id="stack-label"><span>Stack &amp; Education</span></h2>
+    <div class="two-col">
+      <div>
+        <h3 class="subhead">Stack</h3>
+        <dl class="stack-matrix">
+          <div><dt>Languages</dt><dd>Go · Python · TypeScript · Solidity · SQL</dd></div>
+          <div><dt>AI–LLM</dt><dd>Claude API · LangGraph · multi-agent orchestration · RAG · QLoRA fine-tuning</dd></div>
+          <div><dt>Data &amp; Infra</dt><dd>PostgreSQL · TimescaleDB · Redis · BigQuery · Kubernetes · AWS · GCP</dd></div>
+          <div><dt>DeFi</dt><dd>Uniswap · Aave · EVM internals · MEV protection</dd></div>
+        </dl>
+      </div>
+      <div>
+        <h3 class="subhead">Education &amp; Certification</h3>
+        <ul class="edu-list">
+          <li>
+            <span class="edu-name">Towson University</span>
+            <span class="edu-detail"> — BS, Finance &amp; Economics</span>
+            <span class="edu-date">2008 — 2010</span>
+          </li>
+          <li>
+            <span class="edu-name">Thinkful</span>
+            <span class="edu-detail"> — Engineering Immersion (full-stack)</span>
+            <span class="edu-date">2018 — 2019</span>
+          </li>
+          <li>
+            <span class="edu-name">Hummingbot Foundation</span>
+            <span class="edu-detail"> — StrategyV2 Developer, MVP at demo day</span>
+            <span class="edu-date">2024</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK WITH ME -->
+  <section class="section" aria-labelledby="engage-label">
+    <h2 class="sec-head" id="engage-label"><span>Work With Me</span></h2>
+    <div class="engage">
+      <p>I take on a small number of advisory and fractional engagements — agentic engineering, trading infrastructure, DeFi systems.</p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:john.anto.young@gmail.com?subject=Working%20together">Book a call</a>
+        <a class="quiet-link" href="https://jyoung.dev/output/John_Young_Resume.docx">Download resume &darr;</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon wrap">
+  <div class="double-rule"></div>
+  <div class="colophon-inner">
+    <div class="colophon-id">
+      <p class="foot-mark">John Young</p>
+      <p class="colophon-note">Set in Newsreader &amp; IBM Plex Mono · Every claim traced to a primary source</p>
+      <ul class="foot-links">
+        <li><a href="https://github.com/johnayoung">GitHub</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="https://www.linkedin.com/in/jyoung1985">LinkedIn</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="mailto:john.anto.young@gmail.com">Email</a></li>
+        <li aria-hidden="true"><span class="dot">·</span></li>
+        <li><a href="https://jyoung.dev/blog/index.xml">RSS</a></li>
+      </ul>
+      <p class="foot-last">john young<span class="cursor">_</span> · &copy; 2026</p>
+    </div>
+    <div class="sub-slip" id="subscribe">
+      <span class="mono-label">Weekly Ledger</span>
+      <form class="subscribe" action="https://buttondown.com/api/emails/embed-subscribe/johnantoyoung" method="post" target="_blank">
+        <label class="visually-hidden" for="sub-email">Email address</label>
+        <input type="email" id="sub-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+        <input type="hidden" name="embed" value="1">
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+      <p class="sub-note"><em>One research-backed essay a week. Unsubscribe anytime.</em></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
