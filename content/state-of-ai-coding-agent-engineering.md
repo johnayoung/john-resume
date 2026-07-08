@@ -1,6 +1,7 @@
 ---
 title: "The State of AI Coding Agent Engineering"
 description: "Capability is accelerating; the field trial measured developers slower. Where the constraint on AI coding agents moved: verification, review capacity, ownership."
+date: 2026-07-01
 type: report
 layout: single
 kicker: "Field report"

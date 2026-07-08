@@ -3,7 +3,8 @@
 <section class="about-head" aria-label="About John Young">
   <h1>{{ .Title }}</h1>
   <div class="about-intro">
-    <img class="portrait" src="/img/headshot_new.png" alt="John Young" width="280" height="210" fetchpriority="high">
+    {{- $portrait := (resources.Get "img/headshot_new.png").Process "resize 560x webp q85" }}
+    <img class="portrait" src="{{ $portrait.RelPermalink }}" alt="John Young" width="280" height="210" fetchpriority="high">
     <div class="about-prose">
       <p>I started in finance &mdash; modeling risk on a $1B+ credit-card portfolio at Capital One &mdash; then taught myself to code and never looked back. Since then I&rsquo;ve founded two data platforms, both acquired, and built systems that clear 1M+ API requests a day.</p>
       <p>Today I run engineering across Combine Capital and Infrared under Branched Services: multi-agent workflows that cut analysis time 75%, data infrastructure processing 100K+ daily events across EVM chains, and a MIMO token router that solves DeFi routing as a single min-cost-flow problem &mdash; sub-100ms across 50+ liquidity sources.</p>

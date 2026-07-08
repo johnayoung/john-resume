@@ -9,7 +9,10 @@
 
 <section class="intro" aria-label="Introduction">
   <a class="avatar-link" href="/about/" aria-label="About John Young">
-    <img class="avatar" src="/img/headshot_new.png" alt="" width="176" height="176" fetchpriority="high">
+    {{- /* 2x the 176px display size; the source PNG is 1024px/616KB and was
+           the page's LCP element served at full weight. */ -}}
+    {{- $avatar := (resources.Get "img/headshot_new.png").Process "resize 352x webp q85" }}
+    <img class="avatar" src="{{ $avatar.RelPermalink }}" alt="" width="176" height="176" fetchpriority="high">
   </a>
   <div class="intro-text">
     <h1>I&rsquo;m John Young.</h1>

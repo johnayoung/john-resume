@@ -1,6 +1,7 @@
 ---
 title: "The State of AI Coding Agent Engineering"
 description: "Capability is accelerating; the field trial measured developers slower. Six pillars of evidence and the judgment layer for running AI coding agents in production."
+date: 2026-07-01
 type: report
 layout: single
 url: "/state-of-ai-coding-agent-engineering/read/"

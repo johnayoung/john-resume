@@ -1,5 +1,6 @@
 ---
 title: "What AI Coding Agents Are Actually Good For (And When to Skip)"
+metaTitle: "What AI Coding Agents Are Actually Good For"
 date: 2026-05-04
 draft: false
 pillar: architecture-decisions

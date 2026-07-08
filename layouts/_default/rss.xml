@@ -1,0 +1,39 @@
+{{- /* Blog-only feed, served at both /index.xml and /blog/index.xml. Replaces
+       Hugo's embedded template, which ranged ALL regular pages — including
+       standalone pages and the email-gated report at /read/ (private: true).
+       Item descriptions come from frontmatter, not the auto-summary (which
+       started with raw ELI5 <details> markup); full essay HTML ships in
+       content:encoded with the ELI5 leaf stripped. */ -}}
+{{- $pages := where site.RegularPages "Section" "blog" -}}
+{{- $pages = where $pages "Params.private" "!=" true -}}
+{{- $pages = $pages.ByDate.Reverse -}}
+{{- $limit := site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 -}}{{- $pages = $pages | first $limit -}}{{- end -}}
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>{{ site.Title }} — Essays</title>
+    <link>{{ site.BaseURL }}</link>
+    <description>{{ site.Params.description | transform.XMLEscape | safeHTML }}</description>
+    <generator>Hugo</generator>
+    <language>{{ site.LanguageCode }}</language>
+    {{- with index $pages 0 }}
+    <lastBuildDate>{{ .Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</lastBuildDate>
+    {{- end }}
+    {{- with .OutputFormats.Get "rss" }}
+    <atom:link href="{{ .Permalink }}" rel="self" type="application/rss+xml" />
+    {{- end }}
+    {{- range $pages }}
+    <item>
+      <title>{{ .Title | transform.XMLEscape | safeHTML }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
+      <guid>{{ .Permalink }}</guid>
+      {{- $desc := .Description | default (.Summary | plainify) | htmlUnescape | chomp }}
+      <description>{{ $desc | transform.XMLEscape | safeHTML }}</description>
+      {{- $body := replaceRE `(?s)<details class="leaf">.*?</details>` "" (printf "%s" .Content) }}
+      <content:encoded>{{ printf "<![CDATA[%s]]>" $body | safeHTML }}</content:encoded>
+    </item>
+    {{- end }}
+  </channel>
+</rss>

@@ -7,7 +7,14 @@
   {{- $title := .Title -}}
   {{- $siteTitle := site.Title -}}
   {{- $isPost := and (eq .Section "blog") (eq .Kind "page") -}}
-  {{- $pageTitle := cond .IsHome (printf "%s — %s" $siteTitle (site.Params.tagline | default site.Params.description)) (printf "%s — %s" $title $siteTitle) -}}
+  {{- /* Standalone reports (type: report) get full article treatment — OG type,
+         article: meta, Article JSON-LD — unless gated behind private: true. */ -}}
+  {{- $isReport := and (eq .Type "report") (not .Params.private) -}}
+  {{- $isArticle := or $isPost $isReport -}}
+  {{- /* metaTitle overrides the <title>/og:title when the display title would
+         clip in SERPs (~60 chars with the site suffix); h1 keeps .Title. */ -}}
+  {{- $metaTitle := .Params.metaTitle | default $title -}}
+  {{- $pageTitle := cond .IsHome (printf "%s — %s" $siteTitle (site.Params.tagline | default site.Params.description)) (printf "%s — %s" $metaTitle $siteTitle) -}}
   <title>{{ $pageTitle }}</title>
 
   {{- $desc := .Description | default .Summary | default site.Params.description -}}
@@ -18,7 +25,7 @@
   <meta name="keywords" content="{{ delimit . ", " }}" />
   {{- end }}
 
-  {{- if or .Draft .Params.private }}
+  {{- if or .Draft .Params.private (eq .Kind "404") }}
   <meta name="robots" content="noindex, nofollow" />
   {{- else }}
   <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -37,7 +44,7 @@
     {{- with .Params.image -}}
       {{- $ogImage = . -}}
     {{- else -}}
-      {{- if $isPost -}}
+      {{- if $isArticle -}}
         {{- $ogImage = printf "/og/%s.png" .File.ContentBaseName -}}
       {{- else -}}
         {{- $ogImage = site.Params.ogImage -}}
@@ -45,10 +52,11 @@
     {{- end -}}
   {{- end -}}
   {{- $ogImageURL := absURL $ogImage -}}
-  {{- $ogType := cond $isPost "article" "website" }}
+  {{- $ogType := cond $isArticle "article" "website" }}
 
   <meta property="og:type" content="{{ $ogType }}" />
   <meta property="og:site_name" content="{{ $siteTitle }}" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:url" content="{{ .Permalink }}" />
   <meta property="og:title" content="{{ $pageTitle }}" />
   <meta property="og:description" content="{{ $desc }}" />
@@ -57,12 +65,14 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   {{- end }}
-  {{- if $isPost }}
+  {{- if $isArticle }}
+  {{- if not .Date.IsZero }}
   <meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}" />
+  {{- end }}
   {{- if not .Lastmod.IsZero }}
   <meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}" />
   {{- end }}
-  <meta property="article:author" content="{{ .Params.author | default site.Params.author }}" />
+  <meta property="article:author" content="{{ absURL "/about/" }}" />
   {{- end }}
 
   <meta name="twitter:card" content="summary_large_image" />
@@ -76,13 +86,12 @@
 
   <link rel="stylesheet" href="/css/ledger.css" />
 
-  {{- range .AlternativeOutputFormats }}
-  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="{{ $siteTitle }} — Blog" />
-  {{- end }}
-  {{- if and (ne .Kind "section") (ne .Kind "home") }}
+  {{- with .OutputFormats.Get "rss" }}
+  <link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="{{ $siteTitle }} — Essays" />
+  {{- else }}
   {{- with site.GetPage "/blog" }}
   {{- with .OutputFormats.Get "rss" }}
-  <link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="{{ $siteTitle }} — Blog" />
+  <link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="{{ $siteTitle }} — Essays" />
   {{- end }}
   {{- end }}
   {{- end }}
@@ -136,13 +145,37 @@
         (dict "@type" "ListItem" "position" 3 "name" $title "item" .Permalink))
     -}}
   <script type="application/ld+json">{{ $crumbs | jsonify (dict "indent" "  ") | safeJS }}</script>
+  {{- else if $isReport }}
+    {{- $author := .Params.author | default site.Params.author -}}
+    {{- $ld := dict
+      "@context" "https://schema.org"
+      "@type" "Article"
+      "headline" $title
+      "description" $desc
+      "author" (dict "@type" "Person" "name" $author "url" site.BaseURL)
+      "publisher" (dict "@type" "Person" "name" site.Params.author "url" site.BaseURL)
+      "image" $ogImageURL
+      "url" .Permalink
+      "wordCount" .WordCount
+      "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+    -}}
+    {{- if not .Date.IsZero -}}
+      {{- $ld = merge $ld (dict "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")) -}}
+    {{- end }}
+    {{- if not .Lastmod.IsZero -}}
+      {{- $ld = merge $ld (dict "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")) -}}
+    {{- end }}
+    {{- with .Params.keywords -}}
+      {{- $ld = merge $ld (dict "keywords" .) -}}
+    {{- end }}
+  <script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
   {{- else if eq .RelPermalink "/about/" }}
     {{- $ld := dict
       "@context" "https://schema.org"
       "@type" "Person"
       "name" site.Params.author
       "url" (absURL "/about/")
-      "image" (absURL "/img/headshot_new.png")
+      "image" (((resources.Get "img/headshot_new.png").Process "resize 800x webp q85").Permalink)
       "jobTitle" "CTO, Combine Capital & Head of Engineering, Infrared"
       "worksFor" (slice (dict "@type" "Organization" "name" "Combine Capital") (dict "@type" "Organization" "name" "Infrared"))
       "alumniOf" (dict "@type" "CollegeOrUniversity" "name" "Towson University")

@@ -1,5 +1,6 @@
 ---
 title: "CLAUDE.md Instruction Ceiling: Maintained Config, Not a README"
+metaTitle: "The CLAUDE.md Instruction Ceiling"
 date: 2026-05-18
 draft: false
 pillar: context-engineering

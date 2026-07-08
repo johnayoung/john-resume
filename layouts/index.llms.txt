@@ -1,0 +1,34 @@
+{{- /* llms.txt (https://llmstxt.org): a linked index for AI crawlers and
+       answer engines. Generated from site pages so it never goes stale;
+       private pages (the gated report) are excluded. Full essay text lives
+       in llms-full.txt. */ -}}
+{{- $posts := where site.RegularPages "Section" "blog" -}}
+{{- $posts = where $posts "Params.private" "!=" true -}}
+# {{ site.Title }}
+
+> {{ site.Params.description }}
+
+Personal site of John Young — CTO at Combine Capital, head of engineering at Infrared. Long-form essays on the engineering practices behind running AI coding agents in production: task design, context engineering, evals and verification, production operations, team process, and architecture decisions. Every claim links to a primary source; the evidence base is public and machine-readable.
+
+Full essay text: {{ absURL "llms-full.txt" }}
+
+## Report
+
+- [The State of AI Coding Agent Engineering]({{ absURL "state-of-ai-coding-agent-engineering/" }}): The synthesis behind every essay — where the constraint on AI coding agents moved: verification, review capacity, ownership.
+
+## Essays
+{{ range $posts.ByDate.Reverse }}
+- [{{ .Title }}]({{ .Permalink }}): {{ .Description }}
+{{- end }}
+
+## Research
+
+- [Research Index]({{ absURL "research/" }}): A verified index of the primary research behind the essays — every entry a verbatim figure or quote, checked against its source.
+- [research.json]({{ absURL "research.json" }}): The same index as machine-readable JSON{{ with site.Data.research }} — {{ len .sources }} verified sources{{ with .updated }}, last verified {{ . }}{{ end }}{{ end }}.
+
+## About
+
+- [About John Young]({{ absURL "about/" }}): Background, career history, and current work.
+- [Work With Me]({{ absURL "work-with-me/" }}): Advisory and hands-on help for engineering leaders putting AI coding agents into production.
+- [Subscribe]({{ absURL "subscribe/" }}): One email per essay, via Buttondown.
+- [RSS feed]({{ absURL "blog/index.xml" }}): Full-content feed of all essays.

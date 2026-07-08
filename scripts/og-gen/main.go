@@ -132,6 +132,48 @@ func render(p *post, outPath string) error {
 	return dc.SavePNG(outPath)
 }
 
+// renderDefault draws the site-wide fallback card used by every page without
+// a card of its own (home, about, subscribe, work-with-me, the blog index).
+// Referenced from hugo.toml as params.ogImage.
+func renderDefault(outPath string) error {
+	dc := gg.NewContext(cardW, cardH)
+	dc.SetColor(bgColor)
+	dc.Clear()
+
+	brand, err := loadFace(goregular.TTF, 32)
+	if err != nil {
+		return err
+	}
+	title, err := loadFace(gobold.TTF, 84)
+	if err != nil {
+		return err
+	}
+	sub, err := loadFace(goregular.TTF, 34)
+	if err != nil {
+		return err
+	}
+
+	dc.SetFontFace(brand)
+	dc.SetColor(accentColor)
+	dc.DrawStringAnchored("jyoung.dev", pad, pad, 0, 1)
+
+	dc.SetFontFace(title)
+	dc.SetColor(titleColor)
+	dc.DrawStringAnchored("John Young", float64(cardW)/2, 270, 0.5, 0.5)
+
+	dc.SetFontFace(sub)
+	dc.SetColor(bylineColor)
+	dc.DrawStringWrapped(
+		"Research-backed essays on running AI coding agents in production",
+		float64(cardW)/2, 360, 0.5, 0, float64(cardW-3*pad), 1.4, gg.AlignCenter,
+	)
+
+	if err := os.MkdirAll(filepath.Dir(outPath), 0o755); err != nil {
+		return err
+	}
+	return dc.SavePNG(outPath)
+}
+
 // researchData is the subset of data/research.json the card needs. Reading it
 // at build time keeps the card's counts in sync with the index's source of truth.
 type researchData struct {
@@ -235,6 +277,28 @@ func main() {
 		fmt.Printf("wrote %s\n", out)
 		count++
 	}
+
+	// The public report teaser lives at the content root, outside -content.
+	reportPath := filepath.Join(*contentDir, "..", "state-of-ai-coding-agent-engineering.md")
+	rp, err := parsePost(reportPath)
+	if err != nil {
+		log.Fatalf("parse %s: %v", reportPath, err)
+	}
+	if rp != nil {
+		out := filepath.Join(*outDir, rp.slug+".png")
+		if err := render(rp, out); err != nil {
+			log.Fatalf("render %s: %v", rp.slug, err)
+		}
+		fmt.Printf("wrote %s\n", out)
+		count++
+	}
+
+	defaultOut := filepath.Join(*outDir, "default.png")
+	if err := renderDefault(defaultOut); err != nil {
+		log.Fatalf("render default card: %v", err)
+	}
+	fmt.Printf("wrote %s\n", defaultOut)
+	count++
 
 	rdBytes, err := os.ReadFile(researchJSON)
 	if err != nil {

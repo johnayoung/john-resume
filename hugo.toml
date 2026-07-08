@@ -7,6 +7,24 @@ title = "John Young"
 disableKinds = ["taxonomy", "term"]
 
 enableRobotsTXT = true
+# Lastmod from the last commit touching each file; feeds sitemap <lastmod> and
+# article:modified_time. CI checks out with fetch-depth: 0 so this works there.
+enableGitInfo = true
+
+# Plain-text indexes for AI crawlers (llms.txt spec): llms.txt is the linked
+# index, llms-full.txt carries full essay text. Rendered from layouts/index.*.txt.
+[outputFormats]
+  [outputFormats.llms]
+    mediaType = "text/plain"
+    baseName = "llms"
+    isPlainText = true
+  [outputFormats.llmsfull]
+    mediaType = "text/plain"
+    baseName = "llms-full"
+    isPlainText = true
+
+[outputs]
+  home = ["html", "rss", "llms", "llmsfull"]
 
 [markup]
   [markup.highlight]
@@ -24,7 +42,7 @@ enableRobotsTXT = true
   description = "Research-backed essays on running AI coding agents in production — every claim traced to a primary source."
   tagline = "Essays on running AI coding agents in production"
   author = "John Young"
-  ogImage = "/img/headshot_new.png"
+  ogImage = "/og/default.png"
   # Buttondown newsletter handle (Settings → Embedding → the username in the Form URL).
   # The subscribe form + footer capture render only when this is set.
   buttondownUser = "johnantoyoung"

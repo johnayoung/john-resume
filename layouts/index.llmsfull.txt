@@ -1,0 +1,33 @@
+{{- /* llms-full.txt: full markdown text of every published essay plus the
+       public report teaser, for AI crawlers that want content in one fetch.
+       Shortcode delimiters are stripped from RawContent; their inner prose
+       (the ELI5 editions) is kept. The gated report (private: true) is
+       deliberately excluded. */ -}}
+{{- $posts := where site.RegularPages "Section" "blog" -}}
+{{- $posts = where $posts "Params.private" "!=" true -}}
+{{- $strip := `\{\{<[^}]*>\}\}` -}}
+# {{ site.Title }} — full essay text
+
+> {{ site.Params.description }}
+
+Linked index: {{ absURL "llms.txt" }}
+{{ with site.GetPage "/state-of-ai-coding-agent-engineering" }}
+---
+
+# {{ .Title }}
+
+URL: {{ .Permalink }}
+{{ if not .Date.IsZero }}Published: {{ .Date.Format "2006-01-02" }}{{ end }}
+
+{{ replaceRE $strip "" .RawContent | chomp }}
+{{ end }}
+{{- range $posts.ByDate.Reverse }}
+---
+
+# {{ .Title }}
+
+URL: {{ .Permalink }}
+Published: {{ .Date.Format "2006-01-02" }}
+
+{{ replaceRE $strip "" .RawContent | chomp }}
+{{ end }}
