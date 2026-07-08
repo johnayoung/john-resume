@@ -7,6 +7,8 @@ I'm John Young — an engineering leader (CTO, 12+ years in fintech) who builds 
 
 If your team is moving real work onto AI coding agents and hitting the questions that don't have blog-post answers yet — how to scope tasks an agent actually finishes, how to verify output beyond a green build, what production operations and guardrails really cost — that's where I help.
 
+{{< cta-book >}}
+
 ## Where I help
 
 **Advisory for engineering leaders.** A senior sounding board for CTOs, VPs of Engineering, and staff+ engineers adopting agents: task design and decomposition, context engineering, eval strategy, and the team and process changes that agent-written code forces.

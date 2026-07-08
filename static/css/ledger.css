@@ -469,11 +469,14 @@ sup.cite a:hover{text-decoration:underline;text-decoration-thickness:1px}
 .engage{max-width:var(--measure)}
 
 /* ============ STANDALONE PAGES (/subscribe, /work-with-me, report) ============ */
-.page{max-width:var(--measure);margin-inline:auto;padding-block:var(--sp-8) 0}
+/* Left-aligned across the wrap with a display h1, matching home/blog/about;
+   prose stays at measure. The report overrides back to a centered reading
+   column below — it is an article-length document, like a post. */
+.page{padding-block:var(--sp-8) 0}
 @media (min-width:700px){.page{padding-block:var(--sp-10) 0}}
 .page__header .report__kicker{color:var(--accent);margin-bottom:var(--sp-3);display:block}
-.page__title{font-size:var(--title);font-weight:500;line-height:var(--lh-tight);letter-spacing:-0.015em;text-wrap:balance}
-.page__lede{color:var(--secondary);font-size:var(--text-0);font-style:italic;margin-top:var(--sp-3);text-wrap:pretty}
+.page__title{font-size:var(--display);font-weight:500;line-height:var(--lh-tight);letter-spacing:-0.015em;text-wrap:balance}
+.page__lede{color:var(--secondary);font-size:var(--text-0);font-style:italic;margin-top:var(--sp-3);max-width:var(--measure);text-wrap:pretty}
 .report__meta{font-family:var(--mono);font-size:var(--text--2);letter-spacing:0.02em;color:var(--secondary);margin-top:var(--sp-3)}
 .page__content{margin-top:var(--sp-6)}
 .page__content > *{max-width:var(--measure);margin-top:var(--sp-3)}
@@ -497,6 +500,8 @@ sup.cite a:hover{text-decoration:underline;text-decoration-thickness:1px}
 .page__content td{padding:var(--sp-1) var(--sp-2);border-bottom:1px solid var(--hairline);vertical-align:top}
 .report__content h2{border-top:1px solid var(--hairline);padding-top:var(--sp-4)}
 .report__content h2:first-of-type{border-top:0;padding-top:0}
+.report{max-width:var(--measure);margin-inline:auto}
+.report .page__title{font-size:var(--title)}
 
 /* ============ SUBSCRIBE FORM (all variants) ============ */
 .subscribe{margin-top:var(--sp-2)}
