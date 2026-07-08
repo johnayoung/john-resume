@@ -381,16 +381,14 @@ sup.cite a:hover{text-decoration:underline;text-decoration-thickness:1px}
 /* ============ SHARE ============ */
 .share{max-width:var(--measure);margin-top:var(--sp-8);display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--sp-2);border-top:1px solid var(--hairline);padding-top:var(--sp-2)}
 .share-label{color:var(--secondary)}
-.share-links{list-style:none;display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--sp-1);margin-left:calc(-1*var(--sp-1))}
-.share-links li[data-share-native]{display:inline-flex;align-items:center;column-gap:var(--sp-1)}
-.share-links a,.share-links button{font-family:var(--mono);font-size:var(--text--1);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:var(--target);padding-inline:var(--sp-1);background:none;border:0;cursor:pointer;white-space:nowrap}
-.share-links a:hover,.share-links button:hover{color:var(--accent);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.25em}
-.share-links .dot{color:var(--secondary);font-family:var(--mono);font-size:var(--text--1)}
-.share-copy.is-copied,.share-copy.is-copied:hover{color:var(--verified);text-decoration:none}
-@media (max-width:699px){
-  .share-links li[aria-hidden=true],.share-links li[data-share-native] .dot{display:none}
-  .share-links{column-gap:var(--sp-2)}
-}
+.share-links{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:0.125rem;margin-left:calc((var(--target) - 18px)/-2)}
+.share-links a,.share-links button{display:inline-flex;align-items:center;justify-content:center;width:var(--target);height:var(--target);color:var(--secondary);background:none;border:0;border-radius:var(--radius);cursor:pointer;text-decoration:none}
+.share-links a:hover,.share-links button:hover{color:var(--accent)}
+.share-links svg{display:block}
+.share-copy .i-check{display:none}
+.share-copy.is-copied .i-link{display:none}
+.share-copy.is-copied .i-check{display:block}
+.share-copy.is-copied,.share-copy.is-copied:hover{color:var(--verified)}
 
 /* ============ ABOUT ============ */
 .about-head{padding-block:var(--sp-8) 0}
