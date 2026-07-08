@@ -85,6 +85,8 @@
     {{ $content }}
   </div>
 
+  {{ partial "share.html" . }}
+
   {{- if $nSources }}
   <section class="sources" aria-labelledby="sources-label">
     <h2 class="sec-head" id="sources-label"><span>Sources</span></h2>

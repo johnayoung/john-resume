@@ -1,0 +1,60 @@
+{{- /*
+  Share row — Ledger-styled end matter for a page. One include, zero
+  duplication: {{ partial "share.html" . }}
+
+  Copy-link uses the async clipboard API with a transient "copied"
+  confirmation; the native share-sheet item is hidden until JS confirms
+  navigator.share support (mobile, mostly). All outbound intents open in
+  new tabs per site convention.
+*/ -}}
+{{- $url := .Permalink -}}
+{{- $title := .Title -}}
+<aside class="share" aria-label="Share this essay">
+  <span class="mono-label share-label">Share</span>
+  <ul class="share-links">
+    <li><button type="button" class="share-copy" data-url="{{ $url }}" aria-label="Copy link to this essay">copy link</button></li>
+    <li aria-hidden="true"><span class="dot">&middot;</span></li>
+    <li><a href="https://x.com/intent/post?text={{ urlquery $title }}&amp;url={{ urlquery $url }}" target="_blank" rel="noopener" aria-label="Share on X">x</a></li>
+    <li aria-hidden="true"><span class="dot">&middot;</span></li>
+    <li><a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlquery $url }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn">linkedin</a></li>
+    <li aria-hidden="true"><span class="dot">&middot;</span></li>
+    <li><a href="https://news.ycombinator.com/submitlink?u={{ urlquery $url }}&amp;t={{ urlquery $title }}" target="_blank" rel="noopener" aria-label="Submit to Hacker News">hacker news</a></li>
+    <li aria-hidden="true"><span class="dot">&middot;</span></li>
+    <li><a href="https://bsky.app/intent/compose?text={{ urlquery (printf "%s %s" $title $url) }}" target="_blank" rel="noopener" aria-label="Share on Bluesky">bluesky</a></li>
+    <li aria-hidden="true"><span class="dot">&middot;</span></li>
+    <li><a href="mailto:?subject={{ urlquery $title }}&amp;body={{ urlquery $url }}" aria-label="Share by email">email</a></li>
+    <li hidden data-share-native>
+      <span class="dot" aria-hidden="true">&middot;</span>
+      <button type="button" class="share-more" aria-label="Share via your device">more&hellip;</button>
+    </li>
+  </ul>
+</aside>
+<script>
+(function(){
+  var copy=document.querySelector('.share-copy');
+  if(copy){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      copy.addEventListener('click',function(){
+        navigator.clipboard.writeText(copy.getAttribute('data-url')).then(function(){
+          copy.classList.add('is-copied');
+          copy.textContent='copied';
+          setTimeout(function(){
+            copy.classList.remove('is-copied');
+            copy.textContent='copy link';
+          },1800);
+        });
+      });
+    }else{
+      copy.parentElement.nextElementSibling.remove();
+      copy.parentElement.remove();
+    }
+  }
+  var native=document.querySelector('[data-share-native]');
+  if(native&&navigator.share){
+    native.hidden=false;
+    native.querySelector('button').addEventListener('click',function(){
+      navigator.share({title:document.title,url:location.href}).catch(function(){});
+    });
+  }
+})();
+</script>
