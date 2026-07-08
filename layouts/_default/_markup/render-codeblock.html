@@ -1,0 +1,15 @@
+{{- /*
+  Code block hook: a fence with a title attribute renders as the design
+  system's labeled code panel; untitled fences render as a plain highlight.
+
+    ```bash {title="The Ralph Loop"}
+*/ -}}
+{{- $result := transform.HighlightCodeBlock . -}}
+{{- with .Attributes.title -}}
+<figure class="code-panel">
+  <figcaption>{{ . }}</figcaption>
+  {{ $result.Wrapped }}
+</figure>
+{{- else -}}
+{{ $result.Wrapped }}
+{{- end -}}

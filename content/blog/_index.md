@@ -1,6 +1,4 @@
 ---
-title: "Blog"
-description: "Notes from John Young — engineering, AI systems, and DeFi infrastructure."
+title: "Essays"
+description: "All research-backed essays on running AI coding agents in production — filterable by pillar, every claim traced to a primary source."
 ---
-
-Notes on engineering, AI systems, and DeFi infrastructure.

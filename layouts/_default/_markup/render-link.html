@@ -1,3 +1,22 @@
 {{- $url := .Destination | safeURL -}}
 {{- $isExternal := or (strings.HasPrefix .Destination "http://") (strings.HasPrefix .Destination "https://") -}}
+{{- /* Blog posts: number external citations in order of first appearance and
+       collect them for the Sources section + margin rail (single.html reads
+       the citeNums/citeTitles/citeHrefs store). Keyed by normalized URL so
+       repeat renders (other output formats) reuse the same numbers. */ -}}
+{{- $cite := 0 -}}
+{{- if and $isExternal (eq .Page.Section "blog") (eq .Page.Kind "page") (not (strings.Contains .Destination "jyoung.dev")) -}}
+  {{- $key := strings.TrimSuffix "/" .Destination -}}
+  {{- $nums := .Page.Store.Get "citeNums" | default dict -}}
+  {{- with index $nums $key -}}
+    {{- $cite = . -}}
+  {{- else -}}
+    {{- $cite = add (len $nums) 1 -}}
+    {{- .Page.Store.SetInMap "citeNums" $key $cite -}}
+    {{- .Page.Store.SetInMap "citeTitles" (string $cite) (.Text | plainify | chomp) -}}
+    {{- .Page.Store.SetInMap "citeHrefs" (string $cite) $key -}}
+  {{- end -}}
+{{- end -}}
 <a href="{{ $url }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $isExternal }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- if $cite }}<sup class="cite"><a href="#src-{{ $cite }}" aria-label="Source {{ $cite }}">{{ $cite }}</a></sup>{{ end -}}
+{{- /* no trailing newline: it would render as a space after every link */ -}}

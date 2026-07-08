@@ -1,0 +1,54 @@
+{{ define "main" }}
+{{- $posts := where site.RegularPages "Section" "blog" -}}
+{{- $total := len $posts -}}
+{{- $pillars := slice -}}
+{{- range $posts }}{{ with .Params.pillar }}{{ $pillars = $pillars | append . }}{{ end }}{{ end -}}
+{{- $pillars = uniq $pillars -}}
+{{- $pillarNames := dict -}}
+{{- range site.Params.pillars }}{{ $pillarNames = merge $pillarNames (dict .slug .name) }}{{ end -}}
+
+<section class="intro" aria-label="Introduction">
+  <a class="avatar-link" href="/about/" aria-label="About John Young">
+    <img class="avatar" src="/img/headshot_new.png" alt="" width="176" height="176" fetchpriority="high">
+  </a>
+  <div class="intro-text">
+    <h1>I&rsquo;m John Young.</h1>
+    <p class="bio">I run engineering at Combine Capital and Infrared, and write research-backed essays on running AI coding agents in production &mdash; every claim traced to a primary source.</p>
+    <p><a class="more-link" href="/about/">More about me &rarr;</a></p>
+    <p class="intro-links">
+      <a href="https://github.com/johnayoung" rel="me">github.com/johnayoung</a>
+      <a href="https://www.linkedin.com/in/jyoung1985" rel="me">linkedin.com/in/jyoung1985</a>
+      <a href="mailto:john.anto.young@gmail.com">john.anto.young@gmail.com</a>
+      <a href="/blog/index.xml">rss</a>
+    </p>
+  </div>
+  <div class="intro-ledger">
+    <span class="mono-label il-head">Ledger</span>
+    <p class="ledger-line"><span>Essays</span><span class="lead" aria-hidden="true"></span><span class="l-val">{{ $total }}</span></p>
+    <p class="ledger-line"><span>Pillars</span><span class="lead" aria-hidden="true"></span><span class="l-val">{{ len $pillars }}</span></p>
+    {{- with site.Data.research }}{{ with .updated }}
+    <p class="badge"><span>Evidence base verified</span><span>{{ . }}</span></p>
+    {{- end }}{{ end }}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="essays-label">
+  <h2 class="sec-head" id="essays-label"><span>Recent Essays</span></h2>
+  <ul class="essay-list">
+    {{- range $i, $p := first 5 $posts.ByDate.Reverse }}
+    {{- $pillar := $p.Params.pillar }}
+    <li class="essay-row"{{ with $pillar }} data-pillar="{{ . }}"{{ end }}>
+      <span class="essay-date"><time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format "2006-01-02" }}</time><span class="entry-no" aria-hidden="true">&numero; {{ printf "%03d" (sub $total $i) }}</span></span>
+      <span class="essay-title"><a href="{{ $p.RelPermalink }}">{{ $p.Title | markdownify }}</a></span>
+      {{- with $pillar }}
+      <a class="tag tag-link" href="/blog/#{{ . }}">{{ index $pillarNames . | default (humanize .) }}</a>
+      {{- end }}
+      {{- with $p.Description }}
+      <span class="essay-desc">{{ . | markdownify }}</span>
+      {{- end }}
+    </li>
+    {{- end }}
+  </ul>
+  <p class="all-link"><a class="more-link" href="/blog/">All essays &rarr;</a></p>
+</section>
+{{ end }}

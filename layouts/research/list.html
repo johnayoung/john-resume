@@ -1,7 +1,7 @@
 {{ define "main" }}
 <section class="research">
-  <h1 class="post-list__title">{{ .Title }}_</h1>
-  {{ with .Content }}<div class="post-list__intro">{{ . }}</div>{{ end }}
+  <h1 class="research-title">{{ .Title }}</h1>
+  {{ with .Content }}<div class="research-intro">{{ . }}</div>{{ end }}
 
   {{ with site.Data.research }}
   {{ $sources := .sources }}

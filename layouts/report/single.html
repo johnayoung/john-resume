@@ -1,7 +1,7 @@
 {{ define "main" }}
 <article class="page report">
   <header class="page__header report__header">
-    {{ with .Params.kicker }}<p class="report__kicker">{{ . }}</p>{{ end }}
+    {{ with .Params.kicker }}<p class="report__kicker mono-label">{{ . }}</p>{{ end }}
     <h1 class="page__title">{{ .Title }}</h1>
     {{ with .Description }}<p class="page__lede">{{ . }}</p>{{ end }}
     {{ with .Params.meta }}<p class="report__meta">{{ . | markdownify }}</p>{{ end }}

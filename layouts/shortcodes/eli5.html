@@ -1,20 +1,20 @@
 {{- /*
-  Plain-language (ELI5) companion for a post. Collapsed by default, native
-  <details> so it needs zero JS. Lives on the SAME URL as the full post —
-  additive content at a different altitude, not a duplicate page. The inner
-  block is authored as markdown.
+  Plain-language (ELI5) companion for a post — the "tipped-in leaf". Collapsed
+  by default, native <details> so it needs zero JS. Lives on the SAME URL as
+  the full post — additive content at a different altitude, not a duplicate
+  page. The inner block is authored as markdown.
 
   Usage, near the top of a post body:
-    {{< eli5 hint="no jargon, ~4 min" >}}
+    {{< eli5 hint="no background needed · 7 min" >}}
     ...plain-language markdown...
     {{< /eli5 >}}
 */ -}}
-<details class="eli5">
-  <summary class="eli5__summary">
-    <span class="eli5__label">Explain this in plain language</span>
-    <span class="eli5__hint">{{ .Get "hint" | default "no background needed" }}</span>
+<details class="leaf">
+  <summary>
+    <span class="leaf-title">The plain-language edition</span>
+    <span class="leaf-hint">{{ .Get "hint" | default "no background needed" }}</span>
   </summary>
-  <div class="eli5__body">
+  <div class="leaf-body">
     {{ .Inner | markdownify }}
   </div>
 </details>

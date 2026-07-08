@@ -1,6 +1,6 @@
 # jyoung.dev
 
-Personal site (`static/index.html`) + Hugo blog at `/blog`.
+Hugo site — writer-first homepage, essays at `/blog`, full record at `/about`. Ledger design system (Newsreader + IBM Plex Mono, single stylesheet `static/css/ledger.css`).
 
 ## Setup (once)
 
@@ -20,29 +20,29 @@ hugo serve                  # http://localhost:1313 — live reload
 
 Posts are authored in the private `john-content-engine` repo and land here as finished markdown: copy the draft to `content/blog/<slug>.md` with `draft: false`, commit, push. The slug in the filename becomes the URL: `/blog/my-post-slug/`.
 
-Code blocks use Chroma (Catppuccin Mocha). Use fenced blocks with a language tag:
+Post conventions the templates depend on:
 
-    ```go
-    func main() { ... }
-    ```
+- `pillar:` frontmatter slug must match an entry in `[[params.pillars]]` (hugo.toml) — drives the kicker, tags, and blog filters.
+- `tldr:` list renders as the numbered Abstract and feeds JSON-LD.
+- External links are auto-numbered as citations; the `## References` section (`N. [Title](url) — gloss`) is stripped from the body and feeds the Sources list + margin rail. Keep that exact format.
+- Blockquote attribution as a trailing `> — [Source](url)` line renders as a `<footer>`.
+- Code fences take an optional title: ` ```bash {title="The Ralph Loop"} ` renders the labeled code panel. Code is styled two-tone (ink + muted comments) by `ledger.css`.
 
 ## Deploy
 
 Push to `master`. The GitHub Actions workflow (`.github/workflows/hugo.yml`) builds with `hugo --minify` and deploys to GitHub Pages. Custom domain (`jyoung.dev`) comes from `static/CNAME`.
 
-```bash
-git add content/blog/my-post-slug.md
-git commit -m "post: my post"
-git push
-```
-
 Watch the deploy in the **Actions** tab. Live in ~1–2 minutes.
 
-## Editing the homepage
+## Templates
 
-The homepage is plain HTML at `static/index.html`. Hugo doesn't process it — files in `static/` are copied verbatim to `public/`. CSS/JS/images live in `static/css/`, `static/js/`, `static/img/`.
+- `layouts/index.html` — homepage (intro, ledger stats, 5 recent essays)
+- `layouts/_default/list.html` — blog index with pillar filters
+- `layouts/_default/single.html` — post: abstract, citation rail, sources
+- `layouts/page/about.html` — about page incl. career git-graph (edit career/systems/education here)
+- `layouts/_default/_markup/` — render hooks: link (citation numbering), blockquote (attribution footer), codeblock (titled panel)
 
-The blog has its own minimal layouts (`layouts/_default/*.html`) and styling (`static/css/blog.css`). The two don't share templates.
+The `design-explorations` branch archives the mockups this design was built from; `design-explorations/final/` there is the approved reference.
 
 ## Resume
 
@@ -50,21 +50,10 @@ The blog has its own minimal layouts (`layouts/_default/*.html`) and styling (`s
 node convert-resume.js      # rebuilds static/output/John_Young_Resume.docx from resume.md
 ```
 
-The download link in `static/index.html` points at `output/John_Young_Resume.docx`.
-
-## Layout
-
-```
-.
-├── static/                 # served at / verbatim (homepage, css, js, img, output, CNAME)
-├── content/blog/           # blog posts (markdown)
-├── layouts/_default/       # blog templates (baseof, list, single)
-├── hugo.toml               # Hugo config
-└── .github/workflows/      # CI deploy
-```
+The download link on `/about/` points at `output/John_Young_Resume.docx`.
 
 ## Gotchas
 
-- Hugo's home page is disabled (`disableKinds = ["home"]` in `hugo.toml`) so `static/index.html` wins at `/`. Don't add `layouts/index.html` — it would override the homepage.
 - Bump `HUGO_VERSION` in **both** `scripts/install-hugo.sh` and `.github/workflows/hugo.yml` to keep local and CI in sync.
 - `public/` and `resources/` are build artifacts — gitignored, safe to delete.
+- `data/research.json` `updated` date drives the "evidence base verified" badges site-wide.

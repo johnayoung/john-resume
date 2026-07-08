@@ -1,0 +1,11 @@
+{{- /*
+  Blockquote hook: an attribution authored as a trailing "— source" line
+  (markdown: a final "> — [Source](url)" line) is split into a <footer>,
+  matching the design system's quote apparatus. Quotes without a trailing
+  attribution line render unchanged.
+*/ -}}
+{{- $text := .Text -}}
+{{- $text = replaceRE `(?s)\n— (.*?)</p>\s*$` "</p><footer>— $1</footer>" $text -}}
+<blockquote>
+{{ $text | safeHTML }}
+</blockquote>

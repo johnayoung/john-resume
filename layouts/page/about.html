@@ -1,0 +1,275 @@
+{{ define "main" }}
+
+<section class="about-head" aria-label="About John Young">
+  <h1>{{ .Title }}</h1>
+  <div class="about-intro">
+    <img class="portrait" src="/img/headshot_new.png" alt="John Young" width="280" height="210" fetchpriority="high">
+    <div class="about-prose">
+      <p>I started in finance &mdash; modeling risk on a $1B+ credit-card portfolio at Capital One &mdash; then taught myself to code and never looked back. Since then I&rsquo;ve founded two data platforms, both acquired, and built systems that clear 1M+ API requests a day.</p>
+      <p>Today I run engineering across Combine Capital and Infrared under Branched Services: multi-agent workflows that cut analysis time 75%, data infrastructure processing 100K+ daily events across EVM chains, and a MIMO token router that solves DeFi routing as a single min-cost-flow problem &mdash; sub-100ms across 50+ liquidity sources.</p>
+      <p>I publish research-backed essays on running AI coding agents in production. Every claim is traced to a primary source in a verified <a href="/research/">research index</a>{{ with site.Data.research }}{{ with .updated }}, updated {{ . }}{{ end }}{{ end }}.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="career-label">
+  <h2 class="sec-head" id="career-label"><span>Career</span></h2>
+
+  <figure class="career-graph">
+    <!-- Horizontal graph (>=700px) -->
+    <svg class="graph graph-h" viewBox="0 0 1000 280" width="1000" height="280" aria-label="Career drawn as a git graph, 2010 to now. Ventures branch, acquisitions merge back, HEAD points at today.">
+      <!-- trunk -->
+      <path class="t-hair t-trunk" d="M60 170 H775"/>
+      <path class="t-green" d="M775 170 H940"/>
+      <!-- spreadstreet branch (above) -->
+      <path class="t-hair" d="M390 170 C420 170 425 100 465 100 H505 C530 100 535 170 555 170"/>
+      <!-- cryptosheets branch (below) -->
+      <path class="t-hair" d="M500 170 C525 170 530 245 565 245 H610 C640 245 645 170 665 170"/>
+      <!-- plain commit dots -->
+      <circle class="dot-plain" cx="60" cy="170" r="3.5"/>
+      <circle class="dot-plain" cx="140" cy="170" r="3"/>
+      <circle class="dot-plain" cx="330" cy="170" r="3"/>
+      <!-- segment labels -->
+      <text class="g-label" x="250" y="196" text-anchor="middle" aria-hidden="true">capital-one &middot; 2010&ndash;2017</text>
+      <text class="g-label" x="692" y="196" text-anchor="middle" aria-hidden="true">fractal &middot; 2021&ndash;2022</text>
+      <text class="g-label" x="857" y="196" text-anchor="middle" aria-hidden="true">branched &middot; 2023&ndash;now</text>
+      <!-- branch labels -->
+      <text class="g-label" x="472" y="78" text-anchor="middle" aria-hidden="true">spreadstreet &middot; 2016&ndash;2019</text>
+      <text class="g-label" x="588" y="272" text-anchor="middle" aria-hidden="true">cryptosheets &middot; 2018&ndash;2021</text>
+      <!-- merge dots (oxblood = acquisition; see legend) -->
+      <circle class="dot-merge" cx="555" cy="170" r="4.5"/>
+      <circle class="dot-merge" cx="665" cy="170" r="4.5"/>
+      <!-- HEAD tags -->
+      <text class="g-label g-head" x="948" y="126" text-anchor="end" aria-hidden="true">HEAD &rarr; combine-capital</text>
+      <text class="g-label g-head" x="948" y="143" text-anchor="end" aria-hidden="true">infrared</text>
+      <!-- linked nodes -->
+      <a href="#exp-capitalone" aria-label="Capital One, 2010 to 2017 — jump to entry">
+        <circle class="hit" cx="250" cy="170" r="16" fill="transparent" stroke="none"/>
+        <circle class="dot" cx="250" cy="170" r="4.5"/>
+      </a>
+      <a href="#exp-spreadstreet" aria-label="Spreadstreet, 2016 to 2019, acquired — jump to entry">
+        <circle class="hit" cx="485" cy="100" r="16" fill="transparent" stroke="none"/>
+        <circle class="dot" cx="485" cy="100" r="4.5"/>
+      </a>
+      <a href="#exp-cryptosheets" aria-label="Cryptosheets, 2018 to 2021, acquired — jump to entry">
+        <circle class="hit" cx="588" cy="245" r="16" fill="transparent" stroke="none"/>
+        <circle class="dot" cx="588" cy="245" r="4.5"/>
+      </a>
+      <a href="#exp-fractal" aria-label="Fractal, 2021 to 2022 — jump to entry">
+        <circle class="hit" cx="692" cy="170" r="16" fill="transparent" stroke="none"/>
+        <circle class="dot" cx="692" cy="170" r="4.5"/>
+      </a>
+      <a href="#exp-branched" aria-label="Branched Services: Combine Capital and Infrared, 2023 to now — jump to entry">
+        <circle class="hit" cx="940" cy="170" r="16" fill="transparent" stroke="none"/>
+        <circle class="head-ring" cx="940" cy="170" r="9"/>
+        <circle class="dot-head" cx="940" cy="170" r="4.5"/>
+      </a>
+    </svg>
+
+    <!-- Vertical graph (<700px) -->
+    <svg class="graph graph-v" viewBox="0 0 380 580" width="380" height="580" aria-label="Career drawn as a git graph, newest at top. Ventures branch, acquisitions merge back, HEAD points at today.">
+      <!-- trunk -->
+      <path class="t-green" d="M190 48 V163"/>
+      <path class="t-hair t-trunk" d="M190 163 V572"/>
+      <!-- cryptosheets branch (right) -->
+      <path class="t-hair" d="M190 354 C232 354 270 342 270 314 V276 C270 251 236 239 190 239"/>
+      <!-- spreadstreet branch (left) -->
+      <path class="t-hair" d="M190 430 C148 430 110 418 110 390 V356 C110 331 144 316 190 316"/>
+      <!-- plain dots -->
+      <circle class="dot-plain" cx="190" cy="570" r="3.5"/>
+      <circle class="dot-plain" cx="190" cy="545" r="3"/>
+      <!-- labels -->
+      <text class="g-label g-head" x="212" y="44" aria-hidden="true">HEAD &rarr; combine-capital</text>
+      <text class="g-label g-head" x="212" y="60" aria-hidden="true">infrared</text>
+      <text class="g-label" x="212" y="116" aria-hidden="true">branched &middot; 2023&ndash;now</text>
+      <text class="g-label" x="212" y="224" aria-hidden="true">fractal &middot; 2021&ndash;2022</text>
+      <text class="g-label" x="282" y="291" aria-hidden="true">cryptosheets</text>
+      <text class="g-label" x="282" y="307" aria-hidden="true">2018&ndash;2021</text>
+      <text class="g-label" x="98" y="369" text-anchor="end" aria-hidden="true">spreadstreet</text>
+      <text class="g-label" x="98" y="385" text-anchor="end" aria-hidden="true">2016&ndash;2019</text>
+      <text class="g-label" x="212" y="530" aria-hidden="true">capital-one &middot; 2010&ndash;2017</text>
+      <!-- merge dots -->
+      <circle class="dot-merge" cx="190" cy="239" r="4.5"/>
+      <circle class="dot-merge" cx="190" cy="316" r="4.5"/>
+      <!-- linked nodes -->
+      <a href="#exp-branched" aria-label="Branched Services: Combine Capital and Infrared, 2023 to now — jump to entry">
+        <circle class="hit" cx="190" cy="48" r="22" fill="transparent" stroke="none"/>
+        <circle class="head-ring" cx="190" cy="48" r="9"/>
+        <circle class="dot-head" cx="190" cy="48" r="4.5"/>
+      </a>
+      <a href="#exp-fractal" aria-label="Fractal, 2021 to 2022 — jump to entry">
+        <circle class="hit" cx="190" cy="220" r="22" fill="transparent" stroke="none"/>
+        <circle class="dot" cx="190" cy="220" r="4.5"/>
+      </a>
+      <a href="#exp-cryptosheets" aria-label="Cryptosheets, 2018 to 2021, acquired — jump to entry">
+        <circle class="hit" cx="270" cy="295" r="22" fill="transparent" stroke="none"/>
+        <circle class="dot" cx="270" cy="295" r="4.5"/>
+      </a>
+      <a href="#exp-spreadstreet" aria-label="Spreadstreet, 2016 to 2019, acquired — jump to entry">
+        <circle class="hit" cx="110" cy="373" r="22" fill="transparent" stroke="none"/>
+        <circle class="dot" cx="110" cy="373" r="4.5"/>
+      </a>
+      <a href="#exp-capitalone" aria-label="Capital One, 2010 to 2017 — jump to entry">
+        <circle class="hit" cx="190" cy="526" r="22" fill="transparent" stroke="none"/>
+        <circle class="dot" cx="190" cy="526" r="4.5"/>
+      </a>
+    </svg>
+    <p class="g-legend" aria-hidden="true"><span class="lg-merge">&#9679;</span> merge = acquired &middot; <span class="lg-head">&#9679;</span> head = current</p>
+    <figcaption class="visually-hidden">Career history, 2010 to now: Capital One on the trunk; Spreadstreet and Cryptosheets branch off and merge back as acquisitions; Fractal on the trunk; HEAD points at Combine Capital and Infrared.</figcaption>
+  </figure>
+
+  <ol class="entries">
+    <li>
+      <article class="entry" id="exp-branched">
+        <p class="entry-date">2023 &mdash; <span class="now">Now</span></p>
+        <div class="entry-body">
+          <h3>CTO, Combine Capital &amp; Head of Engineering, Infrared <span class="co">&mdash; Branched Services</span></h3>
+          <p class="scope">Trading infrastructure, DeFi routing, AI-agent workflows.</p>
+          <ul class="claims">
+            <li><span class="fig">75%</span><span class="claim">reduction in analysis time from a production multi-agent data-processing system</span></li>
+            <li><span class="fig">65%</span><span class="claim">faster DeFi compliance investigation via fine-tuned LLMs that explain transactions in plain English</span></li>
+            <li><span class="fig">100K+</span><span class="claim">daily events processed across EVM chains and CEXs</span></li>
+            <li><span class="fig">sub-100ms</span><span class="claim">MIMO route computation across 50+ liquidity sources at less than 1% slippage estimation error</span></li>
+          </ul>
+        </div>
+      </article>
+    </li>
+    <li>
+      <article class="entry" id="exp-fractal">
+        <p class="entry-date">2021 &mdash; 2022</p>
+        <div class="entry-body">
+          <h3>Software Engineer <span class="co">&mdash; FRACTAL (Fractal Wealth)</span></h3>
+          <p class="scope">Automated crypto and DeFi trading strategies.</p>
+          <ul class="claims">
+            <li><span class="fig">5+ yrs</span><span class="claim">of historical data processed by a backtesting framework built for strategy validation</span></li>
+            <li><span class="fig">40%</span><span class="claim">reduction in potential losses from risk systems with dynamic position sizing</span></li>
+          </ul>
+        </div>
+      </article>
+    </li>
+    <li>
+      <article class="entry" id="exp-cryptosheets">
+        <p class="entry-date">2018 &mdash; 2021</p>
+        <div class="entry-body">
+          <h3>Founder &amp; CTO <span class="co">&mdash; Cryptosheets</span></h3>
+          <p class="scope">Real-time cryptocurrency data platform for Microsoft Excel. Acquired 2019.</p>
+          <ul class="claims">
+            <li><span class="fig">30,000+</span><span class="claim">active users</span></li>
+            <li><span class="fig">1M+</span><span class="claim">daily API requests on architecture I designed and scaled</span></li>
+            <li><span class="fig">Exit</span><span class="claim">acquired by a private buyer within the first year of operation</span></li>
+          </ul>
+        </div>
+      </article>
+    </li>
+    <li>
+      <article class="entry" id="exp-spreadstreet">
+        <p class="entry-date">2016 &mdash; 2019</p>
+        <div class="entry-body">
+          <h3>Founder &amp; Chief Software Architect <span class="co">&mdash; Spreadstreet.io</span></h3>
+          <p class="scope">Google Sheets integration for cryptocurrency market data. Exited to a strategic buyer.</p>
+          <ul class="claims">
+            <li><span class="fig">500+</span><span class="claim">cryptocurrencies with real-time feeds and custom functions</span></li>
+            <li><span class="fig">5,000+</span><span class="claim">subscribers on a recurring-revenue model</span></li>
+          </ul>
+        </div>
+      </article>
+    </li>
+    <li>
+      <article class="entry" id="exp-capitalone">
+        <p class="entry-date">2010 &mdash; 2017</p>
+        <div class="entry-body">
+          <h3>Principal Financial Analyst <span class="co">&mdash; Capital One</span></h3>
+          <p class="scope">Progressive analyst roles on a $1B+ credit-card portfolio.</p>
+          <ul class="claims">
+            <li><span class="fig">$1B+</span><span class="claim">portfolio covered by financial models I led cross-functional teams to build</span></li>
+            <li><span class="fig">70%</span><span class="claim">reduction in manual reporting via automated systems</span></li>
+          </ul>
+        </div>
+      </article>
+    </li>
+  </ol>
+</section>
+
+<section class="section" aria-labelledby="systems-label">
+  <h2 class="sec-head" id="systems-label"><span>Systems</span></h2>
+  <ul class="sys-list">
+    <li class="sys">
+      <h3 class="sys-name">Flywheel</h3>
+      <p class="sys-spec">Control plane for AI coding agents: concurrent agents in isolated git worktrees, dependency-aware scheduling, grader-gated landing.</p>
+      <p class="sys-meta"><span class="tag">Python</span><a href="https://github.com/johnayoung/flywheel">github &nearr;</a></p>
+    </li>
+    <li class="sys">
+      <h3 class="sys-name">go-gas</h3>
+      <p class="sys-spec">Ultra low-latency Ethereum gas estimation, ~69&micro;s per calculation, zero-copy uint256 math.</p>
+      <p class="sys-meta"><span class="tag">Go</span><span class="sys-private">private repo</span></p>
+    </li>
+    <li class="sys">
+      <h3 class="sys-name">tycho-bridge</h3>
+      <p class="sys-spec">Zero-network local DeFi swap simulation, 5&ndash;3000&micro;s via cached state; C FFI and gRPC interfaces.</p>
+      <p class="sys-meta"><span class="tag">Rust &middot; Go</span><span class="sys-private">private repo</span></p>
+    </li>
+    <li class="sys">
+      <h3 class="sys-name">go-weiroll</h3>
+      <p class="sys-spec">Weiroll command planner for atomic multi-call Ethereum transactions.</p>
+      <p class="sys-meta"><span class="tag">Go</span><span class="sys-private">private repo</span></p>
+    </li>
+    <li class="sys">
+      <h3 class="sys-name">eth-finetuning-cookbook</h3>
+      <p class="sys-spec">QLoRA fine-tuning pipeline extracting structured intents from Ethereum transactions at 90%+ accuracy.</p>
+      <p class="sys-meta"><span class="tag">PyTorch</span><a href="https://github.com/johnayoung/eth-finetuning-cookbook">github &nearr;</a></p>
+    </li>
+  </ul>
+</section>
+
+<section class="section" aria-labelledby="stack-label">
+  <h2 class="sec-head" id="stack-label"><span>Stack &amp; Education</span></h2>
+  <div class="two-col">
+    <div>
+      <h3 class="subhead">Stack</h3>
+      <dl class="stack-matrix">
+        <div><dt>Languages</dt><dd>Go &middot; Python &middot; TypeScript &middot; Solidity &middot; SQL</dd></div>
+        <div><dt>AI&ndash;LLM</dt><dd>Claude API &middot; LangGraph &middot; multi-agent orchestration &middot; RAG &middot; QLoRA fine-tuning</dd></div>
+        <div><dt>Data &amp; Infra</dt><dd>PostgreSQL &middot; TimescaleDB &middot; Redis &middot; BigQuery &middot; Kubernetes &middot; AWS &middot; GCP</dd></div>
+        <div><dt>DeFi</dt><dd>Uniswap &middot; Aave &middot; EVM internals &middot; MEV protection</dd></div>
+      </dl>
+    </div>
+    <div>
+      <h3 class="subhead">Education &amp; Certification</h3>
+      <ul class="edu-list">
+        <li>
+          <span class="edu-name">Towson University</span>
+          <span class="edu-detail"> &mdash; BS, Finance &amp; Economics</span>
+          <span class="edu-date">2008 &mdash; 2010</span>
+        </li>
+        <li>
+          <span class="edu-name">Thinkful</span>
+          <span class="edu-detail"> &mdash; Engineering Immersion (full-stack)</span>
+          <span class="edu-date">2018 &mdash; 2019</span>
+        </li>
+        <li>
+          <span class="edu-name">Hummingbot Foundation</span>
+          <span class="edu-detail"> &mdash; StrategyV2 Developer, MVP at demo day</span>
+          <span class="edu-date">2024</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="engage-label">
+  <h2 class="sec-head" id="engage-label"><span>Work With Me</span></h2>
+  <div class="engage">
+    <p>I take on a small number of advisory and fractional engagements &mdash; agentic engineering, trading infrastructure, DeFi systems.</p>
+    <div class="cta-row">
+      {{- $cal := site.Params.calendlyUrl }}
+      {{- if $cal }}
+      <a class="btn" href="{{ $cal }}" target="_blank" rel="noopener">Book a call</a>
+      {{- else }}
+      <a class="btn" href="mailto:john.anto.young@gmail.com?subject=Working%20together">Book a call</a>
+      {{- end }}
+      <a class="quiet-link" href="/output/John_Young_Resume.docx">Download resume &darr;</a>
+    </div>
+  </div>
+</section>
+
+{{ end }}

@@ -94,7 +94,7 @@ So when Addy Osmani defines the new term — "Loop engineering is replacing your
 
 The concrete version of "stop pressing enter" is the artifact this whole post keeps returning to: the unattended overnight loop.
 
-```bash
+```bash {title="The Ralph Loop"}
 # The Ralph loop — a fresh context every iteration, state on disk.
 while :; do cat PROMPT.md | agent; done
 ```

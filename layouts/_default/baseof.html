@@ -2,13 +2,12 @@
 <html lang="{{ site.LanguageCode | default "en" }}">
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   {{- $title := .Title -}}
   {{- $siteTitle := site.Title -}}
   {{- $isPost := and (eq .Section "blog") (eq .Kind "page") -}}
-  {{- $pageTitle := cond .IsHome $siteTitle (printf "%s — %s" $title $siteTitle) -}}
+  {{- $pageTitle := cond .IsHome (printf "%s — %s" $siteTitle (site.Params.tagline | default site.Params.description)) (printf "%s — %s" $title $siteTitle) -}}
   <title>{{ $pageTitle }}</title>
 
   {{- $desc := .Description | default .Summary | default site.Params.description -}}
@@ -26,7 +25,10 @@
   {{- end }}
 
   <link rel="canonical" href="{{ .Permalink }}" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23F7F3EB'/%3E%3Crect x='14' y='42' width='36' height='9' fill='%2393321F'/%3E%3C/svg%3E" />
   <link rel="shortcut icon" href="/favicon.ico" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F3EB" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171310" />
 
   {{- $ogImage := "" -}}
   {{- with .Params.og_image -}}
@@ -51,6 +53,10 @@
   <meta property="og:title" content="{{ $pageTitle }}" />
   <meta property="og:description" content="{{ $desc }}" />
   <meta property="og:image" content="{{ $ogImageURL }}" />
+  {{- if strings.HasPrefix $ogImage "/og/" }}
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  {{- end }}
   {{- if $isPost }}
   <meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}" />
   {{- if not .Lastmod.IsZero }}
@@ -66,9 +72,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Inconsolata&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/css/blog.css" />
+  <link rel="stylesheet" href="/css/ledger.css" />
 
   {{- range .AlternativeOutputFormats }}
   <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="{{ $siteTitle }} — Blog" />
@@ -93,16 +99,66 @@
       "publisher" (dict "@type" "Person" "name" site.Params.author "url" site.BaseURL)
       "image" $ogImageURL
       "url" .Permalink
+      "wordCount" .WordCount
       "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
     -}}
     {{- if not .Lastmod.IsZero -}}
       {{- $ld = merge $ld (dict "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")) -}}
+    {{- end }}
+    {{- with .Params.keywords -}}
+      {{- $ld = merge $ld (dict "keywords" .) -}}
     {{- end }}
     {{- with .Params.tldr -}}
       {{- $abstract := cond (reflect.IsSlice .) (delimit . " ") (printf "%v" .) -}}
       {{- $abstract = $abstract | plainify | htmlUnescape | chomp -}}
       {{- $ld = merge $ld (dict "abstract" $abstract) -}}
     {{- end }}
+    {{- /* every source the post cites, as structured citations (AEO: the
+           evidence chain is machine-readable). Forcing .Content populates
+           the citation store the link render hook builds. */ -}}
+    {{- $noop := .Content -}}
+    {{- $citeTitles := .Store.Get "citeTitles" | default dict -}}
+    {{- $citeHrefs := .Store.Get "citeHrefs" | default dict -}}
+    {{- $citations := slice -}}
+    {{- range $i := seq (len $citeTitles) -}}
+      {{- $citations = $citations | append (dict "@type" "WebPage" "name" (index $citeTitles (string $i)) "url" (index $citeHrefs (string $i))) -}}
+    {{- end -}}
+    {{- with $citations -}}
+      {{- $ld = merge $ld (dict "citation" .) -}}
+    {{- end }}
+  <script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
+    {{- $crumbs := dict
+      "@context" "https://schema.org"
+      "@type" "BreadcrumbList"
+      "itemListElement" (slice
+        (dict "@type" "ListItem" "position" 1 "name" "Home" "item" site.BaseURL)
+        (dict "@type" "ListItem" "position" 2 "name" "Essays" "item" (absURL "/blog/"))
+        (dict "@type" "ListItem" "position" 3 "name" $title "item" .Permalink))
+    -}}
+  <script type="application/ld+json">{{ $crumbs | jsonify (dict "indent" "  ") | safeJS }}</script>
+  {{- else if eq .RelPermalink "/about/" }}
+    {{- $ld := dict
+      "@context" "https://schema.org"
+      "@type" "Person"
+      "name" site.Params.author
+      "url" (absURL "/about/")
+      "image" (absURL "/img/headshot_new.png")
+      "jobTitle" "CTO, Combine Capital & Head of Engineering, Infrared"
+      "worksFor" (slice (dict "@type" "Organization" "name" "Combine Capital") (dict "@type" "Organization" "name" "Infrared"))
+      "alumniOf" (dict "@type" "CollegeOrUniversity" "name" "Towson University")
+      "sameAs" (slice "https://github.com/johnayoung" "https://www.linkedin.com/in/jyoung1985")
+      "description" $desc
+    -}}
+  <script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
+  {{- else if .IsHome }}
+    {{- $ld := dict
+      "@context" "https://schema.org"
+      "@type" "WebSite"
+      "name" $siteTitle
+      "description" $desc
+      "url" site.BaseURL
+      "author" (dict "@type" "Person" "name" site.Params.author "url" site.BaseURL "sameAs" (slice "https://github.com/johnayoung" "https://www.linkedin.com/in/jyoung1985"))
+    -}}
   <script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
   {{- else if eq .Kind "section" }}
     {{- $ld := dict }}
@@ -133,35 +189,57 @@
   {{- end }}
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  <header class="site-header">
-    <div class="container">
-      <a class="site-header__brand" href="/">John Young<span class="site-header__cursor">_</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="/"{{ if .IsHome }} aria-current="page"{{ end }}>Home</a>
-        <a href="/blog/"{{ if eq .Section "blog" }} aria-current="page"{{ end }}>Blog</a>
-        <a href="/research/"{{ if eq .Section "research" }} aria-current="page"{{ end }}>Research</a>
-        <a href="/subscribe/"{{ if eq .RelPermalink "/subscribe/" }} aria-current="page"{{ end }}>Subscribe</a>
-        <a href="/work-with-me/"{{ if eq .RelPermalink "/work-with-me/" }} aria-current="page"{{ end }}>Work With Me</a>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="wrap">
+    <div class="masthead">
+      <a class="wordmark" href="/">John Young</a>
+      <nav class="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="/blog/"{{ if eq .Section "blog" }} aria-current="page"{{ end }}>essays</a></li>
+          <li aria-hidden="true"><span class="dot">&middot;</span></li>
+          <li><a href="/about/"{{ if eq .RelPermalink "/about/" }} aria-current="page"{{ end }}>about</a></li>
+          <li aria-hidden="true"><span class="dot">&middot;</span></li>
+          <li><a href="/research/"{{ if eq .Section "research" }} aria-current="page"{{ end }}>research</a></li>
+          <li aria-hidden="true"><span class="dot">&middot;</span></li>
+          <li><a href="/subscribe/"{{ if eq .RelPermalink "/subscribe/" }} aria-current="page"{{ end }}>subscribe</a></li>
+          <li aria-hidden="true"><span class="dot">&middot;</span></li>
+          <li><a href="/work-with-me/"{{ if eq .RelPermalink "/work-with-me/" }} aria-current="page"{{ end }}>work with me</a></li>
+        </ul>
       </nav>
     </div>
+    <div class="double-rule"></div>
   </header>
 
-  <main class="container" id="main-content">
+  <main id="main" class="wrap">
     {{- block "main" . }}{{- end }}
   </main>
 
-  {{- if ne .RelPermalink "/subscribe/" }}
-  {{- with partial "subscribe-form.html" "compact" }}
-  <aside class="footer-subscribe">
-    <div class="container">{{ . }}</div>
-  </aside>
-  {{- end }}
-  {{- end }}
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; {{ now.Year }} John Young</p>
+  <footer class="colophon wrap">
+    <div class="double-rule"></div>
+    <div class="colophon-inner">
+      <div class="colophon-id">
+        <p class="foot-mark">John Young</p>
+        <p class="colophon-note">Set in Newsreader &amp; IBM Plex Mono &middot; Every claim traced to a primary source</p>
+        <ul class="foot-links">
+          <li><a href="https://github.com/johnayoung" rel="me">GitHub</a></li>
+          <li aria-hidden="true"><span class="dot">&middot;</span></li>
+          <li><a href="https://www.linkedin.com/in/jyoung1985" rel="me">LinkedIn</a></li>
+          <li aria-hidden="true"><span class="dot">&middot;</span></li>
+          <li><a href="mailto:john.anto.young@gmail.com">Email</a></li>
+          <li aria-hidden="true"><span class="dot">&middot;</span></li>
+          <li><a href="/blog/index.xml">RSS</a></li>
+        </ul>
+        <p class="foot-last">john young<span class="cursor">_</span> &middot; &copy; {{ now.Year }}</p>
+      </div>
+      {{- if ne .RelPermalink "/subscribe/" }}
+      {{- with partial "subscribe-form.html" "compact" }}
+      <div class="sub-slip" id="subscribe">
+        <span class="mono-label">Weekly Ledger</span>
+        {{ . }}
+      </div>
+      {{- end }}
+      {{- end }}
     </div>
   </footer>
 

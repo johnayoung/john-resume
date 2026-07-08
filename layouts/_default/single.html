@@ -1,33 +1,187 @@
 {{ define "main" }}
+{{- /* Force content render first: the link render hook numbers every external
+       citation in order of first appearance and stores them on the page
+       (citeTitles/citeHrefs, keyed by number as a string). */ -}}
+{{- $content := .Content }}
+{{- $titles := .Store.Get "citeTitles" | default dict }}
+{{- $hrefs := .Store.Get "citeHrefs" | default dict }}
+{{- $nSources := len $titles }}
+{{- $pillarNames := dict }}
+{{- range site.Params.pillars }}{{ $pillarNames = merge $pillarNames (dict .slug .name) }}{{ end }}
+
+{{- /* The authored "## References" section is the bibliography of record:
+       full titles + a gloss per source. It feeds the Sources list and the
+       margin rail, so the raw section is removed from the article body. */ -}}
+{{- $refTitles := dict }}
+{{- $refGlosses := dict }}
+{{- $refParts := split .RawContent "## References" }}
+{{- if gt (len $refParts) 1 }}
+  {{- $refBlock := index $refParts 1 }}
+  {{- range findRE `\[[^\]]+\]\(https?://[^)]+\)\s*—[^\n]+` $refBlock }}
+    {{- $title := replaceRE `^\[([^\]]+)\].*` "$1" . }}
+    {{- $url := replaceRE `^\[[^\]]+\]\((https?://[^)]+)\).*` "$1" . }}
+    {{- $gloss := replaceRE `^\[[^\]]+\]\([^)]+\)\s*—\s*` "" . | markdownify | plainify | htmlUnescape | chomp }}
+    {{- $gloss = replaceRE `^(.*?[.!?])\s.*$` "$1" $gloss }}
+    {{- $key := strings.TrimSuffix "/" $url }}
+    {{- $refTitles = merge $refTitles (dict $key $title) }}
+    {{- $refGlosses = merge $refGlosses (dict $key $gloss) }}
+  {{- end }}
+  {{- $content = replaceRE `(?s)(<hr>\s*)?<h2 id="references".*$` "" (printf "%s" $content) | safeHTML }}
+{{- end }}
+
+{{- /* h2 fragments drive the Contents rail; the stripped References heading is excluded */ -}}
+{{- $h2s := slice }}
+{{- range .Fragments.Headings }}
+  {{- if and (eq .Level 2) (ne .ID "references") }}{{ $h2s = $h2s | append . }}{{ end }}
+  {{- range .Headings }}{{ if and (eq .Level 2) (ne .ID "references") }}{{ $h2s = $h2s | append . }}{{ end }}{{ end }}
+{{- end }}
+
 <article class="post">
-  <header class="post__header">
-    <h1 class="post__title">{{ .Title }}</h1>
-    <p class="post__meta">
-      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-      {{ with .Params.author }} &middot; {{ . }}{{ end }}
-      {{ if .ReadingTime }} &middot; {{ .ReadingTime }} min read{{ end }}
+
+  <header class="post-head">
+    {{- with .Params.pillar }}
+    <p class="kicker mono-label">{{ index $pillarNames . | default (humanize .) }}</p>
+    {{- end }}
+    <h1>{{ .Title | markdownify }}</h1>
+    <p class="post-meta">
+      <span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time></span>
+      {{- if .ReadingTime }}<span aria-hidden="true">&middot;</span>
+      <span>{{ .ReadingTime }} min read</span>
+      {{- end }}
+      {{- if $nSources }}<span aria-hidden="true">&middot;</span>
+      <span>{{ $nSources }} source{{ if ne $nSources 1 }}s{{ end }}</span>
+      {{- end }}
     </p>
   </header>
 
-  {{ with .Params.tldr }}
-  <aside class="post__tldr" aria-label="Summary">
-    <p class="post__tldr-label">TL;DR</p>
-    {{ if reflect.IsSlice . }}
-    <ul>
-      {{ range . }}<li>{{ . | markdownify }}</li>{{ end }}
-    </ul>
-    {{ else }}
-    <div class="post__tldr-body">{{ . | markdownify }}</div>
-    {{ end }}
-  </aside>
-  {{ end }}
+  {{- with .Params.tldr }}
+  <section class="abstract" aria-labelledby="abstract-label">
+    <span class="mono-label" id="abstract-label">Abstract</span>
+    {{- if reflect.IsSlice . }}
+    <ol>
+      {{- range $i, $claim := . }}
+      <li><span class="num" aria-hidden="true">{{ add $i 1 }}</span><span class="claim">{{ $claim | markdownify }}</span></li>
+      {{- end }}
+    </ol>
+    {{- else }}
+    <ol>
+      <li><span class="num" aria-hidden="true">1</span><span class="claim">{{ . | markdownify }}</span></li>
+    </ol>
+    {{- end }}
+  </section>
+  {{- end }}
 
-  <div class="post__content">
-    {{ .Content }}
+  <div class="article" id="article">
+    {{- if gt (len $h2s) 1 }}
+    <aside class="margin-note mn-toc">
+      <span class="mn-src">Contents</span>
+      <ol class="toc">
+        {{- range $i, $h := $h2s }}
+        <li><a href="#{{ $h.ID }}"><span class="tn" aria-hidden="true">&sect; {{ add $i 1 }}</span>{{ $h.Title | safeHTML }}</a></li>
+        {{- end }}
+      </ol>
+    </aside>
+    {{- end }}
+    {{ $content }}
   </div>
 
-  <footer class="post__footer">
-    <a class="post__back" href="/blog/">&larr; All posts</a>
-  </footer>
+  {{- if $nSources }}
+  <section class="sources" aria-labelledby="sources-label">
+    <h2 class="sec-head" id="sources-label"><span>Sources</span></h2>
+    <ol>
+      {{- range $i := seq $nSources }}
+      {{- $href := index $hrefs (string $i) }}
+      {{- $short := index $titles (string $i) }}
+      {{- $full := index $refTitles $href | default $short }}
+      {{- $gloss := index $refGlosses $href }}
+      <li id="src-{{ $i }}" data-short="{{ $short }}"{{ with $gloss }} data-gloss="{{ . }}"{{ end }}><span><span class="src-title"><a href="{{ $href }}" target="_blank" rel="noopener noreferrer">{{ $full }}</a></span><span class="src-domain">{{ replaceRE `^https?://(www\.)?` "" $href }}</span></span></li>
+      {{- end }}
+    </ol>
+  </section>
+  {{- end }}
+
+  <p class="back-link"><a href="/blog/">&larr; All essays</a></p>
+
 </article>
+
+{{- if or $nSources (gt (len $h2s) 1) }}
+<script>
+(function(){
+  var article=document.getElementById('article');
+  if(!article)return;
+  var seen={};
+  var hosts=[];
+  var byHost=new Map();
+  article.querySelectorAll('sup.cite > a').forEach(function(a){
+    var n=a.textContent;
+    if(seen[n])return;
+    seen[n]=true;
+    var target=document.querySelector(a.getAttribute('href'));
+    if(!target)return;
+    var titleEl=target.querySelector('.src-title');
+    if(!titleEl)return;
+    var host=a;
+    while(host.parentElement&&host.parentElement!==article){host=host.parentElement;}
+    if(host===a||host.classList.contains('margin-note'))return;
+    if(!byHost.has(host)){byHost.set(host,[]);hosts.push(host);}
+    byHost.get(host).push({
+      num:n,
+      title:target.dataset.short||titleEl.textContent,
+      gloss:target.dataset.gloss||''
+    });
+  });
+  var rail=[];
+  var toc=article.querySelector('.mn-toc');
+  if(toc)rail.push({el:toc,host:null});
+  hosts.forEach(function(host){
+    var aside=document.createElement('aside');
+    aside.className='margin-note';
+    aside.setAttribute('aria-hidden','true');
+    byHost.get(host).forEach(function(entry,i){
+      var p=document.createElement('p');
+      if(i>0)p.className='mn-more';
+      var num=document.createElement('span');
+      num.className='mn-num';
+      num.textContent=entry.num;
+      var src=document.createElement('span');
+      src.className='mn-src';
+      src.textContent=entry.title;
+      p.appendChild(num);
+      p.appendChild(src);
+      if(entry.gloss)p.appendChild(document.createTextNode(' — '+entry.gloss));
+      aside.appendChild(p);
+    });
+    host.insertAdjacentElement('afterend',aside);
+    rail.push({el:aside,host:host});
+  });
+  if(!rail.length)return;
+  var mq=window.matchMedia('(min-width:1200px)');
+  var GAP=24;
+  function layout(){
+    if(mq.matches){
+      article.classList.add('has-rail');
+      var cursor=0;
+      rail.forEach(function(item){
+        var top=item.host?item.host.offsetTop:0;
+        if(top<cursor)top=cursor;
+        item.el.style.top=top+'px';
+        cursor=top+item.el.offsetHeight+GAP;
+      });
+      article.style.minHeight=cursor-GAP+'px';
+    }else{
+      article.classList.remove('has-rail');
+      rail.forEach(function(item){item.el.style.top='';});
+      article.style.minHeight='';
+    }
+  }
+  function schedule(){window.requestAnimationFrame(layout);}
+  layout();
+  window.addEventListener('resize',schedule);
+  window.addEventListener('load',schedule);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(schedule);
+  article.querySelectorAll('details').forEach(function(d){d.addEventListener('toggle',schedule);});
+  if(mq.addEventListener)mq.addEventListener('change',schedule);
+})();
+</script>
+{{- end }}
 {{ end }}

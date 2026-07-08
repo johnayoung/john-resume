@@ -2,26 +2,27 @@ baseURL = "https://jyoung.dev/"
 languageCode = "en-us"
 title = "John Young"
 
-# Homepage is served from static/index.html (the existing single-page site).
-# Disable Hugo's home, taxonomy, and sitemap generation so they don't collide
-# with or pollute the static homepage. Section RSS at /blog/index.xml still works.
-disableKinds = ["home", "taxonomy", "term"]
+# Taxonomies are unused; pillar filtering is driven by the `pillar` frontmatter
+# field and the [[params.pillars]] list below.
+disableKinds = ["taxonomy", "term"]
 
 enableRobotsTXT = true
 
 [markup]
   [markup.highlight]
-    style = "catppuccin-mocha"
+    # Class-based output; ledger.css styles code two-tone (ink + muted comments)
+    # to match the design system's code panel exactly.
     lineNos = false
     codeFences = true
     guessSyntax = false
-    noClasses = true
+    noClasses = false
     tabWidth = 2
   [markup.goldmark.renderer]
     unsafe = true
 
 [params]
-  description = "Notes from John Young — engineering, AI systems, and DeFi infrastructure."
+  description = "Research-backed essays on running AI coding agents in production — every claim traced to a primary source."
+  tagline = "Essays on running AI coding agents in production"
   author = "John Young"
   ogImage = "/img/headshot_new.png"
   # Buttondown newsletter handle (Settings → Embedding → the username in the Form URL).
@@ -33,6 +34,28 @@ enableRobotsTXT = true
   # -> add jyoung.dev -> copy the token out of the JS snippet). Privacy-first, no cookie
   # banner needed. The beacon renders only when this is set.
   cloudflareAnalyticsToken = "835621ce854e4c4c9482b9092b27f1f1"
+
+# Pillar display names, in filter-row order. Slugs match the `pillar` frontmatter
+# field on posts. Labels churn (context -> harness -> loop engineering); treat these
+# as versioned metadata — rename here, slugs stay stable.
+[[params.pillars]]
+  slug = "task-design"
+  name = "Task Design"
+[[params.pillars]]
+  slug = "context-engineering"
+  name = "Context Engineering"
+[[params.pillars]]
+  slug = "evals-verification"
+  name = "Evals & Verification"
+[[params.pillars]]
+  slug = "production-operations"
+  name = "Production Operations"
+[[params.pillars]]
+  slug = "team-process"
+  name = "Team & Process"
+[[params.pillars]]
+  slug = "architecture-decisions"
+  name = "Architecture Decisions"
 
 [sitemap]
   changefreq = "weekly"

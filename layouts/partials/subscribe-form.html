@@ -5,7 +5,7 @@
 
   Accepts either a bare string (the variant) or a dict for tagged signups:
     {{ partial "subscribe-form.html" "full" }}                             (landing page)
-    {{ partial "subscribe-form.html" "compact" }}                          (global footer)
+    {{ partial "subscribe-form.html" "compact" }}                          (colophon sub-slip)
     {{ partial "subscribe-form.html" (dict "variant" "gate" "tag" "report") }}  (lead-magnet gate)
 
   The optional `tag` emits a hidden <input name="tag"> so Buttondown auto-tags the
@@ -30,7 +30,7 @@
   {{- else if eq $variant "gate" }}
   <label class="subscribe__label" for="bd-email-{{ $variant }}">Get the full report by email</label>
   {{- else }}
-  <p class="subscribe__label">Engineering practices for AI coding agents — new essay, straight to your inbox.</p>
+  <label class="visually-hidden" for="bd-email-{{ $variant }}">Email address</label>
   {{- end }}
   <div class="subscribe__row">
     <input class="subscribe__input" id="bd-email-{{ $variant }}" type="email" name="email"
@@ -39,12 +39,12 @@
     {{- with $tag }}
     <input type="hidden" name="tag" value="{{ . }}" />
     {{- end }}
-    <button class="subscribe__btn" type="submit">{{ if eq $variant "gate" }}Send me the report{{ else }}Subscribe{{ end }}</button>
+    <button class="btn" type="submit">{{ if eq $variant "gate" }}Send me the report{{ else }}Subscribe{{ end }}</button>
   </div>
   {{- if eq $variant "gate" }}
-  <p class="subscribe__note">Confirm the opt-in email and the report link lands in your inbox. No spam, unsubscribe anytime.</p>
+  <p class="subscribe__note"><em>Confirm the opt-in email and the report link lands in your inbox. No spam, unsubscribe anytime.</em></p>
   {{- else }}
-  <p class="subscribe__note">No spam. One email when I publish. Unsubscribe anytime.</p>
+  <p class="subscribe__note"><em>One research-backed essay a week. Unsubscribe anytime.</em></p>
   {{- end }}
 </form>
 {{- end -}}

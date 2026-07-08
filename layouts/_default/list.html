@@ -1,19 +1,89 @@
 {{ define "main" }}
-<section class="post-list">
-  <h1 class="post-list__title">{{ .Title }}_</h1>
-  {{ with .Content }}<div class="post-list__intro">{{ . }}</div>{{ end }}
+{{- $pages := where .RegularPagesRecursive "Type" "blog" }}
+{{- if not $pages }}{{ $pages = .RegularPagesRecursive }}{{ end }}
+{{- $total := len $pages }}
+{{- $inUse := slice }}
+{{- range $pages }}{{ with .Params.pillar }}{{ $inUse = $inUse | append . }}{{ end }}{{ end }}
+{{- $inUse = uniq $inUse }}
 
-  {{ $pages := where .RegularPagesRecursive "Type" "blog" }}
-  {{ if not $pages }}{{ $pages = .RegularPagesRecursive }}{{ end }}
+<section class="essays-page" aria-labelledby="essays-title">
+  <h1 id="essays-title">{{ .Title }}</h1>
+  <p class="page-meta">
+    <span id="essay-count">{{ $total }} essay{{ if ne $total 1 }}s{{ end }}</span><span aria-hidden="true">&middot;</span>
+    <span>{{ len $inUse }} pillars</span>
+    {{- with site.Data.research }}{{ with .updated }}<span aria-hidden="true">&middot;</span>
+    <span class="badge">Evidence base verified {{ . }}</span>
+    {{- end }}{{ end }}
+  </p>
 
-  <ul class="post-list__items">
-    {{ range $pages.ByDate.Reverse }}
-    <li class="post-list__item">
-      <time datetime="{{ .Date.Format "2006-01-02" }}" class="post-list__date">{{ .Date.Format "Jan 2, 2006" }}</time>
-      <a class="post-list__link" href="{{ .RelPermalink }}">{{ .Title }}</a>
-      {{ with .Description }}<p class="post-list__desc">{{ . }}</p>{{ end }}
+  <div class="filters" role="group" aria-label="Filter essays by pillar">
+    <button type="button" data-filter="all" aria-pressed="true"><span class="f-name">All</span> <span class="f-count" aria-hidden="true">&middot; {{ $total }}</span></button>
+    {{- range site.Params.pillars }}
+    {{- $n := len (where $pages "Params.pillar" .slug) }}
+    {{- if $n }}
+    <button type="button" data-filter="{{ .slug }}" aria-pressed="false"><span class="f-name">{{ .name }}</span> <span class="f-count" aria-hidden="true">&middot; {{ $n }}</span></button>
+    {{- end }}
+    {{- end }}
+  </div>
+  <p class="visually-hidden" role="status" aria-live="polite" id="filter-status"></p>
+
+  <ul class="essay-list" id="essays">
+    {{- $pillarNames := dict }}
+    {{- range site.Params.pillars }}{{ $pillarNames = merge $pillarNames (dict .slug .name) }}{{ end }}
+    {{- range $i, $p := $pages.ByDate.Reverse }}
+    {{- $pillar := $p.Params.pillar }}
+    <li class="essay-row"{{ with $pillar }} data-pillar="{{ . }}"{{ end }}>
+      <span class="essay-date"><time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format "2006-01-02" }}</time><span class="entry-no" aria-hidden="true">&numero; {{ printf "%03d" (sub $total $i) }}</span></span>
+      <span class="essay-title"><a href="{{ $p.RelPermalink }}">{{ $p.Title | markdownify }}</a></span>
+      {{- with $pillar }}
+      {{- $name := index $pillarNames . | default (humanize .) }}
+      <button type="button" class="tag tag-link" data-pillar="{{ . }}" aria-label="Filter essays: {{ $name }}">{{ $name }}</button>
+      {{- end }}
+      {{- with $p.Description }}
+      <span class="essay-desc">{{ . | markdownify }}</span>
+      {{- end }}
     </li>
-    {{ end }}
+    {{- end }}
   </ul>
 </section>
+
+<script>
+(function(){
+  var buttons=document.querySelectorAll('.filters button');
+  var rows=document.querySelectorAll('#essays .essay-row');
+  var status=document.getElementById('filter-status');
+  var count=document.getElementById('essay-count');
+  function apply(btn){
+    buttons.forEach(function(b){b.setAttribute('aria-pressed',b===btn?'true':'false');});
+    var filter=btn.getAttribute('data-filter');
+    var shown=0;
+    rows.forEach(function(row){
+      var match=filter==='all'||row.getAttribute('data-pillar')===filter;
+      row.hidden=!match;
+      if(match){
+        shown++;
+        row.classList.remove('rowin');
+        void row.offsetWidth;
+        row.classList.add('rowin');
+      }
+    });
+    if(filter==='all'){count.textContent=rows.length+' essays';}
+    else{count.textContent=shown+' of '+rows.length+' essays';}
+    status.textContent=shown+' of '+rows.length+' essays shown.';
+  }
+  buttons.forEach(function(btn){
+    btn.addEventListener('click',function(){apply(btn);});
+  });
+  document.querySelectorAll('#essays .tag-link').forEach(function(tag){
+    tag.addEventListener('click',function(){
+      var pillar=tag.getAttribute('data-pillar');
+      buttons.forEach(function(b){if(b.getAttribute('data-filter')===pillar){apply(b);}});
+    });
+  });
+  var hash=location.hash.replace('#','');
+  if(hash){
+    buttons.forEach(function(b){if(b.getAttribute('data-filter')===hash){apply(b);}});
+  }
+})();
+</script>
 {{ end }}
