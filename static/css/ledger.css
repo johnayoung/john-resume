@@ -16,6 +16,7 @@
   --leaf:#F1EBDD;
   --control:#B9AE9C;
   --graph-line:#C3B7A0;
+  --edge-shadow:rgba(29,26,22,0.20);
   --input-bg:var(--surface);
   --input-border:var(--hairline);
   --code-bg:#241E17;
@@ -70,6 +71,7 @@
     --leaf:#231B12;
     --control:#55493A;
     --graph-line:#4B4335;
+    --edge-shadow:rgba(0,0,0,0.6);
     --input-bg:#100D0A;
     --input-border:#4B4335;
   }
@@ -229,21 +231,41 @@ button.tag-link:hover{color:var(--accent);text-decoration:underline;text-decorat
 /* ============ ABSTRACT (tldr) ============ */
 .abstract{border-block:1px solid var(--hairline);padding-block:var(--sp-4);margin-top:var(--sp-6);max-width:var(--measure)}
 .abstract .mono-label{display:block;color:var(--secondary);margin-bottom:var(--sp-3)}
-.abstract ol{list-style:none;display:grid;row-gap:var(--sp-3)}
-.abstract li{display:grid;grid-template-columns:var(--sp-4) minmax(0,1fr);column-gap:var(--sp-2)}
-.abstract .num{font-family:var(--mono);font-weight:600;font-size:var(--text--1);color:var(--accent);padding-top:0.15rem}
+/* numbering is single-source: a CSS counter renders the visible ordinal and
+   list-style:none hides the native <ol> marker, so styled and reader/no-CSS
+   views each show exactly one number (never "1. 1"). */
+.abstract ol{list-style:none;display:grid;row-gap:var(--sp-3);counter-reset:abstract}
+.abstract li{display:grid;grid-template-columns:var(--sp-4) minmax(0,1fr);column-gap:var(--sp-2);counter-increment:abstract}
+.abstract li::before{content:counter(abstract);font-family:var(--mono);font-weight:600;font-size:var(--text--1);color:var(--accent);padding-top:0.15rem}
 .abstract .claim{font-size:var(--text--1);line-height:var(--lh-body);text-wrap:pretty}
 .abstract .claim p{display:inline}
 
 /* ============ TIPPED-IN LEAF (eli5 details) ============ */
 .leaf{background:var(--leaf);border:1px solid var(--hairline);border-radius:var(--radius);margin-top:var(--sp-5);max-width:var(--measure)}
-.leaf summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2);min-height:var(--target);padding:var(--sp-2) var(--sp-3)}
+/* chevron column + content column; the content column stacks the lead row
+   (title + verb) over the note, so the note always gets the full content width
+   and never gets squeezed into a narrow sub-column on mobile */
+.leaf summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:var(--sp-2);row-gap:0.2rem;align-items:center;min-height:var(--target);padding:var(--sp-2) var(--sp-3);border-radius:var(--radius)}
+.leaf[open] summary{border-radius:var(--radius) var(--radius) 0 0}
 .leaf summary::-webkit-details-marker{display:none}
-.leaf summary::before{content:"+";font-family:var(--mono);font-weight:500;font-size:var(--text-0);color:var(--accent);line-height:1}
-.leaf[open] summary::before{content:"\2013"}
+/* chevron marker points right when closed, down when open; whole bar is the hover target */
+.leaf summary::before{grid-column:1;grid-row:1/3;align-self:center;content:"\25B8";font-family:var(--mono);font-weight:600;font-size:var(--text--1);color:var(--accent);line-height:1}
+.leaf[open] summary::before{content:"\25BE"}
+.leaf summary:hover,.leaf summary:focus-visible{background:var(--surface)}
 .leaf summary:hover .leaf-title{color:var(--accent)}
-.leaf-title{font-family:var(--serif);font-style:italic;font-weight:500;font-size:var(--text-0)}
+.leaf summary:hover::before,.leaf summary:hover .leaf-cta{color:var(--accent-hover);border-color:var(--accent-hover)}
+.leaf-lead{grid-column:2;grid-row:1;display:flex;align-items:center;gap:var(--sp-2)}
+.leaf-title{flex:1;min-width:0;font-family:var(--serif);font-style:italic;font-weight:500;font-size:var(--text-0)}
+.leaf-note{grid-column:2;grid-row:2;line-height:1.5}
+.leaf-audience{font-family:var(--mono);font-size:var(--label);font-weight:500;letter-spacing:var(--track);text-transform:uppercase;color:var(--accent)}
+/* nbsp glues the divider to the audience so it can never orphan onto its own line */
+.leaf-audience::after{content:"\00A0\00B7";color:var(--secondary)}
 .leaf-hint{font-family:var(--mono);font-size:var(--label);font-weight:500;letter-spacing:var(--track);text-transform:uppercase;color:var(--secondary)}
+/* action verb doubles as the state label; details announces expanded/collapsed to AT */
+.leaf-cta{flex-shrink:0;font-family:var(--mono);font-size:var(--label);font-weight:500;letter-spacing:var(--track);text-transform:uppercase;color:var(--accent);border:1px solid var(--control);border-radius:var(--radius);padding:0.25rem var(--sp-1);white-space:nowrap}
+.leaf-cta::after{content:"Expand"}
+.leaf[open] .leaf-cta{color:var(--secondary)}
+.leaf[open] .leaf-cta::after{content:"Collapse"}
 .leaf-body{padding:0 var(--sp-3) var(--sp-3)}
 .leaf-body p,.leaf-body li{font-size:var(--text--1)}
 .leaf-body p + p,.leaf-body ul,.leaf-body ol{margin-top:var(--sp-2)}
@@ -261,6 +283,9 @@ button.tag-link:hover{color:var(--accent);text-decoration:underline;text-decorat
 .article{margin-top:var(--sp-6);position:relative}
 .article > *{max-width:var(--measure);margin-top:var(--sp-3)}
 .article > :first-child{margin-top:0}
+/* zero-height scroll target marking the start of the technical essay (the eli5
+   "read the full version" link collapses the panel and lands here) */
+.article > .essay-anchor{display:block;height:0;margin:0;scroll-margin-top:var(--sp-5)}
 .margin-note{display:none}
 @media (min-width:1200px){
   .article.has-rail > .margin-note{display:block;position:absolute;left:calc(var(--measure) + var(--sp-7));width:var(--notecol);max-width:var(--notecol);margin-top:0}
@@ -354,11 +379,25 @@ sup.cite a:hover{text-decoration:underline;text-decoration-thickness:1px}
 .article pre code.language-markdown{white-space:pre-wrap;word-break:break-word}
 .article pre code.language-markdown > span{display:inline !important}
 
-/* tables */
+/* tables — wrapped by render-table.html so multi-column tables scroll inside
+   the reading column on narrow screens instead of overflowing the page. The
+   layered gradients are a self-hiding scroll shadow: a paper-colored cover
+   pinned to the content (background-attachment:local) masks the shadow at each
+   end, so an edge cue only shows on the side that still has content to reveal. */
+.table-scroll{overflow-x:auto;
+  background:
+    linear-gradient(to right,var(--paper),transparent) 0 0/24px 100% no-repeat,
+    linear-gradient(to left,var(--paper),transparent) 100% 0/24px 100% no-repeat,
+    radial-gradient(farthest-side at 0 50%,var(--edge-shadow),transparent) 0 0/12px 100% no-repeat,
+    radial-gradient(farthest-side at 100% 50%,var(--edge-shadow),transparent) 100% 0/12px 100% no-repeat;
+  background-attachment:local,local,scroll,scroll}
+.article > .table-scroll{margin-top:var(--sp-4)}
 .article table{width:100%;border-collapse:collapse;margin-top:var(--sp-4);font-size:var(--text--1)}
+.table-scroll > table{margin-top:0;min-width:34rem}
 .article thead{border-bottom:1px solid var(--rule)}
 .article th{font-family:var(--mono);font-size:var(--label);font-weight:500;text-transform:uppercase;letter-spacing:var(--track);color:var(--ink);text-align:left;padding:var(--sp-1) var(--sp-2)}
 .article td{padding:var(--sp-1) var(--sp-2);border-bottom:1px solid var(--hairline);vertical-align:top}
+@media (prefers-reduced-motion:no-preference){.table-scroll{scroll-behavior:smooth}}
 
 /* ============ SOURCES ============ */
 .sources{max-width:var(--measure);margin-top:var(--sp-8)}

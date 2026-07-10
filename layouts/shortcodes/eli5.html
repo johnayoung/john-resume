@@ -1,20 +1,52 @@
 {{- /*
   Plain-language (ELI5) companion for a post — the "tipped-in leaf". Collapsed
-  by default, native <details> so it needs zero JS. Lives on the SAME URL as
-  the full post — additive content at a different altitude, not a duplicate
-  page. The inner block is authored as markdown.
+  by default; a native <details> so the disclosure is keyboard- and screen-
+  reader-accessible with no JS (AT announces expanded/collapsed on the summary).
+  Lives on the SAME URL as the full post — additive content at a different
+  altitude, not a duplicate page. The inner block is authored as markdown.
+
+  Params:
+    hint      — short mono sub-label (default "no background needed")
+    audience  — who the plain-language edition is for; renders when set
+
+  Inside the inner markdown, an <a class="leaf-exit" href="#essay"> link
+  collapses the panel and scrolls to the essay start (script below). The
+  #essay anchor is emitted right after the panel to mark that start.
 
   Usage, near the top of a post body:
-    {{< eli5 hint="no background needed · 7 min" >}}
+    {{< eli5 hint="no background needed · 7 min" audience="for readers outside AI engineering" >}}
     ...plain-language markdown...
     {{< /eli5 >}}
 */ -}}
+{{- $audience := .Get "audience" -}}
 <details class="leaf">
   <summary>
-    <span class="leaf-title">The plain-language edition</span>
-    <span class="leaf-hint">{{ .Get "hint" | default "no background needed" }}</span>
+    <span class="leaf-lead">
+      <span class="leaf-title">The plain-language edition</span>
+      <span class="leaf-cta" aria-hidden="true"></span>
+    </span>
+    <span class="leaf-note">
+      {{- with $audience }}<span class="leaf-audience">{{ . }}</span> {{ end -}}
+      <span class="leaf-hint">{{ .Get "hint" | default "no background needed" }}</span>
+    </span>
   </summary>
   <div class="leaf-body">
     {{ .Inner | markdownify }}
   </div>
 </details>
+<span id="essay" class="essay-anchor" aria-hidden="true"></span>
+<script>
+(function(){
+  var leaf=document.querySelector('.leaf');
+  if(!leaf)return;
+  var link=leaf.querySelector('.leaf-exit');
+  var anchor=document.getElementById('essay')||leaf.nextElementSibling;
+  if(!link||!anchor)return;
+  link.addEventListener('click',function(e){
+    e.preventDefault();
+    leaf.open=false;
+    var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    anchor.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+  });
+})();
+</script>

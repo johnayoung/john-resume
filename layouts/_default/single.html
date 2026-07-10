@@ -59,13 +59,13 @@
     <span class="mono-label" id="abstract-label">Abstract</span>
     {{- if reflect.IsSlice . }}
     <ol>
-      {{- range $i, $claim := . }}
-      <li><span class="num" aria-hidden="true">{{ add $i 1 }}</span><span class="claim">{{ $claim | markdownify }}</span></li>
+      {{- range $claim := . }}
+      <li><span class="claim">{{ $claim | markdownify }}</span></li>
       {{- end }}
     </ol>
     {{- else }}
     <ol>
-      <li><span class="num" aria-hidden="true">1</span><span class="claim">{{ . | markdownify }}</span></li>
+      <li><span class="claim">{{ . | markdownify }}</span></li>
     </ol>
     {{- end }}
   </section>

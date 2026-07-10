@@ -1,0 +1,28 @@
+{{- /*
+  Wrap every table in a horizontally-scrollable region so wide multi-column
+  tables scroll inside the reading column on narrow screens instead of forcing
+  the whole page to scroll sideways. tabindex="0" lets keyboard users scroll it;
+  the self-hiding scroll shadow (.table-scroll in ledger.css) is the edge cue.
+*/ -}}
+<div class="table-scroll" tabindex="0" role="group" aria-label="Table, scroll horizontally to see more">
+  <table>
+    <thead>
+      {{- range .THead }}
+      <tr>
+        {{- range . }}
+        <th{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</th>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </thead>
+    <tbody>
+      {{- range .TBody }}
+      <tr>
+        {{- range . }}
+        <td{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</td>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>
