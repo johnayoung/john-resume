@@ -232,6 +232,8 @@ You do not need a quarterly re-prune ritual. You need to run each line you keep 
 
 Run the corpus through the gates and it lands where it should have started: a ~150-line root of pointers and gotchas, three path-scoped files next to the code they govern, and two skills that load only when invoked. Same content, a fraction of the per-session tax, and no standing re-prune ritual — Anthropic's own cadence is a configuration review every three to six months, not a weekly file diet ([Claude by Anthropic: Large codebases](https://claude.com/blog/how-claude-code-works-in-large-codebases-best-practices-and-where-to-start)).
 
+You do not have to run this flowchart by hand. I packaged it as a Claude Code skill — [agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit) — that inventories your repo's three tiers, expands every `@`-import, totals the real always-loaded token cost, and emits the routing report above. It is the audit I ran on my own repos while writing this.
+
 And the skill transfers. The same nearest-file hierarchy is now the cross-tool `AGENTS.md` convention — "Agents automatically read the nearest file in the directory tree, so the closest one takes precedence and every subproject can ship tailored instructions" ([AGENTS.md](https://agents.md/)) — with the same discipline attached: keep the root short and push specifics down the tree ([Addy Osmani: AGENTS.md](https://addyosmani.com/agents/15-agents-md/)). Route by tier once and the discipline is portable.
 
 The pay-per-read and pay-per-trigger tiers you just routed into are just-in-time retrieval by another name — and just-in-time retrieval has failure modes of its own. That is the next thing worth understanding before you push your whole config into the lazy tiers: [where lazy retrieval silently breaks](/blog/jit-context-retrieval-failure/).
@@ -272,6 +274,7 @@ The pay-per-read and pay-per-trigger tiers you just routed into are just-in-time
 25. [anthropics/claude-code#11759](https://github.com/anthropics/claude-code/issues/11759) — A 2,100-line CLAUDE.md split across six @-imported files consumed the same tokens as a monolith, ~85–90% irrelevant to most conversations. The running-thread artifact.
 26. [anthropics/claude-code#24987](https://github.com/anthropics/claude-code/issues/24987) — Subdirectory CLAUDE.md files reported not loading on the VS Code extension while the CLI works. Backs the verify-your-surface caveat.
 27. [anthropics/claude-code#2571](https://github.com/anthropics/claude-code/issues/2571) — Subdirectory CLAUDE.md files reported not auto-loading on macOS, closed not-planned. Backs the reliability caveat.
+28. [agent-engineering-toolkit: audit-claude-md](https://github.com/johnayoung/agent-engineering-toolkit) — This post's routing flowchart as a runnable Claude Code skill: tier inventory, @import expansion, token estimates, and a per-section routing report. MIT-licensed, runs standalone.
 
 ### Author's Judgment (not directly sourced)
 
