@@ -178,6 +178,8 @@ Score every candidate task on verification cost and reversibility first; only th
    ►  DELEGATE unsupervised. Cheap-to-verify, easy-to-undo quadrant.
 ```
 
+The pass is packaged as a runnable gate script and Claude Code skill in my [agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit), so you can score a task in the terminal before you open the prompt.
+
 Now run "clean up old branches" back through it, because a decision tool that only passes easy cases is worthless. Gate 1: there is no cheap check that the pattern-matched branches are the disposable ones — it stumbles immediately. Even granting a check, gate 4: "old" is a taste call with the real intent in the user's head — it fails again. And gate 5: the delete force-pushes away history — irreversible, hard to catch, straight to your hands. The incident that opened this post fails three gates independently, and any one of them would have caught it before the prompt was ever written.
 
 That is the whole apparatus. Not "which agent is best" — the question the rankings answer and the reader never asked — but "does this task belong to an agent at all." And the honest coda is that even a task that clears all five gates still earns a look at the diff. Goedecke, who is bullish on agents, still reports: "For difficult tasks, I'll often reject five or six (or more!) agent attempts before accepting one as good enough to work with, or giving up and making the change by hand" ([Sean Goedecke: How I use LLMs as a staff engineer in 2026](https://www.seangoedecke.com/how-i-use-llms-in-2026/)). The gates decide what you delegate. Judgment still decides what you accept.
@@ -203,3 +205,4 @@ That is the whole apparatus. Not "which agent is best" — the question the rank
 10. [Sean Goedecke: How I use LLMs as a staff engineer](https://www.seangoedecke.com/how-i-use-llms/) — Agents excel at code that doesn't have to be maintained; rarely for business logic.
 11. [Addy Osmani: Code Review in the Age of AI](https://addyo.substack.com/p/code-review-in-the-age-of-ai) — AI writes faster, but a human still has to prove it works; review is the moved bottleneck.
 12. [Anthropic: How we built Claude Code auto mode](https://www.anthropic.com/engineering/claude-code-auto-mode) — The "clean up old branches" incident and the destructive-action taxonomy (force-push, mass-delete, exfiltrate).
+13. [agent-engineering-toolkit: agent-task-go-no-go](https://github.com/johnayoung/agent-engineering-toolkit) — The five-gate go/no-go pass as an interactive script and Claude Code skill; the first failing gate is the verdict. Exit codes distinguish delegate, no-go, and input error, and each verdict cites the measurement behind it.

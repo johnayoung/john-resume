@@ -134,6 +134,8 @@ Before you grant an agent any production authority, run the action down this tab
 
 The columns are the six sections compressed. Reversibility and blast radius are the diagnosis — name the credential, not the model. The control column is the boundary that lives below the prompt, because a prompt's non-zero miss rate can't be trusted with the critical row. The deny-by-default row is the overreach assumption made concrete, and the four rows are the authority-by-task-class table. The "gate decays" note is why the high row is a stage, not a destination; the loosen column is the graduation threshold.
 
+I've packaged this table as [tier-agent-authority](https://github.com/johnayoung/agent-engineering-toolkit) — a skill that runs your Claude Code permission rules down these rows mechanically, flags every grant holding a control looser than its tier's default, and drafts the graduation ledger for anything you want loosened.
+
 Run the PocketOS deletion through the finished table one last time. Reversibility: none. Blast radius: production plus backups. Action class: irreversible, catastrophic — the bottom row. Default authority: deny-by-default, no standing grant. The token that ran the deletion carried a standing grant it was never entitled to, for an action that should have required separate out-of-band authorization every single time. Put the deletion in its correct row and the control on that row holds the nine seconds to zero.
 
 ---
@@ -162,6 +164,7 @@ Run the PocketOS deletion through the finished table one last time. Reversibilit
 15. [Oso: Setting Permissions for AI Agents](https://www.osohq.com/learn/ai-agent-permissions-delegated-access) — Employees ignore 96% of their permissions; agents won't. Why a broad grant is more dangerous for an agent.
 16. [MindStudio: What Is Progressive Autonomy for AI Agents?](https://www.mindstudio.ai/blog/progressive-autonomy-ai-agents) — Agents earn expanded permissions on observed performance; 100–500 clean instances as a graduation threshold.
 17. [Monte Carlo: Agentic Autonomy Is a Trust Score — Barr Moses](https://montecarlo.ai/blog-agentic-autonomy-is-a-trust-score/) — Autonomy as an earned, revocable score, expanded on demonstrated reliability, not decided on day one.
+18. [agent-engineering-toolkit: tier-agent-authority](https://github.com/johnayoung/agent-engineering-toolkit) — Runs your agent's permission rules down the four-tier table and flags every grant looser than its tier's default. Bundles a standalone bash script for Claude Code settings plus the ambient-credential inventory and graduation ledger.
 
 ### Author's Judgment (not directly sourced)
 

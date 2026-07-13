@@ -216,6 +216,8 @@ VERDICT: Build the strategic, continuously-verifiable triage RULES.
 
 The claims-triage decision resolves the same way every published gate predicted it would. The rules clear ownership cost (verifiable, so the tail is bounded), differentiation (they're your business logic), continuous verification (a rules suite), compliance-as-product (they're not the compliance surface — the platform is), and the base rate (the verification story beats one-third). The platform fails at differentiation and compliance and gets bought. That is the answer agentic AI actually changed: not "build more," but "build the small strategic core you can verify, and buy the expensive tail you'd only own blind."
 
+If you'd rather run the gates than trace them, I packaged this flowchart as a standalone calculator in my [agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit) — it prices the 60/60 tail from your first-build estimate and walks all five gates on your answers, one run per slice.
+
 ---
 
 ## References
@@ -240,6 +242,7 @@ The claims-triage decision resolves the same way every published gate predicted 
 13. [Bryan Ross (GitLab): The real cost of build vs. buy for agentic AI in regulated industries](https://about.gitlab.com/the-source/ai/the-real-cost-of-build-vs-buy-for-agentic-ai-in-regulated-industries/) — ~$1.4M year-one build, 2–3 FTEs, 12–18 months, plus the opportunity-cost framing; backs "buy the regulated platform." Vendor-authored; dollar figures treated directionally.
 14. [Pat Brans (CIO.com): Your next big AI decision isn't build vs. buy — It's how to combine the two](https://www.cio.com/article/4097339/your-next-big-ai-decision-isnt-build-vs-buy-its-how-to-combine-the-two.html) — The hybrid "combine the two" reframe; context for why this post gates on verification rather than restating the hybrid consensus.
 15. [Digital Applied Team: Build vs Buy — The 2026 Case for Custom AI Tools](https://www.digitalapplied.com/blog/build-vs-buy-ai-custom-tools-vs-branded-saas-2026) — Reframes the 2026 question around vendor lock-in; context for the differentiation-and-verification lens this post takes instead.
+16. [agent-engineering-toolkit: ownership-cost-gate](https://github.com/johnayoung/agent-engineering-toolkit) — Runnable version of this post's five-gate flowchart: it prices the maintenance tail from your first-build estimate, then gates on differentiation, verification, compliance, and the base rate to a build-or-buy verdict.
 
 ### Author's Judgment (not directly sourced)
 

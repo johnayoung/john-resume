@@ -142,6 +142,8 @@ Run every agent diff through the six moves above, in order, before you approve i
 
 The through-line across all six is one artifact: the reported-complete PR. Its green build is the self-report you reject (move 2), its test file is the claim you read (move 3), its spec is what you verify forward from (move 4), its additions are the scope you flag (move 5), and what it touches sets how hard you look (move 6). "Complete" is where the review starts, not where it ends.
 
+I've packaged the six moves as [verify-agent-pr in the agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit) — a Claude Code skill that runs this checklist as the fresh grader, plus a standalone diff-triage script that inventories the diff, reads the test-claim signal, and flags blast-radius zones before you spend a minute reviewing.
+
 ---
 
 ## References
@@ -168,6 +170,7 @@ The through-line across all six is one artifact: the reported-complete PR. Its g
 15. [LoadSys (Lee Forkenbrock): How to Verify What Your AI Coding Agent Actually Built](https://www.loadsys.com/blog/agentic-context-engineering-verification-practice/) — Structured verification found 30-40% of the spec unimplemented after "complete"; verify forward from the spec because missing features leave no diff.
 16. [Sean Goedecke: If you are good at code review, you will be good at using AI agents](https://www.seangoedecke.com/ai-agents-and-code-review/) — The biggest review mistake is thinking only about the code that was written, not the code that could have been written.
 17. [Hamel Husain and Shreya Shankar: LLM Evals — Everything You Need to Know](https://hamel.dev/blog/posts/evals-faq/) — Good scores on generic metrics don't mean your system works.
+18. [agent-engineering-toolkit: verify-agent-pr](https://github.com/johnayoung/agent-engineering-toolkit) — Runnable version of this post's six-move checklist. A Claude Code skill that grades an agent PR in a fresh context — evidence over self-report, tests read as claims, spec-forward verification, scope diff — with a standalone diff-triage script for the mechanical half.
 
 ### Author's Judgment (not directly sourced)
 

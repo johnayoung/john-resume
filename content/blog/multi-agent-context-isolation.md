@@ -218,6 +218,8 @@ If yes → cap at three to five, whatever you can review and land. If no → fan
 
 For the feature, the honest walk lands at Gate 3: a read-only codebase-explorer subagent clears the pollution, the main window holds, and you never pay the 15x bill or touch the coordination gate. When a split *does* clear all gates and still backfires, route the post-mortem through §7 — look for conflicting implicit decisions before you blame the model.
 
+You don't have to keep this flowchart in your head. I packaged it as a Claude Code skill with a standalone gate-runner script — [agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit) — that walks your concrete task through the gates in order and stops at the first failing one, template included for the isolate-in-session exit.
+
 ---
 
 ## References
@@ -237,3 +239,4 @@ For the feature, the honest walk lands at Gate 3: a read-only codebase-explorer 
 8. [Augment Code (Paula Hingel): Git Worktrees for Parallel AI Agent Execution](https://www.augmentcode.com/guides/git-worktrees-parallel-ai-agent-execution) — Git's file-based locking makes concurrent operations on one working tree fail; dependent tasks must be sequenced, not parallelized.
 9. [Addy Osmani: The Code Agent Orchestra](https://addyosmani.com/blog/code-agent-orchestra/) — Large codebases overwhelm one window; three-to-five agents is the sweet spot, and verification, not generation, is the bottleneck.
 10. [Simon Willison: Embracing the parallel coding agent lifestyle](https://simonw.substack.com/p/embracing-the-parallel-coding-agent) — You can review and land one significant change at a time, which bounds how far parallel fan-out actually scales.
+11. [agent-engineering-toolkit: isolation-gate](https://github.com/johnayoung/agent-engineering-toolkit) — This post's two-gate flowchart as a runnable Claude Code skill plus a standalone interactive script: seven ordered gates, sourced stop verdicts, and the explorer-subagent template. MIT-licensed, runs without Claude.

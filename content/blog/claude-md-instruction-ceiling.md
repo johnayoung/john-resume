@@ -176,6 +176,8 @@ Before any line goes in — or stays in — run it through one table. Each row i
 | **Cadence** | Would removing it cause a mistake? | If not, prune it ([Anthropic: best-practices](https://code.claude.com/docs/en/best-practices)). |
 | **Hook escalation** | Must it hold every single time, no exceptions? | Move it to a PreToolUse or Stop hook ([Anthropic: best-practices](https://code.claude.com/docs/en/best-practices)). |
 
+I packaged this table as [lint-claude-md](https://github.com/johnayoung/agent-engineering-toolkit) — a script that runs every line of your CLAUDE.md through these gates and reports the budget, the decaying-class flags, and whether you have a canary installed.
+
 The whole table reduces to one bet. A CLAUDE.md line is not documentation and not enforcement — it's a wager that one advisory instruction, drawn from a nearly-full account, will still be read and still be followed when it matters. The instruction ceiling is what makes CLAUDE.md maintenance a real discipline rather than a formatting exercise, and it's the same finite-resource argument that governs how you [size a single task for the agent](/blog/how-to-size-tasks-for-ai-coding-agents/). Budget accordingly.
 
 ---
@@ -196,3 +198,4 @@ The whole table reduces to one bet. A CLAUDE.md line is not documentation and no
 7. [Zhu Liang: The Pink Elephant Problem — Why 'Don't Do That' Fails with LLMs](https://eval.16x.engineer/blog/the-pink-elephant-negative-instructions-llms-effectiveness-analysis) — Negative instructions are unreliable as user prompts (which is what CLAUDE.md is), with the caveat that they work for hard safety boundaries in system prompts.
 8. [Albert Nahas: Your CLAUDE.md Instructions Are Being Ignored — Here's Why (and How to Fix It)](https://dev.to/albert_nahas_cdc8469a6ae8/your-claudemd-instructions-are-being-ignored-heres-why-and-how-to-fix-it-23p6) — CLAUDE.md values get summarized away at compaction; hook output arrives without the "may or may not be relevant" advisory framing.
 9. [Hacker News: How big is your claude.md file?](https://news.ycombinator.com/item?id=45688243) — Practitioner size contest (845 lines vs. a 60–120-line sweet spot) showing length alone doesn't predict adherence.
+10. [agent-engineering-toolkit: lint-claude-md](https://github.com/johnayoung/agent-engineering-toolkit) — Runs every line of a CLAUDE.md through this post's per-line decision table: instruction-ceiling budget, self-evident/negative/vague/hook-shaped flags, and the canary probe check.

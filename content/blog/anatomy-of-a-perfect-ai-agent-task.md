@@ -173,6 +173,8 @@ No handler, migration, sqlc, or integration-test changes. No edits to `ValidateE
     golangci-lint run ./internal/user/...
 ```
 
+The spec above is available as a copy-paste template with a lint script that fails on missing sections in the [agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit).
+
 ---
 
 ## Why This Works
@@ -200,3 +202,4 @@ No handler, migration, sqlc, or integration-test changes. No edits to `ValidateE
 6. [Google Cloud — Five Best Practices for AI Coding Assistants](https://cloud.google.com/blog/topics/developers-practitioners/five-best-practices-for-using-ai-coding-assistants) — Planning-first workflow and using tests as acceptance criteria for generated code.
 7. [HumanLayer — Writing a Good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) — Why fewer, focused instructions outperform instruction overload, and the ~150–200 instruction ceiling for frontier models.
 8. [Chroma — Context Rot (Hong et al., 2025)](https://research.trychroma.com/context-rot) — Empirical study across 18 LLMs showing that attention to context degrades non-uniformly as input length grows.
+9. [agent-engineering-toolkit: task-spec](https://github.com/johnayoung/agent-engineering-toolkit) — Copy-paste task-spec skeleton matching this post's worked example, plus a lint script that fails on missing sections and flags vague acceptance criteria.

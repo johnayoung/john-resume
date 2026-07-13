@@ -176,6 +176,8 @@ Before you ship a JIT agent, walk the completed ledger row by row — for each b
 | 4 | No stop rule on the retrieval loop | Thrashes, burning budget on "get more" | Caps at three passes and returns a disclaimed best-effort answer |
 | — | Low-confidence resolution (the fallback) | Re-injects the raw payload and rots the window | Withholds the raw blob; prefers honest abstention |
 
+That walk is packaged as an [audit-jit-retrieval skill](https://github.com/johnayoung/agent-engineering-toolkit) — it runs this ledger against your repo row by row and includes a standalone tool-catalog audit script for the description-routing row, no Claude required.
+
 The through-line across all five: JIT does not make retrieval free — it makes retrieval late, and late retrieval fails silently unless you engineer the failure to be loud. The evangelism ships the first column. The honest column is the deliverable. If shipping the fallback for a production JIT agent is the wedge between a demo and a system you can trust, that is the work I do — [let's talk](/work-with-me).
 
 ---
@@ -196,3 +198,4 @@ The through-line across all five: JIT does not make retrieval free — it makes 
 7. [Guy / AWS Heroes: MCP Tool Design — Why Your AI Agent Is Failing (And How to Fix It)](https://dev.to/aws-heroes/mcp-tool-design-why-your-ai-agent-is-failing-and-how-to-fix-it-40fc) — Tool descriptions as the LLM's primary decision surface; the 97.1%/56%/5.85pp figures (arXiv:2602.14878) and the Speakeasy 107-vs-10-tools result. Backs the tool-description section.
 8. [Ibrahim / Towards Data Science: Agentic RAG Failure Modes](https://towardsdatascience.com/agentic-rag-failure-modes-retrieval-thrash-tool-storms-and-context-bloat-and-how-to-spot-them-early/) — The "get more" spiral, the three-cycle cap, and the 200-calls/\$50–200 and 1,700% cost anecdotes. Backs "cap the loop and abstain."
 9. [Perrone: Why AI Agents Keep Failing in Production](https://medium.com/data-science-collective/why-ai-agents-keep-failing-in-production-cdd335b22219) — Silent retrieval failure has no flag; bad retrieval is not a hallucination; auth/token rot fails silently. Backs the dead-reference and fallback sections.
+10. [agent-engineering-toolkit: audit-jit-retrieval](https://github.com/johnayoung/agent-engineering-toolkit) — Claude Code skill that walks an agent repo against this post's five-row failure ledger and reports which failures surface loud and which stay silent. Bundles a standalone tool-catalog audit script (coreutils + jq only) covering the tool-description row's measured thresholds.

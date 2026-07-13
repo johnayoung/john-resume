@@ -183,6 +183,8 @@ Consumption data is table stakes; allocation — and then enforcement on top of 
 6. **Terminate before the next call.** Confirm the budget check fails the request pre-admission, not post-invoice.
 7. **Set the ceiling per session.** Confirm both a dollar cap and an iteration cap key on the session id.
 
+The seven layers above are packaged as a copy-paste pre-ship checklist — [cost-guardrail-checklist](https://github.com/johnayoung/agent-engineering-toolkit) — one attribution box and one enforcement box per layer, with the verified LiteLLM per-session config inline.
+
 The compression, one row per layer above — the attribution move you must have, and the enforcement move that is the actual decision:
 
 | Layer | The attribution move | The enforcement move |
@@ -218,3 +220,4 @@ Read the table left to right and the thesis falls out: every enforcement move on
 10. [Logan Kelly, Waxell: The $400M AI FinOps Gap](https://www.waxell.ai/blog/ai-agent-finops-cost-enforcement) — Provider controls operate at the key/account level and can't isolate a single runaway session.
 11. [Hacker News: $38k AWS Bedrock bill caused by a simple prompt caching miss](https://news.ycombinator.com/item?id=47933355) — Budget alerts are not a kill switch; a silent overrun with no hard cap.
 12. [Hacker News: Ask HN: How are you keeping AI coding agents from burning money?](https://news.ycombinator.com/item?id=47559293) — Practitioner demand for per-agent/per-task limits and the ability to cut it off, not just optimize.
+13. [agent-engineering-toolkit: cost-guardrail-checklist](https://github.com/johnayoung/agent-engineering-toolkit) — Pre-ship checklist for agent spend controls: seven layers, each requiring both an attribution dimension and an enforcement ceiling, with a verified LiteLLM per-session config.

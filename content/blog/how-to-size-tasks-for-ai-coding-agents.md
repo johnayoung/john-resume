@@ -139,6 +139,8 @@ If yes → either the task is too broad, or you need to provide more upfront con
 **Could you do it faster manually than writing the task spec?**
 If yes → bundle it with the next logical step.
 
+I packaged this flowchart as [size-agent-task](https://github.com/johnayoung/agent-engineering-toolkit), a Claude Code skill that runs a proposed task through the five gates and bundles a standalone script that measures any git diff against the thresholds above.
+
 ---
 
 ## References
@@ -158,6 +160,7 @@ If yes → bundle it with the next logical step.
 8. [Google Cloud: Five Best Practices for AI Coding Assistants](https://cloud.google.com/blog/topics/developers-practitioners/five-best-practices-for-using-ai-coding-assistants) — Test-driven verification as part of task definition.
 9. [MindStudio: Claude Session Limits](https://www.mindstudio.ai/blog/how-to-manage-claude-session-limits) — Match effort level to task complexity; sub-agents for work that exceeds a single session.
 10. [Augment Code: Code Review Best Practices](https://www.augmentcode.com/guides/code-review-best-practices-that-scale) — Sub-400 LOC PRs and sub-six-hour completion times as scaling benchmarks.
+11. [agent-engineering-toolkit: size-agent-task](https://github.com/johnayoung/agent-engineering-toolkit) — Skill that runs a proposed agent task through the five-gate sizing flowchart, plus a standalone script that measures any git diff against the 200/400/600-line PR-sizing thresholds.
 
 ### Author's Judgment (not directly sourced)
 

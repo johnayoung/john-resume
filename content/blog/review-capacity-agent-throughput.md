@@ -49,6 +49,8 @@ That crossover is not a metaphor. Monperrus, who argues the case as hard as anyo
 
 The sizing question is therefore: **does the reviewer-hours math clear before you add the agent, or are you buying queue depth and calling it throughput?** This is the same discipline as sizing the tasks in the first place — a well-sized diff maps to a reviewable unit, so upstream sizing is what keeps the per-PR review cost inside the budget ([How to Size Tasks for AI Coding Agents](/blog/how-to-size-tasks-for-ai-coding-agents/)). Compute the denominator first. If the sum exceeds capacity, agent number seven is not an output gain — it's a deferral.
 
+If you'd rather not do the division by hand, [size-review-capacity](https://github.com/johnayoung/agent-engineering-toolkit) runs this arithmetic on your numbers — attention per PR before and after the added agents, and a clears/exceeds verdict against the floor you name — and ships the six-question table as a copy-paste checklist.
+
 ---
 
 ## Measure Your Review Agents by the Load They Remove, Not the Comments They Post
@@ -154,3 +156,4 @@ The pattern across all six rows: the ceiling on how many agents you can run is a
 10. [Blake Crosley: Agents Supersede the Reviewer, Not the Review](https://blakecrosley.com/blog/agents-supersede-the-reviewer) — Output outruns absorption; the reviewer role automates while the review relocates to intent-in and accountability-out. Backs the capacity wall and the inspection/judgment split.
 11. [David Loker / CodeRabbit: How to Evaluate AI Code Review Tools — A Practical Framework](https://www.coderabbit.ai/blog/framework-for-evaluating-ai-code-review-tools) — Precision metrics degrade as comments are ignored due to volume; you end up measuring how reviewers cope with noise (vendor source). Backs the measurement rule.
 12. [Developers Digest: AI Coding Agents Move the Bottleneck to Review Queues](https://www.developersdigest.tech/blog/ai-coding-agents-review-queues) — Bottleneck relocation from generation to review queues, CI, and human merge attention. Supporting framing for the first section.
+13. [agent-engineering-toolkit: size-review-capacity](https://github.com/johnayoung/agent-engineering-toolkit) — Calculator that turns reviewer count, focused review-hours, and PR volume into attention-per-PR and a clears/exceeds verdict for the next agent you want to add. Bundles the post's six-gate scorecard as a copy-paste checklist; defaults are labeled as the post's worked-example assumptions, not measured constants.

@@ -187,6 +187,8 @@ State also changes what retrieval means, and this is where the loop reopens a pr
 
 Do not scale autonomy on a playbook you have not re-derived for many invocations. Every assumption in the table below was safe when the unit of work was one invocation; each one changes when the unit becomes many. Before the overnight loop runs unattended, walk each row and confirm you have an answer — this is the migration made into a checklist.
 
+That checklist is runnable: [loop-preflight](https://github.com/johnayoung/agent-engineering-toolkit) greps your wrapper for the three brakes, the state file, and the check you don't let the model self-grade, then prices the always-on context your loop re-pays every iteration.
+
 | Single-shot assumption | What changes across many invocations | Check before you walk away |
 | --- | --- | --- |
 | Loop engineering is a new skill to learn | It is the gather/act/verify primitive you already ran, now unattended | Are you migrating your single-invocation habits, or starting from a blank slate you don't need? |
@@ -221,6 +223,7 @@ I write one long-form piece at a time on context engineering and agent reliabili
 12. [Anthropic: Building agents with the Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — The gather/act/verify/repeat cycle and the compact feature that summarizes previous messages as the window fills. Backs loop-as-primitive and the compaction caveat.
 13. [Geoffrey Huntley: Ralph Wiggum as a "software engineer"](https://ghuntley.com/ralph/) — The unattended overnight loop with a fresh context each iteration and state in files; verify success programmatically rather than trusting the model to self-assess. The running artifact and the honest failure mode.
 14. [Truong Phung (DEV Community): The Agentic Loop / Loop Engineering: A Practical Field Guide](https://dev.to/truongpx396/the-agentic-loop-a-practical-field-guide-mnc) — The three hard stops (max iterations, no-progress detection, spend budget) and disk-backed state: "the agent forgets; the repo doesn't." Backs the stop-and-state section.
+15. [agent-engineering-toolkit: loop-preflight](https://github.com/johnayoung/agent-engineering-toolkit) — A preflight script plus Claude Code skill that checks an unattended loop wrapper for the max-iteration, no-progress, and spend brakes, externalized state, and a non-self-graded check, and prices the always-on context re-paid every iteration. Every check is a pattern grep and says so — MISSING means no recognizable pattern was found, not proof the guard is absent.
 
 ### Author's Judgment (not directly sourced)
 
