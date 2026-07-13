@@ -54,14 +54,15 @@ enableGitInfo = true
   cloudflareAnalyticsToken = "835621ce854e4c4c9482b9092b27f1f1"
 
 # Pillar display names, in filter-row order. Slugs match the `pillar` frontmatter
-# field on posts. Labels churn (context -> harness -> loop engineering); treat these
-# as versioned metadata — rename here, slugs stay stable.
+# field on posts. Labels are versioned metadata — rename here, slugs stay stable.
+# "Agent Runtime" is the umbrella for context/harness/loop engineering (distinct
+# sub-topics, not successive names — reframed 2026-07-13).
 [[params.pillars]]
   slug = "task-design"
   name = "Task Design"
 [[params.pillars]]
   slug = "context-engineering"
-  name = "Context Engineering"
+  name = "Agent Runtime"
 [[params.pillars]]
   slug = "evals-verification"
   name = "Evals & Verification"

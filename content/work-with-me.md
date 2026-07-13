@@ -11,7 +11,7 @@ If your team is moving real work onto AI coding agents and hitting the questions
 
 ## Where I help
 
-**Advisory for engineering leaders.** A senior sounding board for CTOs, VPs of Engineering, and staff+ engineers adopting agents: task design and decomposition, context engineering, eval strategy, and the team and process changes that agent-written code forces.
+**Advisory for engineering leaders.** A senior sounding board for CTOs, VPs of Engineering, and staff+ engineers adopting agents: task design and decomposition, agent runtime engineering (context, harness, and the loop), eval strategy, and the team and process changes that agent-written code forces.
 
 **Architecture & readiness review.** A focused engagement on one system — how work is decomposed for agents, how output is verified, where cost and failure modes hide, and what it takes to run it in production safely.
 

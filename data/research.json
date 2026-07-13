@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01",
+  "updated": "2026-07-13",
   "pillars": [
     {
       "id": 1,
@@ -8,8 +8,8 @@
     },
     {
       "id": 2,
-      "name": "Context Engineering",
-      "blurb": "What goes in the window and when — CLAUDE.md, just-in-time retrieval, the instruction ceiling."
+      "name": "Agent Runtime",
+      "blurb": "The machinery around the model — the context it sees, the harness it acts through, the loop it runs in."
     },
     {
       "id": 3,

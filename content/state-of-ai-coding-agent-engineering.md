@@ -24,7 +24,7 @@ The SME move follows directly: **stop optimizing generation, and start engineeri
 ## The six pillars, in one argument
 
 1. **Task Design & Decomposition** — Sizing an agent's work is a verification-cost problem, not a line-count problem; oversight belongs on the rare irreversible action, not the average one.
-2. **Context Engineering** — More context is not free reliability. Instruction-following [degrades to 68% at 500 instructions](https://arxiv.org/abs/2507.11538), and models [don't read a long window uniformly](https://www.trychroma.com/research/context-rot).
+2. **Agent Runtime** — More context is not free reliability. Instruction-following [degrades to 68% at 500 instructions](https://arxiv.org/abs/2507.11538), and models [don't read a long window uniformly](https://www.trychroma.com/research/context-rot).
 3. **Evals & Verification** — Generation outran verification. A green build isn't trust when [45.4% of flagged agent PRs describe changes the code never made](https://arxiv.org/abs/2601.04886) and [every major agent benchmark can be gamed to a near-perfect score](https://rdi.berkeley.edu/blog/trustworthy-benchmarks-cont).
 4. **Production Operations** — Safety comes from constraining what an agent can *reach*, not watching what it does — and you can't cap a cost you can't attribute to a task.
 5. **Team & Process** — Reviewer-hours are the real ceiling on how many agents you can run, and the burden lands on the seniors you can least afford to lose. *(Read this one in full below.)*

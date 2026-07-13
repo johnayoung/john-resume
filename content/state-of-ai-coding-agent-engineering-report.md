@@ -45,7 +45,7 @@ One number keeps the fear calibrated: in real agent traffic Anthropic measured [
 
 ---
 
-## Pillar 2 — Context Engineering
+## Pillar 2 — Agent Runtime
 
 **The claim: context is a budget you spend against a hard ceiling, not a free input you maximize.**
 
@@ -140,7 +140,7 @@ Stop tuning the agent; engineer the system. Here is the whole report on one scre
 | Pillar | Where the cost landed | The number that proves it | The move you make |
 | --- | --- | --- | --- |
 | **1 · Task Design** | Before the prompt — the choice to delegate | <10% agent success on tasks past ~4 hours of human work | Score verification cost and blast radius before you delegate |
-| **2 · Context Engineering** | In the window — what the agent reads to write the diff | 68% instruction compliance at 500 instructions | Budget context against a ~150–200 instruction ceiling |
+| **2 · Agent Runtime** | In the window — what the agent reads to write the diff | 68% instruction compliance at 500 instructions | Budget context against a ~150–200 instruction ceiling |
 | **3 · Evals & Verification** | In the gap between the diff and its description | 45.4% of flagged agent PRs describe work the code didn't do | Diff the description against the code; green build ≠ correct |
 | **4 · Production Operations** | At the boundary — what the agent can reach and cost | 0.8% of actions irreversible; dashboards lag up to 30 days | Contain by capability; attribute cost per task before you cap it |
 | **5 · Team & Process** | In the review queue — who absorbs the diff | +441.5% median time in review | Budget reviewer-hours; split delegable inspection from human judgment |
@@ -160,7 +160,7 @@ Every claim above traces to a primary source in the [public research index](/res
 
 **Task Design & Decomposition** — [METR: Measuring AI Ability to Complete Long Tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) · [Anthropic: Building effective agents](https://www.anthropic.com/research/building-effective-agents) · [Anthropic: How we built Claude Code auto mode](https://www.anthropic.com/engineering/claude-code-auto-mode) · [Addy Osmani: The 80% Problem in Agentic Coding](https://addyo.substack.com/p/the-80-problem-in-agentic-coding) · [Anthropic: Measuring AI agent autonomy in practice](https://www.anthropic.com/news/measuring-agent-autonomy)
 
-**Context Engineering** — [Jaroslawicz, Whiting, Shah, Maamari (Distyl AI): How Many Instructions Can LLMs Follow at Once?](https://arxiv.org/abs/2507.11538) · [Hong, Troynikov, Huber (Chroma): Context Rot](https://www.trychroma.com/research/context-rot) · [Kyle / HumanLayer: Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) · [Anthropic: Introducing advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) · [Anthropic: Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) · [Chatlatanagulchai et al.: Agent READMEs](https://arxiv.org/abs/2511.12884)
+**Agent Runtime** — [Jaroslawicz, Whiting, Shah, Maamari (Distyl AI): How Many Instructions Can LLMs Follow at Once?](https://arxiv.org/abs/2507.11538) · [Hong, Troynikov, Huber (Chroma): Context Rot](https://www.trychroma.com/research/context-rot) · [Kyle / HumanLayer: Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) · [Anthropic: Introducing advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) · [Anthropic: Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) · [Chatlatanagulchai et al.: Agent READMEs](https://arxiv.org/abs/2511.12884)
 
 **Evals & Verification** — [Gong, Pinna, Bian, Zhang: Analyzing Message-Code Inconsistency in AI Coding Agent-Authored Pull Requests](https://arxiv.org/abs/2601.04886) · [Hassan et al.: Agentic Software Engineering (the speed-vs-trust gap)](https://arxiv.org/html/2509.06216) · [New Relic / Hanover Research: 2026 State of AI Coding (perception survey, n=200)](https://newrelic.com/blog/ai/state-of-ai-coding-2026) · [Berkeley RDI: How We Broke Top AI Agent Benchmarks](https://rdi.berkeley.edu/blog/trustworthy-benchmarks-cont) · [Gian Segato / Anthropic Engineering: Quantifying infrastructure noise in agentic coding evals](https://www.anthropic.com/engineering/infrastructure-noise) · [Kumar: SWE-PRBench](https://arxiv.org/abs/2603.26130) · [Stack Overflow: 2025 Developer Survey (AI)](https://survey.stackoverflow.co/2025/ai) · [Simon Willison: Agentic Engineering Patterns](https://simonw.substack.com/p/agentic-engineering-patterns) · [Anthropic: Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) · [Liu et al.: Debt Behind the AI Boom](https://arxiv.org/abs/2603.28592)
 

@@ -8,7 +8,7 @@
   {{ $pillars := .pillars }}
   {{ $nData := len (where $sources "class" "research-data") }}
   {{ $nPrac := sub (len $sources) $nData }}
-  {{ $chipLabels := dict "1" "Task Design" "2" "Context" "3" "Evals" "4" "Production" "5" "Team" "6" "Architecture" }}
+  {{ $chipLabels := dict "1" "Task Design" "2" "Runtime" "3" "Evals" "4" "Production" "5" "Team" "6" "Architecture" }}
 
   <div class="stats" role="group" aria-label="Dataset summary">
     <div class="stat">

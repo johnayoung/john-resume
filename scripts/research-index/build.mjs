@@ -19,11 +19,11 @@ import { dirname, join } from 'node:path';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
 const SRC = join(HERE, 'extracted.json');
-const UPDATED = '2026-07-01'; // bump when regenerating with new sources
+const UPDATED = '2026-07-13'; // bump when regenerating with new sources
 
 const PILLARS = [
   { id: 1, name: 'Task Design & Decomposition', blurb: 'Scoping, decomposing, and speccing work so an agent finishes it on the first try.' },
-  { id: 2, name: 'Context Engineering', blurb: 'What goes in the window and when — CLAUDE.md, just-in-time retrieval, the instruction ceiling.' },
+  { id: 2, name: 'Agent Runtime', blurb: 'The machinery around the model — the context it sees, the harness it acts through, the loop it runs in.' },
   { id: 3, name: 'Evals & Verification', blurb: 'Knowing an agent’s output is actually correct, beyond a green build.' },
   { id: 4, name: 'Production Operations', blurb: 'Running agents in production: cost, permissions, failure modes, guardrails.' },
   { id: 5, name: 'Team & Process', blurb: 'Reviewing AI diffs, reviewer capacity, and how teams absorb agent output.' },

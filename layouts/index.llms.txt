@@ -8,7 +8,7 @@
 
 > {{ site.Params.description }}
 
-Personal site of John Young — CTO at Combine Capital, head of engineering at Infrared. Long-form essays on the engineering practices behind running AI coding agents in production: task design, context engineering, evals and verification, production operations, team process, and architecture decisions. Every claim links to a primary source; the evidence base is public and machine-readable.
+Personal site of John Young — CTO at Combine Capital, head of engineering at Infrared. Long-form essays on the engineering practices behind running AI coding agents in production: task design, the agent runtime (context engineering, harness engineering, loop engineering), evals and verification, production operations, team process, and architecture decisions. Every claim links to a primary source; the evidence base is public and machine-readable.
 
 Full essay text: {{ absURL "llms-full.txt" }}
 
