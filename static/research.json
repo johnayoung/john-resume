@@ -34,6 +34,27 @@
   ],
   "sources": [
     {
+      "title": "Beyond the Leaderboard: A Synthesis of Tool-Use, Planning, and Reasoning Failures in Large Language Model Agents",
+      "author": "Albayaydh, Zhao, Flechais",
+      "url": "https://arxiv.org/abs/2607.05775",
+      "date": "Jul 7, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "A synthesis of 27 benchmark, taxonomy, and audit papers spanning 19 benchmarks finds that additional scaffolding does not consistently improve reliability.",
+      "proves": "The honesty brake on 'more harness is better' - and the reason this post's claim is bounded to blast radius rather than quality.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "Failures compound nonlinearly with task length",
+        "Strong performance on individual sub-tasks does not reliably translate into end-to-end success",
+        "Secondary synthesis - every number in it is someone else's measurement"
+      ]
+    },
+    {
       "title": "Measuring AI agent autonomy in practice",
       "author": "Anthropic",
       "url": "https://www.anthropic.com/news/measuring-agent-autonomy",
@@ -99,23 +120,48 @@
     },
     {
       "title": "Quantifying infrastructure noise in agentic coding evals",
-      "author": "Anthropic Research",
+      "author": "Anthropic (Gian Segato)",
       "url": "https://www.anthropic.com/engineering/infrastructure-noise",
-      "date": "February 05, 2026",
+      "date": "Feb 5, 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Infrastructure configuration can swing agentic coding benchmarks by several percentage points - sometimes more than the leaderboard gap between top models. The gap between most- and least-resourced setups on Terminal-Bench 2.0 was 6 percentage points (p < 0.01).",
+      "proves": "The controlled companion to the leaderboard spread: a frontier lab measuring, against its own interest, that the scaffold moves scores more than the model does.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit",
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "A 2-point lead on a leaderboard might reflect a genuine capability difference, or it might reflect that one eval ran on beefier hardware, or even at a luckier time of day, or both.",
+        "Infra error rates dropped monotonically from 5.8% at strict enforcement to 0.5% uncapped",
+        "'The boundary between model capability and infrastructure behavior is blurrier than a single benchmark score suggests'",
+        "gap between the most- and least-resourced setups on Terminal-Bench 2.0 was 6 percentage points (p < 0.01)"
+      ]
+    },
+    {
+      "title": "Demystifying evals for AI agents",
+      "author": "Anthropic (Grace, Hadfield, Olivares, De Jonghe)",
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "date": "Jan 9, 2026",
       "class": "research-data",
       "pillars": [
         3
       ],
-      "stat": "A 2-point lead on a leaderboard might reflect a genuine capability difference, or it might reflect that one eval ran on beefier hardware, or even at a luckier time of day, or both.",
-      "proves": "Small benchmark-score gaps between models are dominated by infrastructure noise, so self-reported numbers can't be trusted at fine margins.",
+      "stat": "Opus 4.5 initially scored 42% on CORE-Bench; after fixing grading bugs and using a less constrained scaffold, the same model's score jumped to 95%.",
+      "proves": "A 53-point swing on a fixed model attributable entirely to scaffolding and grading - capability was never the variable.",
       "verification": "confirmed",
       "powers": [
+        "agent-harness-audit",
         "evaluating-ai-coding-agent-output"
       ],
       "secondary": [
-        "gap between the most- and least-resourced setups on Terminal-Bench 2.0 was 6 percentage points (p < 0.01)",
-        "leaderboard differences below 3 percentage points deserve skepticism until the eval configuration is documented",
-        "Two agents with different resource budgets and time limits aren't taking the same test."
+        "So as not to unnecessarily punish creativity, it's often better to grade what the agent produced, not the path it took.",
+        "'With frontier models, a 0% pass rate across many trials (i.e 0% pass@100) is most often a signal of a broken task, not an incapable agent'",
+        "The initial 42% observation is Anthropic citing an external report; the diagnosis and the 95% re-run are Anthropic's own",
+        "As a rule, we do not take eval scores at face value until someone digs into the details of the eval and reads some transcripts."
       ]
     },
     {
@@ -217,6 +263,25 @@
         "claude-md-context-hierarchy"
       ],
       "secondary": []
+    },
+    {
+      "title": "MCP-Atlas: A Large-Scale Benchmark for Tool-Use Competency with Real MCP Servers",
+      "author": "Bandi, Dumitru, Hertzberg, Agarwal et al. (Scale AI)",
+      "url": "https://arxiv.org/abs/2602.00933",
+      "date": "Jan 31, 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Across 1,000 expert-written tasks spanning 36 real MCP servers and 220 tools, automated diagnostics show 63.3% of diagnosed failures are cognitive rather than tool-call related.",
+      "proves": "Second independent finding that the majority of agent failures are model-side, not tool-surface.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "'Several high-performing models fail after successful tool execution due to premature stopping or incorrect synthesis' - a cognitive fault the harness can still address"
+      ]
     },
     {
       "title": "How We Broke Top AI Agent Benchmarks: And What Comes Next",
@@ -804,6 +869,26 @@
       ]
     },
     {
+      "title": "Terminal-Bench 2.0 Leaderboard",
+      "author": "Terminal-Bench (Stanford x Laude)",
+      "url": "https://www.tbench.ai/leaderboard/terminal-bench/2.0",
+      "date": "live leaderboard (fetched Jul 27, 2026)",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Eleven Claude Opus 4.6 entries span 58.0% (Claude Code, +/-2.9) to 76.4% (Meta-Harness, +/-2.4) on 89 terminal tasks - an 18.4-point spread on identical model weights, 13.1 points at the non-overlapping confidence bounds.",
+      "proves": "The same frontier model varies by double-digit percentage points purely as a function of the harness it runs in.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "Entries are self-submitted by harness authors via pull request, machine-validated for timeout/resource parity and a five-trial minimum, then maintainer-merged",
+        "Submissions span Dec 2025 to May 2026 and are not contemporaneous; harness-side and model-side settings are not held constant, so the spread is observational rather than controlled"
+      ]
+    },
+    {
       "title": "State of AI vs. Human Code Generation Report",
       "author": "Thomas Claburn, The Register",
       "url": "https://www.theregister.com/2025/12/17/ai_code_bugs",
@@ -885,6 +970,27 @@
         "On average, its refusal rate increased from 0.767 to 0.828, while the hallucination rate decreased from 0.128 to 0.083.",
         "anchoring the retrieval process in logical queries substantially reduces hallucinations in generated responses.",
         "matches a strong agentic hybrid baseline, while substantially reducing construction and serving cost"
+      ]
+    },
+    {
+      "title": "Failure as a Process: An Anatomy of CLI Coding Agent Trajectories",
+      "author": "Zhao, Li, Li, Zhao, Barr, Sarro, Ye",
+      "url": "https://arxiv.org/abs/2607.09510",
+      "date": "Jul 10, 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Across 1,794 manually annotated trajectories (63,000+ execution steps, seven frontier models, three scaffolds), environment triggers account for 9.4% of decisive errors against 57.9% epistemic and 32.8% competence.",
+      "proves": "The direct refutation of harness causation - agent failures are predominantly model-side, which is why this post argues leverage rather than cause.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "Largest single trigger is false premises at 30.7%",
+        "Epistemic errors are the largest share in every scaffold tested, ranging 44% to 80%",
+        "The paper's own prescription - 'earlier validation and intervention' - is itself a harness prescription"
       ]
     },
     {
@@ -1231,6 +1337,29 @@
       ]
     },
     {
+      "title": "Monitoring",
+      "author": "Anthropic (Claude Code docs)",
+      "url": "https://code.claude.com/docs/en/monitoring-usage",
+      "date": "undated, min-versions v2.1.214-216 (fetched Jul 27, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "The claude_code.tool_decision event carries a source enum recording which control surface made each decision: config, hook, user_permanent, user_temporary, user_abort, user_reject.",
+      "proves": "The per-tool-call authorization provenance record a governance process needs already exists in the product - and ships disabled.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit",
+        "per-task-cost-attribution"
+      ],
+      "secondary": [
+        "Attributing spend to specific skills, plugins, or subagent types via the `skill.name`, `plugin.name`, and `agent.name` attributes",
+        "OpenTelemetry export to your backend is opt-in and requires explicit configuration.",
+        "Telemetry is off by default: CLAUDE_CODE_ENABLE_TELEMETRY 'Enables telemetry collection (required)'",
+        "Argument capture is gated behind a second variable, OTEL_LOG_TOOL_DETAILS=1"
+      ]
+    },
+    {
       "title": "Extend Claude with skills",
       "author": "Anthropic (Claude Code docs)",
       "url": "https://code.claude.com/docs/en/skills",
@@ -1247,6 +1376,89 @@
       ],
       "secondary": [
         "When you or Claude invoke a skill, the rendered SKILL.md content enters the conversation as a single message and stays there for the rest of the session."
+      ]
+    },
+    {
+      "title": "Configure the sandboxed Bash tool",
+      "author": "Anthropic (Claude Code docs)",
+      "url": "https://code.claude.com/docs/en/sandboxing",
+      "date": "undated, min-versions through v2.1.218 (fetched Jul 27, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'The operating system enforces the sandbox boundary on the running process, so it holds regardless of what the model chose to run and even if an allowed command does more than its name suggests.'",
+      "proves": "Where the check physically runs is what decides whether it is a control - stated by the vendor, at mechanism level.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "'Sandboxing reduces risk but is not a complete isolation boundary'",
+        "Default failure mode: if the sandbox cannot start because dependencies are missing, Claude Code warns and runs commands without sandboxing unless sandbox.failIfUnavailable is set",
+        "Claude may retry a sandbox-blocked command with the dangerouslyDisableSandbox parameter",
+        "excludedCommands has no managed-only lockdown, so a developer can always widen the policy"
+      ]
+    },
+    {
+      "title": "Hooks reference",
+      "author": "Anthropic (Claude Code docs)",
+      "url": "https://code.claude.com/docs/en/hooks",
+      "date": "undated, min-versions through v2.1.218 (fetched Jul 27, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'For most hook events, only exit code 2 blocks the action. Claude Code treats exit code 1 as a non-blocking error and proceeds with the action, even though 1 is the conventional Unix failure code.'",
+      "proves": "The hook layer fails open by default - and the vendor redirects hard enforcement away from it.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "'Because the if filter is best-effort, use the permission system rather than a hook to enforce a hard allow or deny'",
+        "'The filter also fails open, running your hook regardless of pattern, when the Bash command can't be parsed'",
+        "permissionDecision enum: allow, deny, ask, defer"
+      ]
+    },
+    {
+      "title": "Automate actions with hooks",
+      "author": "Anthropic (Claude Code docs)",
+      "url": "https://code.claude.com/docs/en/hooks-guide",
+      "date": "undated (fetched Jul 27, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'They provide deterministic control over Claude Code's behavior, ensuring certain actions always happen rather than relying on the LLM to choose to run them.'",
+      "proves": "'Deterministic' is the vendor's own word for the control surface - but the claim is immediately qualified.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "The very next sentence: prompt-based and agent-based hooks 'use a Claude model to evaluate conditions' - so 'hook' is an umbrella containing probabilistic members, and the determinism attaches to command hooks only"
+      ]
+    },
+    {
+      "title": "Security",
+      "author": "Anthropic (Claude Code docs)",
+      "url": "https://code.claude.com/docs/en/security",
+      "date": "undated (fetched Jul 27, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'Claude Code only has the permissions you grant it. You're responsible for reviewing proposed code and commands for safety before approval.'",
+      "proves": "The vendor explicitly transfers review responsibility to the user - the responsibility this post argues is being discharged on the wrong layer.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "'Fail-closed matching: Unmatched commands default to requiring manual approval' - scoped to bash permission-rule matching, NOT hook failure handling",
+        "'Trust verification is disabled when running non-interactively with the -p flag'",
+        "Safeguard list: network request approval, isolated context windows, trust verification, command injection detection, fail-closed matching, natural language descriptions, secure credential storage"
       ]
     },
     {
@@ -1318,25 +1530,23 @@
       ]
     },
     {
-      "title": "Monitoring",
-      "author": "Anthropic (code.claude.com)",
-      "url": "https://code.claude.com/docs/en/monitoring-usage",
-      "date": "undated (references minimum version \"Claude Code v2.1.193 or later\")",
+      "title": "Beyond permission prompts: making Claude Code more secure and autonomous",
+      "author": "Anthropic (David Dworken, Oliver Weller-Davies)",
+      "url": "https://www.anthropic.com/engineering/claude-code-sandboxing",
+      "date": "Oct 20, 2025",
       "class": "practitioner",
       "pillars": [
-        4
+        2
       ],
-      "stat": "Attributing spend to specific skills, plugins, or subagent types via the `skill.name`, `plugin.name`, and `agent.name` attributes",
-      "proves": "Claude Code's OpenTelemetry export already emits per-skill, per-plugin, per-subagent, and per-prompt attribution attributes on every call, so an (agent, task, user) schema can be committed at the call level today.",
+      "stat": "'Constantly clicking approve slows down development cycles and can lead to approval fatigue, where users might not pay close attention to what they're approving, and in turn making development less safe.'",
+      "proves": "Why prompt-time human review does not scale, argued by the vendor whose product depends on it.",
       "verification": "confirmed",
       "powers": [
-        "per-task-cost-attribution"
+        "agent-harness-audit"
       ],
       "secondary": [
-        "OpenTelemetry export to your backend is opt-in and requires explicit configuration.",
-        "`token.usage` `type` attribute allowed values: `\"input\"`, `\"output\"`, `\"cacheRead\"`, `\"cacheCreation\"`",
-        "`query_source` attribute allowed values: `\"main\"`, `\"subagent\"`, `\"auxiliary\"` — distinguishes main-loop calls from subagent/auxiliary calls.",
-        "`prompt.id`: \"UUID v4 correlating a user prompt with all subsequent events until next prompt\"."
+        "'In our internal usage, we've found that sandboxing safely reduces permission prompts by 84%' - vendor-internal, no methodology, sample size, or definition of 'safely'",
+        "Context-reversal finding: this blog says a successful prompt injection is 'fully isolated', which the product documentation explicitly contradicts ('not a complete isolation boundary')"
       ]
     },
     {
@@ -1400,27 +1610,6 @@
         "Enterprise Analytics cost granularity: \"per-user and organization-level token usage and cost over time (usage-based Enterprise plans)\" — NOT per-request.",
         "Cost data freshness: \"Data is typically available within four hours of the underlying usage but may take up to 24 hours.\"",
         "\"Daily Claude Code metrics per user: sessions, lines of code, commits, pull requests, tool acceptance, and estimated cost by model\""
-      ]
-    },
-    {
-      "title": "Demystifying evals for AI agents",
-      "author": "Anthropic Engineering Blog (Mikaela Grace, Jeremy Hadfield, Rodrigo Olivares, Jiri De Jonghe)",
-      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
-      "date": "January 9, 2026",
-      "class": "practitioner",
-      "pillars": [
-        3
-      ],
-      "stat": "So as not to unnecessarily punish creativity, it's often better to grade what the agent produced, not the path it took.",
-      "proves": "Grade the agent on the outcome it produced, not the procedure it followed, or you punish valid solutions.",
-      "verification": "confirmed",
-      "powers": [
-        "evaluating-ai-coding-agent-output"
-      ],
-      "secondary": [
-        "As a rule, we do not take eval scores at face value until someone digs into the details of the eval and reads some transcripts.",
-        "CORE-Bench: \"Opus 4.5 initially scored 42%... After fixing bugs... score jumped to 95%\" — Anthropic's own eval-harness bug (Step 5)",
-        "Defining eval tasks is one of the best ways to stress-test whether the product requirements are concrete enough to start building"
       ]
     },
     {
@@ -1501,6 +1690,28 @@
         "claude-md-context-hierarchy"
       ],
       "secondary": []
+    },
+    {
+      "title": "Harness engineering for coding agent users",
+      "author": "Birgitta Bockeler (martinfowler.com)",
+      "url": "https://martinfowler.com/articles/harness-engineering.html",
+      "date": "Apr 2, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'In coding agents, part of the harness is already built in (e.g. via the system prompt, or the chosen code retrieval mechanism, or even a sophisticated orchestration system).'",
+      "proves": "The harness arrives partly pre-built - the inherited-defaults premise, from the discipline's highest-authority restatement.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "The 2x2 that organizes the post: guides (feedforward) vs sensors (feedback), crossed with computational (deterministic, reliable) vs inferential (non-deterministic)",
+        "She files AGENTS.md and Skills as inferential feedforward - a legitimate quadrant member, not the harness's opposite",
+        "'Building this outer harness is emerging as an ongoing engineering practice, not a one-time configuration'",
+        "Names cybernetics as the lineage via a Wikipedia link, with no specific control-theory originator"
+      ]
     },
     {
       "title": "Agents Supersede the Reviewer, Not the Review",
@@ -1660,6 +1871,27 @@
       ]
     },
     {
+      "title": "Hooks",
+      "author": "Cursor (docs)",
+      "url": "https://cursor.com/docs/hooks",
+      "date": "undated (fetched Jul 27, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'Other exit codes - Hook failed, action proceeds (fail-open by default)'. The failClosed override ships with default false: 'When true, hook failures (crash, timeout, invalid JSON) block the action instead of allowing it through. Useful for security-critical hooks.'",
+      "proves": "A second vendor whose guardrail layer fails open by default, with the security switch shipped off.",
+      "verification": "partial",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "Verification note: two independent passes disagreed on whether the page renders permission: \"deny\" or permission: 'deny'; that quote was dropped from the post rather than resolved",
+        "No raw-markdown endpoint (cursor.com/docs/hooks.md returns 404), so all quotes come from rendered HTML",
+        "beforeReadFile hook failures are logged and the read is allowed through"
+      ]
+    },
+    {
       "title": "How to evaluate AI code review tools: A practical framework",
       "author": "David Loker / CodeRabbit",
       "url": "https://www.coderabbit.ai/blog/framework-for-evaluating-ai-code-review-tools",
@@ -1740,6 +1972,28 @@
         "\"The model matters, but the delivery surface matters just as much.\"",
         "\"A team that cannot write crisp tasks will struggle to evaluate agents honestly.\"",
         "\"Reviewers do not need another wall of generated explanation. They need the shortest path to deciding whether the change should merge.\""
+      ]
+    },
+    {
+      "title": "Why Software Factories Fail (or: harness engineering is not enough)",
+      "author": "Dex Horthy (HumanLayer)",
+      "url": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/wsff.md",
+      "date": "Jul 23, 2026 (undated in body; dated by commit history)",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "'no amount of harness engineering or loopsmaxxing can solve what is fundamentally a model-training issue.'",
+      "proves": "The strongest counterargument to a harness-centric thesis, and the reason this post bounds its claim to blast radius rather than quality.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "On the limit of fast deterministic gates: 'Running the tests gets you a clean pass or fail in ~seconds... But the cost function of bad architecture is measured in weeks, months, maybe even years'",
+        "'if you build a harness but you don't own the weights and can't RL the model inside it, you'll always be at a disadvantage to a team that owns both'",
+        "Cites Faros AI: 31.3% of PRs skip review entirely, +242.7% incidents per PR under high AI adoption",
+        "The words determinism, guardrails, permissions, sandboxing, and policy enforcement appear nowhere in the document - it argues about design quality, not authorization"
       ]
     },
     {
@@ -1870,6 +2124,28 @@
       ],
       "secondary": [
         "85-90% of loaded content is irrelevant to most conversations"
+      ]
+    },
+    {
+      "title": "Policy engine",
+      "author": "Google (Gemini CLI docs)",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/policy-engine.md",
+      "date": "undated, main branch (fetched Jul 27, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'For global rules (those without an argsPattern), tools that are denied are completely excluded from the model's memory.' The model never sees the tool as an option.",
+      "proves": "A deny decision is not a request to the model - it is a change to what exists. Deterministic policy evaluation as reviewable code.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "SCOPE: the memory-exclusion claim applies only to global rules without an argsPattern; the doc says nothing about argument-conditional deny rules",
+        "Precedence is arithmetic: final_priority = tier_base + (toml_priority / 1000), tier bases Default 1 through Admin 5 - tier always dominates because the fractional term can never reach 1",
+        "'The first rule that matches determines the outcome' - first in priority order, not file order",
+        "In non-interactive mode ask_user is treated as deny"
       ]
     },
     {
@@ -2119,6 +2395,28 @@
       "secondary": []
     },
     {
+      "title": "Harness Engineering for Self-Improvement",
+      "author": "Lilian Weng (Lil'Log)",
+      "url": "https://lilianweng.github.io/posts/2026-07-04-harness",
+      "date": "Jul 4, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'The evaluator and permission control should likely sit outside the loop that evolves harness, with held-out tests, trace audits, and human review at decision points that matter.'",
+      "proves": "Enforcement belongs outside the loop it governs - and, because harnesses evolve, the audit is recurring rather than one-time.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "SCOPE: scoped specifically to self-modifying harnesses, not agent harnesses generally; the 'should likely' hedge is the author's own",
+        "'A harness is the system surrounding a base model that orchestrates execution and decides how the model thinks and plans, calls tools and acts, perceives and manages context, stores artifacts, and evaluates results'",
+        "The words deterministic and probabilistic appear nowhere in the post - do not attribute that framing to her",
+        "'The core interface of mainstream coding agents has become stabilized across Claude Code, Codex, OpenCode, and Cursor-style agents'"
+      ]
+    },
+    {
       "title": "Budgets, Rate Limits",
       "author": "LiteLLM (docs.litellm.ai)",
       "url": "https://docs.litellm.ai/docs/proxy/users",
@@ -2266,6 +2564,69 @@
       ]
     },
     {
+      "title": "Harness engineering: leveraging Codex in an agent-first world",
+      "author": "OpenAI",
+      "url": "https://openai.com/index/harness-engineering",
+      "date": "undated, on or before Feb 11, 2026 (Wayback-bounded)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'Agents are most effective in environments with strict boundaries and predictable structure, so we built the application around a rigid architectural model.'",
+      "proves": "The canonical build-a-harness text - and the differentiation foil: written from an empty repository, with zero coverage of inherited vendor defaults.",
+      "verification": "partial",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "Direct fetch returns HTTP 403 and web.archive.org is blocked to the tool; content read via a text-extraction proxy",
+        "Page carries no byline and no publication date - attribute to OpenAI, not to an individual",
+        "Its 'boundaries' are architectural layer-dependency lint rules inside the application codebase, not harness control surfaces",
+        "Posture cuts against gates: 'The repository operates with minimal blocking merge gates'"
+      ]
+    },
+    {
+      "title": "Hooks",
+      "author": "OpenAI (Codex docs)",
+      "url": "https://learn.chatgpt.com/docs/hooks",
+      "date": "undated (fetched Jul 27, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'Some specialized tool paths can opt out of the default hook path. Treat tool hooks as a useful guardrail, not a complete enforcement boundary.'",
+      "proves": "A vendor stating in its own documentation that the layer most teams build policy on is not an enforcement boundary.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "The named hole: 'Hosted tools, such as WebSearch... don't use the local function-tool hook path'",
+        "Codex also fails open: a PreToolUse hook returning unsupported fields is marked failed and 'continues the tool call'",
+        "'Multiple matching command hooks for the same event are launched concurrently, so one hook can't prevent another matching hook from starting'"
+      ]
+    },
+    {
+      "title": "Semantic conventions for GenAI spans (Execute tool span)",
+      "author": "OpenTelemetry",
+      "url": "https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/gen-ai-spans.md",
+      "date": "status Development, pins semantic-conventions v1.43.0 (fetched Jul 27, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "gen_ai.tool.name is Required, while gen_ai.tool.call.arguments and gen_ai.tool.call.result are both Opt-In. A fully spec-compliant trace records that a tool ran and nothing about what it ran.",
+      "proves": "'We have OpenTelemetry' does not mean 'we have an audit trail' - the audit-grade fields are the weakest requirement level in the spec.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "Both opt-in fields carry the spec warning 'This attribute may contain sensitive information' - a real privacy tradeoff, not an oversight",
+        "The opentelemetry.io spec path is now a stub; cite the repo path"
+      ]
+    },
+    {
       "title": "Setting Permissions for AI Agents",
       "author": "Oso",
       "url": "https://www.osohq.com/learn/ai-agent-permissions-delegated-access",
@@ -2284,6 +2645,27 @@
         "Without mirroring these same permissions, an AI agent could expose protected data.",
         "Developers should consider to use just-in-time access, human-in-the-loop verification",
         "An agent that holds one of those tokens will keep answering requests even when the system has revoked"
+      ]
+    },
+    {
+      "title": "LLM01:2025 Prompt Injection",
+      "author": "OWASP Gen AI Security Project",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection",
+      "date": "LLM Top 10 for LLM Applications, 2025 edition",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "'Provide the application with its own API tokens for extensible functionality, and handle these functions in code rather than providing them to the model. Restrict the model's access privileges to the minimum necessary for its intended operations.'",
+      "proves": "An independent standards body placing the control in code rather than in the prompt.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "'Given the stochastic influence at the heart of the way models work, it is unclear if there are fool-proof methods of prevention for prompt injection'",
+        "Framing caveat: the list is introduced as measures that 'can mitigate' impact - recommendations, not requirements",
+        "Item 2 independently recommends using 'deterministic code to validate adherence to these formats'"
       ]
     },
     {
@@ -2568,6 +2950,44 @@
       "secondary": []
     },
     {
+      "title": "How coding agents work",
+      "author": "Simon Willison",
+      "url": "https://simonwillison.net/guides/agentic-engineering-patterns/how-coding-agents-work",
+      "date": "Mar 16, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'A coding agent is a piece of software that acts as a harness for an LLM, extending that LLM with additional capabilities that are powered by invisible prompts and implemented as callable tools.'",
+      "proves": "The harness's prompts are invisible to the user by construction - the closest practitioner framing to the unreviewed-defaults claim.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "'A tool is a function that the agent harness makes available to the LLM'"
+      ]
+    },
+    {
+      "title": "The lethal trifecta for AI agents: private data, untrusted content, and external communication",
+      "author": "Simon Willison",
+      "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta",
+      "date": "Jun 16, 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'you can try telling it not to in your own prompt, but how confident can you be that your protection will work every time?'",
+      "proves": "A system-prompt instruction is not a security control - the cleanest one-line statement of the post's premise.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "On vendor guardrails claiming '95% of attacks': 'in web application security 95% is very much a failing grade' - note the 95% is Willison characterizing vendor marketing, not his own measurement"
+      ]
+    },
+    {
       "title": "Context engineering",
       "author": "Simon Willison's Weblog",
       "url": "https://simonwillison.net/2025/Jun/27/context-engineering",
@@ -2684,6 +3104,25 @@
         "claude-md-context-hierarchy"
       ],
       "secondary": []
+    },
+    {
+      "title": "The Anatomy of an Agent Harness",
+      "author": "Vivek Trivedy",
+      "url": "https://www.vtrivedy.com/posts/the-anatomy-of-an-agent-harness",
+      "date": "Mar 10, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'A harness is every piece of code, configuration, and execution logic that isn't the model itself. A raw model is not an agent. But it becomes one when a harness gives it things like state, tool execution, feedback loops, and enforceable constraints.'",
+      "proves": "The canonical definition, from the coinage. Cite Trivedy rather than downstream restatements.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "The component enumeration explicitly places System Prompts inside the harness alongside tools, sandbox, orchestration logic, and hooks - so 'harness vs CLAUDE.md' is not the boundary the field draws"
+      ]
     },
     {
       "title": "Don't Build Multi-Agents",
