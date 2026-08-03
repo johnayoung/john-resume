@@ -55,6 +55,27 @@
       ]
     },
     {
+      "title": "What Breaks When LLMs Code? Characterizing Operational Safety Failures of Agentic Code Assistants",
+      "author": "Alif Al Hasan, Sumon Biswas (Case Western Reserve University)",
+      "url": "https://arxiv.org/abs/2605.30777",
+      "date": "May 29, 2026",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Across 547 confirmed real-world safety failures mined from the GitHub issue trackers of 13 foundational code models, the top threat category is Constraint Violations at 40.4%, ahead of Destructive Operations (24.5%), Authorization Bypasses (18.3%), and Deception (15.7%).",
+      "proves": "Independent corroboration of the constraint-violation finding by a different dataset and method - two teams reaching the same top category within two points.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "Failures arise during benign, goal-directed use rather than adversarial attack",
+        "Nearly 60% of confirmed incidents were rated high or critical severity",
+        "The quantified breakdown appears in the full text, not on the arXiv abstract page"
+      ]
+    },
+    {
       "title": "Measuring AI agent autonomy in practice",
       "author": "Anthropic",
       "url": "https://www.anthropic.com/news/measuring-agent-autonomy",
@@ -162,6 +183,28 @@
         "'With frontier models, a 0% pass rate across many trials (i.e 0% pass@100) is most often a signal of a broken task, not an incapable agent'",
         "The initial 42% observation is Anthropic citing an external report; the diagnosis and the 95% re-run are Anthropic's own",
         "As a rule, we do not take eval scores at face value until someone digs into the details of the eval and reads some transcripts."
+      ]
+    },
+    {
+      "title": "CooperBench: Why Coding Agents Cannot be Your Teammates Yet",
+      "author": "Arpandeep Khatua, Hao Zhu, Peter Tran, Arya Prabhudesai, Frederic Sadrieh, Johann K. Lieberwirth, Xinkai Yu, Yicheng Fu, Michael J. Ryan, Jiaxin Pei, Diyi Yang (Stanford, SAP Labs)",
+      "url": "https://arxiv.org/abs/2601.13295",
+      "date": "Jan 19, 2026 (v1); revised Jan 26, 2026 (v2)",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Across 600+ collaborative coding tasks in 12 libraries and 4 languages, agents working together achieve on average 30% lower success rates than the same agents doing both tasks individually - the 'curse of coordination'. GPT-5 and Claude Sonnet 4.5 configurations reach only 25% under two-agent cooperation, roughly half the solo baseline. 77.3% of tasks have conflicting ground-truth solutions.",
+      "proves": "Without assigned file and interface ownership, parallel agents duplicate work and overwrite changes they believe will merge cleanly - the collision is the default outcome, not an edge case.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "Adding a messaging tool did not help: the difference between 'with comm' and 'no comm' settings is not statistically significant for task success, though it did reduce literal merge conflicts",
+        "The paper separates two problems: merge conflicts are spatial coordination (who edits which lines), while task success requires semantic coordination (what to implement, not just where)",
+        "Agents were given no pre-assigned file ownership and were free to redivide the features between themselves",
+        "Scope limit: no experimental arm tested pre-assigned ownership as a fix, so the benchmark diagnoses the problem without validating the cure"
       ]
     },
     {
@@ -727,6 +770,28 @@
       ]
     },
     {
+      "title": "How Coding Agents Fail Their Users: A Large-Scale Analysis of Developer-Agent Misalignment in 20,574 Real-World Sessions",
+      "author": "Ningzhi Tang, Chaoran Chen, Gelei Xu, Yiyu Shi, Yu Huang, Collin McMillan, Tao Dong, Toby Jia-Jun Li (Notre Dame, Vanderbilt, Google)",
+      "url": "https://arxiv.org/abs/2605.29442",
+      "date": "May 28, 2026",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Across 20,574 coding-agent sessions from 1,639 repositories, the most prevalent misalignment symptom is Developer Constraint Violation - defined as violating an explicit developer constraint - at 38.33% of episodes, with 73.68% of those attributed to instruction-following failure. The separate underspecification cause (C1) accounts for only 15.36%.",
+      "proves": "The dominant measured failure is agents breaking constraints developers already stated, not developers failing to state them - which is why sharpening prompt prose does not address the main failure mode.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "The symptom taxonomy is explicitly multi-label - 29.56% of episodes carry two labels and 0.54% carry three or more - so the seven shares deliberately do not sum to 100%",
+        "90.50% of episodes impose effort and trust costs rather than irreversible system damage, yet 91.49% of visible resolutions still require explicit user correction",
+        "Misalignment compounds across sessions: probability of misalignment in the next session is 0.519 after an affected session versus 0.336 otherwise",
+        "Constraint violation is markedly worse in CLI sessions (49.49%) than IDE sessions (32.26%)"
+      ]
+    },
+    {
       "title": "CR-Bench: Evaluating the Real-World Utility of AI Code Review Agents",
       "author": "Pereira, Sinha, Ghosh, Dutta (Nutanix, Inc.)",
       "url": "https://arxiv.org/abs/2603.11078",
@@ -849,6 +914,28 @@
       ]
     },
     {
+      "title": "Runtime-Structured Task Decomposition for Agentic Coding Systems",
+      "author": "Shubhi Asthana, Bing Zhang, Chad DeLuca, Hima Patel, Ruchi Mahindru (IBM Research)",
+      "url": "https://arxiv.org/abs/2605.15425",
+      "date": "May 14, 2026",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "On a Kubernetes root-cause-analysis workload, a decomposition fixed at design time with no runtime branching cost 1,632 +/- 145 tokens in retries versus 904 +/- 17 for a monolithic run - 80.5% worse. Runtime-structured decomposition with schema-validated handoffs cut retry cost to 436 +/- 132, a 51.7% reduction against monolithic and 73.2% against static.",
+      "proves": "Decomposition is not automatically a win. Splitting work without runtime isolation adds rerun surface area, because a failure anywhere forces re-execution of every downstream subtask.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "The mechanism is stated directly: 'fixed sequential execution must rerun all downstream subtasks from the point of failure'",
+        "Structuring is not free - the runtime-structured baseline run cost 2,716 +/- 424 tokens against 904 +/- 17 monolithic, so the trade only pays at a nonzero failure rate",
+        "Authors' limitation: both use cases are controlled scenarios at temperature 0 with low natural failure rates (0-2%), and token savings depend on deployment failure rates they did not measure at scale",
+        "Authors' limitation, load-bearing for this post: 'Decomposition policies are developer-authored and may not generalize to automatically derived graphs'"
+      ]
+    },
+    {
       "title": "The Illusion of Diminishing Returns: Measuring Long Horizon Execution in LLMs",
       "author": "Sinha, Arun, Goel, Staab, Geiping",
       "url": "https://arxiv.org/abs/2509.09677",
@@ -910,6 +997,26 @@
       ]
     },
     {
+      "title": "Are Delayed Issues Harder to Resolve? Revisiting Cost-to-Fix of Defects throughout the Lifecycle",
+      "author": "Tim Menzies, William Nichols, Forrest Shull, Lucas Layman (NC State, SEI-CMU, Fraunhofer CESE)",
+      "url": "https://arxiv.org/abs/1609.04886",
+      "date": "2016",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Across 171 software projects from 2006 to 2014: 'We found no evidence for the delayed issue effect; i.e. the effort to resolve issues in a later phase was not consistently or substantially greater than when issues were resolved soon after their introduction.'",
+      "proves": "The classic exponential cost-of-delay curve does not replicate, so the case for planning before an agent runs has to rest on measured agent failure rates rather than shift-left folklore.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "Requirements issues reaching system test showed roughly a 1.85x median resolution-time increase, against the 37-250x multipliers cited in the classic literature",
+        "Used in the post as an honesty move - it argues against a convenient cliche the author declined to use"
+      ]
+    },
+    {
       "title": "Agent READMEs: An Empirical Study of Context Files for Agentic Coding",
       "author": "Worawalan Chatlatanagulchai et al.",
       "url": "https://arxiv.org/abs/2511.12884",
@@ -928,6 +1035,25 @@
         "2,303 agent context files across 1,925 repositories",
         "Build and run commands: 62.3%, Implementation details: 69.9%, Architecture: 67.7%; Security: 14.5%, Performance: 14.5%",
         "These files are not static documentation but complex, difficult-to-read artifacts that evolve like configuration code"
+      ]
+    },
+    {
+      "title": "Compositional Skill Routing for LLM Agents: Decompose, Retrieve, and Compose",
+      "author": "Xueping Gao",
+      "url": "https://arxiv.org/abs/2606.18051",
+      "date": "Jun 16, 2026",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Across CompSkillBench - 300 compositional queries over 2,209 real MCP server skills spanning 24 categories - standard LLM decomposition reaches only 34.2% category recall at the step level, making decomposition quality the primary bottleneck.",
+      "proves": "Granularity is the hard part of decomposition and the part models are worst at, which is why the task graph is drawn by a human rather than delegated to the agent.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "Iterative Skill-Aware Decomposition raised decomposition accuracy from 51.0% to 67.7% (+32.7%, Wilcoxon p < 10^-6)"
       ]
     },
     {
@@ -1337,6 +1463,47 @@
       ]
     },
     {
+      "title": "Building multi-agent systems: When and how to use them",
+      "author": "Anthropic",
+      "url": "https://www.claude.com/blog/building-multi-agent-systems-when-and-how-to-use-them",
+      "date": "Jan 23, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "'Planning, implementation, and testing of the same feature share too much context' to split across agents, and 'Components requiring constant back-and-forth belong in the same agent.'",
+      "proves": "There are principled places not to cut the graph - shared context and high synchronization needs are the signals to keep work in one node.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "Used in the post as the 'where not to cut' check in the pricing list, a counterweight to over-decomposition"
+      ]
+    },
+    {
+      "title": "2026 Agentic Coding Trends Report",
+      "author": "Anthropic",
+      "url": "https://resources.anthropic.com/2026-agentic-coding-trends-report",
+      "date": "Jan 2026",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "'In 2026, the value of an engineer's contributions shifts to system architecture design, agent coordination, quality evaluation, and strategic problem decomposition.'",
+      "proves": "A frontier lab naming decomposition as a core emerging engineering skill - cited as Anthropic's position, not as independent evidence.",
+      "verification": "unreachable",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "The landing page returns 200 but is gated behind a form, and the PDF is not text-extractable, so the quote could not be re-confirmed against a live fetch on Aug 3, 2026; it was carried from a verified full 17-page read earlier the same session",
+        "PDF fallback surface: https://resources.anthropic.com/hubfs/2026%20Agentic%20Coding%20Trends%20Report.pdf",
+        "The widely circulated line 'the bottleneck is no longer writing code but clarity about what to build' does NOT appear anywhere in this report and is not cited in the post",
+        "Verified adjacent data from the same report: developers use AI in roughly 60% of their work but report being able to fully delegate only 0-20% of tasks"
+      ]
+    },
+    {
       "title": "Monitoring",
       "author": "Anthropic (Claude Code docs)",
       "url": "https://code.claude.com/docs/en/monitoring-usage",
@@ -1714,6 +1881,25 @@
       ]
     },
     {
+      "title": "Understanding Spec-Driven-Development: Kiro, spec-kit, and Tessl",
+      "author": "Birgitta Böckeler (martinfowler.com)",
+      "url": "https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html",
+      "date": "Oct 15, 2025",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "Spec-driven tooling applied to a small bug produced four user stories with sixteen acceptance criteria - a sledgehammer for a nut. 'All SDD approaches and definitions I've found are spec-first, but not all strive to be spec-anchored or spec-as-source.'",
+      "proves": "Over-specification is a real failure mode with a cost, which supplies the stop condition in the post's pricing checklist.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "The most authoritative non-vendor treatment of the spec-first / spec-anchored / spec-as-source distinction found in this research pass"
+      ]
+    },
+    {
       "title": "Agents Supersede the Reviewer, Not the Review",
       "author": "Blake Crosley",
       "url": "https://blakecrosley.com/blog/agents-supersede-the-reviewer",
@@ -1850,6 +2036,26 @@
       "secondary": []
     },
     {
+      "title": "Run parallel sessions with worktrees",
+      "author": "Claude Docs (Anthropic)",
+      "url": "https://code.claude.com/docs/en/worktrees",
+      "date": "living docs (fetched Aug 3, 2026; inline version markers v2.1.198-v2.1.212)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'Running each Claude Code session in its own worktree means edits in one session never touch files in another.' The docs distinguish mechanisms explicitly: worktrees 'isolate file edits, while subagents and agent teams coordinate the work itself.'",
+      "proves": "File-ownership isolation is a shipped, first-class product mechanism - the enforcement layer exists today.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "The page ships the enforcement mechanism but gives no guidance on how a human decides which files each session owns, and says nothing about what happens when two sessions need the same file - that absence is the gap the post addresses",
+        "Isolation is filesystem and branch level, not permission or prompt level: subagents take an 'isolation: worktree' frontmatter field, and Claude runs 'git worktree lock' while an agent is active"
+      ]
+    },
+    {
       "title": "AI Is Breaking Code Review: How Engineering Teams Survive the PR Bottleneck",
       "author": "Codacy",
       "url": "https://blog.codacy.com/ai-breaking-code-review-how-engineering-teams-survive-pr-bottleneck",
@@ -1892,6 +2098,26 @@
       ]
     },
     {
+      "title": "Agentic-Agile: Why Agent Development Needs Agile (Not Just Prompts)",
+      "author": "Daniel Epstein (Microsoft Developer Blog)",
+      "url": "https://developer.microsoft.com/blog/agentic-agile-why-agent-development-needs-agile-not-just-prompts",
+      "date": "May 19, 2026",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "Names the failure directly: 'No backlog: There is no structured list of what needs to be built, in what order, with what dependencies. Work gets discovered during implementation, not planned before it.' The prescribed fix is 'Specs in Backlog first: Every capability is an issue. Every issue has acceptance criteria.'",
+      "proves": "A named practitioner framing of the missing artifact this post builds - the dependency-ordered backlog that precedes any agent run.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "The article contains no numbers, percentages, or named studies - it is argumentative, and the post cites it as practitioner framing only, never as measurement",
+        "A widely circulated line about 'the hardest step ... assumed rather than solved' is from a reader comment by Rolf Kristensen, not from Epstein's article, and is not cited in this post"
+      ]
+    },
+    {
       "title": "How to evaluate AI code review tools: A practical framework",
       "author": "David Loker / CodeRabbit",
       "url": "https://www.coderabbit.ai/blog/framework-for-evaluating-ai-code-review-tools",
@@ -1911,6 +2137,23 @@
         "\"Review behavior changes—comments are skimmed, bulk‑dismissed, or ignored\" — same section",
         "\"You are no longer measuring how a tool performs in practice, but how reviewers cope with noise.\""
       ]
+    },
+    {
+      "title": "Spec-driven development with AI: Get started with a new open source toolkit",
+      "author": "Den Delimarsky (GitHub Blog)",
+      "url": "https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit",
+      "date": "Sep 2, 2025",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "'A vague prompt like “add photo sharing to my app” forces the model to guess at potentially thousands of unstated requirements.'",
+      "proves": "Frames the epic-shaped input problem the task graph exists to resolve.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": []
     },
     {
       "title": "AI Coding Agents Can Verify Some of Their Work Now. Here's What They Still Miss.",
@@ -2214,6 +2457,25 @@
       ]
     },
     {
+      "title": "Rise of the Agent Engineer: Why AI Evals Fail Before the Evaluation Begins",
+      "author": "Hamel Husain, interviewed by Sara Verdi (Arize)",
+      "url": "https://arize.com/blog/rise-of-the-ai-engineer-why-ai-evals-fail-before-the-evaluation-begins",
+      "date": "Jul 30, 2026",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "'A really common way that the model is not the problem is query disambiguation. The LLM doesn't have a chance because the user is asking a very ambiguous question.'",
+      "proves": "Ambiguity attaches to interface contracts, not just prose - an agent told to clean up an authentication service cannot know whether it may change the public API, add a dependency, touch the schema, or alter error behavior.",
+      "verification": "confirmed",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "Backs the semantic half of the post's two-edge model: a node needs an owned contract, not only an owned file glob"
+      ]
+    },
+    {
       "title": "The Build vs Buy Framework in the Age of AI",
       "author": "HatchWorks (Matt Paige)",
       "url": "https://hatchworks.com/blog/gen-ai/build-vs-buy-framework",
@@ -2332,6 +2594,26 @@
         "claude-md-context-hierarchy"
       ],
       "secondary": []
+    },
+    {
+      "title": "Vibe Coding: More Experiments, More Care",
+      "author": "Kent Beck (O'Reilly, 'Coding with AI: The End of Software Development As We Know It')",
+      "url": "https://www.oreilly.com/CodingwithAI",
+      "date": "session page, undated; underlying event May 8, 2025",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "'Augmented coding deprecates formerly leveraged skills such as language expertise. Augmented coding amplifies vision, strategy, task breakdown, and feedback loops.'",
+      "proves": "Task breakdown is an appreciating skill under agentic coding, not a depreciating one - which is the argument for naming an owner rather than letting it go unassigned.",
+      "verification": "partial",
+      "powers": [
+        "task-decomposition-for-ai-coding-agents"
+      ],
+      "secondary": [
+        "Quote confirmed verbatim on the O'Reilly session page, but the page carries no publication date; the event date is corroborated from independent announcements and O'Reilly Radar coverage",
+        "Beck's own newsletter does not carry this exact sentence; kentbeck.com has a near-identical paraphrase in a mutable homepage section, so the O'Reilly page is the only stable surface for the verbatim wording"
+      ]
     },
     {
       "title": "AI Agent Permissions and Entitlements: Enforcing Least-Privilege Access in Regulated Enterprises",
@@ -3128,18 +3410,20 @@
       "title": "Don't Build Multi-Agents",
       "author": "Walden Yan (Cognition)",
       "url": "https://cognition.com/blog/dont-build-multi-agents",
-      "date": "06.12.25",
+      "date": "Jun 12, 2025",
       "class": "practitioner",
       "pillars": [
         6
       ],
-      "stat": "Actions carry implicit decisions, and conflicting decisions carry bad results.",
-      "proves": "When a parallel split backfires it is conflicting implicit decisions between agents, not weak model quality, that causes it.",
+      "stat": "'Actions carry implicit decisions, and conflicting decisions carry bad results.' On the parallel-subagent failure: 'The actions subagent 1 took and the actions subagent 2 took were based on conflicting assumptions not prescribed upfront.'",
+      "proves": "The root cause of parallel-agent collision is assumptions that were never prescribed in advance - which is an argument for pre-assigned structure over runtime negotiation.",
       "verification": "confirmed",
       "powers": [
+        "task-decomposition-for-ai-coding-agents",
         "multi-agent-context-isolation"
       ],
       "secondary": [
+        "Cognition's April 2026 follow-up states that multi-agent systems work best when writes stay single-threaded and additional agents contribute intelligence rather than actions",
         "Share context, and share full agent traces, not just individual messages",
         "At the core of reliability is Context Engineering",
         "The simplest way to follow the principles is to just use a single-threaded linear agent"
