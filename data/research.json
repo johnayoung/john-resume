@@ -55,6 +55,25 @@
       ]
     },
     {
+      "title": "SWE-Bench+: Enhanced Coding Benchmark for LLMs",
+      "author": "Aleithan, Xue, Mohajer, Nnorom, Uddin, Wang",
+      "url": "https://arxiv.org/abs/2410.06992",
+      "date": "October 9, 2024",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "32.67% of successful SWE-bench patches involved solution leakage (the fix present in the issue report or comments) and 31.08% passed on weak tests; filtering both drops SWE-Agent+GPT-4's resolution rate from 12.47% to 3.97%.",
+      "proves": "A third of measured SWE-bench success was answer leakage, a concrete mechanism by which leaderboard scores inflate without capability.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "Over 94% of benchmark issues predate LLM knowledge cutoff dates"
+      ]
+    },
+    {
       "title": "What Breaks When LLMs Code? Characterizing Operational Safety Failures of Agentic Code Assistants",
       "author": "Alif Al Hasan, Sumon Biswas (Case Western Reserve University)",
       "url": "https://arxiv.org/abs/2605.30777",
@@ -140,49 +159,51 @@
       ]
     },
     {
-      "title": "Quantifying infrastructure noise in agentic coding evals",
-      "author": "Anthropic (Gian Segato)",
-      "url": "https://www.anthropic.com/engineering/infrastructure-noise",
-      "date": "Feb 5, 2026",
-      "class": "research-data",
-      "pillars": [
-        2
-      ],
-      "stat": "Infrastructure configuration can swing agentic coding benchmarks by several percentage points - sometimes more than the leaderboard gap between top models. The gap between most- and least-resourced setups on Terminal-Bench 2.0 was 6 percentage points (p < 0.01).",
-      "proves": "The controlled companion to the leaderboard spread: a frontier lab measuring, against its own interest, that the scaffold moves scores more than the model does.",
-      "verification": "confirmed",
-      "powers": [
-        "agent-harness-audit",
-        "evaluating-ai-coding-agent-output"
-      ],
-      "secondary": [
-        "A 2-point lead on a leaderboard might reflect a genuine capability difference, or it might reflect that one eval ran on beefier hardware, or even at a luckier time of day, or both.",
-        "Infra error rates dropped monotonically from 5.8% at strict enforcement to 0.5% uncapped",
-        "'The boundary between model capability and infrastructure behavior is blurrier than a single benchmark score suggests'",
-        "gap between the most- and least-resourced setups on Terminal-Bench 2.0 was 6 percentage points (p < 0.01)"
-      ]
-    },
-    {
       "title": "Demystifying evals for AI agents",
-      "author": "Anthropic (Grace, Hadfield, Olivares, De Jonghe)",
+      "author": "Anthropic Engineering",
       "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
-      "date": "Jan 9, 2026",
+      "date": "January 9, 2026",
       "class": "research-data",
       "pillars": [
         3
       ],
-      "stat": "Opus 4.5 initially scored 42% on CORE-Bench; after fixing grading bugs and using a less constrained scaffold, the same model's score jumped to 95%.",
-      "proves": "A 53-point swing on a fixed model attributable entirely to scaffolding and grading - capability was never the variable.",
+      "stat": "Teams delay building evals thinking they need hundreds of tasks; in reality 20-50 simple tasks drawn from real failures is a great start, structured by task/trial/outcome vocabulary.",
+      "proves": "A working internal agent eval suite is a 20-50 task project, not an infrastructure program - removing the main excuse for deciding from public leaderboards instead.",
       "verification": "confirmed",
       "powers": [
+        "coding-agent-leaderboard-noise",
         "agent-harness-audit",
         "evaluating-ai-coding-agent-output"
       ],
       "secondary": [
+        "Opus 4.5 initially scored 42% on CORE-Bench; after fixing grading bugs and using a less constrained scaffold, the same model's score jumped to 95%.",
         "So as not to unnecessarily punish creativity, it's often better to grade what the agent produced, not the path it took.",
         "'With frontier models, a 0% pass rate across many trials (i.e 0% pass@100) is most often a signal of a broken task, not an incapable agent'",
-        "The initial 42% observation is Anthropic citing an external report; the diagnosis and the 95% re-run are Anthropic's own",
-        "As a rule, we do not take eval scores at face value until someone digs into the details of the eval and reads some transcripts."
+        "The initial 42% observation is Anthropic citing an external report; the diagnosis and the 95% re-run are Anthropic's own"
+      ]
+    },
+    {
+      "title": "Quantifying infrastructure noise in agentic coding evals",
+      "author": "Anthropic Engineering",
+      "url": "https://www.anthropic.com/engineering/infrastructure-noise",
+      "date": "February 5, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "In internal experiments spanning six compute-resource configurations on GKE with model, harness, and task set held fixed, the gap between the most- and least-resourced setups on Terminal-Bench 2.0 was 6 percentage points (p < 0.01); infrastructure error rates fell from 5.8% under strict 1x enforcement to 2.1% at 3x headroom and 0.5% uncapped.",
+      "proves": "Infrastructure configuration alone produces score differences exceeding the few-point margins that separate top leaderboard entries, so cross-infrastructure leaderboard comparisons are not decision-grade evidence for a model swap.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise",
+        "agent-harness-audit",
+        "evaluating-ai-coding-agent-output"
+      ],
+      "secondary": [
+        "Infrastructure configuration can swing agentic coding benchmarks by several percentage points - sometimes more than the leaderboard gap between top models. The gap between most- and least-resourced setups on Terminal-Bench 2.0 was 6 percentage points (p < 0.01).",
+        "A 2-point lead on a leaderboard might reflect a genuine capability difference, or it might reflect that one eval ran on beefier hardware, or even at a luckier time of day, or both.",
+        "Top leaderboard spots are often separated by just a few percentage points, per the post's own framing",
+        "Resource headroom is an eval-infrastructure design requirement: error rate falls an order of magnitude from strict to uncapped provisioning"
       ]
     },
     {
@@ -339,13 +360,49 @@
       "proves": "Every major agent benchmark can be gamed to near-perfect scores without solving anything, so self-reported benchmark performance is structurally untrustworthy.",
       "verification": "confirmed",
       "powers": [
-        "evaluating-ai-coding-agent-output"
+        "evaluating-ai-coding-agent-output",
+        "coding-agent-leaderboard-noise"
       ],
       "secondary": [
+        "Every one of eight major AI agent benchmarks audited can be exploited to near-perfect scores without solving a single task - including 100% on SWE-bench Verified via a 10-line conftest.py that hooks pytest and rewrites every test result to passed.",
         "A conftest.py file with 10 lines of Python 'resolves' every instance on SWE-bench Verified.",
         "SWE-bench Verified (500 tasks) — 100% score via pytest hooks",
         "Benchmark scores are actively being gamed, inflated, or rendered meaningless, not in theory, but in practice."
       ]
+    },
+    {
+      "title": "Rank Intervals for Leaderboards: A Hierarchical Framework for Model Evaluation",
+      "author": "Bitya Neuhof, Yuval Benjamini",
+      "url": "https://arxiv.org/abs/2606.08679",
+      "date": "June 7, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Applying rank confidence intervals to MMLU abstract-algebra rankings, the authors conclude the observed ranking cannot be trusted and all models are statistically interchangeable.",
+      "proves": "Once uncertainty is displayed, observed leaderboard orderings among top models frequently collapse into statistical ties.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": []
+    },
+    {
+      "title": "Quantifying Ranking Uncertainty in LLM Benchmarks",
+      "author": "Bitya Neuhof, Yuval Benjamini",
+      "url": "https://arxiv.org/abs/2607.16259",
+      "date": "June 28, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "On MMLU (57 subjects), three distinct models can be ranked as the fourth from the top - statistically consistent with the same rank position - with uncertainty driven more by between-subject variability than prompt variants.",
+      "proves": "Leaderboard ranks published as single values hide that several models are often statistically tied for the same position.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": []
     },
     {
       "title": "Why Do Multi-Agent LLM Systems Fail?",
@@ -489,6 +546,26 @@
       "secondary": []
     },
     {
+      "title": "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations",
+      "author": "Evan Miller (Anthropic)",
+      "url": "https://arxiv.org/abs/2411.00640",
+      "date": "November 1, 2024",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Clustered standard errors on public evals can be over 3X larger than naive standard errors, and detecting an absolute score difference of 0.03 at 80% power requires an eval of at least ~969 independent questions.",
+      "proves": "Most reported model-to-model benchmark gaps are narrower than honestly computed confidence intervals - the statistical foundation for treating small leaderboard gaps as ties.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "The same pair of models can differ significantly on one benchmark (MATH) and not on others (HumanEval, MGSM) in the paper's worked example",
+        "The Llama 3 paper's reported confidence intervals are judged likely anti-conservative (too narrow)"
+      ]
+    },
+    {
       "title": "The hidden cost of AI code quality: Why senior engineers are paying the price",
       "author": "Faros AI (Naomi Lurie)",
       "url": "https://www.faros.ai/blog/ai-code-quality-senior-engineer-review-burden",
@@ -551,6 +628,25 @@
       ]
     },
     {
+      "title": "What skills does SWE-bench Verified evaluate?",
+      "author": "Florian Brand, Jean-Stanislas Denain (Epoch AI)",
+      "url": "https://epoch.ai/publications/what-skills-does-swe-bench-verified-evaluate",
+      "date": "June 13, 2025",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "A good scaffold can increase SWE-bench Verified performance by up to 20%, so scores reflect the sophistication of the scaffold as much as the capability of the underlying model.",
+      "proves": "Scaffold quality is a confound baked into every SWE-bench Verified score - the leaderboard measures a model-plus-scaffold system.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "Concrete scaffold example: SWE-Agent's 100-line file viewer, linter-integrated edit tool, and custom directory search"
+      ]
+    },
+    {
       "title": "AI Copilot Code Quality: 2025 Data Suggests 4x Growth in Code Clones",
       "author": "GitClear",
       "url": "https://www.gitclear.com/ai_assistant_code_quality_2025_research",
@@ -592,6 +688,25 @@
       ]
     },
     {
+      "title": "SWE-Doctor: Guiding Software Engineering Agents with Runtime Diagnosis from Multi-Faceted Bug Reproduction Tests",
+      "author": "Guo, Liu, Zhang, Ma, Lou, Chen",
+      "url": "https://arxiv.org/abs/2607.00990",
+      "date": "July 1, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Across five runs, run-to-run standard deviations were 2.0 percentage points for SWE-Doctor (the most stable agent), 2.2 for mini-SWE-agent, and 3.4 for live-SWE-agent; SWE-Doctor's Pass@5 was 70.0% against All@5 of 40.0%.",
+      "proves": "Even the most stable SWE-bench-family agents swing multiple percentage points between identical runs - variance comparable to the gaps separating leaderboard leaders.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "The 30-point spread between Pass@5 (solves at least once) and All@5 (solves every time) is its own nondeterminism exhibit"
+      ]
+    },
+    {
       "title": "When Agents Fail to Act: A Diagnostic Framework for Tool Invocation Reliability in Multi-Agent LLM Systems",
       "author": "Huang et al. (arXiv)",
       "url": "https://arxiv.org/abs/2601.16280",
@@ -610,6 +725,25 @@
         "1,980 deterministic test instances",
         "12-category error taxonomy capturing failure modes across tool initialization, parameter handling, execution, and result interpretation",
         "Mid-sized models (qwen2.5:14b) offer practical accuracy-efficiency trade-offs on commodity hardware (96.6% success rate, 7.3 s latency)"
+      ]
+    },
+    {
+      "title": "Scaffold Effects on GAIA: A Controlled Comparison",
+      "author": "Jason Starace",
+      "url": "https://arxiv.org/abs/2606.08529",
+      "date": "June 7, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Under controlled, pre-registered conditions, scaffold choice alone moves a single model's measured accuracy by up to 28 percentage points (Claude Opus, GAIA Level 2: Planner-Actor-Rater 84% vs ReAct 56%).",
+      "proves": "Published agent capability scores conflate what a model can do with what its scaffold lets it do, at magnitudes far exceeding typical inter-model leaderboard gaps.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "The paper's citation of Pimpale et al.'s 33% vs 62.2% Sonnet 3.5 elicitation split is chain-of-citation only - not independently verified against Pimpale's own text"
       ]
     },
     {
@@ -747,6 +881,25 @@
       ]
     },
     {
+      "title": "Details about METR's evaluation of OpenAI GPT-5",
+      "author": "METR",
+      "url": "https://metr.org/evaluations/gpt-5-report",
+      "date": "August 7, 2025",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "METR's headline 50%-time-horizon estimate of ~2h17m carries a 95% CI of 65 minutes to 4h25m, and of 28 tasks with zero successes in 6 runs, roughly 25-35% of failures were estimated possibly spurious or infrastructure-related.",
+      "proves": "Even a dedicated evaluator's headline capability metric carries hours-wide uncertainty, much of it from task-set resampling and infrastructure rather than capability.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "Uncertainty across measurements is highly correlated because it largely comes from resampling the task set"
+      ]
+    },
+    {
       "title": "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity",
       "author": "METR (Becker, Rush, Barnes, Rein)",
       "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study",
@@ -813,6 +966,23 @@
       ]
     },
     {
+      "title": "Forecasting Frontier Language Model Agent Capabilities",
+      "author": "Pimpale, Hojmark, Scheurer, Hobbhahn",
+      "url": "https://arxiv.org/abs/2502.15850",
+      "date": "February 21, 2025",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "The paper forecasts that by early 2026, low-elicitation non-specialized LM agents reach 54% on SWE-Bench Verified while state-of-the-art-elicitation agents reach 87% - a 33-point gap attributable to elicitation level alone.",
+      "proves": "The forecasting literature treats elicitation/scaffold quality as a first-class capability axis separate from the model.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": []
+    },
+    {
       "title": "Context Discipline and Performance Correlation: Analyzing LLM Performance and Quality Degradation Under Varying Context Lengths",
       "author": "Ponnusamy, Chandran, Hossain",
       "url": "https://arxiv.org/abs/2601.11564",
@@ -874,6 +1044,23 @@
       ]
     },
     {
+      "title": "The SWE-Bench Illusion: When State-of-the-Art LLMs Remember Instead of Reason",
+      "author": "Shanchao Liang, Spandan Garg, Roshanak Zilouchian Moghaddam",
+      "url": "https://arxiv.org/abs/2506.12286",
+      "date": "June 14, 2025",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "State-of-the-art models identify buggy file paths from issue descriptions alone - no repository access - at up to 76% accuracy on SWE-Bench repositories but only up to 53% on repositories outside the benchmark; consecutive 5-gram verbatim similarity runs up to 35% on SWE-Bench Verified/Full versus 18% elsewhere.",
+      "proves": "SWE-bench performance gains are partially memorization of the benchmark's repositories, so the score measures training exposure as well as coding skill.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": []
+    },
+    {
       "title": "MIT report: 95% of generative AI pilots at companies are failing",
       "author": "Sheryl Estrada (Fortune)",
       "url": "https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo",
@@ -893,6 +1080,23 @@
         "about 5% of AI pilot programs achieve rapid revenue acceleration",
         "150 interviews with leaders, a survey of 350 employees, and an analysis of 300 public AI deployments"
       ]
+    },
+    {
+      "title": "SaaS-Bench: Can Computer-Use Agents Leverage Real-World SaaS to Solve Professional Workflows?",
+      "author": "Shi et al.",
+      "url": "https://arxiv.org/abs/2605.15777",
+      "date": "May 24, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Claude Sonnet 4.6 evaluated three times on the same HR-grievance workflow scored 0.000, 0.214, and 0.679 - a range the authors call a qualitative, not merely quantitative, difference.",
+      "proves": "Single-task agent nondeterminism can dwarf any leaderboard rank gap - an illustrative extreme, not a benchmark-wide average.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": []
     },
     {
       "title": "Large Language Models Can Be Easily Distracted by Irrelevant Context",
@@ -933,6 +1137,26 @@
         "Structuring is not free - the runtime-structured baseline run cost 2,716 +/- 424 tokens against 904 +/- 17 monolithic, so the trade only pays at a nonzero failure rate",
         "Authors' limitation: both use cases are controlled scenarios at temperature 0 with low natural failure rates (0-2%), and token savings depend on deployment failure rates they did not measure at scale",
         "Authors' limitation, load-bearing for this post: 'Decomposition policies are developer-authored and may not generalize to automatically derived graphs'"
+      ]
+    },
+    {
+      "title": "The Leaderboard Illusion",
+      "author": "Singh, Nan, Wang, D'Souza, Kapoor, Ustun, Koyejo, Deng, Longpre, Smith, Ermis, Fadaee, Hooker",
+      "url": "https://arxiv.org/abs/2504.20879",
+      "date": "April 29, 2025",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "The authors identify 27 private LLM variants tested by Meta on Chatbot Arena in the lead-up to the Llama-4 release, with undisclosed private testing letting providers test multiple variants and publish only the best score.",
+      "proves": "Public leaderboards are gameable by labs through selective disclosure, biasing the ranking independent of any measurement noise.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "LMArena publicly disputed several of the paper's framings and calculations at https://news.lmarena.ai/our-response/ - cite alongside for balance",
+        "Estimated arena data share: Google 19.2% and OpenAI 20.4%, versus 29.7% combined for 83 open-weight models"
       ]
     },
     {
@@ -1017,6 +1241,23 @@
       ]
     },
     {
+      "title": "Do Androids Dream of Breaking the Game? Systematically Auditing AI Agent Benchmarks with BenchJack",
+      "author": "Wang, Li, Mang, Cheung, Sen, Song",
+      "url": "https://arxiv.org/abs/2605.12673",
+      "date": "May 12, 2026",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Systematic auditing found 219 distinct flaws across eight flaw classes in major agent benchmarks; patching reduced the hackable-task ratio from near 100% to under 10% across four benchmarks.",
+      "proves": "Benchmark exploitability is a design-flaw problem, not just a contamination problem - the academic backbone for the RDI exploit findings.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": []
+    },
+    {
       "title": "Agent READMEs: An Empirical Study of Context Files for Agentic Coding",
       "author": "Worawalan Chatlatanagulchai et al.",
       "url": "https://arxiv.org/abs/2511.12884",
@@ -1054,6 +1295,26 @@
       ],
       "secondary": [
         "Iterative Skill-Aware Decomposition raised decomposition accuracy from 51.0% to 67.7% (+32.7%, Wilcoxon p < 10^-6)"
+      ]
+    },
+    {
+      "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+      "author": "Yang et al. (NeurIPS 2024)",
+      "url": "https://arxiv.org/abs/2405.15793",
+      "date": "May 6, 2024 (v3 November 11, 2024)",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "SWE-agent solves 10.7 percentage points more issues than the baseline agent that uses just the default Linux shell (300-issue ablation); on SWE-bench Lite, SWE-agent with GPT-4 Turbo resolves 18.00% versus 11.00% for the shell-only agent with the same model.",
+      "proves": "Agent-computer interface design alone moves resolve rates by double digits with the model held fixed - the founding demonstration of the scaffold confound.",
+      "verification": "partial",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "Verification is partial because arXiv HTML routes 404 and the PDF required reader-proxy extraction; figures converged across three independent extraction passes",
+        "Citation caution: the paper's verbatim 10.7pp sentence arithmetically pairs with the 7.33% no-demonstration shell baseline, not the 11.00% row - quote the sentence or the 18.00/11.00 pair, never 10.7 with 11.00"
       ]
     },
     {
@@ -1096,6 +1357,26 @@
         "On average, its refusal rate increased from 0.767 to 0.828, while the hallucination rate decreased from 0.128 to 0.083.",
         "anchoring the retrieval process in logical queries substantially reduces hallucinations in generated responses.",
         "matches a strong agentic hybrid baseline, while substantially reducing construction and serving cost"
+      ]
+    },
+    {
+      "title": "Stop Comparing LLM Agents Without Disclosing the Harness",
+      "author": "Zhang et al.",
+      "url": "https://arxiv.org/abs/2605.23950",
+      "date": "May 7, 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "In a controlled 3x3 factorial experiment, average harness variance is 18.48 pp-squared versus average model variance of 2.37 pp-squared - a 7.80x ratio - and public leaderboards show harness-only swings of 7.3pp (Terminal-Bench 2), 9.5pp (SWE-bench Pro, same Opus 4.5), up to 15pp (SWE-bench Verified), and 34-48pp cross-scaffold gaps on the HAL Leaderboard.",
+      "proves": "Performance variance is governed more by harness configuration than model choice, so evaluation protocols without harness disclosure systematically misattribute harness gains to model improvements.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "The same model under a different harness can rank above or below a competitor - rank order itself is harness-dependent",
+        "The paper proposes a harness-aware evaluation framework with a disclosure standard and variance decomposition protocol"
       ]
     },
     {
@@ -1277,6 +1558,25 @@
       ],
       "secondary": [
         "For example, at time of writing the main OpenAI repo has 88 AGENTS.md files."
+      ]
+    },
+    {
+      "title": "Code editing leaderboard",
+      "author": "Aider (Paul Gauthier)",
+      "url": "https://aider.chat/docs/leaderboards/edit.html",
+      "date": "continuously updated (fetched August 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "The same model's code-editing score moves ~10 points by edit format alone: gemini-exp-1206 scores 80.5% in whole format versus 69.2% in diff format; o1-mini 70.7% versus 61.1%.",
+      "proves": "A live, reproducible public leaderboard shows the harness's edit protocol moving scores by roughly the same magnitude as top-of-table model gaps.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "Live page - re-pull current figures before quoting in new work"
       ]
     },
     {
@@ -1777,6 +2077,25 @@
         "Enterprise Analytics cost granularity: \"per-user and organization-level token usage and cost over time (usage-based Enterprise plans)\" — NOT per-request.",
         "Cost data freshness: \"Data is typically available within four hours of the underlying usage but may take up to 24 hours.\"",
         "\"Daily Claude Code metrics per user: sessions, lines of code, commits, pull requests, tool acceptance, and estimated cost by model\""
+      ]
+    },
+    {
+      "title": "An update on recent Claude Code quality reports",
+      "author": "Anthropic Engineering",
+      "url": "https://www.anthropic.com/engineering/april-23-postmortem",
+      "date": "April 23, 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "A production coding-agent quality regression traced to a reasoning-effort default change, a caching bug, and one system-prompt addition; one internal eval showed a 3% drop for both Opus 4.6 and 4.7, and Anthropic committed to running a broad suite of per-model evals for every system prompt change.",
+      "proves": "A named lab now gates every change to its coding agent behind per-model internal evals - the swap-as-production-change discipline practiced at the source.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "Non-model changes (runtime config, caching) produced user-visible quality regressions - runtime configuration is a quality variable independent of the model"
       ]
     },
     {
@@ -2281,6 +2600,23 @@
       ]
     },
     {
+      "title": "About | Benchmarking",
+      "author": "Epoch AI",
+      "url": "https://epoch.ai/benchmarks/about",
+      "date": "undated (live methodology page)",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Epoch AI runs most models 16 times on GPQA Diamond and Mock AIME and 8 times on MATH Level 5, displaying plus/minus one standard error following Miller's arXiv:2411.00640 methodology.",
+      "proves": "A reputable third-party evaluator treats single-run benchmark scores as insufficient and re-runs models many times specifically to bound noise.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": []
+    },
+    {
       "title": "Ralph Wiggum as a \"software engineer\"",
       "author": "Geoffrey Huntley",
       "url": "https://ghuntley.com/ralph",
@@ -2392,6 +2728,25 @@
       ]
     },
     {
+      "title": "Your model upgrade just broke your agent's safety",
+      "author": "Guangshuo Zang (Promptfoo)",
+      "url": "https://www.promptfoo.dev/blog/model-upgrades-break-agent-safety",
+      "date": "December 8, 2025",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "After a GPT-4o to GPT-4.1 upgrade, an agent's prompt-injection resistance dropped from 94% to 71% on the vendor's eval harness.",
+      "proves": "Model swaps silently regress agent behavior on dimensions no public leaderboard measures - run your own tests on your own data; third-party numbers are a starting point, not a finish line.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "Authority caveat: commercial eval-tooling vendor with a named staff-engineer author and a falsifiable data point - cited with attribution, not as neutral research"
+      ]
+    },
+    {
       "title": "MCP Tool Design: Why Your AI Agent Is Failing (And How to Fix It)",
       "author": "Guy (AWS Heroes) / DEV Community",
       "url": "https://dev.to/aws-heroes/mcp-tool-design-why-your-ai-agent-is-failing-and-how-to-fix-it-40fc",
@@ -2436,6 +2791,23 @@
       ]
     },
     {
+      "title": "Your AI Product Needs Evals",
+      "author": "Hamel Husain",
+      "url": "https://hamel.dev/blog/posts/evals/index.html",
+      "date": "March 29, 2024",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Qualitative case study (Rechat/Lucy): performance plateaued under generic evaluation frameworks until a problem-specific evaluation system replaced them.",
+      "proves": "Generic evaluation frameworks do not transfer to a specific workload - create an evaluation system specific to your problem.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": []
+    },
+    {
       "title": "LLM Evals: Everything You Need to Know",
       "author": "Hamel Husain and Shreya Shankar",
       "url": "https://hamel.dev/blog/posts/evals-faq",
@@ -2448,9 +2820,11 @@
       "proves": "Evals should be derived from error analysis of real traces, because good scores on generic metrics don't mean the system works.",
       "verification": "confirmed",
       "powers": [
-        "evaluating-ai-coding-agent-output"
+        "evaluating-ai-coding-agent-output",
+        "coding-agent-leaderboard-noise"
       ],
       "secondary": [
+        "On model switching: do not treat switching model as the main axis of improvement without evidence - does error analysis suggest the model is the problem?",
         "Error analysis helps you decide what evals to write in the first place. It allows you to identify failure modes unique to your application and data.",
         "Spend 60-80% of our development time on error analysis and evaluation",
         "Binary evaluations force clearer thinking and more consistent labeling. Likert scales introduce significant challenges."
@@ -2846,6 +3220,25 @@
       ]
     },
     {
+      "title": "Guidelines for capability elicitation",
+      "author": "METR",
+      "url": "https://metr.org/blog/2024-03-15-guidelines-for-capability-elicitation",
+      "date": "March 15, 2024",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "METR's protocol requires models be provided the best available scaffolding and tooling because it is hard to upper-bound what might be possible with clever prompting and tooling.",
+      "proves": "The eval-methodology establishment treats scaffolding quality as a confound that must be standardized before capability claims are comparable.",
+      "verification": "confirmed",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "METR's elicitation-gap data page was unreachable (redirect stub) - its numbers are not cited"
+      ]
+    },
+    {
       "title": "Harness engineering: leveraging Codex in an agent-first world",
       "author": "OpenAI",
       "url": "https://openai.com/index/harness-engineering",
@@ -2865,6 +3258,44 @@
         "Page carries no byline and no publication date - attribute to OpenAI, not to an individual",
         "Its 'boundaries' are architectural layer-dependency lint rules inside the application codebase, not harness control surfaces",
         "Posture cuts against gates: 'The repository operates with minimal blocking merge gates'"
+      ]
+    },
+    {
+      "title": "Why SWE-bench Verified no longer measures frontier coding capabilities",
+      "author": "OpenAI",
+      "url": "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified",
+      "date": "circa February 23, 2026 (date not visible on page)",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "OpenAI's audit found at least 59.4% of audited problems have flawed test cases that reject functionally correct submissions (35.5% overly strict tests, 18.8% out-of-scope checks), and all frontier models tested could reproduce the original human-written bug fix.",
+      "proves": "The benchmark's own creator retracted it: score gains (74.9% to 80.9% in six months) no longer reflect real-world software development ability.",
+      "verification": "partial",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "Verification is partial because openai.com blocks automated fetches (HTTP 403); content was retrieved via reader proxy and cross-checked against independent snippets, and the publication date is inferred from third-party citation"
+      ]
+    },
+    {
+      "title": "Introducing SWE-bench Verified",
+      "author": "OpenAI",
+      "url": "https://openai.com/index/introducing-swe-bench-verified",
+      "date": "August 2024 (page updated February 24, 2025)",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Human screening of 1,699 SWE-bench samples flagged 38.3% for underspecified problem statements and 61.1% for unit tests that may unfairly mark valid solutions incorrect; 68.3% of samples were filtered out to produce the 500-task Verified set.",
+      "proves": "The majority of original SWE-bench tasks were broken or underspecified before later contamination concerns - the earliest documented data-quality failure in the benchmark's lineage.",
+      "verification": "partial",
+      "powers": [
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "Verification is partial because openai.com blocks automated fetches (HTTP 403); content retrieved via reader proxy"
       ]
     },
     {
