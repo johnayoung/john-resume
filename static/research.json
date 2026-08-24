@@ -161,18 +161,20 @@
       "date": "June 13, 2025",
       "class": "research-data",
       "pillars": [
-        6
+        2
       ],
-      "stat": "Subagents facilitate compression by operating in parallel with their own context windows, exploring different aspects of the question simultaneously before condensing the most important tokens for the lead research agent.",
-      "proves": "Subagents earn their place by isolating and compressing context — separate windows, not raw speed, are the reason to split.",
+      "stat": "A four-field delegation spec for every subagent: an objective, an output format, guidance on the tools and sources to use, and clear task boundaries. Without it, one subagent explored the 2021 automotive chip crisis while two others duplicated work on 2025 supply chains. Agents use about 4x more tokens than chat interactions; multi-agent systems about 15x.",
+      "proves": "Every edge in an agent graph needs an explicit specification, and the failure mode of an underspecified edge is duplicated and misaligned work rather than a visible error.",
       "verification": "confirmed",
       "powers": [
+        "agent-architecture-review-capacity",
         "multi-agent-context-isolation"
       ],
       "secondary": [
-        "agents typically use about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats",
-        "some domains that require all agents to share the same context or involve many dependencies between agents are not a good fit for multi-agent systems today",
-        "token usage by itself explains 80% of the variance"
+        "Subagents facilitate compression by operating in parallel with their own context windows, exploring different aspects of the question simultaneously before condensing the most important tokens for the lead research agent.",
+        "Coding-specific bound, time-indexed to June 2025: 'most coding tasks involve fewer truly parallelizable tasks than research, and LLM agents are not yet great at coordinating and delegating to other agents in real time.'",
+        "The 15x and 4x multiples are both baselined against chat interactions, not against single-agent search - not interchangeable with the 3-10x figure from Anthropic's January 2026 post.",
+        "Anthropic never describes the spec as a contract, interface, or reviewable artifact."
       ]
     },
     {
@@ -244,6 +246,27 @@
         "A 2-point lead on a leaderboard might reflect a genuine capability difference, or it might reflect that one eval ran on beefier hardware, or even at a luckier time of day, or both.",
         "Top leaderboard spots are often separated by just a few percentage points, per the post's own framing",
         "Resource headroom is an eval-infrastructure design requirement: error rate falls an order of magnitude from strict to uncapped provisioning"
+      ]
+    },
+    {
+      "title": "Patterns and problems in emerging multiagent systems",
+      "author": "Anthropic Frontier Red Team",
+      "url": "https://www.anthropic.com/research/multiagent-systems",
+      "date": "August 13, 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "In a shared-repository run, 18 out of 30 agents created a git branch with the identical name 'mvp-game-loop'. A job-market coordination attempt produced 2.4 million job requests against 117 accepted jobs. On hidden-profile tasks, groups scored 17-36% against solo ceilings near 100%. In a coordinated vulnerability hunt, agents found 266 vulnerabilities versus 21 in a solo 6.5-million-token run, with only 12 in common.",
+      "proves": "Coordination failures in multi-agent systems are properties of the arrangement rather than of model capability, and they show up first in ordinary coding artifacts: colliding branch names, conflicting pull requests, and duplicated work.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "Structure determines behavior directly: given a private back-channel, agents began colluding almost immediately.",
+        "Correlated failure across a fleet: when one agent makes a bad decision, many agents are likely to make the same one.",
+        "The words 'checkpoint', 'approval', 'topology', 'graph' and 'architecture' do not appear anywhere in the piece; human intervention appears only as a fallback."
       ]
     },
     {
@@ -548,6 +571,27 @@
         "Threshold decay: \"Performance remains stable until a threshold, then transitions to a different (steeper) degradation slope\" — exhibited by gemini-2.5-pro, o3",
         "Primacy effects display an interesting pattern across all models: they start low at minimal instruction densities indicating almost no bias for earlier instructions, peak around 150–200 instructions",
         "Analysis reveals model size and reasoning capability to correlate with 3 distinct performance degradation patterns, bias towards earlier instructions, and distinct categories of instruction-following errors."
+      ]
+    },
+    {
+      "title": "Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets",
+      "author": "Dat Tran, Douwe Kiela",
+      "url": "https://arxiv.org/abs/2604.02460",
+      "date": "April 2, 2026 (v2: April 11, 2026)",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Across two datasets (FRAMES, MuSiQue), three model families (Qwen3, DeepSeek, Gemini) and five multi-agent architectures (Sequential, Debate, Ensemble, Parallel-roles, Subtask-parallel), single-agent systems match or outperform multi-agent systems when reasoning tokens are held constant. Thinking-token budgets tested at 100, 500, 1k, 2k, 5k and 10k.",
+      "proves": "Many reported multi-agent advantages are better explained by unaccounted computation and context effects than by any inherent architectural benefit, so an edge's apparent gain has to be re-measured with compute held equal before it is kept.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "The paper carves out a regime where multi-agent wins: in sufficiently degraded-context regimes, structured pipelines 'may occasionally surpass SAS by imposing useful factorization, filtering, or verification structure'.",
+        "Explicitly scoped out of tool-using settings: 'We focus on text-only multi-hop reasoning; MAS advantages with tools/vision or safety constraints are out of scope.' Coding agents are tool-using, so this is indirect evidence for coding.",
+        "Non-peer-reviewed preprint."
       ]
     },
     {
@@ -1649,23 +1693,25 @@
     },
     {
       "title": "Towards a Science of Scaling Agent Systems",
-      "author": "Yubin Kim, Ken Gu, Chanwoo Park, et al. (MIT / Google)",
+      "author": "Yubin Kim, Ken Gu, Chanwoo Park, Chunjong Park, Samuel Schmidgall, et al. (Google Research / MIT Media Lab / DeepMind)",
       "url": "https://arxiv.org/abs/2512.08296",
-      "date": "Submitted 9 Dec 2025",
+      "date": "December 9, 2025 (v3: April 8, 2026)",
       "class": "research-data",
       "pillars": [
-        6
+        2
       ],
-      "stat": "Relative performance change compared to single-agent baseline ranges from +80.8% on decomposable financial reasoning to -70.0% on sequential planning, demonstrating that architecture-task alignment determines collaborative success.",
-      "proves": "Whether a multi-agent split helps or hurts is decided by task decomposability — decomposable tasks gain sharply, sequential ones degrade sharply.",
+      "stat": "260 configurations across six agentic benchmarks, five canonical architectures (Single-Agent plus Independent, Centralized, Decentralized, Hybrid) and three LLM families, with tools, prompts and compute standardized to isolate architectural effects. On SWE-bench Verified every multi-agent architecture underperformed the single-agent baseline (mean 0.522): Hybrid -2.1%, Centralized -3.1%, Decentralized -5.4%, Independent -14.9%, on 20-instance subsets. Agent count was not a significant predictor (log(1+n_a): beta=0.040, 95% CI [-0.074, 0.155], p=0.487). Capability ceiling beta=-0.236, p=0.004. Cross-validated R^2=0.373.",
+      "proves": "The shape of an agent system, not the number of agents in it, determines whether collaboration helps; and on coding work specifically every multi-agent arrangement tested lost to a single agent.",
       "verification": "confirmed",
       "powers": [
+        "agent-architecture-review-capacity",
         "multi-agent-context-isolation"
       ],
       "secondary": [
-        "Across 260 configurations spanning six agentic benchmarks, five canonical architectures (Single-Agent and four Multi-Agent: Independent, Centralized, Decentralized, Hybrid), and three LLM families",
-        "The framework identifies the best-performing architecture for 87% of held-out configurations",
-        "architectures without centralized verification tend to propagate errors more than those with centralized coordination"
+        "Relative performance change compared to single-agent baseline ranges from +80.8% on decomposable financial reasoning to -70.0% on sequential planning, demonstrating that architecture-task alignment determines collaborative success.",
+        "The headline range quoted from the abstract (+80.8% to -70.0%) spans two different architectures on two different tasks: +80.8% is Centralized on Finance Agent, -70.0% is Independent on PlanCraft. Holding Centralized fixed, the pair is +80.8% / -50.3%.",
+        "Architectures without centralized verification propagate errors more than centrally coordinated ones.",
+        "Cite arXiv v3; Google's blog post describes an earlier 180-configuration, four-benchmark version."
       ]
     },
     {
@@ -1800,18 +1846,20 @@
       "date": "March 26, 2026",
       "class": "practitioner",
       "pillars": [
-        6
+        2
       ],
-      "stat": "Three to five teammates is the sweet spot. Token costs scale linearly, and three focused teammates consistently outperform five scattered ones.",
-      "proves": "Fan-out has a practical ceiling around three to five focused agents; the real bottleneck becomes verification, not generation.",
+      "stat": "A six-step production line (Plan, Spawn, Monitor, Verify, Integrate, Retro) with three to five teammates named as the sweet spot and a ratio of one reviewer per three to four builders. Guardrail defaults include MAX_ITERATIONS=8 and an auto-pause at 85% of budget.",
+      "proves": "Verification, not generation, is the bottleneck in multi-agent coding, and human review is infrastructure rather than optional overhead.",
       "verification": "confirmed",
       "powers": [
+        "agent-architecture-review-capacity",
         "multi-agent-context-isolation"
       ],
       "secondary": [
-        "The bottleneck is no longer generation. It's verification.",
-        "Three focused agents consistently outperform one generalist agent working three times as long.",
-        "One agent can only hold so much information. Large codebases overwhelm a single context window."
+        "Three to five teammates is the sweet spot. Token costs scale linearly, and three focused teammates consistently outperform five scattered ones.",
+        "Review is positioned as a stage in an ordered pipeline, not as a node in a topology; team size is chosen first for parallelism and cost, and the reviewer ratio is applied afterward.",
+        "Cites Gloaguen et al. (ETH Zurich) for a roughly 3% success-rate reduction and over 20% inference-cost increase from LLM-generated AGENTS.md files.",
+        "The bottleneck is no longer generation. It's verification."
       ]
     },
     {
@@ -2153,6 +2201,27 @@
         "PDF fallback surface: https://resources.anthropic.com/hubfs/2026%20Agentic%20Coding%20Trends%20Report.pdf",
         "The widely circulated line 'the bottleneck is no longer writing code but clarity about what to build' does NOT appear anywhere in this report and is not cited in the post",
         "Verified adjacent data from the same report: developers use AI in roughly 60% of their work but report being able to fully delegate only 0-20% of tasks"
+      ]
+    },
+    {
+      "title": "Multi-agent coordination patterns: Five approaches and when to use them",
+      "author": "Anthropic",
+      "url": "https://claude.com/blog/multi-agent-coordination-patterns",
+      "date": "April 10, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Five named coordination patterns: generator-verifier, orchestrator-subagent, agent teams, message bus, and shared-state. Pattern choice is derived from workflow predictability, decomposability, interdependence and context duration.",
+      "proves": "The current frontier-lab state of the art for choosing an agent arrangement is a pattern catalogue selected by task structure, with an explicit recommendation to start with the simplest pattern and evolve from there.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "The words 'risk', 'blast radius', 'reviewer', 'review capacity', 'bandwidth' and 'checkpoint' appear nowhere in the article.",
+        "Human involvement appears exactly once, as a fallback inside a loop-prevention mechanism.",
+        "Contains no quantitative data of any kind."
       ]
     },
     {
@@ -2629,6 +2698,27 @@
       ]
     },
     {
+      "title": "When to use multi-agent systems (and when not to)",
+      "author": "Cara Phillips, with Paul Chen, Andy Schumeister, Brad Abrams, Theo Chu (Anthropic)",
+      "url": "https://claude.com/blog/building-multi-agent-systems-when-and-how-to-use-them",
+      "date": "January 23, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Anthropic reports that multi-agent implementations typically use 3-10x more tokens than single-agent approaches for equivalent tasks. Three named conditions justify multiple agents: context pollution degrading performance, tasks that can run in parallel, and specialization that improves tool selection or task focus.",
+      "proves": "A closed list of three conditions is the only thing that justifies adding an agent; outside them, coordination costs typically exceed the benefits.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "The 3-10x figure is unqualified internal testing with no published methodology, task list, dataset size, or model versions.",
+        "Coding-specific: dividing by type of work (one agent writes features, another writes tests, a third reviews code) creates constant coordination overhead; an agent handling a feature should also handle its tests.",
+        "The piece never mentions humans, approval, or review; verification is framed entirely as an agent-to-agent subagent pattern."
+      ]
+    },
+    {
       "title": "Least Privilege Access for AI Agents: The Control You're Missing",
       "author": "Cequence Security",
       "url": "https://www.cequence.ai/blog/ai/ai-agent-least-privilege-access",
@@ -2990,6 +3080,26 @@
       "secondary": []
     },
     {
+      "title": "Building effective agents",
+      "author": "Erik Schluntz, Barry Zhang (Anthropic)",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents",
+      "date": "December 19, 2024",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Five named workflow patterns (Prompt chaining, Routing, Parallelization, Orchestrator-workers, Evaluator-optimizer), each with its own section and diagram. The only intermediate control point diagrammed as a node is a programmatic 'gate'; human checkpoints appear in a single line of prose.",
+      "proves": "The topology primitives predate later attempts to rename them, and no frontier-lab source elevates the human checkpoint to a named, diagrammed pattern the way it does the programmatic gate.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "The subtractive bar, with 'only' italicized on the page: 'you should consider adding complexity only when it demonstrably improves outcomes.'",
+        "Anthropic gates 'multi-step agentic systems' while still endorsing multi-step workflows for well-defined tasks."
+      ]
+    },
+    {
       "title": "Ralph Wiggum as a \"software engineer\"",
       "author": "Geoffrey Huntley",
       "url": "https://ghuntley.com/ralph",
@@ -3223,6 +3333,26 @@
       ]
     },
     {
+      "title": "How and when to build multi-agent systems",
+      "author": "Harrison Chase (LangChain)",
+      "url": "https://www.langchain.com/blog/how-and-when-to-build-multi-agent-systems",
+      "date": "June 16, 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'The key insight is that read actions are inherently more parallelizable than write actions.' Parallelizing writes creates a dual problem: communicating context between agents and then merging their outputs coherently.",
+      "proves": "Whether an edge is safe to draw depends on whether the work crossing it reads or writes, which is why research-shaped multi-agent systems succeed where coding-shaped ones struggle.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "Explicitly reconciles Cognition's 'Don't Build Multi-Agents' with Anthropic's research-system post as two correct answers for different work: 'Despite their opposing titles, I would argue they actually have a lot in common.'",
+        "Reproduces Anthropic's four-field subagent spec as an attributed block quote, so it is commentary on that material rather than independent corroboration of it."
+      ]
+    },
+    {
       "title": "The Build vs Buy Framework in the Age of AI",
       "author": "HatchWorks (Matt Paige)",
       "url": "https://hatchworks.com/blog/gen-ai/build-vs-buy-framework",
@@ -3422,6 +3552,46 @@
         "claude-md-context-hierarchy"
       ],
       "secondary": []
+    },
+    {
+      "title": "Making it easier to build human-in-the-loop agents with interrupt",
+      "author": "LangChain",
+      "url": "https://www.langchain.com/blog/making-it-easier-to-build-human-in-the-loop-agents-with-interrupt",
+      "date": "December 14, 2024",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "The pause is implemented on the graph's own persistence layer: 'Every step of the graph, it reads from and then writes to a checkpoint of that graph state', which is what allows the run to 'pause execution of the graph half way through, and then resume after some time'.",
+      "proves": "The human checkpoint is durable because it rides the graph's existing checkpoint mechanism rather than an external callback, which is what makes it structurally different from a manual review step in a runbook.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "Named human-in-the-loop patterns: Approve or Reject, Review and Edit State, Review Tool Calls, and multi-turn conversation in a multi-agent setup."
+      ]
+    },
+    {
+      "title": "Interrupts",
+      "author": "LangChain (LangGraph OSS Python documentation)",
+      "url": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "'The interrupt function pauses graph execution and returns a value to the caller. When you call interrupt within a node, LangGraph saves the current graph state and waits for you to resume execution with input.' Named patterns include approval workflows, review and edit state, interrupts in tools, and validating human input.",
+      "proves": "A human checkpoint can be a first-class graph node with durable state rather than a process stage described in prose - the mechanism ships today in a production framework.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "Durability is explicit: state is saved by the checkpointer, which in production should be database-backed.",
+        "Idempotency gotcha: 'The node restarts from the beginning... so any code before the interrupt runs again.'",
+        "The documentation contains no notion of review capacity, cost, or how many checkpoints is too many."
+      ]
     },
     {
       "title": "Harness Engineering for Self-Improvement",
@@ -3633,6 +3803,26 @@
       ]
     },
     {
+      "title": "How to Run a Multi-Agent Coding Workspace (2026)",
+      "author": "Molisha Shah (Augment Code)",
+      "url": "https://www.augmentcode.com/guides/how-to-run-a-multi-agent-coding-workspace",
+      "date": "March 16, 2026 (updated June 18, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Six patterns for parallel coding agents, including git-worktree isolation (each agent gets its own working directory and index while sharing one .git object database) and sequential merges. 'Git detects textual conflicts, not semantic ones. Authoritative guidance still converges on mandatory human review for logic-level contradictions.'",
+      "proves": "Mechanical isolation between parallel coding agents solves textual collision but not semantic conflict, which is what leaves a human judgment step irreducible at the merge boundary.",
+      "verification": "partial",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "Vendor guide authored by a go-to-market staff member rather than an engineer; the technical core is real but a '40% reduction in hallucinations' claim about the vendor's own product is unverified marketing and is not cited.",
+        "Humans are given a tier in a review pipeline ('Reserve humans for semantic correctness and architecture'), not a position in a graph."
+      ]
+    },
+    {
       "title": "Harness engineering: leveraging Codex in an agent-first world",
       "author": "OpenAI",
       "url": "https://openai.com/index/harness-engineering",
@@ -3690,6 +3880,27 @@
       ],
       "secondary": [
         "Verification is partial because openai.com blocks automated fetches (HTTP 403); content retrieved via reader proxy"
+      ]
+    },
+    {
+      "title": "Orchestration and handoffs",
+      "author": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/guides/agents/orchestration",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "OpenAI's stated default: 'Start with one agent whenever you can. Add specialists only when they materially improve capability isolation, policy isolation, prompt clarity, or trace legibility. Splitting too early creates more prompts, more traces, and more approval surfaces without necessarily making the workflow better.'",
+      "proves": "Both major labs publish a single-agent default with an explicit justification bar, and OpenAI counts human approval surface as one of the costs that premature decomposition imposes.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-architecture-review-capacity"
+      ],
+      "secondary": [
+        "'Approval surfaces' is used once and never defined, on this page or the parent guide.",
+        "Neither page uses 'review capacity' or 'reviewer bandwidth', and neither frames human review as a binding constraint on agent count - that framing belongs to the post, not to OpenAI.",
+        "'Trace legibility' is listed as a reason to split, which cuts against reading this as a blanket anti-splitting stance."
       ]
     },
     {
@@ -4295,23 +4506,24 @@
       "title": "Don't Build Multi-Agents",
       "author": "Walden Yan (Cognition)",
       "url": "https://cognition.com/blog/dont-build-multi-agents",
-      "date": "Jun 12, 2025",
+      "date": "June 12, 2025",
       "class": "practitioner",
       "pillars": [
         6
       ],
-      "stat": "'Actions carry implicit decisions, and conflicting decisions carry bad results.' On the parallel-subagent failure: 'The actions subagent 1 took and the actions subagent 2 took were based on conflicting assumptions not prescribed upfront.'",
-      "proves": "The root cause of parallel-agent collision is assumptions that were never prescribed in advance - which is an argument for pre-assigned structure over runtime negotiation.",
+      "stat": "Two named principles: 'Share context, and share full agent traces, not just individual messages' and 'Actions carry implicit decisions, and conflicting decisions carry bad results.' Illustrated with a Flappy Bird clone split across two subagents whose outputs could not be reconciled.",
+      "proves": "A written handoff specification cannot capture the implicit decisions an agent makes mid-task, which is why parallel subagents without shared context produce conflicting assumptions that were never prescribed upfront.",
       "verification": "confirmed",
       "powers": [
+        "agent-architecture-review-capacity",
         "task-decomposition-for-ai-coding-agents",
         "multi-agent-context-isolation"
       ],
       "secondary": [
-        "Cognition's April 2026 follow-up states that multi-agent systems work best when writes stay single-threaded and additional agents contribute intelligence rather than actions",
-        "Share context, and share full agent traces, not just individual messages",
-        "At the core of reliability is Context Engineering",
-        "The simplest way to follow the principles is to just use a single-threaded linear agent"
+        "'Actions carry implicit decisions, and conflicting decisions carry bad results.' On the parallel-subagent failure: 'The actions subagent 1 took and the actions subagent 2 took were based on conflicting assumptions not prescribed upfront.'",
+        "The essay's actual position is broader than an argument about edge specification: 'in 2025, running multiple agents in collaboration only results in fragile systems.' It is the steel-manned opposition to any multi-agent topology, not a supporting voice.",
+        "Its proposed alternative is a single-threaded linear agent.",
+        "Cognition's April 2026 follow-up states that multi-agent systems work best when writes stay single-threaded and additional agents contribute intelligence rather than actions"
       ]
     },
     {
