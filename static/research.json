@@ -34,6 +34,26 @@
   ],
   "sources": [
     {
+      "title": "From Prompting to Verification: How Experience Shapes Vibe Coding Practices",
+      "author": "Ahmed Fawzy, Amjed Tahir, Kelly Blincoe",
+      "url": "https://arxiv.org/abs/2605.24521",
+      "date": "May 23, 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "Across 162 participants in three experience groups, roughly 45% of professionals reported always checking AI-generated code before use, while non-developers were the only group reporting never checking. Reported perceptions of code quality were broadly similar across groups while quality-assurance practices diverged with experience.",
+      "proves": "Awareness of AI-code risk is broadly distributed but the capacity to evaluate, debug, and verify remains experience-dependent — so a team that reports uniform skepticism about AI output has revealed nothing about whether it can actually catch that output's errors.",
+      "verification": "partial",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Measures solo verification behavior, not team code review: the phrase 'code review' appears once in the paper, and only to contrast vibe coding against traditional practice",
+        "Participants were recruited via Prolific; 'professional developers' means individuals who vibe-code and self-identify as professionals, not an intact engineering team"
+      ]
+    },
+    {
       "title": "Beyond the Leaderboard: A Synthesis of Tool-Use, Planning, and Reasoning Failures in Large Language Model Agents",
       "author": "Albayaydh, Zhao, Flechais",
       "url": "https://arxiv.org/abs/2607.05775",
@@ -92,6 +112,26 @@
         "Failures arise during benign, goal-directed use rather than adversarial attack",
         "Nearly 60% of confirmed incidents were rated high or critical severity",
         "The quantified breakdown appears in the full text, not on the arXiv abstract page"
+      ]
+    },
+    {
+      "title": "The garden of forking paths: Why multiple comparisons can be a problem, even when there is no \"fishing expedition\" or \"p-hacking\" and the research hypothesis was posited ahead of time",
+      "author": "Andrew Gelman, Eric Loken (Columbia University / Penn State)",
+      "url": "https://sites.stat.columbia.edu/gelman/research/unpublished/p_hacking.pdf",
+      "date": "November 14, 2013",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Researcher degrees of freedom can produce a multiple-comparisons problem even where researchers perform only a single analysis on their data, because the analysis actually run is one of many that would have been equally reasonable had the data come out differently.",
+      "proves": "A team reading its own agent-PR dashboard once, in good faith, with a hypothesis stated in advance, is already exposed to the fragility — no p-hacking or repeated analysis is required for the result to be contingent on arbitrary choices.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "'The researcher degrees of freedom do not feel like degrees of freedom because, conditional on the data, each choice appears to be deterministic'",
+        "Cited from the 2013 unpublished manuscript; the 2014 American Scientist version ('The Statistical Crisis in Science') was not reachable for verification and is not the version quoted"
       ]
     },
     {
@@ -405,6 +445,27 @@
       "secondary": []
     },
     {
+      "title": "Mitigating Omitted Variable Bias in Empirical Software Engineering",
+      "author": "Carlo A. Furia, Richard Torkar",
+      "url": "https://arxiv.org/abs/2501.17026",
+      "date": "January 28, 2025 (latest revision April 1, 2026)",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "In a study of 105 projects (45 Java, 60 Python) and 952 developers, omitting programmer skill inflated the measured programming-language effect on code quality roughly fourfold, from an adjusted -0.012 to a confounded -0.052. Sensitivity analysis showed a scaled-mean difference of -0.062 would be sufficient to flip the sign of the measured effect.",
+      "proves": "An aggregate software-engineering trend can be substantially distorted — and, at plausible confounding strengths, sign-flipped — by omitting a variable that is a real determinant of the outcome, which is what a dashboard that does not condition on team properties is doing.",
+      "verification": "partial",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "'Additional data about X and Y (i.e., sampling more datapoints) is not going to help; in fact, it may just entrench our reliance on the biased estimate by reducing its variance and giving the false impression of reliability'",
+        "The sign flip is a sensitivity-analysis threshold showing how little confounding would suffice, not an observed reversal in the data; neither case study concerns code review",
+        "Preprint with no journal-ref; Simpson's paradox is not discussed anywhere in the paper"
+      ]
+    },
+    {
       "title": "Why Do Multi-Agent LLM Systems Fail?",
       "author": "Cemri, Pan, Yang, Agrawal, Chopra, Tiwari, Keutzer, Parameswaran, Klein, Ramchandran, Zaharia, Gonzalez, Stoica (UC Berkeley)",
       "url": "https://arxiv.org/abs/2503.13657",
@@ -444,6 +505,26 @@
         "\"34.88%\" abandonment (CRA-only) vs \"21.60%\" (human-only) — outcome distribution across reviewed categories",
         "\"60.2% of closed CRA-only PRs fall into the 0–30% signal range\" — signal-to-noise analysis of 98 closed CRA-only PRs",
         "\"12 of 13 CRAs exhibit average signal ratios below 60%\" — quality assessment across 13 unique code review agents"
+      ]
+    },
+    {
+      "title": "Principles and Guidelines for Randomized Controlled Trials in AI Evaluation",
+      "author": "Christopher Kelly, Angelica Chowdhury, Alexandra Campili, Bimpe Ayoola, Devin Barbour, Thomas Chen Dawson, Ze Shen Chin, Rokas Gipiškis",
+      "url": "https://arxiv.org/abs/2605.02050",
+      "date": "May 3, 2026 (revised July 26, 2026; ICML 2026 Workshop on Technical AI Governance)",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Synthesizes five principles from established validity frameworks into 33 guidelines for AI evaluation trials, naming construct underrepresentation and construct-irrelevant variance as the failure modes that make AI-effect measurements uninterpretable.",
+      "proves": "Where construct validity is weak, a study can show that scores increased with AI without credibly claiming the underlying capability improved — which is why 'is AI good for code review' is not merely contested but malformed as a measurable question.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Guideline 18 is directly applicable to reading a vendor claim: 'Apply identical quality rubrics, performance benchmarks, and scoring criteria to human-only and human+AI outputs'",
+        "Software engineering appears as a donor methodology field and 'coding competence' as an example construct; the paper analyzes no code-review study"
       ]
     },
     {
@@ -566,6 +647,29 @@
       ]
     },
     {
+      "title": "Ten Takeaways from the AI Engineering Report 2026: The Acceleration Whiplash",
+      "author": "Faros AI (Faros Research)",
+      "url": "https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways",
+      "date": "April 12, 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "Two years of telemetry across 22,000 developers and more than 4,000 teams, comparing each organization's lowest- and highest-AI-adoption periods: median time to first PR review up 156.6%, average time spent in code review up 199.6%, median time in review up 441.5%, and pull requests merged without any review — human or agentic — up 31.3%.",
+      "proves": "The strongest available case against team-level explanations: Faros reports that high-performing organizations with mature DevOps practices, high DORA scores, and disciplined delivery processes experienced the same downstream deterioration as everyone else, and states directly that its data contradicts DORA's 2025 findings.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic",
+        "review-capacity-agent-throughput"
+      ],
+      "secondary": [
+        "Median time in review is up 441.5%",
+        "Scope caveat that matters for how the numbers can be read: these describe all pull requests at organizations during low- versus high-AI-adoption periods, not agent-authored pull requests specifically",
+        "The two-year comparison window spans multiple model generations with no stated control; this confound was raised publicly and Faros acknowledged the trend without disputing the critique",
+        "Vendor research: Faros sells engineering-intelligence tooling into this market"
+      ]
+    },
+    {
       "title": "The hidden cost of AI code quality: Why senior engineers are paying the price",
       "author": "Faros AI (Naomi Lurie)",
       "url": "https://www.faros.ai/blog/ai-code-quality-senior-engineer-review-burden",
@@ -584,27 +688,6 @@
         "\"Replacement cost of a senior software engineer at $150,000 to $300,000 in 2026, including recruiting, ramp time, and lost institutional knowledge.\" — Industry benchmarks cited",
         "\"25% of PRs are now reviewed by AI agents, up from 0% in 2025. But review times have increased nearly 200%.\" — AI Engineering Report 2026 caption",
         "the burden \"does not get measured in PR throughput dashboards\""
-      ]
-    },
-    {
-      "title": "Ten takeaways from the AI Engineering Report 2026: The Acceleration Whiplash",
-      "author": "Faros Research",
-      "url": "https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways",
-      "date": "April 12, 2026",
-      "class": "research-data",
-      "pillars": [
-        5
-      ],
-      "stat": "Median time in review is up 441.5%",
-      "proves": "Telemetry across thousands of teams shows review time exploding under AI adoption while more PRs merge unreviewed and incidents rise.",
-      "verification": "confirmed",
-      "powers": [
-        "review-capacity-agent-throughput"
-      ],
-      "secondary": [
-        "\"Code churn... has increased 861% under high AI adoption\" — Takeaway 3 (Faros telemetry)",
-        "\"Pull requests merged without any review... up 31.3%\" — Takeaway 8 (Faros telemetry)",
-        "\"Incidents-to-PR ratio is up 242.7%\" — Takeaway 4 (Faros telemetry)"
       ]
     },
     {
@@ -707,6 +790,27 @@
       ]
     },
     {
+      "title": "More Code, Less Reuse: Investigating Code Quality and Reviewer Sentiment towards AI-generated Pull Requests",
+      "author": "Haoming Huang, Pongchai Jaisri, Shota Shimizu, Lingfeng Chen, Sota Nakashima, Gema Rodríguez-Pérez",
+      "url": "https://arxiv.org/abs/2601.21276",
+      "date": "January 29, 2026 (accepted to MSR 2026)",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "Across 3,858 pull requests, average max redundancy was 0.2867 for AI agents versus 0.1532 for humans — a roughly 1.87x increase, Mann-Whitney p<0.001 — while reviewers expressed more neutral or positive emotions toward AI-generated contributions than human ones.",
+      "proves": "Reviewer confidence moves opposite to code quality on agent-authored PRs: the surface-level plausibility of AI code masks redundancy, letting technical debt accumulate silently through a review process that feels like it is working.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Sentiment was measured with an off-the-shelf classifier (Emotion English DistilRoBERTa-base) that the authors caution 'is trained on general English text' and 'may misinterpret technical discussions in code reviews'",
+        "RQ1 analyzed a single repository due to computational cost, and the study covers Python repositories only",
+        "The study measures code metrics and reviewer sentiment but not whether reviewers caught the redundancy; it reports no breakdown by team or reviewer experience"
+      ]
+    },
+    {
       "title": "When Agents Fail to Act: A Diagnostic Framework for Tool Invocation Reliability in Multi-Agent LLM Systems",
       "author": "Huang et al. (arXiv)",
       "url": "https://arxiv.org/abs/2601.16280",
@@ -725,6 +829,26 @@
         "1,980 deterministic test instances",
         "12-category error taxonomy capturing failure modes across tool initialization, parameter handling, execution, and result interpretation",
         "Mid-sized models (qwen2.5:14b) offer practical accuracy-efficiency trade-offs on commodity hardware (96.6% success rate, 7.3 s latency)"
+      ]
+    },
+    {
+      "title": "Rethinking Code Review in the Age of AI: A Vision for Agentic Code Review",
+      "author": "Hüseyin Özgür Kamalı, Erdem Tuna, Vahid Haratian, Eray Tüzün",
+      "url": "https://arxiv.org/abs/2605.17548",
+      "date": "May 17, 2026 (v2 June 5, 2026)",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "A five-stage agentic review lifecycle in which 'reviewers transition from manual inspectors into supervisory operators of agents', with concrete policy levers including reviewer-selection criteria (familiarity with the changes, adequate review experience, workload headroom) and a pace guardrail of no faster than 200 lines per hour.",
+      "proves": "Once agents author the changes, the reviewer's role becomes supervisory, which makes review-policy design — who reviews what, against which checklist, at which gates — the load-bearing variable rather than an administrative detail.",
+      "verification": "partial",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "A vision/position paper presenting no new empirical data; it argues policy should adapt, and cannot evidence whether real teams' policies have adapted",
+        "The paper asserts as established fact a module-experience finding that its cited source states as a hypothesis, and additionally miscites that source's title and author list"
       ]
     },
     {
@@ -836,6 +960,25 @@
       ]
     },
     {
+      "title": "A Traveler's Guide to the Multiverse: Promises, Pitfalls, and a Framework for the Evaluation of Analytic Decisions",
+      "author": "Marco Del Giudice, Steven W. Gangestad",
+      "url": "https://iris.unito.it/retrieve/e27ce435-58ab-2581-e053-d805fe0acbaa/DelGiudice_Gangestad_2021_guide-to-the-multiverse_ampps.pdf",
+      "date": "2021 (Advances in Methods and Practices in Psychological Science 4(1))",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "In the authors' worked example, an unprincipled 1,216-specification multiverse left just 27% of effects significant at the .05 threshold with a median p of .194; pruning to a principled 6-specification multiverse left all six effects positive and significant with a median p of .012.",
+      "proves": "Multiverse-style analysis is not a free move: if specifications are not truly arbitrary, it can hide meaningful effects within a mass of poorly justified alternatives, so instability under a multiverse is not automatic proof that an effect is illusory.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Retrieved via the University of Turin open-access repository; the SAGE DOI page returns HTTP 403 to automated fetching"
+      ]
+    },
+    {
       "title": "The End of Code Review: Coding Agents Supersede Human Inspection",
       "author": "Martin Monperrus",
       "url": "https://arxiv.org/abs/2606.13175",
@@ -923,6 +1066,68 @@
       ]
     },
     {
+      "title": "From Trust to Appropriate Reliance: Measurement Constructs in Human-AI Decision-Making",
+      "author": "Muhammad Raees, Konstantinos Papangelis",
+      "url": "https://arxiv.org/abs/2604.23896",
+      "date": "April 26, 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "A review of the human-AI decision-making literature finds trust measurements do not inform users' appropriate reliance on AI systems, and catalogues the objective metrics used instead — over-reliance (13 studies), under-reliance (8), Relative AI Reliance (10), Relative Self-Reliance (9), accuracy with initial disagreement (5).",
+      "proves": "Asking whether engineers trust an AI reviewer is the wrong instrument: what matters is appropriate reliance — the ability to discriminate correct from incorrect AI advice and act on that discrimination — which trust surveys do not measure.",
+      "verification": "partial",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "The paper contains no software-engineering or code-review content; applying its metrics to code review is an adaptation rather than a finding it reports",
+        "The authors state that 'there is still limited consensus on common measurements of humans' appropriate reliance on AI across the studies'",
+        "Preprint with no journal-ref"
+      ]
+    },
+    {
+      "title": "The Silent Helper: The Impact of Continuous Integration on Code Reviews",
+      "author": "Nathan Cassee, Bogdan Vasilescu, Alexander Serebrenik",
+      "url": "https://doi.org/10.1109/SANER48275.2020.9054818",
+      "date": "2020 (SANER 2020, pp. 423-434)",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "An exploratory study of code reviews across 685 GitHub projects found that with the introduction of continuous integration, pull requests are discussed less — on average CI saves up to one review comment per pull request — and that the decrease cannot be explained by a decrease in pull-request updates.",
+      "proves": "The claim shape now made about agent-authored PRs (a tool arrived, review discussion went down) was made about code review before, by a reasonable study using reasonable methods — and is the finding that later reproduced in under 0.2% of defensible analysis pipelines.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Verified independently via the Semantic Scholar graph API; the IEEE Xplore page bot-blocks automated fetching",
+        "The paper explicitly frames code review as its object of study: 'we focus on studying the impact of CI on a paradigmatic socio-technical activity within the software engineering domain, namely code reviews'"
+      ]
+    },
+    {
+      "title": "Exploring the Garden of Forking Paths in Empirical Software Engineering Research: A Multiverse Analysis",
+      "author": "Nathan Cassee, Robert Feldt",
+      "url": "https://arxiv.org/abs/2512.08910",
+      "date": "December 9, 2025 (v3 February 23, 2026; accepted at TOSEM)",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "Re-running one published empirical software-engineering study across nine pivotal analytical decisions, each with at least one equally defensible alternative, produced 3,072 analysis pipelines and 12,288 fitted RDiT models. Only 6 universes (<0.2%) reproduced the published results; changing Period Length alone produced a different outcome in 86.3% of universes.",
+      "proves": "Directional instability under defensible analytical choices is an established, peer-accepted result in software engineering rather than a rhetorical hedge — a published SE finding can fail to reproduce across the overwhelming majority of reasonable analysis paths.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "The re-analyzed study is itself a code-review study: 'The Silent Helper: The Impact of Continuous Integration on Code Reviews' (Cassee et al., SANER 2020), so the demonstration requires no cross-domain transfer",
+        "Nathan Cassee is first author of both the 2020 study and the 2026 re-analysis; the paper discloses that 'one of the authors of this study was also involved in the primary study'",
+        "The authors propose the Justification Ladder of Analytical Choices (JLAC) and advocate robustness checks across plausible analysis variants, or explicit justification of each analytical decision"
+      ]
+    },
+    {
       "title": "How Coding Agents Fail Their Users: A Large-Scale Analysis of Developer-Agent Misalignment in 20,574 Real-World Sessions",
       "author": "Ningzhi Tang, Chaoran Chen, Gelei Xu, Yiyu Shi, Yu Huang, Collin McMillan, Tao Dong, Toby Jia-Jun Li (Notre Dame, Vanderbilt, Google)",
       "url": "https://arxiv.org/abs/2605.29442",
@@ -942,6 +1147,47 @@
         "90.50% of episodes impose effort and trust costs rather than irreversible system damage, yet 91.49% of visible resolutions still require explicit user correction",
         "Misalignment compounds across sessions: probability of misalignment in the next session is 0.519 after an affected session versus 0.336 otherwise",
         "Constraint violation is markedly worse in CLI sessions (49.49%) than IDE sessions (32.26%)"
+      ]
+    },
+    {
+      "title": "Investigating Code Review Quality: Do People and Participation Matter?",
+      "author": "Oleksii Kononenko, Olga Baysal, Latifa Guerrouj, Yaxin Cao, Michael W. Godfrey",
+      "url": "https://plg.uwaterloo.ca/~migod/papers/2015/icsme15-OleksiiOlgaLatifa.pdf",
+      "date": "2015 (ICSME 2015, pp. 111-120)",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "Across 28,127 code reviews on 27,270 Mozilla commits from January 2013 to January 2014, 54% of reviews missed bugs present in the approved commits — consistently across modules (Core 54.3%, Firefox 54.2%, Firefox for Android 56%). Reviewer experience carried a significant negative regression coefficient in all four studied systems.",
+      "proves": "Who performs a review measurably changes whether defects are caught: less experienced reviewers are more likely to neglect problems in the changes under review, so an identical review process yields different outcomes depending on the expertise of the person assigned.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "The finding is correlational by the authors' own framing: the goal 'is not to use MLR models for predicting defect-prone code reviews but to understand the impact our personal and participation metrics have on code review quality'",
+        "Adjusted R-squared of 0.123-0.173 across four models; the authors describe the predictive power as low",
+        "Backs overall reviewer experience only. A widely repeated module-specific version of this claim is stated in the paper as a hypothesis in its metrics table, not as a confirmed result"
+      ]
+    },
+    {
+      "title": "Code Review Quality: How Developers See It",
+      "author": "Oleksii Kononenko, Olga Baysal, Michael W. Godfrey",
+      "url": "https://plg.uwaterloo.ca/~migod/papers/2016/icse16.pdf",
+      "date": "2016 (ICSE 2016)",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "A survey of 88 Mozilla core developers (22% response rate, 938 coded quotes, inter-coder agreement 94.2-97.2%) found review quality is primarily associated with thoroughness of feedback, the reviewer's familiarity with the code, and perceived code quality; 96% agreed reviewer experience influences review time.",
+      "proves": "Reviewers themselves identify expertise and code familiarity as the determinants of review quality, and name gaining familiarity with unfamiliar code as their single biggest challenge — corroborating the measured finding from the same group's quantitative study.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "This is self-reported perception, not measured defect-detection data; it is the qualitative companion to the ICSME 2015 study and should be paired with it rather than substituted for it",
+        "Scoped to one large open-source community: 'While our findings might not generalize outside of Mozilla...'"
       ]
     },
     {
@@ -1020,6 +1266,27 @@
         "estimated delivery stability is expected to decrease by 7.2%",
         "75.9% of respondents (of roughly 3,000 people surveyed) are relying on AI for at least part of their job responsibilities",
         "if AI adoption increases by 25%, time spent doing valuable work is estimated to decrease 2.6%"
+      ]
+    },
+    {
+      "title": "Increasing Transparency Through a Multiverse Analysis",
+      "author": "Sara Steegen, Francis Tuerlinckx, Andrew Gelman, Wolf Vanpaemel",
+      "url": "https://sites.stat.columbia.edu/gelman/research/published/multiverse_published.pdf",
+      "date": "2016 (Perspectives on Psychological Science 11(5), 702-712)",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Re-analyzing one published study across all reasonable data-processing choices, 7 of 120 choice combinations produced a significant interaction for religiosity in Study 1, with the remaining 94% yielding p values from .05 to 1.0.",
+      "proves": "Isolating a single statistical result from a chain of arbitrary data-construction choices can be highly misleading; the origin of the multiverse-analysis method that later SE work applies.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "The dramatic panel is not representative: the same paper reports 42% significant for religiosity in Study 2, 49% for social political attitudes, 46% for voting, and 57% for donation — so multiverse analysis does not uniformly dissolve effects",
+        "The authors disclaim the method as neither a formal test of questionable research practices nor an estimate of evidential strength",
+        "Preregistration does not deflate the multiverse: it 'does not annihilate the arbitrariness in data preparation'"
       ]
     },
     {
@@ -1140,6 +1407,27 @@
       ]
     },
     {
+      "title": "3100 Opinions on Code Review in an AI World: Building Causal Theory from Practitioner Discourse",
+      "author": "Shyam Agarwal, Courtney Miller, Christian Kästner, Bogdan Vasilescu (Carnegie Mellon University)",
+      "url": "https://arxiv.org/abs/2607.07980",
+      "date": "July 8, 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "A causal model of 26 constructs and 67 relationships (64 directed, 3 contested) built from 38,709 grey-literature documents, with a stratified sample of 3,100 coded via an LLM-assisted pipeline. Within the authors' own data, 40.1% of agent-authored PRs were examined only by the developer who invoked the agent, versus 21.5% of human-authored PRs.",
+      "proves": "Code review is the control point through which a coding agent's effect on software is decided, and the sign of that effect is set by the team — via reviewer expertise and how it structures review — rather than by the tool. The paper names three moderators: reviewer expertise and disposition, automated-reviewer capability, and process adaptation.",
+      "verification": "partial",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "The authors demonstrate directional instability inside their own dataset: whether the developer who invoked an agent counts as an independent reviewer or as the author reviewing their own work decides whether independent review of agent PRs sits above or below the human rate",
+        "The reversal is scoped to the independent-review construct only; merge speed and discussion volume are presented as stable, non-reversing findings",
+        "Unrefereed preprint that self-describes as 'a proposed explanatory theory, not a validated one'; several figures cited elsewhere for this paper (4.6%/18.7%, 20.8%/29.3%, the Wilcoxon statistics) could not be located in the text across two independent verification passes and are not used"
+      ]
+    },
+    {
       "title": "The Leaderboard Illusion",
       "author": "Singh, Nan, Wang, D'Souza, Kapoor, Ustun, Koyejo, Deng, Longpre, Smith, Ermis, Fadaee, Hooker",
       "url": "https://arxiv.org/abs/2504.20879",
@@ -1177,6 +1465,27 @@
       "secondary": [
         "larger models can correctly execute significantly more turns even when small models have near-perfect single-turn accuracy",
         "measured on a synthetic running-sum task; thinking mitigates self-conditioning; larger models are more prone, not less"
+      ]
+    },
+    {
+      "title": "Human-AI Synergy in Agentic Code Review",
+      "author": "Suzhen Zhong, Shayan Noei, Ying Zou, Bram Adams",
+      "url": "https://arxiv.org/abs/2603.15911",
+      "date": "March 16, 2026",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "Across 278,790 code review conversations in 300 open-source GitHub projects, human reviewers' suggestions were adopted at 56.5% versus 16.6% for AI agents — a 39.9 percentage-point gap. Over half of unadopted AI suggestions (28.7% incorrect plus 24.0% superseded by an alternative fix) were not usable as written.",
+      "proves": "Automated-reviewer capability is a measurable quantity with a wide gap from human review, and adopting AI suggestions carries a quality cost: when adopted, agent suggestions produce significantly larger increases in code complexity and code size than human ones.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Over 95% of AI agent comments fall into Code Improvement and Defect Detection, while humans also supply Understanding, Testing, and Knowledge Transfer feedback",
+        "Results are pooled averages across 300 projects with no breakdown by project, team, or reviewer characteristics, and the authors note findings may not generalize to proprietary enterprise systems",
+        "Preprint; the AI-agent population mixes coding agents and purpose-built review bots (GitHub Copilot, CodeRabbit, Devin, Claude Code, Gemini Code Assist)"
       ]
     },
     {
@@ -1238,6 +1547,27 @@
       "secondary": [
         "Requirements issues reaching system test showed roughly a 1.85x median resolution-time increase, against the 37-250x multipliers cited in the classic literature",
         "Used in the post as an honesty move - it argues against a convenient cliche the author declined to use"
+      ]
+    },
+    {
+      "title": "Beyond the Commit: Developer Perspectives on Productivity with AI Coding Assistants",
+      "author": "Valerie Chen, Jasmyn He, Behnjamin Williams, Jason Valentino, Ameet Talwalkar",
+      "url": "https://arxiv.org/abs/2602.03593",
+      "date": "February 3, 2026 (ICSE-SEIP 2026)",
+      "class": "research-data",
+      "pillars": [
+        5
+      ],
+      "stat": "A survey of 2,989 developer responses plus 11 in-depth interviews at a single enterprise surfaced six productivity factors, two of them long-term — technical expertise and ownership of work — that per-sprint output metrics do not capture. Peer review is one of the six named factors.",
+      "proves": "What AI assistance puts at risk is a team-level capital stock (expertise, ownership, comprehension) rather than per-PR throughput, which is why merge-speed dashboards can move in a healthy direction while the thing that determines review quality erodes underneath them.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Interviewees emphasized 'the importance of growth as a developer over time, rather than just an individual's output per sprint'",
+        "Within the peer-review factor, a senior manager reports junior developers optimizing the wrong things in ways that cost others time to fix — the same tooling producing different outcomes by seniority inside one company",
+        "Single-company sample (BNY Mellon); code review is one of six factors rather than the study's focus"
       ]
     },
     {
@@ -1441,7 +1771,7 @@
       ]
     },
     {
-      "title": "Agentic Code Review (addyosmani.com)",
+      "title": "Agentic Code Review",
       "author": "Addy Osmani",
       "url": "https://addyosmani.com/blog/agentic-code-review",
       "date": "June 15, 2026",
@@ -1449,16 +1779,18 @@
       "pillars": [
         5
       ],
-      "stat": "Tier by risk, not by author. A config change earns a linter and a glance. A payments path earns the full stack",
-      "proves": "Review depth should be triaged by the risk class of the change, not by who authored it or the diff size.",
+      "stat": "Argues that the purpose of review changes with a team's position along three variables — blast radius, how long the code lives, and how many people need to understand it — and that 'the only answer that survives contact with a real codebase is that it depends entirely on who you are.'",
+      "proves": "The most authoritative named-author treatment reaches contingency rather than a universal verdict, but segments on situational rather than team-capability variables and stops short of giving a reader any way to determine which regime their own team occupies.",
       "verification": "confirmed",
       "powers": [
+        "ai-code-review-team-diagnostic",
         "review-capacity-agent-throughput"
       ],
       "secondary": [
-        "\"AI-written code produces 1.7x more issues than human code\" — CodeRabbit (470 OSS PRs, December 2025)",
-        "\"93.4% of findings caught by exactly one tool\" — dev.to engineer (4 parallel reviewers, 146 PRs, 679 findings)",
-        "\"A model cannot be paged and cannot be held responsible for what it shipped, so whoever clicks merge owns it\""
+        "Tier by risk, not by author. A config change earns a linter and a glance. A payments path earns the full stack",
+        "Carries the strongest counterargument to team-level explanations: 'teams with mature, disciplined engineering practices were hit just as hard as everyone else', citing Faros AI",
+        "Offers its own vendor-bias caveat: 'CodeRabbit and Faros both sell into this market, so their framing is not disinterested'",
+        "'We made writing cheap, and understanding stayed exactly as expensive as it has always been'"
       ]
     },
     {
@@ -1598,6 +1930,26 @@
         "hook output requires approximately 15 tokens per prompt reminder",
         "Over 50-turn session, motto reminders total ~750 tokens against 200k context window",
         "hook output arrives as clean system-reminder messages — no disclaimer, no 'may or may not be relevant' framing"
+      ]
+    },
+    {
+      "title": "Agent pull requests are everywhere. Here's how to review them.",
+      "author": "Andrea Griffiths (The GitHub Blog)",
+      "url": "https://github.blog/ai-and-ml/generative-ai/agent-pull-requests-are-everywhere-heres-how-to-review-them",
+      "date": "May 7, 2026",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "GitHub's own platform telemetry: Copilot code review has processed over 60 million reviews, growing 10x in less than a year, and more than one in five code reviews on GitHub now involve an agent.",
+      "proves": "Agent involvement in review is now the normal case rather than an edge case, and the highest-authority platform guidance responds with standardized review practices applied uniformly, with no conditioning on team maturity, expertise distribution, size, or review culture.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Frames the core problem as invisible cost: 'The surface looks clean. The debt is quiet.'",
+        "Cites the January 2026 study 'More Code, Less Reuse' for the finding that agent-generated code adds redundancy and technical debt per change while reviewers feel better about approving it"
       ]
     },
     {
@@ -2580,6 +2932,27 @@
       ]
     },
     {
+      "title": "2025 State of AI-assisted Software Development Report",
+      "author": "DORA (Google Cloud)",
+      "url": "https://dora.dev/dora-report-2025",
+      "date": "2025",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "Based on roughly 5,000 survey responses and more than 100 hours of qualitative interviews, DORA frames AI's primary role as an amplifier that magnifies an organization's existing strengths and weaknesses, and locates the greatest returns in the underlying organizational system rather than the tools.",
+      "proves": "An independent method — survey and interview rather than telemetry — reaches the organizational-contingency conclusion, and stands in direct, named contradiction to Faros's telemetry finding that engineering maturity offered no protection.",
+      "verification": "partial",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Google Cloud-sponsored; headline figures are self-reported perception rather than measured delivery outcomes, and the amplifier thesis is close to unfalsifiable as stated",
+        "The full report is gated behind a lead-generation page and could not be read directly; the amplifier framing was verified on the public landing pages",
+        "The 2025 report does not address code review; a widely repeated 2024-to-2025 reversal on delivery throughput could not be verified and is not used"
+      ]
+    },
+    {
       "title": "Managing agentic memory with Elasticsearch",
       "author": "Elasticsearch Labs (Someshwaran Mohankumar)",
       "url": "https://www.elastic.co/search-labs/blog/agentic-memory-management-elasticsearch",
@@ -3239,6 +3612,27 @@
       ]
     },
     {
+      "title": "We are Changing our Developer Productivity Experiment Design",
+      "author": "METR (Joel Becker, Nate Rush, Tom Cunningham, David Rein, Khalid Mahamud)",
+      "url": "https://metr.org/blog/2026-02-24-uplift-update",
+      "date": "February 24, 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "When surveyed, 30% to 50% of developers reported choosing not to submit some tasks because they did not want to do them without AI. Effect estimates diverged by subpopulation: -18% (CI -38% to +9%) for the 10 original developers versus -4% (CI -15% to +9%) for 47 newly recruited ones, against the original study's +19% (CI +2% to +39%).",
+      "proves": "The authors of the most-cited 'AI slowed developers down' result state first-party and against interest that their headline number is biased by who chose to participate, and that the true speedup could be much higher among those selected out — a measured effect that is partly a property of who was measured.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "METR names at least six mechanisms, not one: self-selection, selective task submission, task-type substitution, quality variation between conditions, non-compliance, and unreliable time measurement under concurrent agents; the pay cut from $150/hr to $50/hr is framed as a contributor to selection rather than an independent cause",
+        "The authors bound the bias honestly: 'The selection effects seem to affect a minority share of developers and of tasks, which limits the degree of bias'",
+        "Concerns developer productivity, not code review; no results from the redesigned study had published as of August 2026"
+      ]
+    },
+    {
       "title": "Harness engineering: leveraging Codex in an agent-first world",
       "author": "OpenAI",
       "url": "https://openai.com/index/harness-engineering",
@@ -3443,6 +3837,26 @@
       ]
     },
     {
+      "title": "AI Didn't Break Coding. It Broke Code Review.",
+      "author": "Rooz Mohazzabi (Moderne)",
+      "url": "https://moderne.ai/blog/ai-didnt-break-coding-it-broke-code-review",
+      "date": "July 6, 2026",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "Synthesizing an interview with Morgan Stanley engineers, argues review shifted rightward onto scarce senior engineers, with Khalid Elsawaf noting a simple prompt could produce a thousand-file, 10,000-line pull request: 'No human here is going to review that.'",
+      "proves": "The canonical statement of the 'AI broke code review' position, asserted as a general industry pattern with no conditioning on team properties and no admission that the effect might run the other way for some teams.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Overt vendor content: the piece closes with a section on Moderne's own product and quotes Moderne's CEO; Morgan Stanley is a named Moderne customer",
+        "Anecdote-driven with no quantified metrics, surveys, or study citations"
+      ]
+    },
+    {
       "title": "Anthropic Shipped An Enterprise Analytics API. We Shipped the Claude Adapter Today.",
       "author": "Scott Castle, Chief Product Officer at CloudZero",
       "url": "https://www.cloudzero.com/blog/anthropic-analytics-api-adapter",
@@ -3524,6 +3938,26 @@
         "about once an hour I notice that the agent is doing something that looks suspicious, and when I dig deeper I'm able to set it on the right track and save hours of wasted effort.",
         "If you're a nitpicky code reviewer, I think you will struggle to use AI tooling effectively.",
         "Trying to make a badly-designed solution work costs time, tokens, and codebase complexity."
+      ]
+    },
+    {
+      "title": "Scaling Code Reviews: Adapting to a Surge in AI-Generated Code",
+      "author": "Shan Appajodu, Ravi Boyapati (Salesforce Engineering)",
+      "url": "https://engineering.salesforce.com/scaling-code-reviews-adapting-to-a-surge-in-ai-generated-code",
+      "date": "January 29 (year not shown on page)",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "Internal signals reported without population, period, or sample size: code volume up approximately 30%, pull requests regularly exceeding 20 files and 1,000 lines, review latency rising quarter over quarter, and review time for the largest pull requests beginning to plateau or decline.",
+      "proves": "A worked example of a review metric reported rather than interrogated: the team asserts that plateauing review time on large PRs indicates reviewers disengaging, considers no alternative reading of the same signal, and never defines who counts as a reviewer.",
+      "verification": "confirmed",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "Explicitly scoped to one organization rather than generalized",
+        "No publication year appears anywhere on the page, and no external research is cited"
       ]
     },
     {
@@ -3817,6 +4251,26 @@
         "claude-md-context-hierarchy"
       ],
       "secondary": []
+    },
+    {
+      "title": "The code review crisis and how you should rebuild review models",
+      "author": "Vittesh Sahni (CIO)",
+      "url": "https://www.cio.com/article/4207438/the-code-review-crisis-and-how-you-should-rebuild-review-models.html",
+      "date": "August 11, 2026",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "Argues the bottleneck has moved from writing code to deciding what should merge, and that dropping AI tooling into an unchanged lifecycle treats it as a productivity patch that will not last.",
+      "proves": "The freshest executive-facing coverage occupies the prescription slot rather than the diagnosis slot: it recommends a target state without offering a way to determine what is currently true of the reader's own team on expertise, reviewer capability, or policy adaptation.",
+      "verification": "partial",
+      "powers": [
+        "ai-code-review-team-diagnostic"
+      ],
+      "secondary": [
+        "It does carry one narrow genuine diagnostic — expand AI review scope only when suggestion acceptance rate is climbing and post-merge defect rate is flat or falling, treating one signal moving without the other as a red flag",
+        "Its statistics (CloudBees 2026 State of Code Abundance, GitHub Octoverse 2025, Stack Overflow 2025 Developer Survey) are cited second-hand and were not independently verified"
+      ]
     },
     {
       "title": "The Anatomy of an Agent Harness",
