@@ -1,6 +1,6 @@
 ---
 title: "Rank Your Agent Trace Fields by What You Can Never Get Back"
-date: 2026-09-07
+date: 2026-09-01
 draft: false
 pillar: production-operations
 author: "John Young"
