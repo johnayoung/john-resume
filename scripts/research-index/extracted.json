@@ -4655,5 +4655,553 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "agent-observability-trace-schema",
+    "sources": [
+      {
+        "title": "TelemetrySuffBench: Is Agent Telemetry Sufficient for Failure-Origin Diagnosis?",
+        "author": "Yuxuan Zhu, Peng Pu (East China Normal University)",
+        "url": "https://arxiv.org/abs/2608.07899",
+        "date": "Aug 8, 2026",
+        "class": "research-data",
+        "pillars": [
+          4,
+          3
+        ],
+        "stat": "Across 312 deterministically generated traces and five models, Metadata, OpenTelemetry-compatible and OpenInference-compatible views retain 99.5% to 100% failure-detection F1 while origin-step accuracy stays at or below 0.5%. Removing decision content drives origin-step accuracy to zero for all five models.",
+        "proves": "A trace shaped like the published conventions is sufficient to prove a run failed and near-useless for locating which step caused it.",
+        "verification": "confirmed",
+        "secondary": [
+          "The 99.5-100% / 0.5% range is stated jointly across all three restricted views, not per view",
+          "The Full view also detects at 99.3% to 100.0% F1, so near-perfect detection is a property of this corpus rather than something the standards-shaped views uniquely preserve",
+          "The compatibility renderers are the authors' own and 'use the same conservative generic field set', so the paper did not test the published OpenTelemetry or OpenInference registries and cannot rank one against the other",
+          "Two-author, single-institution preprint; corpus is synthetic across three domains"
+        ]
+      },
+      {
+        "title": "Seeing the Whole Elephant: A Benchmark for Failure Attribution in LLM-based Multi-Agent Systems",
+        "author": "Mengzhuo Chen, Junjie Wang, Fangwen Mu, Yawen Wang, Zhe Liu, Huanxiang Feng, Qing Wang",
+        "url": "https://aclanthology.org/2026.acl-long.912/",
+        "date": "ACL 2026 (July 2026), pp. 19888-19905",
+        "class": "research-data",
+        "pillars": [
+          4,
+          3
+        ],
+        "stat": "Full traces improve attribution accuracy by up to 76.5% over a partial-observation counterpart on natural multi-agent traces.",
+        "proves": "The natural-trace leg of the localization argument: missing inputs, not weak analysis, obscure failure causes.",
+        "verification": "confirmed",
+        "secondary": [
+          "76.5% is a RELATIVE improvement over a partial-observation baseline, not an absolute accuracy",
+          "Peer-reviewed camera-ready reports 76.5%; the earlier arXiv v1 said 76%",
+          "Analyzer choice alone moves step-level accuracy substantially on identical full traces, so completeness is a precondition for attribution rather than a substitute for analysis"
+        ]
+      },
+      {
+        "title": "Grade: Graph Representation of LLM Agent Dependency and Execution",
+        "author": "Yue Zhao (University of Southern California)",
+        "url": "https://arxiv.org/abs/2606.22741",
+        "date": "Jun 22, 2026",
+        "class": "research-data",
+        "pillars": [
+          4,
+          3
+        ],
+        "stat": "Dependency-based scoring beats a position-prior baseline on Who&When top-1 localization (0.211 vs 0.159) and top-3 (0.614 vs 0.516), and stays above chance on all six held-out corpora under leave-one-corpus-out transfer (0.551 to 0.662).",
+        "proves": "A trace records which steps executed and in what order, never what each step relied on, so reliance is the part the record leaves out.",
+        "verification": "confirmed",
+        "secondary": [
+          "The +0.142 ROC-AUC gain is ABSOLUTE and is the best case, on SWE-Gym only, not a cross-corpus average",
+          "Single-author, un-peer-reviewed preprint with self-run evaluation on six public corpora",
+          "The superseded pre-mid-2026 attribution figures (53.5% agent-level, 14.2% step-level) belong to the Who&When origin paper, arXiv:2505.00212, ICML 2025, not to this work"
+        ]
+      },
+      {
+        "title": "From Agent Traces to Trust: A Survey of Evidence Tracing and Execution Provenance in LLM Agents",
+        "author": "Yiqi Wang et al.",
+        "url": "https://arxiv.org/abs/2606.04990",
+        "date": "v4, Jun 28, 2026",
+        "class": "research-data",
+        "pillars": [
+          4,
+          3
+        ],
+        "stat": "No quantitative results. The survey states that final-answer accuracy alone cannot explain how an output was produced, which evidence supported each claim, or where failures originated.",
+        "proves": "Framing and vocabulary for why an ordered event log does not answer 'why', with unified trace schemas named as an open problem rather than a solved one.",
+        "verification": "partial",
+        "secondary": [
+          "Cited for framing only; the paper runs no experiments and the body contains zero quantitative figures, so no statistic may be sourced to it",
+          "Its schema requirements sit in an Open Problems section phrased as a need",
+          "Version hazard: /abs/ serves v4 with 11 authors and 'A Survey of' in the title; v1 had 9 authors and no 'A Survey of'"
+        ]
+      },
+      {
+        "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act)",
+        "author": "European Parliament and Council",
+        "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02024R1689-20260727",
+        "date": "Consolidated EN text as of 27 July 2026",
+        "class": "research-data",
+        "pillars": [
+          4
+        ],
+        "stat": "Article 19(1) requires providers to keep automatically generated logs 'for a period appropriate to the intended purpose of the high-risk AI system, of at least six months'. Article 12(1) requires that high-risk systems 'shall technically allow for the automatic recording of events (logs) over the lifetime of the system'.",
+        "proves": "The law fixes that logs exist and how long they are kept, and never ranks which fields they must contain.",
+        "verification": "partial",
+        "secondary": [
+          "The Act's only field-level list, Article 12(3), is scoped to Annex III point 1(a) biometric identification systems and does not generalize",
+          "Article 18(1)'s ten-year clock covers compliance DOCUMENTATION, a different retention regime from log retention",
+          "Articles 26(6), 73(6) and the applicability date in Article 113 were UNREACHABLE across nine EUR-Lex routes and are deliberately not cited",
+          "All operative obligations quoted use binding 'shall'"
+        ]
+      },
+      {
+        "title": "Semantic conventions for generative client AI spans",
+        "author": "OpenTelemetry Authors",
+        "url": "https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/gen-ai-spans.md",
+        "date": "Status: Development; main-branch revision retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "`gen_ai.request.model` is Conditionally Required (example `gpt-4`) while `gen_ai.response.model` is only Recommended (example `gpt-4-0613`). System instructions and input/output messages sit at Opt-In.",
+        "proves": "The published conventions rank the model alias you sent above the model snapshot that actually answered you, which inverts the ordering that matters after a session ends.",
+        "verification": "confirmed",
+        "secondary": [
+          "Status is Development throughout, not Stable",
+          "'OpenTelemetry instrumentations SHOULD NOT capture them by default, but SHOULD provide an option for users to opt in'",
+          "The GenAI conventions moved out of the main semantic-conventions repo to a dedicated one; the old paths now serve a 'no longer maintained' stub"
+        ]
+      },
+      {
+        "title": "Semantic conventions for OpenAI client operations",
+        "author": "OpenTelemetry Authors",
+        "url": "https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/openai.md",
+        "date": "Status: Development",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "On OpenAI client spans `gen_ai.request.model` is flatly Required while `gen_ai.response.model` is only Recommended. `openai.response.system_fingerprint` is Recommended and `gen_ai.request.seed` is Conditionally Required.",
+        "proves": "No attribute that pins the execution environment is ever Required on these spans.",
+        "verification": "confirmed",
+        "secondary": [
+          "`gen_ai.operation.name` is also Required, so request-side data is not uniquely privileged",
+          "`gen_ai.system_instructions` and `gen_ai.tool.definitions` are both Opt-In"
+        ]
+      },
+      {
+        "title": "Attribute requirement levels",
+        "author": "OpenTelemetry Authors",
+        "url": "https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/attribute-requirement-level.md",
+        "date": "Status: Stable",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "Requirement levels are set 'depending on attribute availability across instrumented entities, performance, security, and other factors'. Every worked Opt-In demotion example is a retrieval-cost case, including `http.response.body.size`, demoted purely as an expensive read.",
+        "proves": "The tiering rationale is never framed as recoverability, so nothing in it distinguishes a field you can re-derive from a field that dies with the call.",
+        "verification": "confirmed",
+        "secondary": [
+          "Do NOT claim the specs 'never rank by recoverability'; that overreads an open list. The doc leaves its criteria open twice ('and other factors', 'any others specific to the signal')",
+          "Cardinality and security are named as genuine criteria, so demotion is not pure silence",
+          "Stable and signal-general, with zero GenAI or agent content, so it cannot speak directly to how the GenAI conventions reasoned",
+          "`http.response.body.size` is unrecoverable once the stream closes, yet is classified purely as an expensive operation"
+        ]
+      },
+      {
+        "title": "Tail Sampling Processor",
+        "author": "OpenTelemetry Authors",
+        "url": "https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/README.md",
+        "date": "main branch, retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "`decision_wait` defaults to 30s and `num_traces` to 50000. 'If the collector is processing more traces in-memory than the `num_traces` configuration option allows, some will have to be dropped before they can be sampled.'",
+        "proves": "Tail sampling shifts the pre-commitment rather than removing it: the decision still lands on an incomplete trace, and overflow traces are dropped before any policy evaluates them.",
+        "verification": "confirmed",
+        "secondary": [
+          "'All spans for a given trace MUST be received by the same collector instance for effective sampling decisions' is a genuine RFC-2119 MUST in the source",
+          "A 30-second default decision window is far shorter than an agent session that runs for minutes or hours"
+        ]
+      },
+      {
+        "title": "Sampling",
+        "author": "OpenTelemetry Authors",
+        "url": "https://opentelemetry.io/docs/concepts/sampling/",
+        "date": "Last modified October 16, 2025",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "Sampling is scoped to systems that 'generate 1000 or more traces per second' and advised against when you 'generate very little data (tens of small traces per second or lower)'.",
+        "proves": "Agent sessions sit far below the volume floor sampling was designed for, so the mechanism that actually deletes an agent session is retention and export policy rather than sampling.",
+        "verification": "confirmed",
+        "secondary": [
+          "Use hedged. The page prescribes tail sampling as the remedy to head sampling's whole-trace limitation in the very next sentence, and offers routing unsampled data to low-cost storage",
+          "Do NOT claim head sampling 'cannot condition on anything inside the trace'; the page's own example conditions on trace ID",
+          "An earlier, stronger version of this claim was refuted three votes to zero"
+        ]
+      },
+      {
+        "title": "OpenInference Semantic Conventions",
+        "author": "Arize AI",
+        "url": "https://arize-ai.github.io/openinference/spec/semantic_conventions.html",
+        "date": "undated; main-branch revision retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "Exactly one attribute, `openinference.span.kind`, is required across all spans, and there is no Required/Recommended/Opt-In tiering at all. Of the request/response model split the spec says: 'Both are optional' and 'Most providers echo the same model back, so these attributes will typically be unset.'",
+        "proves": "Requiredness in the published menus is thin and unranked, so which fields you compel is your decision rather than a settled fact.",
+        "verification": "confirmed",
+        "secondary": [
+          "`llm.model_name` is conditionally required 'where applicable', so say 'exactly one attribute required across all spans', not 'one per span'",
+          "`llm.prompt_template.version` DOES exist here, so prompt versioning is not missing from the menus",
+          "The spec's three MUSTs govern SDK support and enum value selection, never per-span emission"
+        ]
+      },
+      {
+        "title": "AOS Schema (version 0.1.0)",
+        "author": "OWASP Agent Observability Standard",
+        "url": "https://github.com/OWASP/www-project-agent-observability-standard/blob/dev/specification/AOS/aos_schema.json",
+        "date": "self-declared version 0.1.0; dev branch retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "The Agent object requires `instructions` and `version` while leaving `model` and `tools` out of the required set. The Model object requires only `id`, `name` and `provider`, and has no version or snapshot property; the string 'snapshot' appears zero times in the file.",
+        "proves": "The spec that mandates recording the agent's own version has no field in its trace record for the model's.",
+        "verification": "confirmed",
+        "secondary": [
+          "Served from the moving `dev` branch, not a tagged release, so the file can change under the claim",
+          "AOS `required` is a JSON entity-validity constraint while OpenTelemetry Opt-In is a span-capture policy, so say the menus 'assign sharply different requiredness' rather than 'contradict'",
+          "`$defs/A2APartialAgentDetails` defines an inline agent shape with no required array at all"
+        ]
+      },
+      {
+        "title": "Inspect with AgBOM",
+        "author": "OWASP Agent Observability Standard",
+        "url": "https://aos.owasp.org/spec/inspect/",
+        "date": "undated; footer copyright 2025",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "The AgBOM Models entity carries 'Name, Version, Description, Endpoint, Context Window, Args', and 'Model discovered, removed or changed capabilities' is a trigger for AgBOM update. 'AgBOM must dynamically adapt to reflect the rapid iteration and evolution of agent architectures.'",
+        "proves": "Model version lives in a dynamically refreshed inventory of what is deployed now, so after an incident it reports the current version rather than the one that served the failed session.",
+        "verification": "confirmed",
+        "secondary": [
+          "Do NOT claim AOS has no model version field anywhere; it has one, just not in the per-call trace record",
+          "The three BoM bindings are self-labeled 'Working draft', 'Help wanted' and 'Help wanted'"
+        ]
+      },
+      {
+        "title": "Model deprecations",
+        "author": "Anthropic",
+        "url": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "date": "undated; deprecation history runs through Jun 5, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4
+        ],
+        "stat": "'Retired: The model is no longer available for use. Requests to retired models will fail.' `claude-opus-4-1-20250805` was deprecated June 5, 2026 and retired August 5, 2026, with 'at least 60 days' notice before model retirement for publicly released models'.",
+        "proves": "The model snapshot named in a trace is retired on a vendor-published clock, so re-running the session is not a fallback.",
+        "verification": "confirmed",
+        "secondary": [
+          "The 60-day notice goes to 'customers with active deployments', not all customers",
+          "The table column is headed 'Tentative retirement date' and Active models read 'Not sooner than', a floor rather than a fixed date",
+          "Dates cover Anthropic-operated platforms only; Amazon Bedrock and Google Cloud set their own schedules",
+          "The page commits to long-term weight preservation but never states that preservation is not continued API availability; that connection is inference"
+        ]
+      },
+      {
+        "title": "Model IDs and versioning",
+        "author": "Anthropic",
+        "url": "https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions",
+        "date": "undated; retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4
+        ],
+        "stat": "'Model weights are fixed for a given ID, but the serving infrastructure around the model can change over time. This infrastructure includes components such as the request router, safety classifiers, and sampling logic.'",
+        "proves": "Pinning a model ID is not sufficient to reproduce a past session, because the serving stack around fixed weights moves independently.",
+        "verification": "confirmed",
+        "secondary": [
+          "The alias-resolves-over-time framing applies to PRE-4.6 models; for 4.6 and later the dateless ID is the snapshot, not an alias",
+          "'Every model ID, whether dated or dateless, has its own distinct deprecation and retirement schedule'",
+          "The page contains no 'use pinned IDs in production' recommendation"
+        ]
+      },
+      {
+        "title": "Messages (API reference)",
+        "author": "Anthropic",
+        "url": "https://platform.claude.com/docs/en/api/messages",
+        "date": "undated; retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "'Note that even with `temperature` of `0.0`, the results will not be fully deterministic.' No seed parameter exists anywhere in the request body schema.",
+        "proves": "The vendor states about its own API that re-running does not reproduce a session, and offers no seed to pin it.",
+        "verification": "confirmed",
+        "secondary": [
+          "`temperature`, `top_p` and `top_k` are all now marked Deprecated for models released after Claude Opus 4.6, with non-compatibility values rejected as 400 errors",
+          "The absence of `seed` is a documented omission verified against the full enumerated parameter list"
+        ]
+      },
+      {
+        "title": "Glossary",
+        "author": "Anthropic",
+        "url": "https://platform.claude.com/docs/en/about-claude/glossary",
+        "date": "undated; retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "'Even with temperature set to 0, the results will not be fully deterministic and identical inputs may produce different outputs across API calls. This applies both to Anthropic's first-party inference service and to inference through third-party cloud providers.'",
+        "proves": "Closes the 'we run on a third-party cloud so we can replay it' objection with first-party wording.",
+        "verification": "confirmed",
+        "secondary": [
+          "The statement lives inside the Temperature entry; there is no separate determinism glossary term"
+        ]
+      },
+      {
+        "title": "Scaling Managed Agents: Decoupling the brain from the hands",
+        "author": "Lance Martin, Gabe Cemaj, Michael Cohen (Anthropic Engineering)",
+        "url": "https://www.anthropic.com/engineering/managed-agents",
+        "date": "Apr 8, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "'Our only window in was the WebSocket event stream, but that couldn't tell us where failures arose, which meant that a bug in the harness, a packet drop in the event stream, or a container going offline all presented the same.'",
+        "proves": "A first-party operator account that having a telemetry stream is not the same as being able to localize a failure.",
+        "verification": "confirmed",
+        "secondary": [
+          "Cited for the BEFORE state only. A full-text search confirms the article never reports an observability after-state",
+          "It names decoupling as the fix and scopes its durable event log to crash recovery and model-side context interrogation",
+          "Its quantified improvements (p50 TTFT down roughly 60%, p95 over 90%) are latency, not observability"
+        ]
+      },
+      {
+        "title": "How we built our multi-agent research system",
+        "author": "Jeremy Hadfield, Barry Zhang, Kenneth Lien, Florian Scholz, Jeremy Fox, Daniel Ford (Anthropic Engineering)",
+        "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+        "date": "Jun 13, 2025",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "'Agents make dynamic decisions and are non-deterministic between runs, even with identical prompts.' Scale context: 'Simple fact-finding requires just 1 agent with 3-10 tool calls, direct comparisons might need 2-4 subagents with 10-15 calls each'.",
+        "proves": "Operator confirmation that a session cannot be reproduced by re-running it, and that adding full production tracing is what made failures diagnosable.",
+        "verification": "confirmed",
+        "secondary": [
+          "Published June 2025; date-stamp it",
+          "The article's headline 90.2% figure is a RELATIVE internal-eval result comparing multi-agent to single-agent performance and is unrelated to tracing; it must not be imported into an observability argument"
+        ]
+      },
+      {
+        "title": "Managed Agents tutorial: prompt versioning and rollback",
+        "author": "Mark Nowicki (Anthropic, Claude Cookbook)",
+        "url": "https://platform.claude.com/cookbook/managed-agents-cma-prompt-versioning-and-rollback",
+        "date": "Apr 7, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "'If callers are passing the bare agent ID instead of a pinned version, they'll start using the new prompt on their very next session.' 'There's no built-in approval workflow on `agents.update`. Any key in the workspace can call it.'",
+        "proves": "The system prompt you actually called is a server-side object whose identity floats unless the exact version is pinned and recorded.",
+        "verification": "confirmed",
+        "secondary": [
+          "Vendor tutorial content documenting one platform's behavior, not a product guarantee or an industry-wide claim",
+          "Quote the wording as 'approval workflow', not 'approval gate'"
+        ]
+      },
+      {
+        "title": "Deprecations",
+        "author": "OpenAI",
+        "url": "https://developers.openai.com/api/docs/deprecations",
+        "date": "undated; most recent entry Aug 26, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4
+        ],
+        "stat": "'At the time of the shut down, the model or endpoint will no longer be accessible.' Notice floors are at least 6 months for GA models, at least 3 months for specialized variants, and as little as 'such as 2 weeks' for preview models.",
+        "proves": "The same retirement mechanism from the second vendor, with published notice floors rather than guarantees.",
+        "verification": "confirmed",
+        "secondary": [
+          "The 3-month tier is named 'Specialized variants' and includes chat variants such as `gpt-5.1-chat-latest`, not only Codex and deep research",
+          "A safety or compliance carve-out can shorten every tier to 'as much notice as reasonably possible'",
+          "Counterargument that must be acknowledged: 'In some cases, developers may be able to provision dedicated capacity for continued access after a model's shutdown date', a sales-gated exception"
+        ]
+      },
+      {
+        "title": "Models (API reference)",
+        "author": "OpenAI",
+        "url": "https://developers.openai.com/api/reference/resources/models",
+        "date": "undated; retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4
+        ],
+        "stat": "The Model object exposes `shutdown_date`: 'The date when the model will shut down, or null if not announced.'",
+        "proves": "Model expiry is a machine-readable value you can capture at call time rather than reconstruct later.",
+        "verification": "confirmed",
+        "secondary": [
+          "The page documents the field only; it does not argue for capturing it in a trace and never mentions observability"
+        ]
+      },
+      {
+        "title": "Create chat completion (API reference)",
+        "author": "OpenAI",
+        "url": "https://developers.openai.com/api/docs/api-reference/chat/create",
+        "date": "undated; retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "'Determinism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.' The `seed` parameter is still labelled 'This feature is in Beta.'",
+        "proves": "The current, non-archived provider determinism contract: the serving configuration is knowable only from a response field you capture at request time.",
+        "verification": "confirmed",
+        "secondary": [
+          "The Responses API, OpenAI's newer agent-facing endpoint, exposes neither `seed` nor `system_fingerprint` anywhere in its 30 documented parameters"
+        ]
+      },
+      {
+        "title": "Migrate from prompt objects",
+        "author": "OpenAI",
+        "url": "https://developers.openai.com/api/docs/guides/prompting/migrate-from-prompt-object",
+        "date": "undated; retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "'Prompt creation will be de-emphasized beginning June 3, 2026, and `v1/prompts` is scheduled to shut down on November 30, 2026.' The stated migration is to 'move the prompt content out of the managed `prompt` object and into your application code.'",
+        "proves": "A trace field holding a hosted prompt pointer is a perishable reference, and the vendor's own advice points the same direction as recording resolved content.",
+        "verification": "partial",
+        "secondary": [
+          "The page does NOT state whether existing prompt IDs remain retrievable after shutdown; that a stored pointer stops resolving is inference from 'scheduled to shut down', not a sourced vendor statement"
+        ]
+      },
+      {
+        "title": "Data controls in the OpenAI platform",
+        "author": "OpenAI",
+        "url": "https://developers.openai.com/api/docs/guides/your-data",
+        "date": "undated; retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4
+        ],
+        "stat": "Default application-state retention on the Responses API and Chat Completions is 'None, see below for exceptions'. 'When Zero Data Retention is enabled for an organization, the `store` parameter will always be treated as `false`, even if the request attempts to set the value to `true`.' Abuse-monitoring logs are 'retained for up to 30 days'.",
+        "proves": "The provider's own copy is not a fallback: retention defaults and org policy decide the session's fate before any incident surfaces.",
+        "verification": "confirmed",
+        "secondary": [
+          "Defaults flip by endpoint: Assistants, Threads, Vector Stores and Conversations default to 'Until deleted', so the claim must name which API surface it means",
+          "The page does not describe a customer-facing mechanism to query abuse-monitoring logs, which is absence of evidence rather than a documented prohibition"
+        ]
+      },
+      {
+        "title": "Tracing (OpenAI Agents SDK)",
+        "author": "OpenAI",
+        "url": "https://openai.github.io/openai-agents-python/tracing/",
+        "date": "undated; retrieved Sep 1, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "'Tracing is unavailable for organizations that use OpenAI's APIs under a Zero Data Retention (ZDR) policy.' Replacing default processors via `set_trace_processors()` means 'traces will not be sent to the OpenAI backend unless you include a `TracingProcessor` that does so.'",
+        "proves": "Framework tracing is on by default and can be removed wholesale by org policy or by a configuration change, neither of which raises a runtime error.",
+        "verification": "confirmed",
+        "secondary": [
+          "Scope to the OpenAI Agents SDK specifically, not agent frameworks generally",
+          "Calling the processor-replacement behavior 'silent' is characterization; the page phrases it as an instructive note"
+        ]
+      },
+      {
+        "title": "Observability concepts (LangSmith)",
+        "author": "LangChain",
+        "url": "https://docs.langchain.com/langsmith/observability-concepts",
+        "date": "JSON-LD dateModified Aug 4, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4
+        ],
+        "stat": "'LangSmith (SaaS) retains trace data for 180 days from ingestion. After that, traces are permanently deleted, with limited metadata retained for usage statistics.' 'Each trace is limited to a maximum of 25,000 runs. Once the trace reaches this limit, LangSmith will reject any additional runs that you send for that trace.'",
+        "proves": "Two hard vendor-documented deletion boundaries: a retention cliff, and a per-trace cap that rejects the tail of a long session where failures accumulate.",
+        "verification": "confirmed",
+        "secondary": [
+          "Both figures verified first-party from the page payload on Sep 1, 2026"
+        ]
+      },
+      {
+        "title": "Core Concepts (observability data model)",
+        "author": "Langfuse",
+        "url": "https://langfuse.com/docs/observability/data-model",
+        "date": "page payload lastUpdate Aug 28, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4
+        ],
+        "stat": "'To avoid losing data, short-lived applications must explicitly call flush() before exiting.'",
+        "proves": "A documented silent-loss path that hits exactly the CI-agent and one-shot-job shape, where the process exits before the background batcher sends.",
+        "verification": "confirmed",
+        "secondary": [
+          "The data model defines observation, trace and session with no required-versus-optional tiering"
+        ]
+      },
+      {
+        "title": "Agent observability: how to trace, debug, and improve AI agents",
+        "author": "Aryan Kargwal (Arize AI)",
+        "url": "https://arize.com/ai-agents/agent-observability/",
+        "date": "last updated Aug 6, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "'Observe the outcome it produced, the path it followed, the actions it attempted, and the context that informed its decisions. These are the core observation surfaces, not an exhaustive checklist.'",
+        "proves": "The strongest counterexample in the landscape: a genuine ranking of what to capture, on a diagnostic axis rather than a survivability one.",
+        "verification": "confirmed",
+        "secondary": [
+          "Cited to prevent the post from claiming nobody ranks anything, which would be false",
+          "Never addresses whether a field can still be obtained after the session ends"
+        ]
+      },
+      {
+        "title": "Ten AI Agents Destroyed Production. Zero Postmortems.",
+        "author": "Harper Foley",
+        "url": "https://www.harperfoley.com/blog/ai-agents-destroyed-production-zero-postmortems",
+        "date": "Mar 8, 2026",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          5
+        ],
+        "stat": "'10 documented incidents across 6 AI coding tools in 16 months. Missing audit trails, no liability frameworks, no vendor postmortems. The accountability infrastructure doesn't exist.'",
+        "proves": "Operator-side evidence that the reconstruction gap is real in production and not a theoretical concern.",
+        "verification": "confirmed",
+        "secondary": [
+          "Independent practitioner survey of public incidents, not a peer-reviewed dataset or a vendor postmortem"
+        ]
+      }
+    ]
   }
 ]
