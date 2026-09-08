@@ -5203,5 +5203,956 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "switching-between-ai-coding-agents",
+    "sources": [
+      {
+        "title": "An Empirical Characterization of Outages and Incidents in Public Services for Large Language Models",
+        "author": "Xiaoyu Chu, Sacheendra Talluri, Qingxian Lu, Alexandru Iosup (VU Amsterdam)",
+        "url": "https://arxiv.org/abs/2501.12469",
+        "date": "Jan 21, 2025 (v2: Mar 15, 2025; ICPE '25)",
+        "class": "research-data",
+        "pillars": [
+          2,
+          4,
+          6
+        ],
+        "stat": "For Anthropic's services, the likelihood of any two services experiencing outages on the same day is over 80%, while no correlation is observed between services from different providers. Anthropic averaged an MTTR of 2.70 hours and an MTBF of 5.22 days across the study window.",
+        "proves": "A vendor's surfaces fail together, so the vendor, not the individual product, is the failure domain to plan around.",
+        "verification": "confirmed",
+        "secondary": [
+          "Data window ends 2024-08-31 across 8 services from OpenAI, Anthropic and Character.AI; the over-80% figure is Anthropic-specific",
+          "The mechanism is hedged: the paper says the difference may be caused by different cloud infrastructures (OpenAI on Azure, Anthropic on GCP)",
+          "The 49.21% OpenAI figure is API-to-ChatGPT co-occurrence specifically, not a whole-provider aggregate",
+          "Only 6.15% of reports disclose a postmortem; Anthropic provided none for its API and Console services"
+        ]
+      },
+      {
+        "title": "A postmortem of three recent issues",
+        "author": "Anthropic",
+        "url": "https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues",
+        "date": "Sep 17, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Approximately 30% of Claude Code users who made requests during the affected window had at least one message routed to the wrong server type. Misrouting peaked at 16% of Sonnet 4 requests on the first-party platform on August 31, 0.18% on Amazon Bedrock, and under 0.0004% on Google Cloud's Vertex AI.",
+        "proves": "The same model degraded very differently by serving path, and internal evals did not catch what users were reporting.",
+        "verification": "confirmed",
+        "secondary": [
+          "The 30% figure counts users with at least one misrouted message, not sustained degradation, and is scoped to Claude Code users",
+          "Routing was sticky, so a request served by the wrong server made follow-ups likely to hit it too",
+          "The piece shows containment within Anthropic's own infrastructure; it cannot speak to other vendors being unaffected in the same window",
+          "Bug 2 and Bug 3 date boundaries are less crisp in the text; verify before quoting bug-by-bug ranges"
+        ]
+      },
+      {
+        "title": "Elevated errors for multiple models",
+        "author": "Anthropic (status.claude.com)",
+        "url": "https://status.claude.com/incidents/461yvfrzpwtt",
+        "date": "Sep 3, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "A major-impact incident on 2026-09-03 ran from 13:26 to 16:23 UTC (2h57m) and listed claude.ai, the Claude API, Claude Code and Claude Cowork as affected components.",
+        "proves": "A model-layer outage takes Claude Code down with every other Anthropic surface at once, which is the drill the post runs.",
+        "verification": "partial",
+        "secondary": [
+          "No dedicated dossier deep read; the timeline and affected components come from the status.claude.com incidents feed captured on 2026-09-07",
+          "The incident sits in a rolling status window and will age out of the public feed"
+        ]
+      },
+      {
+        "title": "Elevated errors on Sonnet 5 and Haiku 4.5",
+        "author": "Anthropic (status.claude.com)",
+        "url": "https://status.claude.com/incidents/7gpjd8n56rlq",
+        "date": "Jul 17, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "A single model incident on 2026-07-17 affected claude.ai, Claude API (api.anthropic.com), Claude Code, and Claude Cowork from 06:47 to 12:21 UTC, roughly 5 hours 34 minutes, and the status regressed from Monitoring back to Identified at 07:10 UTC before resolution.",
+        "proves": "Outages co-occur inside a provider: one model incident took the coding agent down with the API and the chat product.",
+        "verification": "confirmed",
+        "secondary": [
+          "Single-vendor incident; says nothing about cross-vendor correlation",
+          "Non-monotonic status (a fix declared at 07:03 UTC, then reverted) is why a status page reading needs the full timeline, not the latest update"
+        ]
+      },
+      {
+        "title": "Model output quality",
+        "author": "Anthropic (status.claude.com)",
+        "url": "https://status.claude.com/incidents/72f99lh1cj2c",
+        "date": "Sep 9, 2025 to Sep 17, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "The public incident opened on Sep 9, 2025 for a Claude Sonnet 4 bug that started Aug 5 and a second bug affecting Claude Haiku 3.5 and Sonnet 4 from Aug 26; the detection method is recorded as community reports helping identify and isolate the bugs.",
+        "proves": "Quality degradation ran for weeks before the vendor opened an incident, and users detected it first.",
+        "verification": "partial",
+        "secondary": [
+          "Affected components list claude.ai, Claude Console, Claude API and Claude Code; single-vendor and cannot speak to cross-vendor correlation",
+          "A Sep 12 monitoring update said no ongoing issues five days before the Sep 17 resolution",
+          "The engineering postmortem is the fuller account of the same bugs"
+        ]
+      },
+      {
+        "title": "Elevated errors on Claude Code and Claude Cowork",
+        "author": "Anthropic (status.claude.com)",
+        "url": "https://status.claude.com/incidents/vr9tpk8w7zr8",
+        "date": "Aug 28, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Anthropic's Identified update at 17:22 UTC on 2026-08-28 reads: 'We have identified an issue with an upstream cloud provider affecting Claude Cowork and Claude Code on the web.' The major-impact incident ran until 20:21 UTC, about 2h59m.",
+        "proves": "An upstream cloud provider, not a model, can take the coding agent down, so the failure domain includes the vendor's own infrastructure dependencies.",
+        "verification": "partial",
+        "secondary": [
+          "No dedicated dossier deep read; the quote and timeline come from the status.claude.com incidents feed captured on 2026-09-07",
+          "The upstream provider is not named",
+          "Scoped to Claude Code on the web and Claude Cowork, not the terminal client"
+        ]
+      },
+      {
+        "title": "Claude Status",
+        "author": "Anthropic (status.claude.com)",
+        "url": "https://status.claude.com/",
+        "date": "undated (live; feed updated 2026-09-07)",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "As displayed on 2026-09-07, 90-day uptime read 99.44% for Claude Code, 99.5% for the Claude API, 99.4% for claude.ai and 99.43% for Claude Cowork. The incidents feed held 28 entries from 2026-08-04 to 2026-09-03, 19 of them listing Claude Code among affected components.",
+        "proves": "Anthropic's surfaces fail together repeatedly, and any incident count drawn from the page must carry a date because the feed is a rolling window.",
+        "verification": "partial",
+        "secondary": [
+          "A prior-pass count (37 of 50 incidents from 2026-07-21) could not be reproduced; the feed's earliest entry had moved to 2026-08-04, so counts shrink over time",
+          "The 19-of-28 and 9 major-or-critical figures are derived by itemizing the feed, not stated by the page",
+          "Provides nothing on cross-vendor correlation"
+        ]
+      },
+      {
+        "title": "Elevated error rates",
+        "author": "OpenAI (status.openai.com)",
+        "url": "https://status.openai.com/incidents/01JXCAW3K3JAE0EP56AEZ7CBG3/write-up",
+        "date": "Jun 9 to Jun 10, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "ChatGPT users experienced elevated error rates reaching about 35% at peak while API error rates peaked near 25%, and API availability dropped to 75%; the absence of break-glass tooling to rapidly restore network connectivity on affected nodes extended the overall recovery timeline.",
+        "proves": "The second vendor has its own outage character: a routine host-OS update on GPU nodes fanned out into a roughly 15-hour cross-product outage.",
+        "verification": "partial",
+        "secondary": [
+          "The write-up does not mention Codex anywhere; only ChatGPT and the API are named, so the earlier 'Codex listed as affected' claim was dropped",
+          "Root cause was a systemd-networkd restart conflicting with a production networking agent, which removed all routes from affected nodes",
+          "Remediation disabled automatic daily updates on GPU systems"
+        ]
+      },
+      {
+        "title": "Access issues affecting OpenAI websites",
+        "author": "OpenAI (status.openai.com)",
+        "url": "https://status.openai.com/incidents/01KABE2437NJYKBFHT22SD3H92",
+        "date": "Nov 18, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "'We have confirmed that the incident is caused by an issue with one of our third-party service providers.' The outage affected APIs and ChatGPT from 12:12 PM to 3:18 PM, roughly 3 hours 6 minutes.",
+        "proves": "Premise (a) of the shared-edge judgment: OpenAI attributed a multi-hour outage to an unnamed upstream provider.",
+        "verification": "confirmed",
+        "secondary": [
+          "No provider is named; do not assert Cloudflare from this source",
+          "The promised root cause analysis was not located",
+          "Over an hour passed before the cause category was named"
+        ]
+      },
+      {
+        "title": "Cloudflare outage on November 18, 2025",
+        "author": "Cloudflare",
+        "url": "https://blog.cloudflare.com/18-november-2025-outage/",
+        "date": "Nov 18, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "A change to a database system's permissions caused it to output multiple entries into a Bot Management feature file, which doubled in size and broke core traffic from 11:20 UTC, with recovery around 14:30 UTC and full normalization by 17:06 UTC.",
+        "proves": "Premise (b) of the shared-edge judgment: a shared edge provider failed the same day, in an overlapping window, from an internal change.",
+        "verification": "partial",
+        "secondary": [
+          "Names no AI vendor; the link to OpenAI's same-day incident is time-consistent but neither postmortem names the other",
+          "Explicitly not caused by an attack or malicious activity",
+          "No same-day Anthropic incident could be retrieved from the rolling status feed, so the shared-edge claim stays author's judgment"
+        ]
+      },
+      {
+        "title": "Harness Engineering for Agentic AI Coding Tools: An Exploratory Study",
+        "author": "Matthias Galster, Seyedmoein Mohsenimofidi, Jai Lal Lulla, Muhammad Auwal Abubakar, Christoph Treude, Sebastian Baltes",
+        "url": "https://arxiv.org/abs/2602.14690",
+        "date": "Feb 16, 2026 (v5: Jun 30, 2026)",
+        "class": "research-data",
+        "pillars": [
+          2
+        ],
+        "stat": "Across 2,853 repositories, 2,015 (70.6%) adopted a single tool while 295 (10.3%) configured two, and 493 repositories (17.3%) used AGENTS.md as a tool-agnostic standard without any tool-specific artifact. The paper recommends that developers who rely on multiple tools maintain an AGENTS.md file as the shared core configuration, with tool-specific files as adapters that reference it.",
+        "proves": "The shared-core-plus-adapters layout is the empirically observed pattern and the paper's own recommendation, not a preference of the post.",
+        "verification": "confirmed",
+        "secondary": [
+          "Keep repo-level adoption (AGENTS.md 39.5%, CLAUDE.md 45.9%) separate from file-count share (31.6% and 34.4%); the paper reports both",
+          "No mechanism beyond context files exceeds 20% adoption for Claude, Copilot, Cursor or Gemini; 72.8% of Cursor repositories adopt Rules",
+          "Adopting tool-specific mechanisms such as Rules or Commands ties workflows to a specific tool, in the paper's own words",
+          "85.5% of Skills include no additional resources, so Skills function primarily as structured text"
+        ]
+      },
+      {
+        "title": "Harness Engineering: Anatomy, Architecture, and Evolution of Coding Agents, A Source-Code Study of Eleven Systems",
+        "author": "Paul Barbaste, Tristan Darrigol, Germain Vu, Tom Wiltberger",
+        "url": "https://arxiv.org/abs/2609.00006",
+        "date": "Jul 15, 2026 (expanded second edition of an April 2026 study)",
+        "class": "research-data",
+        "pillars": [
+          2
+        ],
+        "stat": "Across eleven harnesses and roughly four million lines of source, SKILL.md skills lead MCP in adoption (9/11 vs 8/11), OpenHands runs Claude Code, Codex, or Gemini CLI as interchangeable backends, and Codex adopts Claude Code's hook vocabulary verbatim and ships an importer for its sessions and settings.",
+        "proves": "The harness layer has converged enough that one harness can host its rivals, and behavioral policy is migrating from prompt prose into configuration.",
+        "verification": "partial",
+        "secondary": [
+          "Per-harness hook event counts (Gemini CLI 11, Pi about 33, OpenCode 20), the 'hooks in 9/11' aggregate and the Polly per-task worktree example could not be located in the paper; those figures are sourced first-party from vendor docs instead",
+          "No agent runtime in the corpus imports a general-purpose agentic framework or retrieves code with vector embeddings",
+          "Preprint; bibliography was not extractable in the deep read"
+        ]
+      },
+      {
+        "title": "Evaluating AGENTS.md: Are Repository-Level Context Files Helpful for Coding Agents?",
+        "author": "Gloaguen, Mündler, Müller, Raychev, Vechev (ETH Zurich)",
+        "url": "https://arxiv.org/abs/2602.11988",
+        "date": "Feb 12, 2026 (revised Jun 23, 2026)",
+        "class": "research-data",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "Providing context files does not generally improve task success rates while increasing inference cost by over 20% on average. Developer-provided files improved performance by 2.4% on average, not statistically significant (p=21%); LLM-generated files caused drops in 5 of 8 settings.",
+        "proves": "The most portable layer of the setup is not the most valuable one, so portability of AGENTS.md should not be mistaken for leverage.",
+        "verification": "confirmed",
+        "secondary": [
+          "Context files increased steps in every setting, by 2.45 and 3.92 on average, driving cost increases of 20% and 23% on SWE-bench and CTXbench respectively",
+          "Developer-provided files significantly outperform LLM-generated ones (p=3.8%)",
+          "Instructions are well followed; repository overviews, although recommended by model providers, are not helpful"
+        ]
+      },
+      {
+        "title": "AGENTS.md outperforms skills in our agent evals",
+        "author": "Jude Gao (Vercel)",
+        "url": "https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals",
+        "date": "Jan 27, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "In 56% of eval cases the skill was never invoked. A compressed 8KB docs index embedded directly in AGENTS.md achieved a 100% pass rate while skills maxed out at 79%; skills without explicit instructions matched the no-docs baseline at 53%.",
+        "proves": "Whether an agent uses a portable artifact depends on the harness deciding to load it, which is a per-tool behavior rather than a property of the file.",
+        "verification": "partial",
+        "secondary": [
+          "Vendor eval on Next.js 16 API tasks; no inference-cost delta is reported on the page",
+          "The docs injection started at about 40KB and was compressed to 8KB, an 80% reduction"
+        ]
+      },
+      {
+        "title": "Terminal-Bench 2.1",
+        "author": "The Terminal-Bench Team (Kelly Buchanan, TB2.1 Lead)",
+        "url": "https://www.tbench.ai/news/terminal-bench-2-1",
+        "date": "undated",
+        "class": "research-data",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "On Terminal-Bench 2.1 the same model scores differently under different harnesses: Opus 4.6 at 70.1% in Claude Code vs 63.8% in Terminus 2, GPT-5.4 at 77.3% in Codex CLI vs 54.8% in Terminus 2, Gemini 3.1 Pro at 70.7% in Terminus 2 vs 67.1% in Gemini CLI.",
+        "proves": "A model-versus-model leaderboard cannot tell you how a swap will perform, because the harness moves the score.",
+        "verification": "partial",
+        "secondary": [
+          "The page never states a harness-versus-harness comparison in prose; the pairs are read off the agent-model table, and the harness-causation argument is the post's inference",
+          "The release fixes 28 of the 89 tasks in Terminal-Bench 2.0; the largest gain is Claude Code with Opus 4.6, up 12.1%",
+          "Additional pairs: GPT-5.4 mini 66.1% in Codex CLI vs 36.9% in Terminus 2; Sonnet 4.6 58.5% in Claude Code vs 51.5%"
+        ]
+      },
+      {
+        "title": "Claude Code on Amazon Bedrock",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/amazon-bedrock",
+        "date": "undated (version markers v2.1.172 to v2.1.239)",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "When using Amazon Bedrock, the /logout command is unavailable and the WebSearch tool is not available. Without pinning, model aliases such as sonnet and opus resolve to Claude Code's built-in default for Bedrock, which can lag the newest release, and Claude Code falls back to an earlier or lower-tier model at startup when the default is unavailable.",
+        "proves": "A second serving path for the same agent is a cheaper hedge than a second vendor, and it has a named feature cost.",
+        "verification": "confirmed",
+        "secondary": [
+          "Enabled with CLAUDE_CODE_USE_BEDROCK=1 plus AWS_REGION",
+          "A gateway that rewrites Content-Type on streaming responses forces a slower non-streaming path on every turn",
+          "The startup fallback is not persisted"
+        ]
+      },
+      {
+        "title": "Other LLM gateways",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/llm-gateway",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "'The tradeoff is that the gateway becomes infrastructure your organization operates. Claude Code adds capabilities with each release, and a gateway that doesn't forward them breaks the corresponding features.' ANTHROPIC_BASE_URL is the variable that points Claude Code at the gateway.",
+        "proves": "Routing through a gateway buys provider switching and central credentials at the price of running infrastructure that must track the agent's release cadence.",
+        "verification": "confirmed",
+        "secondary": [
+          "Anthropic does not endorse, maintain or audit third-party gateways and does not support routing Claude Code to non-Claude models through any gateway",
+          "Provider switching without reconfiguring machines depends on the gateway exposing a single Anthropic-format endpoint",
+          "While a gateway credential variable or apiKeyHelper is active, a developer's claude.ai subscription is not used"
+        ]
+      },
+      {
+        "title": "How Claude remembers your project",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/memory",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'Claude Code reads CLAUDE.md, not AGENTS.md. If your repository already uses AGENTS.md for other coding agents, create a CLAUDE.md that imports it so both tools read the same instructions without duplicating them.' Memory files are treated as context, not enforced configuration; to block an action regardless of what Claude decides, use a PreToolUse hook.",
+        "proves": "The bridge for Claude Code is a one-line import, and the instruction file is advisory rather than enforcing.",
+        "verification": "confirmed",
+        "secondary": [
+          "A symlink also works, but Windows symlinks need Administrator privileges or Developer Mode, so the @AGENTS.md import is the recommended route",
+          "Default /init reads Cursor and Copilot rules only; AGENTS.md, Devin, Windsurf and Cline rules are read only with CLAUDE_CODE_NEW_INIT=1",
+          "/import brings another agent's instruction files, MCP servers, commands, subagents and skills into Claude Code (v2.1.213 or later)",
+          "CLAUDE.md is delivered as a user message after the system prompt, with no guarantee of strict compliance"
+        ]
+      },
+      {
+        "title": "Hooks reference",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/hooks",
+        "date": "undated (version notes run through v2.1.248)",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'Hooks are user-defined shell commands, HTTP endpoints, MCP tool calls, LLM prompts, or subagents that execute automatically at specific points in Claude Code's lifecycle.' The reference lists 33 events, five handler types and seven configuration locations, and exit 2 means a blocking error that even a JSON permissionDecision of allow cannot override.",
+        "proves": "Hooks are a vendor-specific enforcement surface with their own event vocabulary, so they belong in the per-tool adapter pile.",
+        "verification": "confirmed",
+        "secondary": [
+          "Matcher semantics changed across point releases (v2.1.195, v2.1.214, v2.1.248), so hook configs are version-sensitive",
+          "The page says handlers run in the current directory with Claude Code's environment; it does not say 'full user permissions', treat that as inference",
+          "Cloud sessions on Claude Code on the web do not read local ~/.claude/settings.json; hooks there come from the repo and server-managed settings"
+        ]
+      },
+      {
+        "title": "Choose a permission mode",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/permission-modes",
+        "date": "undated (version-gated content up to v2.1.257)",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Six named modes (default, acceptEdits, plan, auto, dontAsk, bypassPermissions) plus a classifier. Setting auto or bypassPermissions in .claude/settings.json or .claude/settings.local.json does not take effect; if the classifier blocks an action 3 times in a row or 20 times total, auto mode pauses, and those thresholds are not configurable.",
+        "proves": "Claude Code's permission model is a product-specific state machine that cannot be expressed in another tool's config, and parts of it cannot be set from the repo at all.",
+        "verification": "confirmed",
+        "secondary": [
+          "On Pro, Max and Team plans the built-in starting mode is auto (v2.1.228 or later); Enterprise, API-key, claude -p, Agent SDK and Bedrock sessions start in Manual",
+          "The classifier runs on Claude Sonnet 5 by default regardless of the /model selection",
+          "Under auto mode a subagent's permissionMode frontmatter is ignored",
+          "permissions.allow rules do not pre-approve protected-path writes"
+        ]
+      },
+      {
+        "title": "Create custom subagents",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/sub-agents",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Subagent frontmatter carries permissionMode, hooks, mcpServers, maxTurns, memory and isolation (set to worktree to run in a temporary git worktree), and when the parent runs auto mode any permissionMode in the subagent frontmatter is ignored.",
+        "proves": "The subagent file format is markdown with YAML frontmatter, but the fields are Claude Code's own and do not map onto other tools.",
+        "verification": "confirmed",
+        "secondary": [
+          "Definition precedence: managed settings, --agents CLI flag, .claude/agents/, ~/.claude/agents/, plugin agents; the definition closest to the working directory wins (v2.1.178+)",
+          "Subagent hooks support PreToolUse, PostToolUse and Stop, converted to SubagentStop at runtime",
+          "permissionMode: bypassPermissions is ignored when permissions.disableBypassPermissionsMode is set (v2.1.223+)"
+        ]
+      },
+      {
+        "title": "Extend Claude with skills",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/skills",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'Outside Claude Code, you can use only the fields in the Agent Skills spec. If you include any field the spec doesn't allow, packaging or upload fails with a hard error instead of ignoring the field.' Six fields are portable: name, description, license, compatibility, metadata, allowed-tools.",
+        "proves": "A SKILL.md ports only when it stays inside the spec; Claude-Code-only fields like hooks, shell, argument-hint and disable-model-invocation are adapter-layer.",
+        "verification": "partial",
+        "secondary": [
+          "The hard-error enforcement is documented for Anthropic's own paths (claude.ai uploads, the Skills API, package_skill.py); the page never mentions Codex, Cursor or Gemini CLI, so do not cite it as evidence that third-party agents reject non-spec fields",
+          "Custom commands have been merged into skills: .claude/commands/deploy.md and .claude/skills/deploy/SKILL.md both create /deploy",
+          "Inline shell injection with the !`command` syntax is a live-execution mechanism tied to Claude Code's session model"
+        ]
+      },
+      {
+        "title": "Connect Claude Code to tools via MCP",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/mcp",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": ".mcp.json uses the standard top-level mcpServers shape and accepts streamable-http as an alias for http so configurations copied from server documentation work unchanged, but an entry with a url and no type is read as a stdio server and skipped with the error 'MCP server \"<name>\" has a \"url\" but no \"type\"'.",
+        "proves": "The mcpServers object is the portable element; scope precedence, approval gating and the type-field gotcha are Claude Code wiring.",
+        "verification": "confirmed",
+        "secondary": [
+          "Scope precedence: local, project, user, plugin-provided, claude.ai connectors; same-name servers are not merged",
+          "Project-scoped .mcp.json servers need approval before first use in interactive sessions; non-interactive contexts load them without prompting unless --strict-mcp-config (v2.1.246+) or disabledMcpjsonServers is used",
+          "anthropic/requiresUserInteraction in a tool's _meta forces an approval prompt on every call even under auto or bypassPermissions (v2.1.199+)"
+        ]
+      },
+      {
+        "title": "Choose a sandbox environment",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/sandbox-environments",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "A dev container 'is a convention rather than an enforcement boundary, because Claude Code does not require a container.' Under the built-in Bash sandbox, MCP servers and hooks are separate processes that run unconstrained on the host; the built-in Bash sandbox is the only approach Claude Code enforces itself.",
+        "proves": "Isolation that lives inside the vendor's product is a per-tool control surface; a container, VM, worktree or CI layer sits underneath every tool.",
+        "verification": "confirmed",
+        "secondary": [
+          "A sandboxed session that can write .mcp.json, .claude/commands or .claude/agents can persist hooks or MCP servers that run unsandboxed on the next launch",
+          "Isolation does not change what is sent to the model",
+          "Permission modes decide whether a call runs; isolation restricts what it can reach once it runs"
+        ]
+      },
+      {
+        "title": "Configure the sandboxed Bash tool",
+        "author": "Claude Code docs (code.claude.com)",
+        "url": "https://code.claude.com/docs/en/sandboxing",
+        "date": "undated (version gates reference up to v2.1.260)",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'By default, if the sandbox cannot start because dependencies are missing or the platform is unsupported, Claude Code shows a warning and runs commands without sandboxing. To make this a hard failure instead, set sandbox.failIfUnavailable to true.' Native Windows is not supported.",
+        "proves": "The vendor sandbox fails open unless you configure it not to, so it cannot be the enforcement boundary.",
+        "verification": "confirmed",
+        "secondary": [
+          "Paths and domains from both sandbox settings and permission rules are merged into the final sandbox configuration, so the sandbox is interlocked with Claude Code's own permission grammar",
+          "Protected paths (.claude settings, skills, agents, commands, hooks, .mcp.json, credentials) cannot be exempted except by disabling filesystem isolation entirely",
+          "In a linked git worktree the sandbox allows writes to the main repository's shared .git directory except hooks/ and config",
+          "The built-in proxy does not inspect TLS, so domain fronting can reach hosts outside the allowlist"
+        ]
+      },
+      {
+        "title": "Import from another agent",
+        "author": "OpenAI Codex docs (learn.chatgpt.com)",
+        "url": "https://learn.chatgpt.com/docs/import",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "The import maps instruction files to AGENTS.md, settings.json to config.toml, slash commands to Skills, subagents to Codex subagents, MCP configuration to Codex MCP configuration and hooks to Codex hooks, then lists tool restrictions and permissions, MCP auth and headers, hook behavior, plugins and argument-bearing prompts as items to review manually.",
+        "proves": "The vendor's own migration tool draws the line between what carries over and what has to be rebuilt per tool.",
+        "verification": "confirmed",
+        "secondary": [
+          "Supported sources: Claude Code, Claude Cowork and Cursor for the desktop app; Claude Code and Cursor for Codex CLI",
+          "The page describes importing into Codex only, never exporting; use 'items to review', not 'silently converted'",
+          "Chats import at most 50 from the last 30 days, which is state rather than configuration"
+        ]
+      },
+      {
+        "title": "Custom instructions with AGENTS.md",
+        "author": "OpenAI Codex docs (learn.chatgpt.com)",
+        "url": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Codex checks each directory in this order: AGENTS.override.md, AGENTS.md, TEAM_GUIDE.md, .agents.md (fallbacks set via project_doc_fallback_filenames), uses only the first non-empty file per level, and stops adding files once the combined size reaches project_doc_max_bytes, default 32 KiB.",
+        "proves": "Codex reads AGENTS.md natively and rebuilds the instruction chain root-down each run, so no flip is required.",
+        "verification": "confirmed",
+        "secondary": [
+          "Files closer to the current directory override earlier guidance because they appear later in the chain",
+          "Spot-check the literal fallback example array before quoting"
+        ]
+      },
+      {
+        "title": "Hooks reference",
+        "author": "OpenAI Codex docs (learn.chatgpt.com)",
+        "url": "https://learn.chatgpt.com/docs/hooks",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Codex hooks fire at 12 lifecycle points (PreToolUse, PermissionRequest, PostToolUse, PreCompact, PostCompact, UserPromptSubmit, SubagentStop, Stop, Interrupt, SessionStart, SubagentStart, SessionEnd), are configured in .codex/hooks.json or .codex/config.toml, and 'you can also use exit code 2 and write the blocking reason to stderr.'",
+        "proves": "Codex's hook contract rhymes with Claude Code's but lives in different files with a different event list, so hooks are rebuilt per tool.",
+        "verification": "partial",
+        "secondary": [
+          "The page never mentions Claude Code, so 'copies Claude Code's contract' is inference; say it uses the same exit-code-2 convention. The explicit compatibility statement belongs to Cursor",
+          "PermissionRequest hooks accept a JSON permissionDecision of deny as the alternative to exit code 2"
+        ]
+      },
+      {
+        "title": "Advanced configuration",
+        "author": "OpenAI Codex docs (learn.chatgpt.com)",
+        "url": "https://learn.chatgpt.com/docs/config-file/config-advanced",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Permissions are a cross-product of approval_policy (untrusted, on-request, never, or granular) and sandbox_mode (read-only, workspace-write, danger-full-access), where danger-full-access disables sandboxing entirely; the combined --dangerously-bypass-approvals-and-sandbox flag is aliased --yolo.",
+        "proves": "Codex's two-axis permission model has no field-level equivalent to Claude Code's six named modes, so permissions do not port.",
+        "verification": "confirmed",
+        "secondary": [
+          "Codex loads project-scoped .codex/ config layers only when the project is trusted and may start read-only until the working directory is trusted",
+          "The six named sandbox-and-approval combinations come from the companion agent-approvals-security page"
+        ]
+      },
+      {
+        "title": "Subagents",
+        "author": "OpenAI Codex docs (learn.chatgpt.com)",
+        "url": "https://learn.chatgpt.com/docs/agent-configuration/subagents",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Every standalone custom agent file must define name, description and developer_instructions, lives as TOML under .codex/agents/ or ~/.codex/agents/, and the docs say 'the format may evolve as authoring and sharing mature.'",
+        "proves": "The Codex subagent format is TOML with its own required keys, not the markdown-plus-frontmatter shape Claude Code, Gemini CLI and Cursor share.",
+        "verification": "confirmed",
+        "secondary": [
+          "Codex reapplies the parent turn's live runtime overrides (such as /permissions changes or --yolo) when spawning a child, even if the agent file sets different defaults",
+          "Settings resolve from an explicit spawn value, then the [agents] default, then the parent's value",
+          "Other config.toml keys such as model, sandbox_mode, mcp_servers and skills.config can be included in an agent file"
+        ]
+      },
+      {
+        "title": "Model Context Protocol",
+        "author": "OpenAI Codex docs (learn.chatgpt.com)",
+        "url": "https://learn.chatgpt.com/docs/extend/mcp?surface=cli",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "MCP servers are configured as [mcp_servers.<server-name>] TOML tables in ~/.codex/config.toml or a project-scoped .codex/config.toml (trusted projects only), and 'the ChatGPT desktop app, Codex CLI, and IDE extension share this configuration.'",
+        "proves": "Codex shares MCP config across OpenAI's own surfaces only, in TOML rather than the JSON mcpServers shape the other three tools use.",
+        "verification": "confirmed",
+        "secondary": [
+          "Per-server default_tools_approval_mode accepts auto, prompt, writes and approve, plus per-tool approval_mode",
+          "Codex validates any returned iss before exchanging an OAuth authorization code; a mismatch always rejects",
+          "Codex reads the MCP instructions field returned at initialization as server-wide guidance"
+        ]
+      },
+      {
+        "title": "Worktrees",
+        "author": "OpenAI Codex docs (learn.chatgpt.com)",
+        "url": "https://learn.chatgpt.com/docs/environments/git-worktrees",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Codex creates worktrees in $CODEX_HOME/worktrees in a detached HEAD state, keeps the most recent 15 Codex-managed worktrees by default, and copies ignored files only if they match .worktreeinclude (AGENTS.override.md is copied automatically).",
+        "proves": "Vendor-managed worktrees are a convenience over plain git worktree that is scoped to one product's parallel-chat feature.",
+        "verification": "confirmed",
+        "secondary": [
+          "The mechanism is scoped to the Codex desktop app running parallel chats",
+          "AGENTS.override.md is a Codex-specific override file distinct from the AGENTS.md convention"
+        ]
+      },
+      {
+        "title": "Customization",
+        "author": "OpenAI Codex docs (learn.chatgpt.com)",
+        "url": "https://learn.chatgpt.com/docs/customization/overview",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'Pair AGENTS.md with infrastructure that enforces those rules: pre-commit hooks, linters, and type checkers catch issues before you see them.' Files closer to the working directory take precedence, and nested AGENTS.md supersede parents while the repo overrides ~/.codex/AGENTS.md.",
+        "proves": "The vendor's own advice is that the instruction file is not the enforcement layer; enforcement lives in tooling no agent can talk past.",
+        "verification": "confirmed",
+        "secondary": [
+          "Skills live at ~/.agents/skills (global) and .agents/skills (repo) as SKILL.md with optional scripts, references and assets",
+          "agents/openai.yaml (MCP dependencies for skills) and Plugins are explicitly OpenAI/Codex-specific"
+        ]
+      },
+      {
+        "title": "Provide context with GEMINI.md files",
+        "author": "Gemini CLI docs (geminicli.com)",
+        "url": "https://geminicli.com/docs/cli/gemini-md/",
+        "date": "Jun 18, 2026 (last updated)",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "The context.fileName setting in settings.json ships an example list of 'AGENTS.md, CONTEXT.md, GEMINI.md', and large files can import others with the @file.md syntax using relative or absolute paths.",
+        "proves": "Gemini CLI is a one-key flip to read the shared AGENTS.md.",
+        "verification": "confirmed",
+        "secondary": [
+          "The page banner reads: 'Unpaid tier and Google One users: Gemini CLI was replaced by Antigravity CLI on June 18th, 2026', the same date as the last-updated stamp",
+          "Three-tier load order: global ~/.gemini/GEMINI.md, workspace ancestors, and just-in-time loading when a tool touches a directory",
+          "Gemini CLI itself is not durable for unpaid-tier readers; the post has to address that"
+        ]
+      },
+      {
+        "title": "Hooks reference",
+        "author": "Gemini CLI docs (geminicli.com)",
+        "url": "https://geminicli.com/docs/hooks/reference/",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Eleven hook events across four groups: BeforeTool and AfterTool; BeforeAgent and AfterAgent; BeforeModel, BeforeToolSelection and AfterModel; SessionStart, SessionEnd, Notification and PreCompress. None shares a name with a Claude Code event.",
+        "proves": "Gemini CLI's hook vocabulary is disjoint from Claude Code's, so hooks are rewritten rather than copied.",
+        "verification": "confirmed",
+        "secondary": [
+          "The count of 11 is a manual tally across four section headings; there is no single master table",
+          "Blocking semantics differ per hook type: BeforeAgent aborts the turn and erases the prompt, AfterAgent rejects the response and triggers a retry",
+          "Configured in layered settings.json files (project .gemini/, user ~/.gemini/, system /etc/gemini-cli/)"
+        ]
+      },
+      {
+        "title": "Policy engine",
+        "author": "Gemini CLI docs (geminicli.com)",
+        "url": "https://geminicli.com/docs/reference/policy-engine/",
+        "date": "Apr 30, 2026 (last updated)",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "A priority-ordered rule engine: 'When a large language model wants to execute a tool, the policy engine evaluates all rules to find the highest-priority rule that matches the tool call', with allow, deny and ask_user decisions loaded from user, workspace (currently disabled) and admin TOML tiers, under an approval hierarchy of plan < default < autoEdit < yolo.",
+        "proves": "Gemini CLI's permission model is structurally unlike Codex's two flags and Claude Code's six modes, so there is no field-level translation.",
+        "verification": "confirmed",
+        "secondary": [
+          "ask_user is treated as deny in non-interactive mode",
+          "Workspace policies at $WORKSPACE_ROOT/.gemini/policies/*.toml are currently disabled; admin policies live in OS-specific system paths",
+          "Allow-for-all-future-sessions includes the current mode and all more permissive modes in the hierarchy"
+        ]
+      },
+      {
+        "title": "Subagents",
+        "author": "Gemini CLI docs (geminicli.com)",
+        "url": "https://geminicli.com/docs/core/subagents/",
+        "date": "Jun 8, 2026 (last updated)",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Custom agents are Markdown files with YAML frontmatter in .gemini/agents/ or ~/.gemini/agents/, with name and description required and fields including kind, tools, mcpServers, model, temperature, max_turns (default 30) and timeout_mins (default 10); the markdown body becomes the system prompt.",
+        "proves": "Same file shape as Claude Code's subagents, different directory and schema, so the definition is re-authored per tool.",
+        "verification": "partial",
+        "secondary": [
+          "model: inherit is not a documented value on this page",
+          "Subagents are treated as virtual tool names for policy matching, so access is governed by the TOML policy engine rather than by frontmatter",
+          "Tool wildcards: *, mcp_*, mcp_<server>_*"
+        ]
+      },
+      {
+        "title": "MCP servers with Gemini CLI",
+        "author": "Gemini CLI docs (geminicli.com)",
+        "url": "https://geminicli.com/docs/tools/mcp-server/",
+        "date": "Sep 2, 2026 (last updated)",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'Gemini CLI uses the mcpServers configuration in your settings.json file to locate and connect to MCP servers.' The trust option 'bypasses all tool call confirmations for this server (default: false)' and the docs say to use it cautiously and only for servers you completely control.",
+        "proves": "The mcpServers block is the same shape across tools, while trust and allowlist merge rules are Gemini-specific.",
+        "verification": "partial",
+        "secondary": [
+          "The literal .gemini/settings.json path is not returned verbatim from this page; agents.md states it",
+          "excludeTools takes precedence over includeTools; when two sources both give an allowlist, only tools in both lists are enabled",
+          "Transports: stdio, SSE and streamable HTTP; fields include cwd, httpUrl, headers, timeout, targetAudience and targetServiceAccount"
+        ]
+      },
+      {
+        "title": "Git worktrees (experimental)",
+        "author": "Gemini CLI docs (geminicli.com)",
+        "url": "https://geminicli.com/docs/cli/git-worktrees/",
+        "date": "Mar 20, 2026 (last updated)",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "The vendor's own manual equivalent of its experimental --worktree flag is 'git worktree add ../project-feature-search -b feature-search' followed by cd and gemini; the flag stores worktrees under .gemini/worktrees/ and does not automatically delete the worktree or branch.",
+        "proves": "Worktree isolation is plain git, so it belongs in the layer that survives a vendor swap.",
+        "verification": "confirmed",
+        "secondary": [
+          "Gated behind an experimental opt-in: \"experimental\": { \"worktrees\": true } in settings.json",
+          "Cleanup is manual: git worktree remove .gemini/worktrees/<name> --force",
+          "The page carries the Gemini CLI to Antigravity CLI replacement banner"
+        ]
+      },
+      {
+        "title": "Rules",
+        "author": "Cursor docs (cursor.com)",
+        "url": "https://cursor.com/docs/rules",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'Cursor supports AGENTS.md in the project root and subdirectories.' 'Unlike Project Rules, AGENTS.md is a plain markdown file without metadata or complex configurations.' Nested AGENTS.md files combine with parents, with more specific instructions taking precedence.",
+        "proves": "Cursor reads the shared file natively with no flip, while its .mdc rules and dashboard-managed Team Rules have no equivalent outside Cursor.",
+        "verification": "confirmed",
+        "secondary": [
+          ".mdc attachment logic (alwaysApply, globs, description-triggered) has no equivalent in a flat instructions file",
+          "Rules apply in the order Team Rules, Project Rules, User Rules; earlier sources win on conflict",
+          "Team and Enterprise plans can enforce rules from the Cursor dashboard so they cannot be disabled by members"
+        ]
+      },
+      {
+        "title": "Agent hooks",
+        "author": "Cursor docs (cursor.com)",
+        "url": "https://cursor.com/docs/agent/hooks",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Twenty-one hook events (14 supported for cloud agents plus 7 not available to them) configured in .cursor/hooks.json, and 'Exit code 2 from command hooks blocks the action (equivalent to returning permission: \"deny\"). This matches Claude Code behavior for compatibility.'",
+        "proves": "Cursor is the only vendor doc that states its exit-2 contract matches Claude Code's, and even so the event list is its own.",
+        "verification": "confirmed",
+        "secondary": [
+          "Tab hooks and workspaceOpen are excluded from cloud agents because Tab completions are an IDE feature",
+          "Config paths: <project-root>/.cursor/hooks.json and ~/.cursor/hooks.json"
+        ]
+      },
+      {
+        "title": "CLI permissions",
+        "author": "Cursor docs (cursor.com)",
+        "url": "https://cursor.com/docs/cli/reference/permissions",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Permissions are permissions.allow and permissions.deny arrays of rule strings such as Shell(rm), Read(.env*), Write(**/*.key) and Mcp(server:tool) in .cursor/cli.json or ~/.cursor/cli-config.json, and 'Deny rules take precedence over allow rules.'",
+        "proves": "Cursor's permission grammar is its own syntax in its own files, with no cross-tool equivalent.",
+        "verification": "confirmed",
+        "secondary": [
+          "Shell(commandBase) matches on the first token of the command line",
+          "Without an allowlist entry, each WebFetch prompts for approval"
+        ]
+      },
+      {
+        "title": "Subagents",
+        "author": "Cursor docs (cursor.com)",
+        "url": "https://cursor.com/docs/agent/subagents",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Cursor reads subagent files from .claude/agents/ (Claude compatibility) and .codex/agents/ (Codex compatibility) in addition to .cursor/agents/, with .cursor/ taking precedence on name conflicts; its own frontmatter fields readonly and is_background have no equivalent elsewhere.",
+        "proves": "Subagent non-portability is field-level only: the file location is interoperable, the fields (permissionMode, hooks, mcpServers on Claude; readonly, is_background on Cursor; TOML developer_instructions on Codex) are not.",
+        "verification": "partial",
+        "secondary": [
+          "Correction: the earlier claim that Cursor subagents do not map onto Claude Code or Codex was broken by this page; Cursor reads .claude/agents/ and .codex/agents/ explicitly",
+          "Frontmatter: name, description, model (default inherit), readonly (default false), is_background (default false)"
+        ]
+      },
+      {
+        "title": "Model Context Protocol (MCP)",
+        "author": "Cursor docs (cursor.com)",
+        "url": "https://cursor.com/docs/mcp",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Project MCP config lives in .cursor/mcp.json and global config in ~/.cursor/mcp.json, using the mcpServers shape, with Cursor-specific interpolation tokens such as ${env:NAME}, ${userHome}, ${workspaceFolder} and ${pathSeparator}.",
+        "proves": "The mcpServers object is the portable element; the file locations, interpolation and enterprise controls are Cursor wiring.",
+        "verification": "confirmed",
+        "secondary": [
+          "Enterprise Team Settings add command and URL entries, tool allowlists and network modes (Allow all, Allowlist, Deny all, No sandbox)",
+          "Transports: stdio, SSE and streamable HTTP"
+        ]
+      },
+      {
+        "title": "AGENTS.md",
+        "author": "Agentic AI Foundation (Linux Foundation)",
+        "url": "https://agents.md/",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Over 60,000 open-source projects use AGENTS.md; 'the closest AGENTS.md to the edited file wins; explicit user chat prompts override everything.' The supported-tools list runs to 23 entries including OpenAI Codex, Cursor and Google Gemini CLI, and Claude Code is not on it.",
+        "proves": "AGENTS.md is the vendor-neutral instruction convention, and Claude Code's absence from the list is why the post bridges it with an import.",
+        "verification": "partial",
+        "secondary": [
+          "Some strings came back as the fetch tool's paraphrase; re-verify exact wording before quoting verbatim",
+          "Per-tool flips shown on the page: Aider via .aider.conf.yml read: AGENTS.md, Gemini CLI via .gemini/settings.json context filename",
+          "Stewarded by the Agentic AI Foundation under the Linux Foundation"
+        ]
+      },
+      {
+        "title": "Specification",
+        "author": "Agent Skills (agentskills.io)",
+        "url": "https://agentskills.io/specification",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Only name (max 64 characters, lowercase, must match the directory) and description (max 1024 characters) are required; six fields total are in the frontmatter table, and allowed-tools is 'Experimental. Support for this field may vary between agent implementations.'",
+        "proves": "The portable surface of a skill is the six-field spec, and anything beyond it is per-tool.",
+        "verification": "confirmed",
+        "secondary": [
+          "The spec does not state how agents must treat unrecognized top-level frontmatter fields; metadata is the sanctioned place for non-spec data",
+          "Progressive disclosure: about 100 tokens of metadata loaded at startup, a body under 5,000 tokens recommended, main SKILL.md under 500 lines",
+          "Script runtimes depend on the agent implementation"
+        ]
+      },
+      {
+        "title": "Agent Skills",
+        "author": "Addy Osmani",
+        "url": "https://addyosmani.com/blog/agent-skills/",
+        "date": "May 3, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'The same SKILL.md file works in Claude Code, Cursor (with rules), Gemini CLI, Codex, and any other harness that accepts system-prompt content.' Cursor users put them in .cursor/rules/; Gemini CLI has its own install path.",
+        "proves": "Skills are the one advanced mechanism practitioners report carrying across harnesses, because they are plain markdown with frontmatter.",
+        "verification": "confirmed",
+        "secondary": [
+          "Slash commands sit on top as an add-on layer (seven commands over twenty skills in the author's repo)",
+          "Practitioner report on one author's repo, which had crossed 27K stars; not a controlled test of portability"
+        ]
+      },
+      {
+        "title": "An important update: Transitioning Gemini CLI to Antigravity CLI",
+        "author": "Google Developers Blog",
+        "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli",
+        "date": "May 19, 2026 (transition effective Jun 18, 2026)",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          6
+        ],
+        "stat": "'On June 18, 2026, Gemini CLI and Gemini Code Assist IDE extensions will stop serving requests for Google AI Pro and Ultra, as well as those using it free of charge using Gemini Code Assist for individuals.'",
+        "proves": "The one real vendor swap in the record: a vendor retired its own tool out from under individual users.",
+        "verification": "partial",
+        "secondary": [
+          "The blog names Google AI Pro and Ultra plus free individuals, not 'Google One'; that phrasing is the geminicli.com banner's",
+          "Organizations on Gemini Code Assist Standard or Enterprise licenses, or using Gemini Code Assist for GitHub through Google Cloud, keep unchanged access",
+          "Gemini Code Assist for GitHub also stopped new installations on June 18, 2026"
+        ]
+      },
+      {
+        "title": "Gemini CLI to Antigravity CLI migration guide",
+        "author": "Antigravity CLI docs (antigravity.google)",
+        "url": "https://antigravity.google/docs/cli/gcli-migration",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          6
+        ],
+        "stat": "'Both CLI platforms utilize identical workspace context rules. No modifications are needed to your existing rule documents': the agent continues to parse GEMINI.md and AGENTS.md in the active directory and ~/.gemini/GEMINI.md globally.",
+        "proves": "The instruction-file layer survived a vendor retiring its own tool; a team that had pointed Gemini CLI at AGENTS.md needed no change.",
+        "verification": "partial",
+        "secondary": [
+          "Correction: Antigravity CLI reads AGENTS.md automatically by name with no settings key, so the earlier 're-check the flip' claim was broken and the source is used as a counter-example instead",
+          "Vendor migration guide asserting drop-in continuation; not independently tested"
+        ]
+      },
+      {
+        "title": "About rulesets",
+        "author": "GitHub Docs",
+        "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'If multiple rulesets target the same branch or tag in a repository, the rules in each of these rulesets are aggregated' and 'the most restrictive version of the rule applies.' 'Anyone with read access to a repository can view its active rulesets.'",
+        "proves": "Enforcement on the host survives any agent swap because no vendor config can reach it, and it is auditable without admin access.",
+        "verification": "partial",
+        "secondary": [
+          "'Evaluate mode' does not appear on this page; do not cite it to this URL",
+          "Up to 75 rulesets per repository and 75 organization-wide",
+          "Bypass can be granted to roles, teams or GitHub Apps when a ruleset is created; rulesets and branch protection rules enforce alongside each other"
+        ]
+      },
+      {
+        "title": "About protected branches",
+        "author": "GitHub Docs",
+        "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "'By default, the restrictions of a branch protection rule don't apply to people with admin permissions to the repository or custom roles with the bypass branch protections permission' until 'Do not allow bypassing the above settings' is enabled; a required status check pinned to an app blocks merging 'if the status is set by any other person or integration.'",
+        "proves": "Two settings decide whether the host gate actually holds: closing the admin bypass and pinning the required check to its app.",
+        "verification": "confirmed",
+        "secondary": [
+          "Covers legacy branch protection rules; rulesets have their own bypass-actor model",
+          "Only one branch protection rule applies at a time, a restriction that does not apply to rulesets",
+          "Required checks must have a successful, skipped or neutral status before changes land"
+        ]
+      },
+      {
+        "title": "Feature Request: Support AGENTS.md",
+        "author": "GitHub (anthropics/claude-code issue 6235)",
+        "url": "https://github.com/anthropics/claude-code/issues/6235",
+        "date": "Opened Aug 21, 2025; closed Aug 17, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "The year-long request (6,592 reactions, 389+ comments) was closed as completed by a comment pointing at the workaround: 'create a CLAUDE.md containing just @AGENTS.md (an import), or symlink CLAUDE.md to AGENTS.md.' A thread report from 2026-07-04 says a recent update blocked symlinked file updates with 'cannot write through symlinks'.",
+        "proves": "Native AGENTS.md support in Claude Code was declined in favor of the import, and the symlink route has broken in the field, which is why the post recommends import over symlink.",
+        "verification": "confirmed",
+        "secondary": [
+          "Closed with state_reason completed, not 'not planned' and not an inactivity auto-close",
+          "Maintainer status of the closing account (bcherny) was not independently verified beyond authoring the closing response",
+          "Community pushback the same night: the linked doc still requires a CLAUDE.md, a workaround rather than adoption"
+        ]
+      }
+    ]
   }
 ]

@@ -19,7 +19,7 @@ import { dirname, join } from 'node:path';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
 const SRC = join(HERE, 'extracted.json');
-const UPDATED = '2026-07-13'; // bump when regenerating with new sources
+const UPDATED = '2026-09-07'; // bump when regenerating with new sources
 
 const PILLARS = [
   { id: 1, name: 'Task Design & Decomposition', blurb: 'Scoping, decomposing, and speccing work so an agent finishes it on the first try.' },
