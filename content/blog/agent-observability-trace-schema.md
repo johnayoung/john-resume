@@ -254,6 +254,8 @@ Rank your fields by unrecoverability before you ship, and capture the top of tha
 4. Copy the retirement date or `shutdown_date` value into the span at call time.
 5. Assert all of the above in CI, so a missing survivability field fails the build rather than the postmortem.
 
+Point the [agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit)'s trace-field-survivability-audit script at an exported span file and it enforces that fifth step directly: it exits non-zero the moment a call is missing decision content, a resolved response model, a pinned prompt version, or a retirement date.
+
 Instrumentation is one of the few things in an agent system you have to get right on the first try, because there is no second call to the same snapshot. Re-running is not a fallback, and the vendors say so themselves. Anthropic notes that "even with `temperature` of `0.0`, the results will not be fully deterministic" ([Anthropic: Messages](https://platform.claude.com/docs/en/api/messages)) and extends that "both to Anthropic's first-party inference service and to inference through third-party cloud providers" ([Anthropic: Glossary](https://platform.claude.com/docs/en/about-claude/glossary)), which closes the "we run on a cloud provider so we can replay it" objection. OpenAI's seed parameter is still Beta: "Determinism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend" ([OpenAI: Create chat completion](https://developers.openai.com/api/docs/api-reference/chat/create)). Anthropic's own operators put it in one line: "Agents make dynamic decisions and are non-deterministic between runs, even with identical prompts" ([Anthropic Engineering: Multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)).
 
 Which produces the ranking, one row per section above:
@@ -307,6 +309,7 @@ Every row above is a decision made at call time by whoever wrote the instrumenta
 28. [Langfuse: Core Concepts](https://langfuse.com/docs/observability/data-model) — Short-lived applications must explicitly call `flush()` before exiting or buffered trace data is lost when the process exits.
 29. [Arize AI: Agent observability](https://arize.com/ai-agents/agent-observability/) — Ranks the core observation surfaces as outcome, path, actions and context, which is a genuine ranking on a diagnostic axis rather than a survivability one.
 30. [Foley: Ten AI Agents Destroyed Production. Zero Postmortems.](https://www.harperfoley.com/blog/ai-agents-destroyed-production-zero-postmortems) — Ten documented incidents across six AI coding tools in sixteen months, with missing audit trails and no vendor postmortems. A practitioner survey of public incidents, not a peer-reviewed dataset.
+31. [agent-engineering-toolkit: trace-field-survivability-audit](https://github.com/johnayoung/agent-engineering-toolkit) — A read-only script that checks exported OpenTelemetry GenAI or OpenInference spans for the four fields this post ranks unrecoverable and exits non-zero when one is missing, operationalizing the closing table's fifth instruction as a CI gate.
 
 ### Author's Judgment (not directly sourced)
 
