@@ -490,24 +490,22 @@
       ]
     },
     {
-      "title": "Why Do Multi-Agent LLM Systems Fail?",
-      "author": "Cemri, Pan, Yang, Agrawal, Chopra, Tiwari, Keutzer, Parameswaran, Klein, Ramchandran, Zaharia, Gonzalez, Stoica (UC Berkeley)",
-      "url": "https://arxiv.org/abs/2503.13657",
-      "date": "Submitted 17 Mar 2025; last revised 26 Oct 2025 (v3)",
+      "title": "Scaling Multi-agent Systems: A Smart Middleware for Improving Agent Interactions",
+      "author": "Charles Fleming, Guillaume De Saint Marc, Ramana Kompella, Peter Bosch, Vijoy Pandey",
+      "url": "https://arxiv.org/abs/2604.03430",
+      "date": "v1 Apr 3, 2026; v2 May 27, 2026",
       "class": "research-data",
       "pillars": [
-        6
+        2
       ],
-      "stat": "This process identifies 14 unique modes, clustered into 3 categories: (i) system design issues, (ii) inter-agent misalignment, and (iii) task verification.",
-      "proves": "Multi-agent failure is predominantly a system-design and coordination problem, not a model-quality problem — a readiness test, not a model upgrade.",
+      "stat": "A service-mesh-style middleware layer attached to every agent instance improved performance more than 10% over direct agent-to-agent communication on HotPotQA (80.1 to 91.5 vs. 92 baseline) and MuSiQue (72.7 to 86.1 vs. 87.5 baseline).",
+      "proves": "Direct, prompt-embedded agent-to-agent communication measurably costs accuracy; a separated coordination layer recovers most of it.",
       "verification": "confirmed",
       "powers": [
-        "multi-agent-context-isolation"
+        "multi-agent-coordination-layer"
       ],
       "secondary": [
-        "MAST-Data, a comprehensive dataset of 1600+ annotated traces collected across 7 popular MAS frameworks",
-        "We develop MAST through rigorous analysis of 150 traces, guided closely by expert human annotators and validated by high inter-annotator agreement (kappa = 0.88).",
-        "Despite enthusiasm for Multi-Agent LLM Systems (MAS), their performance gains on popular benchmarks are often minimal."
+        "The PDF returned only partial text on direct fetch; verified via the HTML render and cross-checked against the abstract's summary figure"
       ]
     },
     {
@@ -672,6 +670,25 @@
       "secondary": []
     },
     {
+      "title": "Beyond Message Passing: A Semantic View of Agent Communication Protocols",
+      "author": "Dun Yuan, Fuyuan Lyu, Ye Yuan, Weixu Zhang, Bowei He, Jiayi Geng, Linfeng Du, Zipeng Sun, Yankai Chen, Changjiang Han, Jikun Kang, Xi Chen, Haolun Wu, Xue Liu",
+      "url": "https://arxiv.org/abs/2604.02369",
+      "date": "v1 Mar 30, 2026; v3 Apr 13, 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "A systematic audit of 18 agent communication protocols found semantic-layer mechanisms (clarification, context alignment, verification) largely absent at the protocol level.",
+      "proves": "Absent a protocol-level home for coordination logic, developers reintroduce it through prompts, wrappers, and orchestration glue by default, which accumulates hidden complexity.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-coordination-layer"
+      ],
+      "secondary": [
+        "Evidence base is a qualitative comparative audit across nine dimensions in three layers, not quantitative failure-rate measurement"
+      ]
+    },
+    {
       "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act)",
       "author": "European Parliament and Council",
       "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02024R1689-20260727",
@@ -815,6 +832,26 @@
         "211 million changed lines from repos owned by Google, Microsoft, Meta, and enterprise C-Corps",
         "4x more code cloning",
         "'copy/paste' exceeds 'moved' code for first time in history"
+      ]
+    },
+    {
+      "title": "When Agents Coordinate: Measuring Coordination in Multi-Agent AI Coding",
+      "author": "Giuseppe Destefanis, Tomaso Aste",
+      "url": "https://arxiv.org/abs/2608.16801",
+      "date": "Aug 17, 2026",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Across 1,902 instrumented runs plus a 244-run sealed-environment replication, naming one agent as coordinator in its prompt creates no communication hub and no reliable improvement in success; shared files cut output tokens by about 42% at eight agents on message-heavy work.",
+      "proves": "The cheapest fix for multi-agent coordination failures, a role label in one agent's prompt, does not work; structural changes (shared artifacts) do.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-coordination-layer"
+      ],
+      "secondary": [
+        "The null result on coordinator-naming reproduced in the sealed 244-run replication, not just the primary 1,902-run set",
+        "Scope is a coding-agent benchmark with a fixed test suite and specific team configurations; the authors do not claim broader generality"
       ]
     },
     {
@@ -1030,6 +1067,27 @@
       ]
     },
     {
+      "title": "Coordination as an Architectural Layer for LLM-Based Multi-Agent Systems",
+      "author": "Maksym Nechepurenko, Pavel Shuvalov",
+      "url": "https://arxiv.org/abs/2605.03310",
+      "date": "May 5, 2026",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Naming and isolating the coordination layer moves four classes of properties from implicit-in-code to explicit-in-spec (failure-mode signatures, cross-system comparability, agent heterogeneity), and the specification can be implemented atop AutoGen, CrewAI, LangGraph, AWS Strands, or Microsoft Foundry without modification.",
+      "proves": "Coordination logic should be treated as its own configurable, separable architectural layer rather than embedded in agent prompts, because separation is what makes the layer analyzable at all.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-coordination-layer"
+      ],
+      "secondary": [
+        "The paper's own experiment (five coordination configurations, 100 post-cutoff Polymarket markets, Murphy decomposition) tests forecasting calibration signatures, not production failure rates",
+        "The commonly-cited 41-87% production-failure-rate figure appears in this paper's introduction as a citation to Cemri et al. 2025, not as this paper's own finding",
+        "Pairwise comparisons between coordination configurations do not survive Bonferroni correction at n=100; the authors call this a methodology-validating first instantiation, not a general cross-model claim"
+      ]
+    },
+    {
       "title": "A Traveler's Guide to the Multiverse: Promises, Pitfalls, and a Framework for the Evaluation of Analytic Decisions",
       "author": "Marco Del Giudice, Steven W. Gangestad",
       "url": "https://iris.unito.it/retrieve/e27ce435-58ab-2581-e053-d805fe0acbaa/DelGiudice_Gangestad_2021_guide-to-the-multiverse_ampps.pdf",
@@ -1110,6 +1168,29 @@
         "76.5% is a RELATIVE improvement over a partial-observation baseline, not an absolute accuracy",
         "Peer-reviewed camera-ready reports 76.5%; the earlier arXiv v1 said 76%",
         "Analyzer choice alone moves step-level accuracy substantially on identical full traces, so completeness is a precondition for attribution rather than a substitute for analysis"
+      ]
+    },
+    {
+      "title": "Why Do Multi-Agent LLM Systems Fail?",
+      "author": "Mert Cemri, Melissa Z. Pan, Shuyi Yang, Lakshya A. Agrawal, Bhavya Chopra, Rishabh Tiwari, Kurt Keutzer, Aditya Parameswaran, Dan Klein, Kannan Ramchandran, Matei Zaharia, Joseph E. Gonzalez, Ion Stoica",
+      "url": "https://arxiv.org/abs/2503.13657",
+      "date": "v1 Mar 17, 2025; v3 Oct 26, 2025",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Across 1,642 annotated execution traces from seven state-of-the-art multi-agent frameworks (kappa=0.88 inter-annotator agreement), failure rates run 41% to 86.7%, and a design-level intervention on the same underlying model (GPT-4o) recovered +9.4% and +15.6% task-success improvements.",
+      "proves": "Multi-agent failures cluster in organizational design, coordination, and verification defects rather than individual-agent model capability, and fixing the design (not the model) recovers measurable performance.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-coordination-layer",
+        "multi-agent-context-isolation"
+      ],
+      "secondary": [
+        "This process identifies 14 unique modes, clustered into 3 categories: (i) system design issues, (ii) inter-agent misalignment, and (iii) task verification.",
+        "The paper reports per-failure-mode prevalences (14 modes), not a stated category-level aggregate; the 23.5% Task Verification figure used downstream is a sum of three per-mode figures (6.20%, 8.20%, 9.10%), not a number the paper states directly",
+        "The authors' own hedge: after the design-level interventions, not all failure modes are resolved and task completion rates remain low, and durable reliability likely needs combinatorial changes including model-level improvements, not design fixes alone",
+        "MAST-Data, a comprehensive dataset of 1600+ annotated traces collected across 7 popular MAS frameworks"
       ]
     },
     {
@@ -1971,6 +2052,25 @@
         "Largest single trigger is false premises at 30.7%",
         "Epistemic errors are the largest share in every scaffold tested, ranging 44% to 80%",
         "The paper's own prescription - 'earlier validation and intervention' - is itself a harness prescription"
+      ]
+    },
+    {
+      "title": "Agent2Agent (A2A) protocol",
+      "author": "a2aproject (Linux Foundation, Google-originated)",
+      "url": "https://github.com/a2aproject/A2A",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "A2A's opacity principle lets agents collaborate without sharing internal memory, proprietary logic, or specific tool implementations.",
+      "proves": "A shipping, cross-vendor-governed protocol already architects coordination as a separable layer via explicit design intent.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-coordination-layer"
+      ],
+      "secondary": [
+        "Cited as design intent only, not adoption evidence: no adopter case studies or production-deployment list found on the page, and the roadmap still lists authorization schemes, dynamic capability negotiation, and streaming reliability as unresolved"
       ]
     },
     {
@@ -3466,6 +3566,23 @@
       ]
     },
     {
+      "title": "Processes (CrewAI documentation)",
+      "author": "CrewAI",
+      "url": "https://docs.crewai.com/en/concepts/processes",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "CrewAI assigns coordination strategy as a named process type at crew creation, with the hierarchical process requiring its own manager_llm or manager_agent.",
+      "proves": "Coordination strategy is a swappable, crew-level configuration decoupled from individual agent and task definitions in a shipping framework.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-coordination-layer"
+      ],
+      "secondary": []
+    },
+    {
       "title": "Hooks",
       "author": "Cursor (docs)",
       "url": "https://cursor.com/docs/hooks",
@@ -4451,6 +4568,25 @@
       ]
     },
     {
+      "title": "A small handoff contract for multiple coding agents",
+      "author": "Kate Johnson",
+      "url": "https://dev.to/kgjohnson/a-small-handoff-contract-for-multiple-coding-agents-4538",
+      "date": "Aug 25, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "A storage-agnostic handoff contract (objective and ownership, a five-state machine, observations vs. mutations, verification evidence, approval gates) needs no new service, a JSON file, a database row, or a session handoff can carry it.",
+      "proves": "A concrete, lightweight artifact is what a separated coordination layer looks like in practice, not a new orchestration platform.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-coordination-layer"
+      ],
+      "secondary": [
+        "Single-author field pattern, not peer-reviewed or independently corroborated; paired with Cemri et al.'s Task Verification failure category as the academic anchor for the verification half of the claim"
+      ]
+    },
+    {
       "title": "Vibe Coding: More Experiments, More Care",
       "author": "Kent Beck (O'Reilly, 'Coding with AI: The End of Software Development As We Know It')",
       "url": "https://www.oreilly.com/CodingwithAI",
@@ -4652,6 +4788,25 @@
         "'A harness is the system surrounding a base model that orchestrates execution and decides how the model thinks and plans, calls tools and acts, perceives and manages context, stores artifacts, and evaluates results'",
         "The words deterministic and probabilistic appear nowhere in the post - do not attribute that framing to her",
         "'The core interface of mainstream coding agents has become stabilized across Claude Code, Codex, OpenCode, and Cursor-style agents'"
+      ]
+    },
+    {
+      "title": "Orchestration Patterns for Multi-Agent Systems: Performance and Trade-offs",
+      "author": "Lily Jia (Microsoft ISE)",
+      "url": "https://devblogs.microsoft.com/ise/coordinator-patterns-multi-agent-systems",
+      "date": "Jun 12, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Coordinator framework choice is independent of domain-agent implementation technology, but smoke testing showed notable overhead even for a two-agent case, and comparative benchmarking was not yet complete.",
+      "proves": "A separated coordination layer adds real, largely unmeasured overhead that has to be budgeted honestly, not assumed away.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-coordination-layer"
+      ],
+      "secondary": [
+        "No numeric overhead figure given, qualitative disclosure only; the author's own team had not completed comparative benchmarking at time of writing"
       ]
     },
     {
@@ -4860,6 +5015,23 @@
         "The authors bound the bias honestly: 'The selection effects seem to affect a minority share of developers and of tasks, which limits the degree of bias'",
         "Concerns developer productivity, not code review; no results from the redesigned study had published as of August 2026"
       ]
+    },
+    {
+      "title": "Group Chat (AutoGen documentation)",
+      "author": "Microsoft AutoGen",
+      "url": "https://microsoft.github.io/autogen/stable//user-guide/core-user-guide/design-patterns/group-chat.html",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Turn order in AutoGen's group-chat pattern is maintained by a separate Group Chat Manager agent, implemented as its own class, configurable as round-robin or LLM-selected.",
+      "proves": "Shipping open-source frameworks already extract coordination logic (turn-taking, speaker selection) into a separate, configurable component distinct from individual agent definitions.",
+      "verification": "confirmed",
+      "powers": [
+        "multi-agent-coordination-layer"
+      ],
+      "secondary": []
     },
     {
       "title": "How to Run a Multi-Agent Coding Workspace (2026)",
