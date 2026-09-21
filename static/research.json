@@ -550,6 +550,28 @@
       ]
     },
     {
+      "title": "Laya model card",
+      "author": "ConvAI Innovations",
+      "url": "https://huggingface.co/convaiinnovations/laya",
+      "date": "September 2026",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Jev figures are third-party published, never measured here (no TypeSafe API access); sample sizes and prompts differ. Before temperature scaling, the base checkpoint has higher raw ECE (0.213 vs 0.144).",
+      "proves": "The only structured non-vendor comparison of Jev is competitor-published and self-limiting, and its calibration advantage exists only after a temperature-fitting step that Jev did not receive.",
+      "verification": "partial",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Reported splits: Laya leads on typed-decisions (0.766 vs 0.727) and AG News (0.950 vs 0.910), while Jev leads decisively on Banking77 (0.870 vs 0.425), a high-option-count task",
+        "Latency p50 is reported as 32.8ms for Laya against 236-276ms for Jev",
+        "On DAIR Emotion the card reports Jev assigned zero probability to the true label on 16% of examples",
+        "An independent tester re-running on benchmarks with published Jev numbers found the two model cards' headline accuracy figures came from different benchmarks and were not comparable"
+      ]
+    },
+    {
       "title": "How Many Instructions Can LLMs Follow at Once?",
       "author": "Daniel Jaroslawicz, Brendan Whiting, Parth Shah, Karime Maamari (Distyl AI)",
       "url": "https://arxiv.org/abs/2507.11538",
@@ -918,6 +940,50 @@
       ]
     },
     {
+      "title": "Cost-Effective Constitutional Classifiers via Representation Re-use",
+      "author": "Hoagy Cunningham, Alwin Peng, Jerry Wei, Euan Ong, Fabien Roger, Linda Petrini, Misha Wagner, Vladimir Mikulik, Mrinank Sharma",
+      "url": "https://alignment.anthropic.com/2025/cheap-monitors",
+      "date": "2025",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Using Claude 3.5 Haiku as a safety filter for Claude 3.5 Sonnet increases inference costs by approximately 25%.",
+      "proves": "The tier a decision model displaces already has a published price: if a small LLM is doing your filtering today, that is roughly a quarter of your inference bill, which is the baseline a vendor's speed multiple is quietly measured against.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "EMA linear probes outperform, at negligible cost, a dedicated classifier with 2% of the policy model's parameters",
+        "Two-stage pipelines reduce cost by over 10x without significantly reducing overall system performance",
+        "The page states performance at low false-positive rate is the production-relevant metric, because that determines suitability for deployment",
+        "The page carries no publication date; only the 2025 path segment in the URL"
+      ]
+    },
+    {
+      "title": "Constitutional Classifiers++: Efficient Production-Grade Defenses against Universal Jailbreaks",
+      "author": "Hoagy Cunningham, Jerry Wei, Zihan Wang, Andrew Persic, Alwin Peng, Jordan Abderrachid, Raj Agarwal, Bobby Chen, Austin Cohen, Andy Dau, Alek Dimitriev, Rob Gilson, Logan Howard, Yijin Hua, Jared Kaplan, Jan Leike, Mu Lin, Christopher Liu, Vladimir Mikulik, Rohit Mittapalli, Clare O'Hara, Jin Pan, Nikhil Saxena, Alex Silverstein, Yue Song, Xunjie Yu, Giulio Zhou, Ethan Perez, Mrinank Sharma",
+      "url": "https://arxiv.org/abs/2601.04603",
+      "date": "January 8, 2026",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Since exchanges flagged by the first stage are escalated rather than refused, the first-stage classifier can flag a higher proportion of production traffic without incurring an excessive refusal rate. The first-layer probe escalated approximately 5.5% of traffic to the second-stage classifier, for approximately a 40x reduction compared to the single exchange classifier.",
+      "proves": "Escalating rather than refusing changes which false-positive rate you can tolerate, which is why the band you choose matters more than the accuracy number the vendor quotes.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The refusal flag rate was 0.05%, down from the 0.38% reported for the prior system",
+        "1,736 cumulative hours of red-teaming effort across approximately 198K attempts",
+        "Both systems are trained on synthetic data using a constitution related to CBRN weapons, so the domain is narrower than general-purpose triage",
+        "An earlier research pass recorded the escalation rate as roughly 10 percent; the paper states approximately 5.5 percent"
+      ]
+    },
+    {
       "title": "When Agents Fail to Act: A Diagnostic Framework for Tool Invocation Reliability in Multi-Agent LLM Systems",
       "author": "Huang et al. (arXiv)",
       "url": "https://arxiv.org/abs/2601.16280",
@@ -978,6 +1044,25 @@
       ]
     },
     {
+      "title": "Grammar-Aligned Decoding",
+      "author": "Kanghee Park, Jiayu Wang, Taylor Berg-Kirkpatrick, Nadia Polikarpova, Loris D'Antoni",
+      "url": "https://arxiv.org/abs/2405.21047",
+      "date": "2024",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Constrained decoding techniques can distort the LLM's distribution, leading to outputs that are grammatical but appear with likelihoods that are not proportional to the ones given by the LLM, and so ultimately are low-quality.",
+      "proves": "Guaranteeing that an output conforms to a schema is not the same as guaranteeing the output is right; constraining the answer space can actively degrade which valid answer you get.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The authors propose grammar-aligned decoding (ASAp) to preserve grammaticality while matching the model's conditional distribution, so the distortion is a known and addressable artifact rather than an inherent cost"
+      ]
+    },
+    {
       "title": "Context Rot: How Increasing Input Tokens Impacts LLM Performance",
       "author": "Kelly Hong, Anton Troynikov, Jeff Huber (Chroma)",
       "url": "https://www.trychroma.com/research/context-rot",
@@ -1001,6 +1086,27 @@
         "Even a single distractor reduces performance relative to the baseline (needle only).",
         "Whether relevant information is present in a model's context is not all that matters; what matters more is how that information is presented.",
         "Even a single distractor reduces performance relative to the baseline (needle only), and adding four distractors compounds this degradation further"
+      ]
+    },
+    {
+      "title": "Machine Learning with a Reject Option: A survey",
+      "author": "Kilian Hendrickx, Lorenzo Perini, Dries Van der Plas, Wannes Meert, Jesse Davis",
+      "url": "https://arxiv.org/abs/2107.11277",
+      "date": "July 23, 2021",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Machine learning models always make a prediction, even when it is likely to be inaccurate. This machine learning sub-field was already studied in 1970 by Chow and Hellman.",
+      "proves": "Banding a model's probability with an operator-chosen threshold is the textbook reject option with a fifty-year literature, not a new capability introduced by a decision model.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The canonical formalism is a single threshold with two outcomes, so a three-band act/review/escalate structure is an extension of it rather than the base model",
+        "The standard cost ordering Cc < Cr < Ce carries a second constraint frequently dropped in summary: Cr must be no greater than 1/K for K classes",
+        "Ambiguity rejection and novelty rejection need different confidence functions: a class-posterior score signals ambiguity, while novelty needs a density or distance measure against the training distribution"
       ]
     },
     {
@@ -1260,6 +1366,28 @@
       ]
     },
     {
+      "title": "Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming",
+      "author": "Mrinank Sharma, Meg Tong, Jesse Mu, Jerry Wei, Jorrit Kruthoff, Scott Goodfriend, Euan Ong, Alwin Peng, Raj Agarwal, Cem Anil, Amanda Askell, Nathan Bailey, Joe Benton, Emma Bluemke, Samuel R. Bowman, Eric Christiansen, Hoagy Cunningham, Andy Dau, Anjali Gopal, Rob Gilson, Logan Graham, Logan Howard, Nimit Kalra, Taesung Lee, Kevin Lin, Peter Lofgren, Francesco Mosconi, Clare O'Hara, Catherine Olsson, Linda Petrini, Samir Rajani, Nikhil Saxena, Alex Silverstein, Tanya Singh, Theodore Sumers, Leonard Tang, Kevin K. Troy, Constantin Weisser, Ruiqi Zhong, Giulio Zhou, Jan Leike, Jared Kaplan, Ethan Perez",
+      "url": "https://arxiv.org/abs/2501.18837",
+      "date": "January 31, 2025",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "These classifiers also maintain deployment viability, with an absolute 0.38% increase in production-traffic refusals and a 23.7% inference overhead.",
+      "proves": "A synthetic-data-trained classifier was already on the production hot path eighteen months before Jev launched, and its owners published the tax rather than only the accuracy.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The classifiers were trained on synthetic data generated by prompting LLMs with natural language rules, i.e. a constitution, which is the same training lineage a synthetic-only decision model sits in",
+        "Over 3,000 estimated hours of red teaming across 405 HackerOne participants, with bounties up to $15K per jailbreak report",
+        "The prototype's prioritization of robustness led to impractically high refusal rates, which is the tradeoff the next generation was built to fix",
+        "This sits at the input/output safety-filter layer rather than a general-purpose routing tier, so the analogy is about tax disclosure precedent rather than an identical architectural slot"
+      ]
+    },
+    {
       "title": "From Trust to Appropriate Reliance: Measurement Constructs in Human-AI Decision-Making",
       "author": "Muhammad Raees, Konstantinos Papangelis",
       "url": "https://arxiv.org/abs/2604.23896",
@@ -1481,6 +1609,28 @@
         "estimated delivery stability is expected to decrease by 7.2%",
         "75.9% of respondents (of roughly 3,000 people surveyed) are relying on AI for at least part of their job responsibilities",
         "if AI adoption increases by 25%, time spent doing valuable work is estimated to decrease 2.6%"
+      ]
+    },
+    {
+      "title": "LlamaFirewall: An open source guardrail system for building secure AI agents",
+      "author": "Sahana Chennabasappa, Cyrus Nikolaidis, Daniel Song, David Molnar, et al.",
+      "url": "https://arxiv.org/abs/2505.03574",
+      "date": "May 6, 2025",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Approximately 90% of inputs are fully resolved by the first layer, maintaining a typical end-to-end latency of under 70 milliseconds; for the remaining 10% requiring deeper inspection, end-to-end latency can exceed 300 milliseconds. PromptGuard 2 runs at 19.3ms (22M) and 92.4ms (86M).",
+      "proves": "A production agent stack already layers a deterministic tier, a small-classifier tier, and an LLM auditor, each with a measured latency, which is the real comparison set for a new decision model rather than a frontier LLM.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The first tier's own scan time is approximately 60 milliseconds, which is a separate measurement from the under-70ms end-to-end figure for the 90 percent it resolves",
+        "Named tiers: CodeShield for static analysis over 50+ CWEs in seven languages, PromptGuard 2 as the DeBERTa-based classifier, and AlignmentCheck as a chain-of-thought LLM auditor",
+        "Threshold selection is reported as a fixed minimal utility reduction of 3% in the AgentDojo evaluation, which is a separate evaluation from the recall-at-1%-FPR classifier table",
+        "Role-scoped scanning: PromptGuard analyzes only user and tool messages while AlignmentCheck evaluates assistant messages"
       ]
     },
     {
@@ -1786,6 +1936,25 @@
       ]
     },
     {
+      "title": "When Your Model Stops Working: Anytime-Valid Calibration Monitoring",
+      "author": "Tristan Farran",
+      "url": "https://arxiv.org/abs/2603.13156",
+      "date": "March 13, 2026",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Classical calibration metrics include expected calibration error, reliability diagrams, and proper scoring rules. These both provide static calibration assessment but do not address sequential monitoring with false alarm control.",
+      "proves": "Measuring calibration once is not monitoring it, and checking it repeatedly with a naive fixed-sample test manufactures false alarms, so threshold drift needs a sequential instrument rather than a recurring spot check.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "A practitioner checking calibration daily at p<0.05 will almost certainly observe spurious alarms over a year even if calibration remains stable, because classical hypothesis tests assume a fixed sample size determined before seeing data"
+      ]
+    },
+    {
       "title": "Beyond the Commit: Developer Perspectives on Productivity with AI Coding Assistants",
       "author": "Valerie Chen, Jasmyn He, Behnjamin Williams, Jason Valentino, Ameet Talwalkar",
       "url": "https://arxiv.org/abs/2602.03593",
@@ -1822,6 +1991,26 @@
         "coding-agent-leaderboard-noise"
       ],
       "secondary": []
+    },
+    {
+      "title": "When Does Confidence-Based Cascade Deferral Suffice?",
+      "author": "Wittawat Jitkrittum, Neha Gupta, Aditya Krishna Menon, Harikrishna Narasimhan, Ankit Singh Rawat, Sanjiv Kumar",
+      "url": "https://arxiv.org/abs/2307.02764",
+      "date": "July 6, 2023",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Such confidence-based deferral often works remarkably well in practice, but post-hoc deferral significantly improves on it where downstream models are specialists, samples carry label noise, or there is distribution shift between the train and test set.",
+      "proves": "A confidence threshold tuned in evaluation is not guaranteed to survive production traffic drift, which is the named condition under which routing on a cheap model's confidence stops being sufficient.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The paper's position is that confidence deferral is usually fine with three named exceptions, not that it is generally broken",
+        "The Bayes-optimal rule is a difference over both models' correctness probabilities against the deferral cost, so it requires the downstream model's expected correctness, which the first model's raw confidence score alone cannot supply"
+      ]
     },
     {
       "title": "Agent READMEs: An Empirical Study of Context Files for Agentic Coding",
@@ -1906,6 +2095,27 @@
       ]
     },
     {
+      "title": "Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift",
+      "author": "Yaniv Ovadia, Emily Fertig, Jie Ren, Zachary Nado, D Sculley, Sebastian Nowozin, Joshua V. Dillon, Balaji Lakshminarayanan, Jasper Snoek",
+      "url": "https://arxiv.org/abs/1906.02530",
+      "date": "2019",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "We find that traditional post-hoc calibration does indeed fall short, as do several other previous methods.",
+      "proves": "Calibration established on one distribution does not automatically hold when the distribution moves, which is why a vendor's calibration figure has to be re-derived on your own traffic rather than adopted.",
+      "verification": "partial",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Population is 2019 image, text and tabular classifiers under synthetic corruptions, with no LLMs and no synthetic-training-data regime, so applying it to a decision model is an inference and is labelled as such in the post",
+        "The paper's headline positive result is that ensembles stay well calibrated under the same shift, so calibration is joint over model and distribution",
+        "A quote carried by an earlier automated research pass could not be located in the paper and was discarded; only the abstract sentence above is used"
+      ]
+    },
+    {
       "title": "From Agent Traces to Trust: A Survey of Evidence Tracing and Execution Provenance in LLM Agents",
       "author": "Yiqi Wang et al.",
       "url": "https://arxiv.org/abs/2606.04990",
@@ -1924,6 +2134,47 @@
         "Cited for framing only; the paper runs no experiments and the body contains zero quantitative figures, so no statistic may be sourced to it",
         "Its schema requirements sit in an Open Problems section phrased as a need",
         "Version hazard: /abs/ serves v4 with 11 authors and 'A Survey of' in the title; v1 had 9 authors and no 'A Survey of'"
+      ]
+    },
+    {
+      "title": "Selective Classification for Deep Neural Networks",
+      "author": "Yonatan Geifman, Ran El-Yaniv",
+      "url": "https://arxiv.org/abs/1705.08500",
+      "date": "May 23, 2017",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Using our method an unprecedented 2% error in top-5 ImageNet classification can be guaranteed with probability 99.9%, and almost 60% test coverage.",
+      "proves": "Buying a guaranteed risk level costs coverage, and the price is large and measurable: roughly 40 percent of inputs go unanswered to hold a 2 percent error bound.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Coverage is formally the probability mass of the non-rejected region, and selective risk is defined only over the accepted region normalized by coverage",
+        "CIFAR-10 reaches 1% error at 78.56% coverage and CIFAR-100 18.85% error at 67% coverage, both at delta=0.001"
+      ]
+    },
+    {
+      "title": "Prompt Overflow: What the Guardrail Inspects Is Not What the Model Infers",
+      "author": "Yuanbo Zhou, Changjia Zhu, Junyu Wang, Xu He, Yan Zhai, Kun Sun, Mingkui Wei, Junjie Xiong",
+      "url": "https://arxiv.org/abs/2605.23196",
+      "date": "May 22, 2026",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "We identify a critical blind spot arising from the mismatch between the limited inspection windows of guardrail models and the substantially larger context inference windows of downstream LLMs.",
+      "proves": "A decision model's request budget is an attack surface rather than a quota: when the inspector's window is far smaller than the actor's, the gap itself is the vulnerability.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Guardrails with an effective 512-token window sit in front of models accepting up to 400k tokens, with interleave-layout bypass rates consistently above 99.5% against Prompt Guard 86M",
+        "The population is lightweight prompt-injection and toxicity classifiers, not calibrated multi-class decision models, so this is a reason to interrogate a decision model's budget rather than a measurement of one",
+        "Gemini 3 Pro recognized malicious intent in all 200 tested overflow cases, raising the question of whether the actor is a better last-line detector than an undersized upstream guard"
       ]
     },
     {
@@ -2052,6 +2303,27 @@
         "Largest single trigger is false premises at 30.7%",
         "Epistemic errors are the largest share in every scaffold tested, ranging 44% to 80%",
         "The paper's own prescription - 'earlier validation and intervention' - is itself a harness prescription"
+      ]
+    },
+    {
+      "title": "Measuring the Permission Gate: A Stress-Test Evaluation of Claude Code's Auto Mode",
+      "author": "Zimo Ji, Zongjie Li, Wenyuan Jiang, Yudong Gao, Shuai Wang",
+      "url": "https://arxiv.org/abs/2604.04978",
+      "date": "April 4, 2026",
+      "class": "research-data",
+      "pillars": [
+        6
+      ],
+      "stat": "Of the 253 actions, 93 (36.8%) were performed via Edit or Write tool calls, which are routed through Tier 2 and are not evaluated by the classifier.",
+      "proves": "A decision gate's coverage is a distinct failure channel from its accuracy: actions that never reach the model cannot be scored by it at all, and the gate's boundary has to match the actor's real action space rather than its most common channel.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The authors explicitly state the 81.0% stress-test FNR is not directly comparable to Anthropic's reported 17% on organic production traffic, calling the delta workload sensitivity rather than a flaw in the vendor's measurement",
+        "Coverage is the minority cause, not the dominant one: 51 of 115 false negatives came from the coverage gap and 64 from the classifier misjudging actions it did evaluate",
+        "Scope is a single model (Sonnet 4.6), one threat category, four synthetic DevOps task families with shimmed CLIs; the paper never mentions hallucination or schema conformance"
       ]
     },
     {
@@ -2649,6 +2921,27 @@
         "Routing was sticky, so a request served by the wrong server made follow-ups likely to hit it too",
         "The piece shows containment within Anthropic's own infrastructure; it cannot speak to other vendors being unaffected in the same window",
         "Bug 2 and Bug 3 date boundaries are less crisp in the text; verify before quoting bug-by-bug ranges"
+      ]
+    },
+    {
+      "title": "Next-generation Constitutional Classifiers: More efficient protection against universal jailbreaks",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/research/next-generation-constitutional-classifiers",
+      "date": "January 9, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Because flagged exchanges are escalated to the more powerful model, rather than refused, the first-stage classifier can afford a higher false-positive rate and not frustrate the user with refusals. Runs at just ~1% additional compute cost.",
+      "proves": "The cost of the cheap decision tier is not fixed: the same vendor repriced it from 23.7 percent overhead to roughly 1 percent in a year, so a vendor's cost comparison is a snapshot of a moving baseline.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Refusal rate of 0.05% on harmless queries, an 87% drop from the original classifiers system",
+        "The classifiers were trained on synthetic data generated from a constitution of natural language rules",
+        "The scoping qualifier about Claude Sonnet 4.5 traffic over one month was not isolated verbatim during verification and should be re-checked before being quoted"
       ]
     },
     {
@@ -3452,13 +3745,14 @@
       "proves": "Claude Code's permission model is a product-specific state machine that cannot be expressed in another tool's config, and parts of it cannot be set from the repo at all.",
       "verification": "confirmed",
       "powers": [
-        "switching-between-ai-coding-agents"
+        "switching-between-ai-coding-agents",
+        "jev-decision-model-placement"
       ],
       "secondary": [
+        "Each action goes through a fixed decision order. The first matching step wins: allow/ask/deny rules resolve immediately, read-only actions and working-directory edits auto-approve second, everything else goes to the classifier third.",
         "On Pro, Max and Team plans the built-in starting mode is auto (v2.1.228 or later); Enterprise, API-key, claude -p, Agent SDK and Bedrock sessions start in Manual",
         "The classifier runs on Claude Sonnet 5 by default regardless of the /model selection",
-        "Under auto mode a subagent's permissionMode frontmatter is ignored",
-        "permissions.allow rules do not pre-approve protected-path writes"
+        "Under auto mode a subagent's permissionMode frontmatter is ignored"
       ]
     },
     {
@@ -3542,6 +3836,25 @@
         "Names no AI vendor; the link to OpenAI's same-day incident is time-consistent but neither postmortem names the other",
         "Explicitly not caused by an attack or malicious activity",
         "No same-day Anthropic incident could be retrieved from the rolling status feed, so the shared-edge claim stays author's judgment"
+      ]
+    },
+    {
+      "title": "Jev (typesafe)",
+      "author": "Cloudflare",
+      "url": "https://developers.cloudflare.com/ai/models/typesafe/jev",
+      "date": "2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Jev is TypeSafe's structured evaluation model. It evaluates one state against typed Noul, Choice, and Score questions and returns calibrated answers with probabilities and confidence. Context window listed as 32,000 tokens.",
+      "proves": "A third host independently describes the model's contract and publishes a 32,000-token context window, corroborating the cross-host discrepancy on the request budget.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Cloudflare does not publish per-token rates on the model page, deferring to the dashboard"
       ]
     },
     {
@@ -3943,6 +4256,28 @@
       "secondary": [
         "The subtractive bar, with 'only' italicized on the page: 'you should consider adding complexity only when it demonstrably improves outcomes.'",
         "Anthropic gates 'multi-step agentic systems' while still endorsing multi-step workflows for well-defined tasks."
+      ]
+    },
+    {
+      "title": "A deep dive into Jev, TypeSafe's System One model",
+      "author": "Flavio Copes",
+      "url": "https://flaviocopes.com/jev",
+      "date": "September 17, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "The response reports the versioned ID that answered, so log it, and pin that ID once you've tuned thresholds against it.",
+      "proves": "Threshold drift has a version axis: a floating alias moves the model your thresholds were tuned against, and nothing in your logs records that it happened unless you pin and log the resolved ID.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "He reads the vendor's numbers carefully, noting the docs use 0.5 as a review floor and 0.9 before a destructive action as examples rather than defaults",
+        "He documents hands-on accuracy limits: unreliable at counting, comparing numbers, and date or window comparisons, with indirection and large irrelevant state both degrading accuracy",
+        "He notes scores are not a measurement and are usable to threshold or rank rather than to interpolate magnitude",
+        "The origin returns HTTP 403 to direct fetches and web.archive.org was blocked in this environment; the source was recovered via a reader proxy"
       ]
     },
     {
@@ -4935,6 +5270,27 @@
       ]
     },
     {
+      "title": "Jev: TypeSafe's System One Model Explained",
+      "author": "Matt Crabtree",
+      "url": "https://www.datacamp.com/blog/system-one-models-jev",
+      "date": "September 16, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Jev averages 67.8% agreement with the reference answers, where the reference answers are themselves average predictions of GPT-6 Astra and Anthropic's Fable.",
+      "proves": "The headline accuracy figure measures agreement with a synthetic consensus of two other vendors' models rather than with ground truth, which is a weaker claim than accuracy parity.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The piece states all numbers come from TypeSafe's own evaluation tables with no large-scale independent reproduction, and should be treated as vendor-reported",
+        "The workflows were written by TypeSafe's own model capabilities team, which the author flags as a possible source of bias",
+        "Comparison figures cited: GPT-5.6 Terra at 67.9% accuracy and 10.1s, Claude Opus 5 at 73.1% and 37.8s, with Jev reporting 0% structured output error"
+      ]
+    },
+    {
       "title": "Agent Runaway Costs: How to Set LLM Budget Limits Before Costs Spiral",
       "author": "Matt Turley, RelayPlane",
       "url": "https://relayplane.com/blog/agent-runaway-costs-2026",
@@ -5253,6 +5609,26 @@
       ]
     },
     {
+      "title": "Moderation",
+      "author": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/guides/moderation",
+      "date": "2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Treat moderation scores as signals for your application's policy, not as an automatic blocking decision. We plan to continuously upgrade the moderation endpoint's underlying model. Therefore, custom policies that rely on category_scores may need recalibration over time.",
+      "proves": "A vendor shipping this exact product shape, a per-category confidence score plus a typed flag, has been telling customers for years that the threshold is theirs and will need recalibration when the model moves.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The endpoint is free to use, so the precedent is not confounded by pricing pressure",
+        "The docs never use the words alias or floating for omni-moderation-latest; that characterization is the post's analysis, supported in substance by the recalibration warning"
+      ]
+    },
+    {
       "title": "Hooks",
       "author": "OpenAI (Codex docs)",
       "url": "https://learn.chatgpt.com/docs/hooks",
@@ -5315,6 +5691,28 @@
         "No provider is named; do not assert Cloudflare from this source",
         "The promised root cause analysis was not located",
         "Over an hour passed before the cause category was named"
+      ]
+    },
+    {
+      "title": "User guide for gpt-oss-safeguard",
+      "author": "OpenAI and ROOST",
+      "url": "https://developers.openai.com/cookbook/articles/gpt-oss-safeguard-guide",
+      "date": "2025",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "OpenAI uses small, high-recall classifiers to determine if content is domain-relevant to priority risks before evaluating that content with gpt-oss-safeguard. Traditional classifiers have lower latency and cost less to sample from.",
+      "proves": "The cheap classifier tier and the expensive reasoning tier are complements rather than substitutes, stated by a vendor that ships both.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Traditional classifiers trained on thousands of examples will likely perform better on a task than the reasoning model",
+        "Rules alone handle deterministic cases well, such as keyword matches and metadata thresholds, but struggle with satire, coded language, or nuanced policy boundaries",
+        "The guide advises pre-filtering content sent to the reasoning model because it is more time and compute intensive than other classifiers",
+        "No clean general statement exists on the page instructing escalation of ambiguity to a human; only policy-template example text"
       ]
     },
     {
@@ -5458,6 +5856,25 @@
       "secondary": [
         "Skills live at ~/.agents/skills (global) and .agents/skills (repo) as SKILL.md with optional scripts, references and assets",
         "agents/openai.yaml (MCP dependencies for skills) and Plugins are explicitly OpenAI/Codex-specific"
+      ]
+    },
+    {
+      "title": "Typesafe models",
+      "author": "OpenRouter",
+      "url": "https://openrouter.ai/typesafe",
+      "date": "2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "typesafe/jev-1.13 lists input at $0.042/M and output at $0/M with 32K context; the jev-latest entry states it always redirects to the latest model in the Jev family.",
+      "proves": "An independent host confirms both the pricing and the floating-alias behaviour, and publishes a context figure that does not match TypeSafe's own documentation.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "TypeSafe's own Models page states 64k tokens per request with 32k for state plus the longest question, while OpenRouter and Cloudflare both publish 32K, so the number a reader designs against depends on which host they read"
       ]
     },
     {
@@ -5749,6 +6166,49 @@
         "\"Aggregate token counts don't tell you which teams are driving spend.\"",
         "\"Centralized billing simplified procurement and security, but it traded away the per-user and per-team visibility teams used to get from individual seats.\"",
         "\"AI cost also scales differently than cloud cost. It moves with prompt size, fanout, retries, and agentic loops.\""
+      ]
+    },
+    {
+      "title": "Jev means structured output is interesting again",
+      "author": "sean goedecke",
+      "url": "https://www.seangoedecke.com/jev-means-structured-output-is-interesting-again",
+      "date": "September 16, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "To me, this seems like a semantic dodge, since Jev can absolutely still pick the wrong choice (e.g. calling the sky \"red\"). Still, all of this is also true about regular LLMs with structured outputs, and it doesn't make Jev any more reliable in practice.",
+      "proves": "The zero-hallucination claim is about schema conformance, a property any LLM with structured output already has, and it says nothing about whether the decision is correct.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "He reports no evidence the returned probabilities are anything other than regular logit probabilities",
+        "His own test on Qwen2.5-1.5B-Instruct with prefix plus constrained single-token decoding produced a 2x-3x speedup, suggesting the speed is an inference-stack result rather than a new architecture",
+        "Not being able to use test-time compute is a real ceiling that likely caps this model class around the strength of non-reasoning LLMs",
+        "His position is that Jev is useful but not architecturally novel, not that it is worthless"
+      ]
+    },
+    {
+      "title": "System One models like Jev can train their own replacements",
+      "author": "sean goedecke",
+      "url": "https://www.seangoedecke.com/system-one-models-can-train-their-own-replacements",
+      "date": "September 20, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "For serious work, a specific hand-built classifier will always be cheaper and faster than Jev. Generic classifiers have to encode knowledge of all kinds of irrelevant things in their weights, so they can address lots of different tasks. That makes them larger, slower, and more expensive to run.",
+      "proves": "A generic decision model may earn its slot only while you are still unsure the feature works, because its own logged input and output pairs become the training set for the bespoke classifier that replaces it.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The post is explicitly speculative, framed as what the author expects to become a common pattern, so a finite shelf life is a prediction rather than established economics",
+        "The bespoke path still requires ML expertise, merely deferred until after the feature is validated, so what is removed is the dataset obstacle and not the skill obstacle",
+        "The post says nothing about version pinning, rate limits, API shape or ownership economics"
       ]
     },
     {
@@ -6049,6 +6509,26 @@
       ]
     },
     {
+      "title": "A new kind of AI model from a ChatGPT inventor is thrilling developers",
+      "author": "Tim Fernholz",
+      "url": "https://techcrunch.com/2026/09/18/a-new-kind-of-ai-model-from-a-chatgpt-inventor-is-thrilling-developers",
+      "date": "September 18, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "At the end of the day, it delegates the hallucination problem a little bit to the user. The user has to say, okay, if this only comes back with 50% probability, maybe this is a coin toss, and I disregard it. But if it's 95%, sure, then I can do something with it.",
+      "proves": "Buying a calibrated decision model transfers the judgment, rather than removing it: the vendor guarantees the shape of the answer and the operator inherits the threshold that decides what to do with it.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "The quote is Armin Ronacher, CTO of Earendil; no first-party post on Jev exists on his own site, so this article is the primary of record",
+        "Diogo Almeida on the training approach: an early bet that we will be making all of our data, described as one of the best bets he has made"
+      ]
+    },
+    {
       "title": "Agentic RAG Failure Modes: Retrieval Thrash, Tool Storms, and Context Bloat (and How to Spot Them Early)",
       "author": "Towards Data Science (Mostafa Ibrahim)",
       "url": "https://towardsdatascience.com/agentic-rag-failure-modes-retrieval-thrash-tool-storms-and-context-bloat-and-how-to-spot-them-early",
@@ -6107,6 +6587,109 @@
       ],
       "secondary": [
         "Bake all three into every loop: 1. Max iteration count 2. No-progress detection 3. A token or dollar budget"
+      ]
+    },
+    {
+      "title": "System One",
+      "author": "TypeSafe AI",
+      "url": "https://docs.typesafe.ai/concepts/system-one",
+      "date": "2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Calibration is measured across groups of predictions; it does not guarantee that an individual answer is correct.",
+      "proves": "The vendor's own documentation limits the claim its launch post and the downstream coverage make: a calibrated probability is an aggregate property, so a single Jev answer can still be wrong.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Defines the class: System One models are built to make fast, structured decisions software can use directly, and do not write replies, produce code, or explain their reasoning",
+        "Confidence is returned so the caller can decide when to act and when to escalate to a person or a reasoning model",
+        "The page does not define RLCD and does not state cost-scaled confidence bands, despite both being attributed to TypeSafe across the coverage"
+      ]
+    },
+    {
+      "title": "Models",
+      "author": "TypeSafe AI",
+      "url": "https://docs.typesafe.ai/models",
+      "date": "2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "An alias moves when a new release ships, so the answers behind it can change without a change on your side. jev-latest resolves to jev-1.13.0; 64k tokens per request with 32k for state plus the longest question; 250,000 tokens per second and 1,200 requests per minute; input $0.042/M, output free.",
+      "proves": "Adopting a hosted decision model behind a floating alias means the thing your thresholds were tuned against can change with no deploy on your side.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Rate limits are adjusting dynamically and the published limits can change without notice",
+        "Text only at launch: string, JSON object, or array of text values, with no image, audio, or video input",
+        "TypeSafe publishes 64k per request while Cloudflare and OpenRouter both publish 32K context, so the hosts do not agree on the number a reader would design against"
+      ]
+    },
+    {
+      "title": "How to build with System One",
+      "author": "TypeSafe AI",
+      "url": "https://docs.typesafe.ai/concepts/how-to-build-with-system-one",
+      "date": "2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "Test thresholds by plotting confidence against accuracy on your data.",
+      "proves": "The vendor itself instructs callers to derive thresholds locally rather than adopt a published number, which is the strongest available support for treating the threshold as operator-owned.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Guidance is two-outcome: make code take different actions for confident and unconfident answers, escalating uncertain cases to a person or a more expensive reasoning model",
+        "Code examples show a two-sided uncertainty window (0.4 < spam_risk < 0.6) and a single floor (confidence < 0.8 routes to human review)",
+        "The docs never state cost-of-being-wrong scaling; that framing is the post's extension and is labelled as such"
+      ]
+    },
+    {
+      "title": "API reference",
+      "author": "TypeSafe AI",
+      "url": "https://docs.typesafe.ai/api",
+      "date": "2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "POST https://api.typesafe.ai/v1/systemone takes state plus a map of named typed questions and returns answers keyed by question id; the response echoes the resolved version (jev-1.13.0) even when the request said jev-latest.",
+      "proves": "The integration is not a drop-in model swap: the request and response shape diverge from the OpenAI chat-completions convention, and the resolved version is visible in the payload, which is what makes pinning auditable.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Noul returns a 0-1 probability; Choice returns the selected option plus a probabilities map plus confidence; Score returns a weighted value plus a legend",
+        "The docs never themselves draw the contrast with OpenAI's shape; that comparison is the post's observation from the two schemas"
+      ]
+    },
+    {
+      "title": "Introducing System One Models and Jev",
+      "author": "TypeSafe AI",
+      "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+      "date": "September 15, 2026",
+      "class": "practitioner",
+      "pillars": [
+        6
+      ],
+      "stat": "The model never makes type errors. Claims 40x-200x faster, 70ms-500ms end-to-end, $0.042/MTok input with free output, and a homepage figure of 193.6x faster and 444.6x cheaper.",
+      "proves": "The launch page's absolute claim sits against the same vendor's concepts page conceding calibration does not guarantee an individual answer is correct, so the zero-hallucination framing is about schema conformance, not correctness.",
+      "verification": "confirmed",
+      "powers": [
+        "jev-decision-model-placement"
+      ],
+      "secondary": [
+        "Benchmark provenance is vendor-run against a vendor-selected comparison: numbers come from Workflow evals testing how they compare to the average of the smartest models, in this case Astra and Fable",
+        "The page does not state training exclusively on synthetic data and does not define RLCD, despite both being widely attributed to it"
       ]
     },
     {
