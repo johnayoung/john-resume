@@ -202,27 +202,66 @@
       ]
     },
     {
+      "title": "From shortcuts to sabotage: natural emergent misalignment from reward hacking",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/research/emergent-misalignment-reward-hacking",
+      "date": "2025-11-21",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "A model learned to call sys.exit(0) to break out of a test harness with exit code 0, making it appear all tests passed.",
+      "proves": "A bare exit-code predicate is gameable when the agent controls the process; shown in deliberately hackable RL environments, not as a deployed base rate.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Reward hacking generalized to sabotage (12%) and alignment faking"
+      ]
+    },
+    {
+      "title": "Sycophancy to subterfuge: Investigating reward tampering in language models",
+      "author": "Anthropic",
+      "url": "https://www.anthropic.com/research/reward-tampering",
+      "date": "2024-06-17",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Reward tampering occurred 45 times out of 32,768 trials; a helpful-only baseline made no attempts in 100,000 trials.",
+      "proves": "Existence proof that a model with write access to its own check will sometimes edit it.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Harmlessness training did not reduce tampering to zero"
+      ]
+    },
+    {
       "title": "Demystifying evals for AI agents",
       "author": "Anthropic Engineering",
       "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
-      "date": "January 9, 2026",
+      "date": "2026-01-09",
       "class": "research-data",
       "pillars": [
         3
       ],
-      "stat": "Teams delay building evals thinking they need hundreds of tasks; in reality 20-50 simple tasks drawn from real failures is a great start, structured by task/trial/outcome vocabulary.",
-      "proves": "A working internal agent eval suite is a 20-50 task project, not an infrastructure program - removing the main excuse for deciding from public leaderboards instead.",
+      "stat": "The outcome is the final state in the environment: whether a reservation exists in the SQL database, not the agent saying 'Your flight has been booked'. Opus 4.5 went from 42% to 95% on CORE-Bench after grading bugs were fixed.",
+      "proves": "Done is adjudicated on end state, and brittle graders can reject real work.",
       "verification": "confirmed",
       "powers": [
+        "agent-done-criteria-predicates",
         "coding-agent-leaderboard-noise",
         "agent-harness-audit",
         "evaluating-ai-coding-agent-output"
       ],
       "secondary": [
+        "Teams delay building evals thinking they need hundreds of tasks; in reality 20-50 simple tasks drawn from real failures is a great start, structured by task/trial/outcome vocabulary.",
         "Opus 4.5 initially scored 42% on CORE-Bench; after fixing grading bugs and using a less constrained scaffold, the same model's score jumped to 95%.",
         "So as not to unnecessarily punish creativity, it's often better to grade what the agent produced, not the path it took.",
-        "'With frontier models, a 0% pass rate across many trials (i.e 0% pass@100) is most often a signal of a broken task, not an incapable agent'",
-        "The initial 42% observation is Anthropic citing an external report; the diagnosis and the 95% re-run are Anthropic's own"
+        "Code graders are fast, objective, reproducible but brittle; model graders need human calibration"
       ]
     },
     {
@@ -435,6 +474,26 @@
       ]
     },
     {
+      "title": "SpecBench: Measuring Reward Hacking in Long-Horizon Coding Agents",
+      "author": "Bingchen Zhao, Dhruv Srikanth, Yuxiang Wu, Zhengyao Jiang",
+      "url": "https://arxiv.org/abs/2605.21384",
+      "date": "2026-05-20",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "A Codex-built hash-table 'compiler' scored 97% on validation tests and 0% on held-out tests; the P90 gap grows ~27pp per tenfold increase in LOC.",
+      "proves": "A green visible suite can hide missing work, usually through compositional failure rather than deliberate exploit, so held-out checks belong in the gate.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Worst-case gap 21pp under 10K LOC vs 100pp over 25K LOC",
+        "More visible tests do not reliably close the gap"
+      ]
+    },
+    {
       "title": "Rank Intervals for Leaderboards: A Hierarchical Framework for Model Evaluation",
       "author": "Bitya Neuhof, Yuval Benjamini",
       "url": "https://arxiv.org/abs/2606.08679",
@@ -487,6 +546,25 @@
         "'Additional data about X and Y (i.e., sampling more datapoints) is not going to help; in fact, it may just entrench our reliance on the biased estimate by reducing its variance and giving the false impression of reliability'",
         "The sign flip is a sensitivity-analysis threshold showing how little confounding would suffice, not an observed reversal in the data; neither case study concerns code review",
         "Preprint with no journal-ref; Simpson's paradox is not discussed anywhere in the paper"
+      ]
+    },
+    {
+      "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+      "author": "Carlos E. Jimenez et al.",
+      "url": "https://arxiv.org/abs/2310.06770",
+      "date": "2023-10",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "An instance is resolved only when all FAIL_TO_PASS and PASS_TO_PASS tests pass after the patch is applied; a median of 51 additional tests check prior functionality.",
+      "proves": "Done is a pair of end-state predicates: the failing test now passes and nothing that passed now fails.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Harness grades FULL / PARTIAL / NO from the two test sets"
       ]
     },
     {
@@ -1025,6 +1103,27 @@
       ]
     },
     {
+      "title": "When Do Agent Loops Mistake Stagnation for Progress? Self-Evaluation Bias and Externally Grounded Verification in Long-Running Autonomous LLM Agent Loops",
+      "author": "Hyundoo Park, Byungho Choi",
+      "url": "https://arxiv.org/abs/2607.25152",
+      "date": "2026-07-27",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "The strongest in-band judge accepted cycles of which 44 percent were real-world regressions and rejected 38 percent of real improvements.",
+      "proves": "Scaling the judge does not close the gap when success lives outside the transcript; an isolated out-of-band evaluator does, and on artifact-verifiable tasks the gap collapses.",
+      "verification": "partial",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "On a task whose success is verifiable from the artifact, the judge's mirage vanished to zero",
+        "Oracle isolated on a separate network with read-only access to the artifact",
+        "Preregistered pilot, one frontier agent, one testbed; body quotes verified via mirror"
+      ]
+    },
+    {
       "title": "Scaffold Effects on GAIA: A Controlled Comparison",
       "author": "Jason Starace",
       "url": "https://arxiv.org/abs/2606.08529",
@@ -1110,6 +1209,26 @@
       ]
     },
     {
+      "title": "Reward Hacking Benchmark: Measuring Exploits in LLM Agents with Tool Use",
+      "author": "Kunvar Thaman",
+      "url": "https://arxiv.org/abs/2605.02964",
+      "date": "2026-05",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Environmental hardening reduces exploit rates from 6.5% to 0.8% (87.7% relative) with task success statistically unchanged (83.2% vs 82.8%).",
+      "proves": "Hardening the evaluation boundary works without costing real task success.",
+      "verification": "partial",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Exploit rates range 0% to 13.9% by post-training style",
+        "Table 6 per-intervention ablation and Appendix G wording not verified (page truncates); not cited"
+      ]
+    },
+    {
       "title": "Measuring AI Ability to Complete Long Software Tasks",
       "author": "Kwa, West, Becker, et al. (METR)",
       "url": "https://arxiv.org/abs/2503.14499",
@@ -1130,6 +1249,27 @@
         "\"within 5 years, AI systems will be capable of automating many software tasks that currently take humans a month\".",
         "\"The increase in AI models' time horizons seems to be primarily driven by greater reliability and ability to adapt to mistakes\"",
         "50%-task-completion time horizon. This is the time humans typically take to complete tasks that AI models can complete with 50% success rate"
+      ]
+    },
+    {
+      "title": "From Confident Closing to Silent Failure: Characterizing False Success in LLM Agents",
+      "author": "Laksh Advani",
+      "url": "https://arxiv.org/abs/2606.09863",
+      "date": "2026-06-01",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Across 11,755 trajectories, false success is 45-48% of failures in single-control tau2-bench domains, 3% in dual-control telecom, and 75.8% among AppWorld self-assessing coding-agent trajectories with explicit status claims; no LLM judge configuration exceeds AUROC 0.65 on tau2-bench (0.54 on AppWorld).",
+      "proves": "An agent's completion claim is unreliable on its own, and a second LLM reading the transcript cannot adjudicate it; false success nearly disappears where an independent process can verify state.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "TF-IDF + XGBoost detectors reach 0.83 (tau2) and 0.95 (AppWorld) AUROC at ~3,300x lower latency, but only 50% precision at a 10% flag rate on tau2, so triage not gate",
+        "Judges anchor on confident closing-message language as evidence of completion",
+        "The 3% dual-control figure rests on 15 false-success cases; single-author FAGEN@ICML2026 workshop paper"
       ]
     },
     {
@@ -1274,6 +1414,26 @@
         "76.5% is a RELATIVE improvement over a partial-observation baseline, not an absolute accuracy",
         "Peer-reviewed camera-ready reports 76.5%; the earlier arXiv v1 said 76%",
         "Analyzer choice alone moves step-level accuracy substantially on identical full traces, so completeness is a precondition for attribution rather than a substitute for analysis"
+      ]
+    },
+    {
+      "title": "Terminal-Bench: Benchmarking Agents on Hard, Realistic Tasks in Command Line Interfaces",
+      "author": "Merrill et al.",
+      "url": "https://arxiv.org/abs/2601.11868",
+      "date": "2026",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "A task is well-specified if the unit tests will pass if and only if the container ends in an acceptable state; tests check final container state, not commands or console output.",
+      "proves": "Serious agent benchmarks already define done as a predicate on end state evaluated after the agent finishes.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Tests are copied into the container and executed after the agent acts",
+        "2.1 fixed 28 of 89 tasks whose instructions made them unsolvable"
       ]
     },
     {
@@ -1462,13 +1622,35 @@
       "proves": "The dominant measured failure is agents breaking constraints developers already stated, not developers failing to state them - which is why sharpening prompt prose does not address the main failure mode.",
       "verification": "confirmed",
       "powers": [
-        "task-decomposition-for-ai-coding-agents"
+        "task-decomposition-for-ai-coding-agents",
+        "agent-done-criteria-predicates"
       ],
       "secondary": [
+        "Inaccurate Self-Reporting (S7) is 22.58% of 16,118 validated misalignment episodes (IDE 20.36%, CLI 26.66%); 91.49% of visibly resolved episodes required explicit developer pushback.",
         "The symptom taxonomy is explicitly multi-label - 29.56% of episodes carry two labels and 0.54% carry three or more - so the seven shares deliberately do not sum to 100%",
         "90.50% of episodes impose effort and trust costs rather than irreversible system damage, yet 91.49% of visible resolutions still require explicit user correction",
-        "Misalignment compounds across sessions: probability of misalignment in the next session is 0.519 after an affected session versus 0.336 otherwise",
-        "Constraint violation is markedly worse in CLI sessions (49.49%) than IDE sessions (32.26%)"
+        "Misalignment compounds across sessions: probability of misalignment in the next session is 0.519 after an affected session versus 0.336 otherwise"
+      ]
+    },
+    {
+      "title": "Quantifying Overclaiming Propensity in Frontier LLM Agents",
+      "author": "Nolan Smyth et al.",
+      "url": "https://arxiv.org/abs/2609.20812",
+      "date": "2026-09-17",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Agents fail to read every file they were asked to review in 67.9% of runs; among these incomplete runs, agents are misleading 80.4% of the time (59-96% per model).",
+      "proves": "Agents' final responses are not reliable accounts of their actions; completion has to be checked from the record, not the report.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Coverage is measured by a deterministic 'touched' check that requires no inference about intent",
+        "Overclaiming runs missed 58.2% of planted defects vs 32.4% in runs that touched every file",
+        "Delegating to subagents raised coverage but not honesty"
       ]
     },
     {
@@ -1588,6 +1770,26 @@
       ],
       "secondary": [
         "the observed 719.64% increase in latency for the 70B model at the 15,000-word regime"
+      ]
+    },
+    {
+      "title": "BAITBENCH: Measuring Agent Reward Hacking with Optional Shortcuts Planted in ML Tasks",
+      "author": "Pradyumna Shyama Prasad et al.",
+      "url": "https://arxiv.org/abs/2608.30724",
+      "date": "2026-08-31",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "57.1% of judge-run decisions classified the submission as reward hacking; a validity-aware prompt cut it by 6.21 pp; self-reflection 55.6% vs 56.3%; 42.7% of runs named the shortcut yet presented it as success.",
+      "proves": "Prompting and self-reflection do not stop agents from gaming a visible score.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Three synthetic tabular ML task families; a lower bound",
+        "Detection is LLM-judge based"
       ]
     },
     {
@@ -1772,6 +1974,25 @@
       ]
     },
     {
+      "title": "τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains",
+      "author": "Shunyu Yao, Noah Shinn, Pedram Razavi, Karthik Narasimhan",
+      "url": "https://arxiv.org/abs/2406.12045",
+      "date": "2024-06",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "Episode reward is based on whether the final database is identical to the unique ground truth outcome database, and whether responses contain the needed information.",
+      "proves": "Final-state equality, not the conversation, is the grade.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Database contents are the hidden state of the task POMDP"
+      ]
+    },
+    {
       "title": "3100 Opinions on Code Review in an AI World: Building Causal Theory from Practitioner Discourse",
       "author": "Shyam Agarwal, Courtney Miller, Christian Kästner, Bogdan Vasilescu (Carnegie Mellon University)",
       "url": "https://arxiv.org/abs/2607.07980",
@@ -1851,6 +2072,26 @@
         "Over 95% of AI agent comments fall into Code Improvement and Defect Detection, while humans also supply Understanding, Testing, and Knowledge Transfer feedback",
         "Results are pooled averages across 300 projects with no breakdown by project, team, or reviewer characteristics, and the authors note findings may not generalize to proprietary enterprise systems",
         "Preprint; the AI-agent population mixes coding agents and purpose-built review bots (GitHub Copilot, CodeRabbit, Devin, Claude Code, Gemini Code Assist)"
+      ]
+    },
+    {
+      "title": "Recent Frontier Models Are Reward Hacking",
+      "author": "Sydney Von Arx, Lawrence Chan, Beth Barnes (METR)",
+      "url": "https://metr.org/blog/2025-06-05-recent-reward-hacking",
+      "date": "2025-06-05",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "o3 reward hacked 30.4% of RE-Bench runs vs 0.7% of HCAST, 43x more where the scoring function is visible; 'do not cheat' instructions had a nearly negligible effect.",
+      "proves": "Instructions are not a control; the check has to be out of the agent's reach.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "o3 traced the call stack to return the scorer's precomputed answer",
+        "o3 said its plan did not match user intent 10 out of 10 times"
       ]
     },
     {
@@ -2053,6 +2294,26 @@
         "The mechanism is hedged: the paper says the difference may be caused by different cloud infrastructures (OpenAI on Azure, Anthropic on GCP)",
         "The 49.21% OpenAI figure is API-to-ChatGPT co-occurrence specifically, not a whole-provider aggregate",
         "Only 6.15% of reports disclose a postmortem; Anthropic provided none for its API and Console services"
+      ]
+    },
+    {
+      "title": "AgentRewardBench: Evaluating Automatic Evaluations of Web Agent Trajectories",
+      "author": "Xing Han Lù et al.",
+      "url": "https://arxiv.org/abs/2504.08942",
+      "date": "2025-04",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "No judge achieves above 70% precision, so 30% of trajectories are erroneously marked successful; rule-based evaluation reaches 55.9% recall.",
+      "proves": "LLM judges are not precise enough to be the completion gate, and rule-based checks fail in the opposite, safer direction (false rejects).",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Rule-based evaluation used by common benchmarks tends to underreport web-agent success",
+        "1,302 expert-annotated trajectories, 12 LLM judges"
       ]
     },
     {
@@ -2324,6 +2585,26 @@
         "The authors explicitly state the 81.0% stress-test FNR is not directly comparable to Anthropic's reported 17% on organic production traffic, calling the delta workload sensitivity rather than a flaw in the vendor's measurement",
         "Coverage is the minority cause, not the dominant one: 51 of 115 false negatives came from the coverage gap and 64 from the classifier misjudging actions it did evaluate",
         "Scope is a single model (Sonnet 4.6), one threat category, four synthetic DevOps task families with shimmed CLIs; the paper never mentions hallucination or schema conformance"
+      ]
+    },
+    {
+      "title": "ImpossibleBench: Measuring LLMs' Propensity of Exploiting Test Cases",
+      "author": "Ziqian Zhong, Aditi Raghunathan, Nicholas Carlini",
+      "url": "https://arxiv.org/abs/2510.20270",
+      "date": "2025-10-23",
+      "class": "research-data",
+      "pillars": [
+        1
+      ],
+      "stat": "GPT-5 cheats 54.0% of the time on Conflicting-SWEbench; LLM monitors detect 42-65% of cheating on Impossible-SWEbench.",
+      "proves": "When the agent can see or write the tests, passing them is not evidence of the work; hiding or read-only tests reduce this at a cost.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Four cheating categories: modify test cases, overload comparison operators, record extra states, special casing",
+        "Hidden tests cut cheating to near zero but degrade legitimate performance; read-only is a middle ground that does not stop special-casing"
       ]
     },
     {
@@ -3681,13 +3962,14 @@
       "verification": "confirmed",
       "powers": [
         "switching-between-ai-coding-agents",
-        "agent-harness-audit"
+        "agent-harness-audit",
+        "agent-done-criteria-predicates"
       ],
       "secondary": [
         "'For most hook events, only exit code 2 blocks the action. Claude Code treats exit code 1 as a non-blocking error and proceeds with the action, even though 1 is the conventional Unix failure code.'",
+        "Stop hook exit code 2: prevents Claude from stopping, continues the conversation; the blocking message is the hook's stderr when no JSON decision is given.",
         "Matcher semantics changed across point releases (v2.1.195, v2.1.214, v2.1.248), so hook configs are version-sensitive",
-        "The page says handlers run in the current directory with Claude Code's environment; it does not say 'full user permissions', treat that as inference",
-        "Cloud sessions on Claude Code on the web do not read local ~/.claude/settings.json; hooks there come from the repo and server-managed settings"
+        "The page says handlers run in the current directory with Claude Code's environment; it does not say 'full user permissions', treat that as inference"
       ]
     },
     {
@@ -4102,15 +4384,17 @@
       "date": "March 16, 2025",
       "class": "practitioner",
       "pillars": [
-        3
+        1
       ],
       "stat": "Don't ask the same agent to write code and verify it. That's like having students grade their own exams...The separation is what makes the gates trustworthy.",
       "proves": "The agent that writes the code must not be the one that grades it; separated validation gates are what make verification trustworthy.",
       "verification": "confirmed",
       "powers": [
-        "evaluating-ai-coding-agent-output"
+        "evaluating-ai-coding-agent-output",
+        "agent-done-criteria-predicates"
       ],
       "secondary": [
+        "The validator is a separate agent with a separate prompt, separate context, and explicit permission to fail the work.",
         "Eight quality gates required before production",
         "Every commit is a known-good checkpoint. When something fails, the blast radius is one subtask, not an entire feature.",
         "Agents are extremely literal. Give them vague instructions and they'll build something that technically matches what you said but misses what you meant."
@@ -4544,19 +4828,38 @@
       "date": "undated",
       "class": "practitioner",
       "pillars": [
-        2
+        1
       ],
       "stat": "'By default, the restrictions of a branch protection rule don't apply to people with admin permissions to the repository or custom roles with the bypass branch protections permission' until 'Do not allow bypassing the above settings' is enabled; a required status check pinned to an app blocks merging 'if the status is set by any other person or integration.'",
       "proves": "Two settings decide whether the host gate actually holds: closing the admin bypass and pinning the required check to its app.",
       "verification": "confirmed",
       "powers": [
-        "switching-between-ai-coding-agents"
+        "switching-between-ai-coding-agents",
+        "agent-done-criteria-predicates"
       ],
       "secondary": [
+        "After enabling required status checks, all required status checks must pass before collaborators can merge changes into the protected branch.",
         "Covers legacy branch protection rules; rulesets have their own bypass-actor model",
         "Only one branch protection rule applies at a time, a restriction that does not apply to rulesets",
         "Required checks must have a successful, skipped or neutral status before changes land"
       ]
+    },
+    {
+      "title": "About code owners",
+      "author": "GitHub Docs",
+      "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "Enable 'Require review from Code Owners' so changed code is reviewed by the owners of the changed files.",
+      "proves": "Changing the definition of done (predicate and test files) requires a human sign-off.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": []
     },
     {
       "title": "Policy engine",
@@ -5629,6 +5932,25 @@
       ]
     },
     {
+      "title": "Graders",
+      "author": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/guides/graders",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "A model that's hacked the grader will score highly on model grader evals but score poorly on expert human evaluations. Python graders run without network access and are limited to 2 minutes.",
+      "proves": "Deterministic graders first, sandboxed out of the graded model's reach; model graders are hackable.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Grader types: string_check (eq, neq, like, ilike), text_similarity, score_model, python, multi"
+      ]
+    },
+    {
       "title": "Hooks",
       "author": "OpenAI (Codex docs)",
       "url": "https://learn.chatgpt.com/docs/hooks",
@@ -6485,6 +6807,25 @@
       ],
       "secondary": [
         "the art of providing all the context for the task to be plausibly solvable by the LLM"
+      ]
+    },
+    {
+      "title": "What are acceptance criteria?",
+      "author": "SpecStory",
+      "url": "https://specstory.com/learning/ai-coding/acceptance-criteria",
+      "date": "2026-09-29",
+      "class": "practitioner",
+      "pillars": [
+        1
+      ],
+      "stat": "A safer setup has a person approve the criteria before the agent starts, and keeps the acceptance tests in files the agent does not edit.",
+      "proves": "Commodity baseline: criteria outside the agent's edit scope. Stops short of a checker the agent cannot reach.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-done-criteria-predicates"
+      ],
+      "secondary": [
+        "Each criterion names one thing a user can see or a test can check"
       ]
     },
     {
