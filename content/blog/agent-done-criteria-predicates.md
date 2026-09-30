@@ -1,5 +1,5 @@
 ---
-title: "Your Agent's \"Done\" Is a Self-Report. Make It a Predicate."
+title: "Your Agent's “Done” Is a Self-Report. Make It a Predicate."
 date: 2026-09-28
 draft: false
 pillar: task-design
