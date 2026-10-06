@@ -253,15 +253,16 @@
       "verification": "confirmed",
       "powers": [
         "agent-done-criteria-predicates",
+        "standing-agent-eval-suite",
         "coding-agent-leaderboard-noise",
         "agent-harness-audit",
         "evaluating-ai-coding-agent-output"
       ],
       "secondary": [
+        "Capability evals start at a low pass rate; regression evals should be nearly 100%; high-pass capability evals can graduate into a continuously run regression suite after launch and optimization.",
         "Teams delay building evals thinking they need hundreds of tasks; in reality 20-50 simple tasks drawn from real failures is a great start, structured by task/trial/outcome vocabulary.",
         "Opus 4.5 initially scored 42% on CORE-Bench; after fixing grading bugs and using a less constrained scaffold, the same model's score jumped to 95%.",
-        "So as not to unnecessarily punish creativity, it's often better to grade what the agent produced, not the path it took.",
-        "Code graders are fast, objective, reproducible but brittle; model graders need human calibration"
+        "So as not to unnecessarily punish creativity, it's often better to grade what the agent produced, not the path it took."
       ]
     },
     {
@@ -650,6 +651,27 @@
       ]
     },
     {
+      "title": "Hidden Technical Debt in Machine Learning Systems",
+      "author": "D. Sculley et al.",
+      "url": "https://proceedings.neurips.cc/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf",
+      "date": "2015-12-07",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Unit and end-to-end tests are 'not sufficient to provide evidence that a system is working as intended' in a changing world; configurations 'should undergo a full code review and be checked into a repository'.",
+      "proves": "Per-component and per-change tests miss system-level regressions, and configuration changes behavior like code.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "CACE: Changing Anything Changes Everything",
+        "Hidden debt compounds silently",
+        "2015 ML systems; applied to agents by analogy"
+      ]
+    },
+    {
       "title": "How Many Instructions Can LLMs Follow at Once?",
       "author": "Daniel Jaroslawicz, Brendan Whiting, Parth Shah, Karime Maamari (Distyl AI)",
       "url": "https://arxiv.org/abs/2507.11538",
@@ -786,6 +808,27 @@
       ],
       "secondary": [
         "Evidence base is a qualitative comparative audit across nine dimensions in three layers, not quantitative failure-rate measurement"
+      ]
+    },
+    {
+      "title": "The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction",
+      "author": "Eric Breck, Shanqing Cai, Eric Nielsen, Michael Salib, D. Sculley",
+      "url": "https://research.google.com/pubs/archive/aad9f93b86b7addfea4c419b9100c6cdd26cacea.pdf",
+      "date": "2017-12-11",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "A test earns full credit only when it runs automatically on a repeated basis; in a survey of several dozen Google teams, no test was implemented by more than 80% of teams.",
+      "proves": "Production ML systems have to be shown to keep working over time, by automated repeated tests, not by a launch-time check.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Integration tests should run continuously and on new releases of models or servers",
+        "Golden tests are hard to maintain without blindly updating the golden file",
+        "Version at this URL: half point manual, full point automated"
       ]
     },
     {
@@ -968,13 +1011,14 @@
       "verification": "confirmed",
       "powers": [
         "switching-between-ai-coding-agents",
+        "standing-agent-eval-suite",
         "claude-md-context-hierarchy"
       ],
       "secondary": [
+        "Context files do not generally improve task success while increasing inference cost by over 20% on average; developer-written files +2.4% (not significant).",
         "we find that context files tend to reduce task success rates compared to providing no repository context, while also increasing inference cost by over 20%.",
         "Context files increased steps in every setting, by 2.45 and 3.92 on average, driving cost increases of 20% and 23% on SWE-bench and CTXbench respectively",
-        "Developer-provided files significantly outperform LLM-generated ones (p=3.8%)",
-        "Instructions are well followed; repository overviews, although recommended by model providers, are not helpful"
+        "Developer-provided files significantly outperform LLM-generated ones (p=3.8%)"
       ]
     },
     {
@@ -1273,6 +1317,27 @@
       ]
     },
     {
+      "title": "How is ChatGPT's behavior changing over time?",
+      "author": "Lingjiao Chen, Matei Zaharia, James Zou",
+      "url": "https://arxiv.org/abs/2307.09009",
+      "date": "2023-07-18",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "GPT-4 directly executable code generations fell from 52.0% in March to 10.0% in June 2023 (GPT-3.5: 22.0% to 2.0%) under the same model name.",
+      "proves": "The same vendor model can change behavior with no diff on the user's side, so an agent system needs scheduled evals, not only change-triggered ones.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "The paper offers added non-code text (markdown fences) as one possible explanation for the drop",
+        "A LangChain HotpotQA agent ran the opposite direction: 1.2% exact match in March, 37.8% in June",
+        "Figures unchanged across v1-v3"
+      ]
+    },
+    {
       "title": "Lost in the Middle: How Language Models Use Long Contexts",
       "author": "Liu et al. (TACL 2024)",
       "url": "https://arxiv.org/abs/2307.03172",
@@ -1500,6 +1565,26 @@
       ],
       "secondary": [
         "Uncertainty across measurements is highly correlated because it largely comes from resampling the task set"
+      ]
+    },
+    {
+      "title": "Time Horizon 1.1",
+      "author": "METR",
+      "url": "https://metr.org/blog/2026-1-29-time-horizon-1-1",
+      "date": "2026-01-29",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Suite grew from 170 to 228 tasks: 73 added, 15 removed, 53 updated; GPT-4o and o3 scored significantly higher under Vivaria than Inspect.",
+      "proves": "An eval suite drifts too (confusing specs, reward-hackable tasks, broken scorers), and its composition moves measured results, so it needs versioning.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Long tasks (8+ human hours) went from 14 to 31",
+        "Trend is somewhat sensitive to task composition"
       ]
     },
     {
@@ -1857,6 +1942,44 @@
       ]
     },
     {
+      "title": "Holistic Agent Leaderboard: The Missing Infrastructure for AI Agent Evaluation",
+      "author": "Sayash Kapoor et al.",
+      "url": "https://arxiv.org/abs/2510.11977",
+      "date": "2025-10-13",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Total study cost about $40,000 across 21,730 rollouts; one model-benchmark pair skipped because it would cost about $20,000.",
+      "proves": "Agent eval cost varies by orders of magnitude across benchmarks, so a run's price has to be known before it is scheduled.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Per-benchmark averages ranged from $13 to over $450"
+      ]
+    },
+    {
+      "title": "AI Agents That Matter",
+      "author": "Sayash Kapoor, Benedikt Stroebl, Zachary S. Siegel, Nitya Nadgir, Arvind Narayanan",
+      "url": "https://arxiv.org/abs/2407.01502",
+      "date": "2024-07-01",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "At SWE-Agent's USD 4 per-task cap, evaluating the entire benchmark could cost over USD 8,000 for a single run.",
+      "proves": "Full multi-trial agent eval runs are expensive enough that you cannot run all of them on every change; cadence has to be tiered.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "High cost makes repeated runs infeasible, so agent evaluations rarely carry error bars"
+      ]
+    },
+    {
       "title": "\"An Endless Stream of AI Slop\": How Developers Discuss the Burden of AI-Assisted Software Development",
       "author": "Sebastian Baltes, Marc Cheong, Christoph Treude",
       "url": "https://arxiv.org/abs/2603.27249",
@@ -1949,6 +2072,46 @@
       ],
       "secondary": [
         "we find that simply adding an instruction to ignore irrelevant information brings notable performance gains on our benchmark."
+      ]
+    },
+    {
+      "title": "Who Validates the Validators? Aligning LLM-Assisted Evaluation of LLM Outputs with Human Preferences",
+      "author": "Shreya Shankar, J.D. Zamfirescu-Pereira, Björn Hartmann, Aditya G. Parameswaran, Ian Arawjo",
+      "url": "https://arxiv.org/abs/2404.12272",
+      "date": "2024-04-18",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Nine-practitioner study: users need criteria to grade outputs, but grading outputs helps users define criteria ('criteria drift').",
+      "proves": "Evaluation criteria cannot be fully fixed in advance and shift as outputs are graded, so a standing suite's rubric needs periodic re-grading.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Qualitative, single-session study; suite-level drift is an analogy"
+      ]
+    },
+    {
+      "title": "Operationalizing Machine Learning: An Interview Study",
+      "author": "Shreya Shankar, Rolando Garcia, Joseph M. Hellerstein, Aditya G. Parameswaran",
+      "url": "https://arxiv.org/abs/2209.09125",
+      "date": "2022-09-16",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Interviews with 18 ML engineers: many updated validation datasets from live failure modes; higher-stakes applications created separate teams to manage dynamic evaluation.",
+      "proves": "Feeding production failures back into the eval set, under named ownership, is established ML practice that agent teams can adopt.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "P8: a weekly queue where three people review every failed prediction",
+        "No participant had a principled method for choosing cadence",
+        "Engineers kept cloned, diverging copies of the evaluation notebook"
       ]
     },
     {
@@ -2217,6 +2380,26 @@
       ]
     },
     {
+      "title": "AgentAssay: Token-Efficient Regression Testing for Non-Deterministic AI Agent Workflows",
+      "author": "Varun Pratap Bhardwaj",
+      "url": "https://arxiv.org/abs/2603.02601",
+      "date": "2026-03-03",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "SPRT reduced regression-test trials by 78%; 7,605 trials across 5 models and 3 scenarios cost $227.",
+      "proves": "Sequential testing with an inconclusive verdict cuts the cost of multi-trial agent regression runs without giving up statistical guarantees.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Three-valued Pass/Fail/Inconclusive verdicts",
+        "Single-author preprint"
+      ]
+    },
+    {
       "title": "Do Androids Dream of Breaking the Game? Systematically Auditing AI Agent Benchmarks with BenchJack",
       "author": "Wang, Li, Mang, Cheung, Sen, Song",
       "url": "https://arxiv.org/abs/2605.12673",
@@ -2232,6 +2415,27 @@
         "coding-agent-leaderboard-noise"
       ],
       "secondary": []
+    },
+    {
+      "title": "When Errors Become Narratives: A Longitudinal Taxonomy of Silent Failures in a Production LLM Agent Runtime",
+      "author": "Wei Wu",
+      "url": "https://arxiv.org/abs/2606.14589",
+      "date": "2026-06-12",
+      "class": "research-data",
+      "pillars": [
+        3
+      ],
+      "stat": "Of 15 audited incidents (22 documented), ex-ante prevention was 0% and ex-post regression blocking 87%; 80% of misses were dimensions never conceived; ~70% of silent failures were caught by human user-view observation.",
+      "proves": "A suite built from incidents blocks known failures and predicts none of the new ones, so it needs continuous incident intake plus humans watching output.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Weekly 30-minute observation ritual, no coding allowed",
+        "'Sunset Law': before adding a mechanism, try to retire an equivalent one",
+        "One runtime; frequencies not generalizable"
+      ]
     },
     {
       "title": "When Does Confidence-Based Cascade Deferral Suffice?",
@@ -2538,11 +2742,14 @@
       "proves": "Performance variance is governed more by harness configuration than model choice, so evaluation protocols without harness disclosure systematically misattribute harness gains to model improvements.",
       "verification": "confirmed",
       "powers": [
-        "coding-agent-leaderboard-noise"
+        "coding-agent-leaderboard-noise",
+        "standing-agent-eval-suite"
       ],
       "secondary": [
+        "Adding the WarpGrep search subagent on identical infrastructure adds 2.1 to 2.2 points across models and flips the MiniMax 2.5 vs Claude Opus 4.6 ordering.",
         "The same model under a different harness can rank above or below a competitor - rank order itself is harness-dependent",
-        "The paper proposes a harness-aware evaluation framework with a disclosure standard and variance decomposition protocol"
+        "The paper proposes a harness-aware evaluation framework with a disclosure standard and variance decomposition protocol",
+        "Harness changes moved scores 8.5-13.0 points vs 2.5-5.0 for model changes (long-horizon, 3x3 grid)"
       ]
     },
     {
@@ -2624,6 +2831,26 @@
       ],
       "secondary": [
         "Cited as design intent only, not adoption evidence: no adopter case studies or production-deployment list found on the page, and the roadmap still lists authorization schemes, dynamic capability negotiation, and streaming reliability as unresolved"
+      ]
+    },
+    {
+      "title": "Testing Overview (Software Engineering at Google, ch. 11)",
+      "author": "Adam Bender, ed. Tom Manshreck",
+      "url": "https://abseil.io/resources/swe-book/html/ch11.html",
+      "date": "2020-03-01",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "More than 80% of Google Web Server production pushes once contained user-affecting bugs; within a year of requiring tests on every change, emergency pushes dropped by half.",
+      "proves": "A standing suite run on every change reduces production regressions that per-change review missed.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Tests lose value near 1% flakiness; Google runs about 0.15%",
+        "Beyonce Rule: if you liked it, you shoulda put a test on it"
       ]
     },
     {
@@ -3195,13 +3422,14 @@
       "proves": "The same model degraded very differently by serving path, and internal evals did not catch what users were reporting.",
       "verification": "confirmed",
       "powers": [
-        "switching-between-ai-coding-agents"
+        "switching-between-ai-coding-agents",
+        "standing-agent-eval-suite"
       ],
       "secondary": [
+        "Up to 16% of Sonnet 4 requests affected in the worst hour; ~30% of Claude Code users had at least one misrouted message; 'The evaluations we ran simply didn't capture the degradation users were reporting.'",
         "The 30% figure counts users with at least one misrouted message, not sustained degradation, and is scoped to Claude Code users",
         "Routing was sticky, so a request served by the wrong server made follow-ups likely to hit it too",
-        "The piece shows containment within Anthropic's own infrastructure; it cannot speak to other vendors being unaffected in the same window",
-        "Bug 2 and Bug 3 date boundaries are less crisp in the text; verify before quoting bug-by-bug ranges"
+        "The piece shows containment within Anthropic's own infrastructure; it cannot speak to other vendors being unaffected in the same window"
       ]
     },
     {
@@ -4985,6 +5213,25 @@
       "secondary": []
     },
     {
+      "title": "A Field Guide to Rapidly Improving AI Products",
+      "author": "Hamel Husain",
+      "url": "https://hamel.dev/blog/posts/field-guide",
+      "date": "2025-03-24",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Nurture Boss date handling went from 33% to 95%; Honeycomb took three iterations to exceed 90% judge-expert agreement.",
+      "proves": "Evaluation criteria are living documents that evolve with understanding of the problem.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Practitioner anecdotes from 30+ implementations"
+      ]
+    },
+    {
       "title": "LLM Evals: Everything You Need to Know",
       "author": "Hamel Husain and Shreya Shankar",
       "url": "https://hamel.dev/blog/posts/evals-faq",
@@ -5025,6 +5272,62 @@
       "secondary": [
         "Backs the semantic half of the post's two-edge model: a node needs an owned contract, not only an owned file glob"
       ]
+    },
+    {
+      "title": "Q: How often should I run my evals?",
+      "author": "Hamel Husain, Shreya Shankar",
+      "url": "https://hamel.dev/blog/posts/evals-faq/how-often-should-i-run-my-evals.html",
+      "date": "2026-09-27",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Cadence examples: cheap code assertions on every change, a cheaper judge nightly, a high-stakes judge before each release, a saturated low-value judge retired or run every two weeks.",
+      "proves": "Each eval's cadence should come from its cost, its saturation, and the business value of catching the error; harden a saturated eval before retiring it.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Offline evals only; no bright-line rules",
+        "Prove you can trigger the error before building the eval"
+      ]
+    },
+    {
+      "title": "Q: How are evaluations used differently in CI/CD vs. monitoring production?",
+      "author": "Hamel Husain, Shreya Shankar",
+      "url": "https://hamel.dev/blog/posts/evals-faq/how-are-evaluations-used-differently-in-cicd-vs-monitoring-production.html",
+      "date": "2025-06-29",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "CI datasets are small (in many cases 100+ examples), purpose-built, and favor deterministic checks.",
+      "proves": "Production monitoring finds new failure patterns and feeds representative examples back into CI.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Production evals sample live traces asynchronously, often with reference-free judges"
+      ]
+    },
+    {
+      "title": "Q: How often should I re-run error analysis on my production system?",
+      "author": "Hamel Husain, Shreya Shankar",
+      "url": "https://hamel.dev/blog/posts/evals-faq/how-often-should-i-re-run-error-analysis-on-my-production-system.html",
+      "date": "2025-07-27",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Review cycles of 2-4 weeks on 100+ fresh traces, 10-20 traces weekly in between; weekly for new systems, monthly for mature ones.",
+      "proves": "Error analysis is event-triggered (incidents, complaint spikes, metric drift) as well as scheduled.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": []
     },
     {
       "title": "Ten AI Agents Destroyed Production. Zero Postmortems.",
@@ -5145,6 +5448,25 @@
       "secondary": [
         "There's no way it's going to be as flexible as what Amazon does with obidos, which they wrote themselves.",
         "Pick your core business competencies and goals, and do those in house."
+      ]
+    },
+    {
+      "title": "Postmortem Culture: Learning from Failure",
+      "author": "John Lunney, Sue Lueder (Google SRE Book)",
+      "url": "https://sre.google/sre-book/postmortem-culture",
+      "date": "2017-01-01",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Postmortem triggers defined in advance: user-visible degradation past a threshold, data loss, on-call intervention, resolution time past a threshold, monitoring failure.",
+      "proves": "Incidents recur unless a formal learning process with predefined triggers and reviewed write-ups exists.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "An unreviewed postmortem might as well never have existed"
       ]
     },
     {
@@ -5951,6 +6273,27 @@
       ]
     },
     {
+      "title": "Evaluation best practices",
+      "author": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "date": "2026-10-06",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Set up continuous evaluation to run evals on every change and grow the eval set over time; 'waiting until you ship' is a named anti-pattern. Evals platform read-only October 31, 2026, shut down November 30, 2026.",
+      "proves": "Vendor guidance treats evals as a continuous practice started early, and the hosted platform's shutdown argues for team-owned suites.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Log as you develop so logs can be mined for eval cases",
+        "Biased datasets fail to reproduce production traffic",
+        "Undated page; date is access date"
+      ]
+    },
+    {
       "title": "Hooks",
       "author": "OpenAI (Codex docs)",
       "url": "https://learn.chatgpt.com/docs/hooks",
@@ -6181,6 +6524,27 @@
       ]
     },
     {
+      "title": "Build an Agent Improvement Loop with Traces, Evals, and Codex",
+      "author": "OpenAI Cookbook",
+      "url": "https://developers.openai.com/cookbook/examples/agents_sdk/agent_improvement_loop",
+      "date": "2026-10-06",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Promptfoo gate completed in 9s; a full run on five traces takes about 20 minutes.",
+      "proves": "Traces and feedback can be turned into reusable regression evals that gate future harness changes.",
+      "verification": "partial",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Illustrative notebook, not production data",
+        "Byline not shown on page",
+        "Undated page; date is access date"
+      ]
+    },
+    {
       "title": "Typesafe models",
       "author": "OpenRouter",
       "url": "https://openrouter.ai/typesafe",
@@ -6197,6 +6561,25 @@
       ],
       "secondary": [
         "TypeSafe's own Models page states 64k tokens per request with 32k for state plus the longest question, while OpenRouter and Cloudflare both publish 32K, so the number a reader designs against depends on which host they read"
+      ]
+    },
+    {
+      "title": "AI Agent Regression Testing After a Prompt or Model Change",
+      "author": "OpenRouter",
+      "url": "https://openrouter.ai/blog/tutorials/ai-agent-regression-testing-after-a-prompt-or-model-change",
+      "date": "2026-09-30",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "A '-latest' model alias routes to the newest concrete model and updates whenever the author publishes a new version.",
+      "proves": "Model aliases change behavior with no repo diff, so pin and check the resolved snapshot.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "A rubric nothing can fail has no resolving power"
       ]
     },
     {
@@ -6429,6 +6812,25 @@
       ]
     },
     {
+      "title": "Continuous Integration (Software Engineering at Google, ch. 23)",
+      "author": "Rachel Tannenbaum, ed. Lisa Carey",
+      "url": "https://abseil.io/resources/swe-book/html/ch23.html",
+      "date": "2020-03-01",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Presubmit environment checks prevented 95% of broken servers from bad configuration; a two-hour post-submit cadence cut the culprit set 12x; 50+ changes a day bypassed flaky presubmit results.",
+      "proves": "Tier tests: fast reliable checks on presubmit, slower nondeterministic ones post-submit, and test configuration like code.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "A 100% green CI rate is very expensive"
+      ]
+    },
+    {
       "title": "FinOps for AI Workloads in 2026: Why Traditional Cloud FinOps Practices Fail On LLMs",
       "author": "Ravi Kanani, LeanOps Technologies",
       "url": "https://leanopstech.com/blog/finops-for-ai-2026",
@@ -6614,6 +7016,26 @@
       "secondary": [
         "Explicitly scoped to one organization rather than generalized",
         "No publication year appears anywhere on the page, and no external research is cited"
+      ]
+    },
+    {
+      "title": "Macro Evals for Agentic Systems",
+      "author": "Shikhar Kwatra, Will Thieme, Bradley Strauss (OpenAI Cookbook)",
+      "url": "https://developers.openai.com/cookbook/examples/partners/macro_evals_for_agentic_systems/macro_evals_for_agentic_systems",
+      "date": "2026-10-06",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Practical steps: promote the clearest lower-level eval failures into a regression suite, track patterns by model, prompt, and orchestration version, and assign business owners to the highest-impact patterns.",
+      "proves": "Agent-level evals show local risk; system-level health needs population-level analysis above per-run review.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "1,000 synthetic interactions, 992 with complete traces; synthetic data only",
+        "Undated page; date is access date"
       ]
     },
     {
@@ -6850,6 +7272,25 @@
       ]
     },
     {
+      "title": "The Eval Suite That Became the Spec Nobody Agreed To",
+      "author": "Tian Pan",
+      "url": "https://tianpan.co/blog/2026/05/17/eval-suite-became-spec-nobody-agreed-to",
+      "date": "2026-05-17",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "No reported data; argues that a green run only certifies the eval author's assumptions.",
+      "proves": "An unreviewed eval suite becomes the de facto spec; govern it like an API schema with a named reviewer, versioning tied to dates, and cross-functional sign-off.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "Opinion piece, no primary data"
+      ]
+    },
+    {
       "title": "A new kind of AI model from a ChatGPT inventor is thrilling developers",
       "author": "Tim Fernholz",
       "url": "https://techcrunch.com/2026/09/18/a-new-kind-of-ai-model-from-a-chatgpt-inventor-is-thrilling-developers",
@@ -6867,6 +7308,25 @@
       "secondary": [
         "The quote is Armin Ronacher, CTO of Earendil; no first-party post on Jev exists on his own site, so this article is the primary of record",
         "Diogo Almeida on the training approach: an early bet that we will be making all of our data, described as one of the best bets he has made"
+      ]
+    },
+    {
+      "title": "Agent Regression Testing: When Your Agent Breaks Without a Deploy",
+      "author": "Tom Piaggio (Autonoma)",
+      "url": "https://getautonoma.com/blog/agent-regression-testing",
+      "date": "2026-07-01",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "Path-filtered only misses silent model swaps; nightly only lets a bad prompt edit sit up to 24 hours. Example: routing accuracy 93% to 71% after a silent model update (vendor anecdote).",
+      "proves": "Agents need both change-triggered and scheduled runs, and golden sets should be reviewed like schema migrations.",
+      "verification": "confirmed",
+      "powers": [
+        "standing-agent-eval-suite"
+      ],
+      "secondary": [
+        "5 runs per case with a 0.05 tolerance band as a starting point"
       ]
     },
     {
