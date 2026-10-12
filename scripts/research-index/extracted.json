@@ -7728,5 +7728,449 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "agent-tool-contracts",
+    "sources": [
+      {
+        "title": "Where Does Exactly-Once Live? Model, Harness, and Tool-Contract Effects on Duplicate Side Effects in LLM Agents",
+        "author": "Jiapeng Li",
+        "url": "https://arxiv.org/abs/2609.29095",
+        "date": "2026-09-24",
+        "class": "research-data",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Across 25,930 episodes (nine models, three production harnesses), offering an idempotency key on every write cut the duplicate rate from 28% to 4%; on late commits and redelivery frontier models duplicate in 56% and 74% of episodes and the contract explains 81% of variance vs 8% for the model.",
+        "proves": "When the agent cannot read back what happened, exactly-once has to live in the tool contract, not the model or the harness.",
+        "verification": "confirmed",
+        "secondary": [
+          "Agents reported status completed in 90% of the 1,279 episodes that produced a duplicate",
+          "Frontier models attach a key to a keyable write 98% of the time when offered",
+          "The harness barely matters; a key-attaching guard transfers across harnesses",
+          "Per-fault breakdown pairs did not reconcile across fetches; only headline figures used"
+        ]
+      },
+      {
+        "title": "Callability Is Not Operability: Controlled Interface Interventions for LLM Agents",
+        "author": "Zihao Wang",
+        "url": "https://arxiv.org/abs/2608.23628",
+        "date": "2026-08-23",
+        "class": "research-data",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Effect-aware interfaces cut duplicate effects and unsafe commits by 56.9 and 50.0 percentage points, pooled across three models.",
+        "proves": "Reliable tool use is not solely a model-capability problem; the interface decides what the agent can tell apart.",
+        "verification": "confirmed",
+        "secondary": [
+          "Synthetic mechanism benchmark, not a prevalence measure",
+          "Benefit smaller for the GPT model",
+          "SQLite replication: nine duplicates and three unsafe commits vs none"
+        ]
+      },
+      {
+        "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+        "author": "John Yang, Carlos E. Jimenez, Alexander Wettig, Kilian Lieret, Shunyu Yao, Karthik Narasimhan, Ofir Press",
+        "url": "https://arxiv.org/abs/2405.15793",
+        "date": "2024-05-06",
+        "class": "research-data",
+        "pillars": [
+          2
+        ],
+        "stat": "Careful ACI design improves agent performance without modifying model weights; an edit tool with a linting guardrail resolves 18.0% vs 15.0% without it on SWE-bench Lite.",
+        "proves": "The tool interface is a lever independent of the model, and error returns need specific content for the agent to recover.",
+        "verification": "confirmed",
+        "secondary": [
+          "Without the error type agents misdiagnose; without a snippet they re-issue the same command",
+          "Edit success falls from 90.5% to 57.2% after one failed edit",
+          "The 10.7 pp headline reconciles only against the no-demonstration shell baseline"
+        ]
+      },
+      {
+        "title": "The Devil Is in the Interface: Evaluating How Tool Architecture Shapes Coding Agent Behavior",
+        "author": "Xu, Saghir, Wu, Cote, Wang, Lakkaraju, Pei, Zhang",
+        "url": "https://arxiv.org/abs/2608.11386",
+        "date": "2026-08-11",
+        "class": "research-data",
+        "pillars": [
+          2
+        ],
+        "stat": "Across 11,700 trajectories, more structured low-level interfaces improved consistency across repeated attempts by up to 4.7x over a bash-only baseline.",
+        "proves": "Tool architecture changes agent behavior even when capabilities are held similar.",
+        "verification": "confirmed",
+        "secondary": [
+          "CodeAct-style interfaces matched performance with 41.6% fewer steps and 56.3% fewer tokens",
+          "Does not measure error messages or idempotency"
+        ]
+      },
+      {
+        "title": "MCP Pitfall Lab: Exposing Developer Pitfalls in MCP Tool Server Security under Multi-Vector Attacks",
+        "author": "Run Hao, Zhuoran Tan",
+        "url": "https://arxiv.org/html/2604.21477v2",
+        "date": "2026-07-14",
+        "class": "research-data",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "31.9% overall attack success across 2,579 runs (pooled over three attack families and four models); pitfalls include unconstrained recipient/channel/URL parameters (P2) and no server-side validation (P6).",
+        "proves": "Destination-choosing parameters must be constrained in the schema and enforced on the server, not described in prose.",
+        "verification": "partial",
+        "secondary": [
+          "Control coverage 0.173 to 0.697 and residual risk 15.31 to 6.09 are heuristic static scores",
+          "Document-workflow runtime ASR rose from 8.3% to 25.0% after hardening"
+        ]
+      },
+      {
+        "title": "MCPTox: A Benchmark for Tool Poisoning Attack on Real-World MCP Servers",
+        "author": "Zhiqiang Wang et al.",
+        "url": "https://arxiv.org/abs/2508.14925",
+        "date": "2025-08-19",
+        "class": "research-data",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Poisoned tool metadata on 45 live MCP servers and 353 tools reached up to 72.8% attack success (o1-mini); the most cautious model refused less than 3% of the time.",
+        "proves": "Model-side refusal is not a control for poisoned tool definitions.",
+        "verification": "confirmed",
+        "secondary": [
+          "Payloads were researcher-generated, not observed in the wild",
+          "More capable models were often more susceptible",
+          "Does not evaluate pinning or definition drift"
+        ]
+      },
+      {
+        "title": "When Valid Tool Calls Change Meaning: Formation-Consistent Dispatch for LLM Agents",
+        "author": "Geonwoo Kim, Brent ByungHoon Kang",
+        "url": "https://arxiv.org/abs/2609.35088",
+        "date": "2026-09-28",
+        "class": "research-data",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "GitHub MCP Server v1.3 maps an omitted private field to public repo creation and v1.4 to private, for the same name-only create_repository call.",
+        "proves": "An unchanged, schema-valid call can take a different security effect across releases, so definition pinning alone does not cover behavior drift.",
+        "verification": "confirmed",
+        "secondary": [
+          "Exact pinning blocked all six test calls including three safe ones (over-blocks)",
+          "Four profiles covered 32 official releases; 29 needed no release-specific change"
+        ]
+      },
+      {
+        "title": "Building Effective AI Agents",
+        "author": "Erik Schluntz, Barry Zhang",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "date": "2024-12-19",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          6
+        ],
+        "stat": "Anthropic's SWE-bench team spent more time optimizing tools than the overall prompt; requiring absolute filepaths removed a class of mistakes.",
+        "proves": "Tool design is a primary reliability lever, fixed at the interface rather than the prompt.",
+        "verification": "confirmed",
+        "secondary": [
+          "Poka-yoke your tools",
+          "Invest as much in the agent-computer interface as in HCI"
+        ]
+      },
+      {
+        "title": "Writing effective tools for agents",
+        "author": "Ken Aizawa",
+        "url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
+        "date": "2025-09-11",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Claude was needlessly appending 2025 to the web search tool's query parameter; the fix was a rewritten tool description.",
+        "proves": "A production tool misbehavior was fixed at the tool, not the model.",
+        "verification": "confirmed",
+        "secondary": [
+          "Validation errors should be actionable, not opaque codes or tracebacks",
+          "Claude Code restricts tool responses to 25,000 tokens by default"
+        ]
+      },
+      {
+        "title": "AGENTREL06-BP04 Implement idempotent task execution patterns",
+        "author": "AWS Well-Architected Agentic AI Lens",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentrel06-bp04.html",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Risk if not established: High. Non-deterministic keys generated at retry time defeat idempotency; hash the workflow ID, task type, and request body.",
+        "proves": "Idempotency keys must be derived from operation inputs and propagated to delegated steps.",
+        "verification": "confirmed",
+        "secondary": [
+          "Conditional writes with TTL make the pre-execution check safe under concurrency",
+          "Missing key propagation causes duplicates at downstream steps"
+        ]
+      },
+      {
+        "title": "Idempotent requests",
+        "author": "Stripe",
+        "url": "https://docs.stripe.com/api/idempotent_requests",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Retries with the same key return the saved status code and body of the first request, including 500 errors; keys can be pruned after 24 hours; mismatched parameters on a reused key error.",
+        "proves": "Client-supplied idempotency keys on writes are a production-proven pattern agent tools can inherit.",
+        "verification": "confirmed",
+        "secondary": [
+          "GET and DELETE do not take keys; they are idempotent by definition"
+        ]
+      },
+      {
+        "title": "The Idempotency-Key HTTP Header Field (draft-ietf-httpapi-idempotency-key-header-07)",
+        "author": "IETF HTTPAPI Working Group",
+        "url": "https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-idempotency-key-header-07",
+        "date": "2025-10-15",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Defines an idempotency key as a unique client-generated value the resource uses to recognize retries; reuse with a different payload SHOULD return 422.",
+        "proves": "The idempotency-key pattern is converging across APIs.",
+        "verification": "confirmed",
+        "secondary": [
+          "Draft expired April 2026 without becoming an RFC; cite as convergence, not a standard"
+        ]
+      },
+      {
+        "title": "Strict tool use",
+        "author": "Anthropic",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/strict-tool-use",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "strict: true guarantees tool inputs match the JSON Schema via grammar-constrained sampling (passengers: 2, never \"two\").",
+        "proves": "Schemas can enforce shape deterministically, but not business rules about your data.",
+        "verification": "confirmed",
+        "secondary": [
+          "Compiled schemas cached up to 24 hours; no PHI in schemas",
+          "Computer and browser toolsets reject strict"
+        ]
+      },
+      {
+        "title": "SEP-1303: Input Validation Errors as Tool Execution Errors",
+        "author": "@fredericbarthelet",
+        "url": "https://modelcontextprotocol.io/seps/1303-input-validation-errors-as-tool-execution-errors",
+        "date": "2025-08-05",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Only tool execution errors are forwarded to the model; JSON Schema cannot express a check like a date being in the future. Status: Final.",
+        "proves": "Validation failures must come back on the channel the model reads, or it retries blind.",
+        "verification": "confirmed",
+        "secondary": [
+          "Cursor 3x retry is the author's informal observation, not a measured incident"
+        ]
+      },
+      {
+        "title": "Tools (specification 2026-07-28)",
+        "author": "Model Context Protocol",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28/server/tools",
+        "date": "2026-07-28",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Input validation errors are tool execution errors; servers MUST validate all tool inputs; clients MUST treat annotations as untrusted unless from trusted servers.",
+        "proves": "The protocol itself puts validation on the server and treats tool metadata as untrusted.",
+        "verification": "confirmed",
+        "secondary": [
+          "Clients SHOULD provide tool execution errors to models for self-correction",
+          "Clients SHOULD show tool inputs before calling and log tool usage"
+        ]
+      },
+      {
+        "title": "schema.ts (2026-07-28)",
+        "author": "Model Context Protocol",
+        "url": "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/2026-07-28/schema.ts",
+        "date": "2026-07-28",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "ToolAnnotations defaults: readOnlyHint false, destructiveHint true, idempotentHint false, openWorldHint true; all are hints.",
+        "proves": "The protocol's baseline assumption about a write tool is the dangerous one.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "Handle tool calls",
+        "author": "Anthropic",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "If a tool request is invalid or missing parameters, Claude will retry 2-3 times with corrections before apologizing to the user.",
+        "proves": "Error messages are steering input; they need to say what went wrong and what to try next.",
+        "verification": "confirmed",
+        "secondary": [
+          "Treat tool results as untrusted input"
+        ]
+      },
+      {
+        "title": "terraform apply",
+        "author": "HashiCorp",
+        "url": "https://developer.hashicorp.com/terraform/cli/commands/apply",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "A saved plan file contains the final results of planning decisions; apply performs exactly those operations.",
+        "proves": "Preview and commit can be bound so approving the plan is approving the action.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "Choose a permission mode",
+        "author": "Claude Code Docs",
+        "url": "https://code.claude.com/docs/en/permission-modes",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "Plan mode blocks edits until you approve a plan.",
+        "proves": "Agent runtimes already ship preview-before-commit for built-in tools.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "Security Alert: Malicious 'postmark-mcp' npm Package Impersonating Postmark",
+        "author": "Postmark",
+        "url": "https://postmarkapp.com/blog/information-regarding-malicious-postmark-mcp-package",
+        "date": "2025-09-25",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "The impersonating package built trust over 15 versions, then added a backdoor in 1.0.16 that secretly BCC'd emails to an external server.",
+        "proves": "A third-party tool can change behavior behind an unchanged definition in a routine version bump.",
+        "verification": "confirmed",
+        "secondary": [
+          "Original Koi Security disclosure no longer reachable (redirects)"
+        ]
+      },
+      {
+        "title": "Malicious MCP Server on npm postmark-mcp Harvests Emails",
+        "author": "Liran Tal",
+        "url": "https://snyk.io/blog/malicious-mcp-server-on-npm-postmark-mcp-harvests-emails/",
+        "date": "2025-09-25",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "The malicious change was a hardcoded Bcc: 'phan@giftshop.club' header in the send path.",
+        "proves": "The incident lived in the implementation, not the tool schema.",
+        "verification": "confirmed",
+        "secondary": [
+          "BleepingComputer: clean through 1.0.15, ~1,500 downloads in the malicious window"
+        ]
+      },
+      {
+        "title": "MCP Security Notification: Tool Poisoning Attacks",
+        "author": "Luca Beurer-Kellner, Marc Fischer",
+        "url": "https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks",
+        "date": "2025-04-01",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "A malicious server can change the tool description after the client has already approved it (rug pull).",
+        "proves": "Tool definitions are a post-approval change channel.",
+        "verification": "confirmed",
+        "secondary": [
+          "Mitigations named are UI visibility and cross-server dataflow, not hash pinning"
+        ]
+      },
+      {
+        "title": "MCP Security Cheat Sheet",
+        "author": "OWASP Cheat Sheet Series",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html",
+        "date": "undated",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Pin reviewed tool definitions using cryptographic hashes and require review when they change; this detects metadata changes, not changes behind an unchanged definition.",
+        "proves": "Hash-pinning definitions is necessary but cannot catch implementation changes.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "We built the security layer MCP always needed",
+        "author": "Cliff Smith",
+        "url": "https://blog.trailofbits.com/2025/07/28/we-built-the-security-layer-mcp-always-needed/",
+        "date": "2025-07-28",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "mcp-context-protector blocks any tool whose description or parameters changed, so it is never sent to the downstream LLM app until re-approved.",
+        "proves": "Pin-and-block on definition change is buildable today.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "Azure REST API Guidelines",
+        "author": "Microsoft (Azure API Stewardship Board)",
+        "url": "https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md",
+        "date": "2025-03-28",
+        "class": "practitioner",
+        "pillars": [
+          5,
+          6
+        ],
+        "stat": "DO NOT remove values from your enumeration list as this breaks customer code; flipping a field between optional and required is breaking; review API changes with the Azure API Stewardship Board.",
+        "proves": "Contract changes need a named reviewer and a version bump; applied to agent tool definitions by analogy.",
+        "verification": "confirmed",
+        "secondary": [
+          "GitHub page returned 503 twice during drafting; quotes confirmed via raw file"
+        ]
+      },
+      {
+        "title": "Azure's approach to versioning and avoiding breaking changes",
+        "author": "Mike Kistler, Jeffrey Richter",
+        "url": "https://devblogs.microsoft.com/azure-sdk/azure-approach-to-versioning-and-avoiding-breaking-changes/",
+        "date": "2023-03-06",
+        "class": "practitioner",
+        "pillars": [
+          5,
+          6
+        ],
+        "stat": "Any change of behavior requires a change in the API version; flagged PRs cannot merge without Breaking Change Review Board approval.",
+        "proves": "Behavior changes, not just schema changes, warrant versioning and gated review.",
+        "verification": "confirmed",
+        "secondary": [
+          "Review Board holds weekly office hours"
+        ]
+      }
+    ]
   }
 ]

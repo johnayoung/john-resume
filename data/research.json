@@ -957,6 +957,26 @@
       ]
     },
     {
+      "title": "When Valid Tool Calls Change Meaning: Formation-Consistent Dispatch for LLM Agents",
+      "author": "Geonwoo Kim, Brent ByungHoon Kang",
+      "url": "https://arxiv.org/abs/2609.35088",
+      "date": "2026-09-28",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "GitHub MCP Server v1.3 maps an omitted private field to public repo creation and v1.4 to private, for the same name-only create_repository call.",
+      "proves": "An unchanged, schema-valid call can take a different security effect across releases, so definition pinning alone does not cover behavior drift.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Exact pinning blocked all six test calls including three safe ones (over-blocks)",
+        "Four profiles covered 32 official releases; 29 needed no release-specific change"
+      ]
+    },
+    {
       "title": "AI Copilot Code Quality: 2025 Data Suggests 4x Growth in Code Clones",
       "author": "GitClear",
       "url": "https://www.gitclear.com/ai_assistant_code_quality_2025_research",
@@ -1184,6 +1204,51 @@
       ],
       "secondary": [
         "The paper's citation of Pimpale et al.'s 33% vs 62.2% Sonnet 3.5 elicitation split is chain-of-citation only - not independently verified against Pimpale's own text"
+      ]
+    },
+    {
+      "title": "Where Does Exactly-Once Live? Model, Harness, and Tool-Contract Effects on Duplicate Side Effects in LLM Agents",
+      "author": "Jiapeng Li",
+      "url": "https://arxiv.org/abs/2609.29095",
+      "date": "2026-09-24",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Across 25,930 episodes (nine models, three production harnesses), offering an idempotency key on every write cut the duplicate rate from 28% to 4%; on late commits and redelivery frontier models duplicate in 56% and 74% of episodes and the contract explains 81% of variance vs 8% for the model.",
+      "proves": "When the agent cannot read back what happened, exactly-once has to live in the tool contract, not the model or the harness.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Agents reported status completed in 90% of the 1,279 episodes that produced a duplicate",
+        "Frontier models attach a key to a keyable write 98% of the time when offered",
+        "The harness barely matters; a key-attaching guard transfers across harnesses",
+        "Per-fault breakdown pairs did not reconcile across fetches; only headline figures used"
+      ]
+    },
+    {
+      "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+      "author": "John Yang, Carlos E. Jimenez, Alexander Wettig, Kilian Lieret, Shunyu Yao, Karthik Narasimhan, Ofir Press",
+      "url": "https://arxiv.org/abs/2405.15793",
+      "date": "2024-05-06",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Careful ACI design improves agent performance without modifying model weights; an edit tool with a linting guardrail resolves 18.0% vs 15.0% without it on SWE-bench Lite.",
+      "proves": "The tool interface is a lever independent of the model, and error returns need specific content for the agent to recover.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts",
+        "coding-agent-leaderboard-noise"
+      ],
+      "secondary": [
+        "SWE-agent solves 10.7 percentage points more issues than the baseline agent that uses just the default Linux shell (300-issue ablation); on SWE-bench Lite, SWE-agent with GPT-4 Turbo resolves 18.00% versus 11.00% for the shell-only agent with the same model.",
+        "Without the error type agents misdiagnose; without a snippet they re-issue the same command",
+        "Edit success falls from 90.5% to 57.2% after one failed edit",
+        "The 10.7 pp headline reconciles only against the no-demonstration shell baseline"
       ]
     },
     {
@@ -1899,6 +1964,26 @@
       ]
     },
     {
+      "title": "MCP Pitfall Lab: Exposing Developer Pitfalls in MCP Tool Server Security under Multi-Vector Attacks",
+      "author": "Run Hao, Zhuoran Tan",
+      "url": "https://arxiv.org/abs/2604.21477",
+      "date": "2026-07-14",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "31.9% overall attack success across 2,579 runs (pooled over three attack families and four models); pitfalls include unconstrained recipient/channel/URL parameters (P2) and no server-side validation (P6).",
+      "proves": "Destination-choosing parameters must be constrained in the schema and enforced on the server, not described in prose.",
+      "verification": "partial",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Control coverage 0.173 to 0.697 and residual risk 15.31 to 6.09 are heuristic static scores",
+        "Document-workflow runtime ASR rose from 8.3% to 25.0% after hardening"
+      ]
+    },
+    {
       "title": "LlamaFirewall: An open source guardrail system for building secure AI agents",
       "author": "Sahana Chennabasappa, Cyrus Nikolaidis, Daniel Song, David Molnar, et al.",
       "url": "https://arxiv.org/abs/2505.03574",
@@ -2521,6 +2606,26 @@
       ]
     },
     {
+      "title": "The Devil Is in the Interface: Evaluating How Tool Architecture Shapes Coding Agent Behavior",
+      "author": "Xu, Saghir, Wu, Cote, Wang, Lakkaraju, Pei, Zhang",
+      "url": "https://arxiv.org/abs/2608.11386",
+      "date": "2026-08-11",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Across 11,700 trajectories, more structured low-level interfaces improved consistency across repeated attempts by up to 4.7x over a bash-only baseline.",
+      "proves": "Tool architecture changes agent behavior even when capabilities are held similar.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "CodeAct-style interfaces matched performance with 41.6% fewer steps and 56.3% fewer tokens",
+        "Does not measure error messages or idempotency"
+      ]
+    },
+    {
       "title": "Compositional Skill Routing for LLM Agents: Decompose, Retrieve, and Compose",
       "author": "Xueping Gao",
       "url": "https://arxiv.org/abs/2606.18051",
@@ -2537,26 +2642,6 @@
       ],
       "secondary": [
         "Iterative Skill-Aware Decomposition raised decomposition accuracy from 51.0% to 67.7% (+32.7%, Wilcoxon p < 10^-6)"
-      ]
-    },
-    {
-      "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
-      "author": "Yang et al. (NeurIPS 2024)",
-      "url": "https://arxiv.org/abs/2405.15793",
-      "date": "May 6, 2024 (v3 November 11, 2024)",
-      "class": "research-data",
-      "pillars": [
-        2
-      ],
-      "stat": "SWE-agent solves 10.7 percentage points more issues than the baseline agent that uses just the default Linux shell (300-issue ablation); on SWE-bench Lite, SWE-agent with GPT-4 Turbo resolves 18.00% versus 11.00% for the shell-only agent with the same model.",
-      "proves": "Agent-computer interface design alone moves resolve rates by double digits with the model held fixed - the founding demonstration of the scaffold confound.",
-      "verification": "partial",
-      "powers": [
-        "coding-agent-leaderboard-noise"
-      ],
-      "secondary": [
-        "Verification is partial because arXiv HTML routes 404 and the PDF required reader-proxy extraction; figures converged across three independent extraction passes",
-        "Citation caution: the paper's verbatim 10.7pp sentence arithmetically pairs with the 7.33% no-demonstration shell baseline, not the 11.00% row - quote the sentence or the 18.00/11.00 pair, never 10.7 with 11.00"
       ]
     },
     {
@@ -2774,6 +2859,48 @@
       ]
     },
     {
+      "title": "MCPTox: A Benchmark for Tool Poisoning Attack on Real-World MCP Servers",
+      "author": "Zhiqiang Wang et al.",
+      "url": "https://arxiv.org/abs/2508.14925",
+      "date": "2025-08-19",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Poisoned tool metadata on 45 live MCP servers and 353 tools reached up to 72.8% attack success (o1-mini); the most cautious model refused less than 3% of the time.",
+      "proves": "Model-side refusal is not a control for poisoned tool definitions.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Payloads were researcher-generated, not observed in the wild",
+        "More capable models were often more susceptible",
+        "Does not evaluate pinning or definition drift"
+      ]
+    },
+    {
+      "title": "Callability Is Not Operability: Controlled Interface Interventions for LLM Agents",
+      "author": "Zihao Wang",
+      "url": "https://arxiv.org/abs/2608.23628",
+      "date": "2026-08-23",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Effect-aware interfaces cut duplicate effects and unsafe commits by 56.9 and 50.0 percentage points, pooled across three models.",
+      "proves": "Reliable tool use is not solely a model-capability problem; the interface decides what the agent can tell apart.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Synthetic mechanism benchmark, not a prevalence measure",
+        "Benefit smaller for the GPT model",
+        "SQLite replication: nine duplicates and three unsafe commits vs none"
+      ]
+    },
+    {
       "title": "Measuring the Permission Gate: A Stress-Test Evaluation of Claude Code's Auto Mode",
       "author": "Zimo Ji, Zongjie Li, Wenyuan Jiang, Yudong Gao, Shuai Wang",
       "url": "https://arxiv.org/abs/2604.04978",
@@ -2812,6 +2939,25 @@
       "secondary": [
         "Four cheating categories: modify test cases, overload comparison operators, record extra states, special casing",
         "Hidden tests cut cheating to near zero but degrade legitimate performance; read-only is a middle ground that does not stop special-casing"
+      ]
+    },
+    {
+      "title": "SEP-1303: Input Validation Errors as Tool Execution Errors",
+      "author": "@fredericbarthelet",
+      "url": "https://modelcontextprotocol.io/seps/1303-input-validation-errors-as-tool-execution-errors",
+      "date": "2025-08-05",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Only tool execution errors are forwarded to the model; JSON Schema cannot express a check like a date being in the future. Status: Final.",
+      "proves": "Validation failures must come back on the channel the model reads, or it retries blind.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Cursor 3x retry is the author's informal observation, not a measured incident"
       ]
     },
     {
@@ -3454,6 +3600,45 @@
       ]
     },
     {
+      "title": "Strict tool use",
+      "author": "Anthropic",
+      "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/strict-tool-use",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "strict: true guarantees tool inputs match the JSON Schema via grammar-constrained sampling (passengers: 2, never \"two\").",
+      "proves": "Schemas can enforce shape deterministically, but not business rules about your data.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Compiled schemas cached up to 24 hours; no PHI in schemas",
+        "Computer and browser toolsets reject strict"
+      ]
+    },
+    {
+      "title": "Handle tool calls",
+      "author": "Anthropic",
+      "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "If a tool request is invalid or missing parameters, Claude will retry 2-3 times with corrections before apologizing to the user.",
+      "proves": "Error messages are steering input; they need to say what went wrong and what to try next.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Treat tool results as untrusted input"
+      ]
+    },
+    {
       "title": "Monitoring",
       "author": "Anthropic (Claude Code docs)",
       "url": "https://code.claude.com/docs/en/monitoring-usage",
@@ -3597,13 +3782,14 @@
       "verification": "confirmed",
       "powers": [
         "what-ai-agents-are-actually-good-for",
+        "agent-tool-contracts",
         "loop-engineering-breaks-your-playbook"
       ],
       "secondary": [
+        "Anthropic's SWE-bench team spent more time optimizing tools than the overall prompt; requiring absolute filepaths removed a class of mistakes.",
         "They are typically just LLMs using tools based on environmental feedback in a loop.",
         "Code solutions are verifiable through automated tests; Agents can iterate on solutions using test results as feedback",
-        "The autonomous nature of agents means higher costs, and the potential for compounding errors.",
-        "Agentic systems often trade latency and cost for better task performance, and you should consider when this tradeoff makes sense."
+        "The autonomous nature of agents means higher costs, and the potential for compounding errors."
       ]
     },
     {
@@ -3848,6 +4034,26 @@
         "Level of risk exposed if this best practice is not established: High",
         "Implement user confirmation for the agent, requiring users to confirm agent actions and mitigating the risk of excessive agency.",
         "A permission boundary sets the maximum permissions which can be given to a role."
+      ]
+    },
+    {
+      "title": "AGENTREL06-BP04 Implement idempotent task execution patterns",
+      "author": "AWS Well-Architected Agentic AI Lens",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentrel06-bp04.html",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Risk if not established: High. Non-deterministic keys generated at retry time defeat idempotency; hash the workflow ID, task type, and request body.",
+      "proves": "Idempotency keys must be derived from operation inputs and propagated to delegated steps.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Conditional writes with TTL make the pre-execution check safe under concurrency",
+        "Missing key propagation causes duplicates at downstream steps"
       ]
     },
     {
@@ -4256,13 +4462,14 @@
       "verification": "confirmed",
       "powers": [
         "switching-between-ai-coding-agents",
-        "jev-decision-model-placement"
+        "jev-decision-model-placement",
+        "agent-tool-contracts"
       ],
       "secondary": [
         "Each action goes through a fixed decision order. The first matching step wins: allow/ask/deny rules resolve immediately, read-only actions and working-directory edits auto-approve second, everything else goes to the classifier third.",
+        "Plan mode blocks edits until you approve a plan.",
         "On Pro, Max and Team plans the built-in starting mode is auto (v2.1.228 or later); Enterprise, API-key, claude -p, Agent SDK and Bedrock sessions start in Manual",
-        "The classifier runs on Claude Sonnet 5 by default regardless of the /model selection",
-        "Under auto mode a subagent's permissionMode frontmatter is ignored"
+        "The classifier runs on Claude Sonnet 5 by default regardless of the /model selection"
       ]
     },
     {
@@ -4326,6 +4533,23 @@
         "The page ships the enforcement mechanism but gives no guidance on how a human decides which files each session owns, and says nothing about what happens when two sessions need the same file - that absence is the gap the post addresses",
         "Isolation is filesystem and branch level, not permission or prompt level: subagents take an 'isolation: worktree' frontmatter field, and Claude runs 'git worktree lock' while an agent is active"
       ]
+    },
+    {
+      "title": "We built the security layer MCP always needed",
+      "author": "Cliff Smith",
+      "url": "https://blog.trailofbits.com/2025/07/28/we-built-the-security-layer-mcp-always-needed",
+      "date": "2025-07-28",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "mcp-context-protector blocks any tool whose description or parameters changed, so it is never sent to the downstream LLM app until re-approved.",
+      "proves": "Pin-and-block on definition change is buildable today.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": []
     },
     {
       "title": "Cloudflare outage on November 18, 2025",
@@ -5369,6 +5593,23 @@
       ]
     },
     {
+      "title": "terraform apply",
+      "author": "HashiCorp",
+      "url": "https://developer.hashicorp.com/terraform/cli/commands/apply",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "A saved plan file contains the final results of planning decisions; apply performs exactly those operations.",
+      "proves": "Preview and commit can be bound so approving the plan is approving the action.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": []
+    },
+    {
       "title": "The Build vs Buy Framework in the Age of AI",
       "author": "HatchWorks (Matt Paige)",
       "url": "https://hatchworks.com/blog/gen-ai/build-vs-buy-framework",
@@ -5387,6 +5628,25 @@
         "the last 20% (security, governance, observability, performance, reliability, data quality, change management) is still 80% of the effort",
         "In 2026, most enterprises land on 'yes to both.' They buy the heavy core, build what differentiates, and use AI to accelerate the glue layer.",
         "If the capability is your advantage, meaning revenue, margin, speed, or defensible differentiation (AI copilots, agentic workflows, decision support)"
+      ]
+    },
+    {
+      "title": "The Idempotency-Key HTTP Header Field (draft-ietf-httpapi-idempotency-key-header-07)",
+      "author": "IETF HTTPAPI Working Group",
+      "url": "https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-idempotency-key-header-07",
+      "date": "2025-10-15",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Defines an idempotency key as a unique client-generated value the resource uses to recognize retries; reuse with a different payload SHOULD return 422.",
+      "proves": "The idempotency-key pattern is converging across APIs.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Draft expired April 2026 without becoming an RFC; cite as convergence, not a standard"
       ]
     },
     {
@@ -5544,6 +5804,26 @@
       ],
       "secondary": [
         "Single-author field pattern, not peer-reviewed or independently corroborated; paired with Cemri et al.'s Task Verification failure category as the academic anchor for the verification half of the claim"
+      ]
+    },
+    {
+      "title": "Writing effective tools for agents",
+      "author": "Ken Aizawa",
+      "url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
+      "date": "2025-09-11",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Claude was needlessly appending 2025 to the web search tool's query parameter; the fix was a rewritten tool description.",
+      "proves": "A production tool misbehavior was fixed at the tool, not the model.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Validation errors should be actionable, not opaque codes or tracebacks",
+        "Claude Code restricts tool responses to 25,000 tokens by default"
       ]
     },
     {
@@ -5770,6 +6050,25 @@
       ]
     },
     {
+      "title": "Malicious MCP Server on npm postmark-mcp Harvests Emails",
+      "author": "Liran Tal",
+      "url": "https://snyk.io/blog/malicious-mcp-server-on-npm-postmark-mcp-harvests-emails",
+      "date": "2025-09-25",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "The malicious change was a hardcoded Bcc: 'phan@giftshop.club' header in the send path.",
+      "proves": "The incident lived in the implementation, not the tool schema.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "BleepingComputer: clean through 1.0.15, ~1,500 downloads in the malicious window"
+      ]
+    },
+    {
       "title": "Budgets, Rate Limits",
       "author": "LiteLLM (docs.litellm.ai)",
       "url": "https://docs.litellm.ai/docs/proxy/users",
@@ -5851,6 +6150,25 @@
         "\"only 44% of organizations have adopted financial guardrails or AI FinOps practices\" — attributed to Gartner, March 2026",
         "\"A 10-step agent with an average cost of $0.02 per step looks inexpensive in planning. That same agent entering a retry loop and executing 2,000 steps doesn't — that's $40 from a session that was supposed to cost $0.20.\"",
         "\"Provider-level controls operate at the API key or account level, not the individual session level. They cannot distinguish a single runaway session from many well-behaved sessions using the same key.\""
+      ]
+    },
+    {
+      "title": "MCP Security Notification: Tool Poisoning Attacks",
+      "author": "Luca Beurer-Kellner, Marc Fischer",
+      "url": "https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks",
+      "date": "2025-04-01",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "A malicious server can change the tool description after the client has already approved it (rug pull).",
+      "proves": "Tool definitions are a post-approval change channel.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Mitigations named are UI visibility and cross-server dataflow, not hash pinning"
       ]
     },
     {
@@ -5998,6 +6316,25 @@
       ]
     },
     {
+      "title": "Azure REST API Guidelines",
+      "author": "Microsoft (Azure API Stewardship Board)",
+      "url": "https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md",
+      "date": "2025-03-28",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "DO NOT remove values from your enumeration list as this breaks customer code; flipping a field between optional and required is breaking; review API changes with the Azure API Stewardship Board.",
+      "proves": "Contract changes need a named reviewer and a version bump; applied to agent tool definitions by analogy.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "GitHub page returned 503 twice during drafting; quotes confirmed via raw file"
+      ]
+    },
+    {
       "title": "Group Chat (AutoGen documentation)",
       "author": "Microsoft AutoGen",
       "url": "https://microsoft.github.io/autogen/stable//user-guide/core-user-guide/design-patterns/group-chat.html",
@@ -6011,6 +6348,62 @@
       "verification": "confirmed",
       "powers": [
         "multi-agent-coordination-layer"
+      ],
+      "secondary": []
+    },
+    {
+      "title": "Azure's approach to versioning and avoiding breaking changes",
+      "author": "Mike Kistler, Jeffrey Richter",
+      "url": "https://devblogs.microsoft.com/azure-sdk/azure-approach-to-versioning-and-avoiding-breaking-changes",
+      "date": "2023-03-06",
+      "class": "practitioner",
+      "pillars": [
+        5
+      ],
+      "stat": "Any change of behavior requires a change in the API version; flagged PRs cannot merge without Breaking Change Review Board approval.",
+      "proves": "Behavior changes, not just schema changes, warrant versioning and gated review.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Review Board holds weekly office hours"
+      ]
+    },
+    {
+      "title": "Tools (specification 2026-07-28)",
+      "author": "Model Context Protocol",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/server/tools",
+      "date": "2026-07-28",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Input validation errors are tool execution errors; servers MUST validate all tool inputs; clients MUST treat annotations as untrusted unless from trusted servers.",
+      "proves": "The protocol itself puts validation on the server and treats tool metadata as untrusted.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Clients SHOULD provide tool execution errors to models for self-correction",
+        "Clients SHOULD show tool inputs before calling and log tool usage"
+      ]
+    },
+    {
+      "title": "schema.ts (2026-07-28)",
+      "author": "Model Context Protocol",
+      "url": "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/2026-07-28/schema.ts",
+      "date": "2026-07-28",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "ToolAnnotations defaults: readOnlyHint false, destructiveHint true, idempotentHint false, openWorldHint true; all are hints.",
+      "proves": "The protocol's baseline assumption about a write tool is the dangerous one.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
       ],
       "secondary": []
     },
@@ -6751,6 +7144,23 @@
       ]
     },
     {
+      "title": "MCP Security Cheat Sheet",
+      "author": "OWASP Cheat Sheet Series",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Pin reviewed tool definitions using cryptographic hashes and require review when they change; this detects metadata changes, not changes behind an unchanged definition.",
+      "proves": "Hash-pinning definitions is necessary but cannot catch implementation changes.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": []
+    },
+    {
       "title": "LLM01:2025 Prompt Injection",
       "author": "OWASP Gen AI Security Project",
       "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection",
@@ -6789,6 +7199,25 @@
       "secondary": [
         "Six months ago many were experimenting, but now they're scaling.",
         "including cases where a senior executive's data surfaced in a junior employee's query."
+      ]
+    },
+    {
+      "title": "Security Alert: Malicious 'postmark-mcp' npm Package Impersonating Postmark",
+      "author": "Postmark",
+      "url": "https://postmarkapp.com/blog/information-regarding-malicious-postmark-mcp-package",
+      "date": "2025-09-25",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "The impersonating package built trust over 15 versions, then added a backdoor in 1.0.16 that secretly BCC'd emails to an external server.",
+      "proves": "A third-party tool can change behavior behind an unchanged definition in a routine version bump.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "Original Koi Security disclosure no longer reachable (redirects)"
       ]
     },
     {
@@ -7269,6 +7698,25 @@
         "Designing least privilege up front for an agent is an exercise in guesswork",
         "Overpermissioning isn't a failure of discipline. It's a predictable outcome",
         "If access is static, privilege is wrong"
+      ]
+    },
+    {
+      "title": "Idempotent requests",
+      "author": "Stripe",
+      "url": "https://docs.stripe.com/api/idempotent_requests",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Retries with the same key return the saved status code and body of the first request, including 500 errors; keys can be pruned after 24 hours; mismatched parameters on a reused key error.",
+      "proves": "Client-supplied idempotency keys on writes are a production-proven pattern agent tools can inherit.",
+      "verification": "confirmed",
+      "powers": [
+        "agent-tool-contracts"
+      ],
+      "secondary": [
+        "GET and DELETE do not take keys; they are idempotent by definition"
       ]
     },
     {
