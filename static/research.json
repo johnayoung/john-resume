@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-07",
+  "updated": "2026-10-19",
   "pillars": [
     {
       "id": 1,
@@ -308,6 +308,28 @@
         "Structure determines behavior directly: given a private back-channel, agents began colluding almost immediately.",
         "Correlated failure across a fleet: when one agent makes a bad decision, many agents are likely to make the same one.",
         "The words 'checkpoint', 'approval', 'topology', 'graph' and 'architecture' do not appear anywhere in the piece; human intervention appears only as a fallback."
+      ]
+    },
+    {
+      "title": "Claude Code Memory Leak - Process Grows to 120+ GB RAM and Gets OOM Killed (#4953)",
+      "author": "anthropics/claude-code issue reporters",
+      "url": "https://github.com/anthropics/claude-code/issues/4953",
+      "date": "opened Aug 1, 2025; latest comment Jul 19, 2026",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "One WSL2 session grew from about 900 MB to 12.6 GB RSS in about 12 minutes (v2.1.143).",
+      "proves": "Long-lived sessions can grow without bound, so per-session cgroup caps contain the damage while --resume makes a hard kill recoverable.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "systemd-run --user --scope wrapper with MemoryHigh and MemoryMax: MemoryHigh applies reclaim pressure, MemoryMax hard-kills",
+        "Swap plus a per-cgroup MemoryMax self-OOMs one session instead of freezing the host",
+        "NODE_OPTIONS heap flags have no effect on the native binary",
+        "User reports only; version-dependent, one dissenter saw no recent leak"
       ]
     },
     {
@@ -1207,6 +1229,27 @@
       ]
     },
     {
+      "title": "Memory leak causing V8 OOM crashes (SIGABRT) on extended sessions (#18011)",
+      "author": "jc90069 and commenters",
+      "url": "https://github.com/anthropics/claude-code/issues/18011",
+      "date": "opened Jan 13, 2026; closed not planned Apr 16, 2026",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "One session grew to 7.6 GiB RSS (98 GiB virtual) before the Linux OOM killer took it.",
+      "proves": "A session's start-of-day footprint is a floor, not a budget; budget for its peak.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "The NODE_OPTIONS max-old-space-size workaround has no effect on the native build",
+        "Idle WSL2 sessions grew to about 4 GB heap before exhaustion",
+        "A 13-session snapshot (315 to 771 MB each) failed adjudication as a planning baseline"
+      ]
+    },
+    {
       "title": "Where Does Exactly-Once Live? Model, Harness, and Tool-Contract Effects on Duplicate Side Effects in LLM Agents",
       "author": "Jiapeng Li",
       "url": "https://arxiv.org/abs/2609.29095",
@@ -1249,6 +1292,27 @@
         "Without the error type agents misdiagnose; without a snippet they re-issue the same command",
         "Edit success falls from 90.5% to 57.2% after one failed edit",
         "The 10.7 pp headline reconciles only against the no-demonstration shell baseline"
+      ]
+    },
+    {
+      "title": "[FEATURE] Share MCP server processes across concurrent Claude Code sessions (#28860)",
+      "author": "JotaNikkan-pro",
+      "url": "https://github.com/anthropics/claude-code/issues/28860",
+      "date": "opened Feb 26, 2026; closed as duplicate Mar 1, 2026",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "4 sessions with 6 MCP servers spawned about 42 processes instead of 6; npm-launched servers cost two processes each (npm + node).",
+      "proves": "Each concurrent session spawns its own full set of stdio MCP servers, wrappers included, so process count scales with sessions times servers.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "Claude-related processes alone consumed about 4.5 GB of 24 GB and regularly triggered the macOS OOM killer",
+        "Claude Code 2.1.59 on Apple Silicon",
+        "Single user, approximate figures, no RSS/PSS method, no maintainer response"
       ]
     },
     {
@@ -1440,6 +1504,26 @@
         "98 percent increase in PR volume\" — attributed to Faros AI analysis of 10,000+ developers",
         "PR review time went up 91 percent\" — same Faros AI study",
         "68 percent of senior engineers report quality improvements from AI, but only 26 percent would ship AI-generated code without review"
+      ]
+    },
+    {
+      "title": "[FEATURE] Desktop/Claude Code: stdio MCP servers duplicated per session (~1 GB each) and can't be started mid-session (#99831)",
+      "author": "lrgibs01",
+      "url": "https://github.com/anthropics/claude-code/issues/99831",
+      "date": "opened Oct 6, 2026",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "Every session starts its own copy of every stdio MCP server in the user config; with about 10 sessions open that is roughly 10 GB of duplicate MCP server processes.",
+      "proves": "Declaring servers globally makes every session pay for them, because a stdio server cannot be started mid-session.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "9 stdio servers per session, about 1 GB per session, on a 36 GB machine with swap fully used",
+        "Desktop app, no CLI version stated; corroboration only"
       ]
     },
     {
@@ -1757,6 +1841,26 @@
         "The re-analyzed study is itself a code-review study: 'The Silent Helper: The Impact of Continuous Integration on Code Reviews' (Cassee et al., SANER 2020), so the demonstration requires no cross-domain transfer",
         "Nathan Cassee is first author of both the 2020 study and the 2026 re-analysis; the paper discloses that 'one of the authors of this study was also involved in the primary study'",
         "The authors propose the Justification Ladder of Analytical Choices (JLAC) and advocate robustness checks across plausible analysis variants, or explicit justification of each analytical decision"
+      ]
+    },
+    {
+      "title": "Critical Memory Leak: Claude Code Consumed 129GB RAM and Caused System Freeze (#11315)",
+      "author": "nenrightld-ux",
+      "url": "https://github.com/anthropics/claude-code/issues/11315",
+      "date": "opened Nov 9, 2025; latest comment Oct 12, 2026",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "The 129 GB headline was VmPeak virtual address space; VmRSS at the time was about 415 MB resident.",
+      "proves": "Virtual size is not memory use, and a systemd-run fence keeps the host up while individual sessions can still crash.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "A later commenter used the systemd-run workaround to keep the system up but still saw regular session crashes",
+        "One commenter reports lower resident memory since 2.1.1XX"
       ]
     },
     {
@@ -2262,6 +2366,28 @@
       ]
     },
     {
+      "title": "My MCP Servers Were Eating 3 GB of RAM",
+      "author": "Shyam Verma",
+      "url": "https://readybytes.in/blog/shared-mcp-servers-claude-code",
+      "date": "March 27, 2026",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "Seven concurrent Claude Code sessions ran 172 processes and roughly 3 GB of RAM just for MCP servers on a 16 GB MacBook Pro; one shared mcp-proxy cut that to about 33 processes and under 1 GB.",
+      "proves": "Per-session stdio MCP servers multiply with session count, and running shared servers once over HTTP removes most of that overhead.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "npx-based servers spawn a wrapper process too",
+        "RSS overstates actual memory usage because it double-counts shared pages",
+        "If any server fails to initialize, the shared proxy crashes and takes every other server with it",
+        "Single machine, RSS-based; text says under 1 GB, table says about 700 MB"
+      ]
+    },
+    {
       "title": "The Leaderboard Illusion",
       "author": "Singh, Nan, Wang, D'Souza, Kapoor, Ustun, Koyejo, Deng, Longpre, Smith, Ermis, Fadaee, Hooker",
       "url": "https://arxiv.org/abs/2504.20879",
@@ -2441,6 +2567,27 @@
       ],
       "secondary": [
         "A practitioner checking calibration daily at p<0.05 will almost certainly observe spurious alarms over a year even if calibration remains stable, because classical hypothesis tests assume a fixed sample size determined before seeing data"
+      ]
+    },
+    {
+      "title": "[BUG] Multiple concurrent sessions multiply MCP server processes without memory limits, causing kernel panic (#45880)",
+      "author": "TweedBeetle (Christo Wilken)",
+      "url": "https://github.com/anthropics/claude-code/issues/45880",
+      "date": "opened Apr 9, 2026; closed not planned Jun 14, 2026",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "With N sessions and M configured MCP servers the system spawns up to N x M node processes with no memory cap; 15 sessions with 34 servers kernel-panicked a 64 GB MacBook Pro twice in one evening.",
+      "proves": "Session count times server count is the real memory multiplier, and macOS offers no cgroup to contain it.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "Repeat of an April 3, 2026 failure: 12 sessions and 308 node processes, 111 GB total",
+        "macOS has no cgroups to contain per-process memory",
+        "510 processes is the reporter's upper bound, not a measurement; stale-closed, no vendor confirmation"
       ]
     },
     {
@@ -3639,6 +3786,26 @@
       ]
     },
     {
+      "title": "Claude Code CHANGELOG.md",
+      "author": "Anthropic",
+      "url": "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md",
+      "date": "undated headings; top version 2.1.303",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Since 2.1.113 the CLI spawns a native Claude Code binary instead of bundled JavaScript.",
+      "proves": "Node heap flags no longer bound the CLI process, so OS-level fences are the remaining cap.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "2.1.30 cut --resume memory 68% for users with many sessions",
+        "No entry mentions NODE_OPTIONS; the heap-flag conclusion is inferred and backed by user reports in #18011 and #4953"
+      ]
+    },
+    {
       "title": "Monitoring",
       "author": "Anthropic (Claude Code docs)",
       "url": "https://code.claude.com/docs/en/monitoring-usage",
@@ -3746,6 +3913,130 @@
         "The over-specified CLAUDE.md. If your CLAUDE.md is too long, Claude ignores half of it because important rules get lost in the noise.",
         "Keep it concise. For each line, ask: 'Would removing this cause Claude to make mistakes?' If not, cut it. Bloated CLAUDE.md files cause Claude to ignore your actual instructions!",
         "Ruthlessly prune. If Claude already does something correctly without the instruction, delete it or convert it to a hook."
+      ]
+    },
+    {
+      "title": "Troubleshooting",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/troubleshooting",
+      "date": "undated (fetched Oct 19, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "A critical memory warning appears when a session's heap passes 2.5 GB; restart and run claude --continue, or /compact outside fullscreen, to free it.",
+      "proves": "Long sessions have a vendor-recognized memory ceiling, and the fix is a resumable restart.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "2.5 GB is JS heap, not RSS and not a cap",
+        "claude --safe-mode bisects whether a plugin, MCP server, or hook is the source",
+        "Heap snapshots contain the full conversation and credentials"
+      ]
+    },
+    {
+      "title": "Claude Code changelog",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/changelog",
+      "date": "per-release; latest 2.1.303 (Oct 18, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Long-session leaks were fixed release by release: 2.1.208 (MCP stderr, LSP docs, headless payloads), 2.1.238 (subagent tool results), and 2.1.243 (roughly 40 to 70 MB less memory per session).",
+      "proves": "Per-session RAM depends on the CLI version, so the pinned version is a capacity lever.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "2.1.233 added opt-in memory cgroup support for Bash tool commands",
+        "2.1.132 fixed 10GB+ RSS growth from a stdio server writing non-protocol data to stdout",
+        "2.1.283 fixed stdio servers left running when a session ended during startup"
+      ]
+    },
+    {
+      "title": "Tools reference: Memory limit on Linux and WSL",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/tools-reference",
+      "date": "undated (fetched Oct 19, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "CLAUDE_CODE_TOOL_MEMORY_LIMIT caps the memory Bash, PowerShell, and Monitor commands can use against one per-session cgroup; if the cgroup cannot be set up, commands run with no cap.",
+      "proves": "The vendor fence covers what a session spawns, not the session process itself, and can fail open silently.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "CLAUDE_CODE_TOOL_MEMORY_CGROUP_EXCLUDE can bring MCP, LSP, hooks, plugins, helpers, and teammates under the cap (v2.1.246+)",
+        "When the cap kills a command, nothing in its result names the cap",
+        "The page never says the main claude process is under the cap"
+      ]
+    },
+    {
+      "title": "Environment variables",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/env-vars",
+      "date": "undated (fetched Oct 19, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Stdio MCP server subprocesses are long-lived and outlive the session that spawned them.",
+      "proves": "MCP processes are a standing cost that does not end cleanly with the session.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "CLAUDE_CODE_NO_FLICKER keeps memory flat in long conversations",
+        "Default 20 concurrent subagents and 10 concurrent read-only tools",
+        "Background shells are reaped under critical memory pressure after 30 idle minutes"
+      ]
+    },
+    {
+      "title": "Run Claude Code programmatically",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/headless",
+      "date": "undated (fetched Oct 19, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Without --bare, a -p session connects the servers in a project's .mcp.json; with it, only servers supplied on the command line (for example via --mcp-config) connect.",
+      "proves": "CI runs can pin their MCP set explicitly and assert it from the system/init mcp_servers field.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "--bare is recommended for scripted calls and will become the -p default",
+        "Before v2.1.286 the bare-mode limits held only partly",
+        "The page frames bare mode as startup time and reproducibility; the RAM saving is the post's inference"
+      ]
+    },
+    {
+      "title": "Orchestrate teams of Claude Code sessions",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/agent-teams",
+      "date": "undated (fetched Oct 19, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Each teammate is a full, independent Claude Code session that loads CLAUDE.md, MCP servers, and skills; -p runs never spawn teammates.",
+      "proves": "Agent teams multiply MCP process sets like extra sessions, while headless CI runs avoid that multiplier.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "Enabling agent teams can turn a named subagent into a teammate even when you did not ask for one"
       ]
     },
     {
@@ -4340,7 +4631,7 @@
       "title": "Create custom subagents",
       "author": "Claude Code docs (code.claude.com)",
       "url": "https://code.claude.com/docs/en/sub-agents",
-      "date": "undated",
+      "date": "undated (fetched Oct 19, 2026)",
       "class": "practitioner",
       "pillars": [
         2
@@ -4350,13 +4641,14 @@
       "verification": "confirmed",
       "powers": [
         "switching-between-ai-coding-agents",
-        "multi-agent-context-isolation"
+        "multi-agent-context-isolation",
+        "claude-code-parallel-sessions-memory"
       ],
       "secondary": [
         "Use one when a side task would flood your main conversation with search results, logs, or file contents you won't reference again: the subagent does that work in its own context and returns only the summary.",
+        "Subagents that reference an MCP server by name share the parent session's connection; inline servers connect when the subagent starts and disconnect when it finishes.",
         "Definition precedence: managed settings, --agents CLI flag, .claude/agents/, ~/.claude/agents/, plugin agents; the definition closest to the working directory wins (v2.1.178+)",
-        "Subagent hooks support PreToolUse, PostToolUse and Stop, converted to SubagentStop at runtime",
-        "permissionMode: bypassPermissions is ignored when permissions.disableBypassPermissionsMode is set (v2.1.223+)"
+        "Subagent hooks support PreToolUse, PostToolUse and Stop, converted to SubagentStop at runtime"
       ]
     },
     {
@@ -4476,7 +4768,7 @@
       "title": "Connect Claude Code to tools via MCP",
       "author": "Claude Code docs (code.claude.com)",
       "url": "https://code.claude.com/docs/en/mcp",
-      "date": "undated",
+      "date": "undated (fetched Oct 19, 2026)",
       "class": "practitioner",
       "pillars": [
         2
@@ -4485,9 +4777,11 @@
       "proves": "The mcpServers object is the portable element; scope precedence, approval gating and the type-field gotcha are Claude Code wiring.",
       "verification": "confirmed",
       "powers": [
-        "switching-between-ai-coding-agents"
+        "switching-between-ai-coding-agents",
+        "claude-code-parallel-sessions-memory"
       ],
       "secondary": [
+        "Stdio servers run as local processes on your machine; a server defined in several places is connected once per session, and tool search defers tool definitions so more servers cost little context.",
         "Scope precedence: local, project, user, plugin-provided, claude.ai connectors; same-name servers are not merged",
         "Project-scoped .mcp.json servers need approval before first use in interactive sessions; non-interactive contexts load them without prompting unless --strict-mcp-config (v2.1.246+) or disabledMcpjsonServers is used",
         "anthropic/requiresUserInteraction in a tool's _meta forces an approval prompt on every call even under auto or bypassPermissions (v2.1.199+)"
@@ -4917,6 +5211,23 @@
       ]
     },
     {
+      "title": "Resource constraints",
+      "author": "Docker Docs",
+      "url": "https://docs.docker.com/engine/containers/resource_constraints",
+      "date": "undated (fetched Oct 19, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Hard limits let a container use no more than a fixed amount of memory; without -m the host can run out of memory.",
+      "proves": "CI containers running agents need an explicit memory limit.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": []
+    },
+    {
       "title": "2025 State of AI-assisted Software Development Report",
       "author": "DORA (Google Cloud)",
       "url": "https://dora.dev/dora-report-2025",
@@ -5312,6 +5623,25 @@
         "agent-done-criteria-predicates"
       ],
       "secondary": []
+    },
+    {
+      "title": "GitHub-hosted runners reference",
+      "author": "GitHub Docs",
+      "url": "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+      "date": "undated (fetched Oct 19, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Standard ubuntu-latest runners have 8 GB RAM and 2 CPUs for private repos, 16 GB and 4 CPUs for public repos.",
+      "proves": "CI runner memory is a fixed ceiling to size agent runs against with the same formula as a workstation.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "Table values read via summarizer"
+      ]
     },
     {
       "title": "Policy engine",
@@ -5868,6 +6198,26 @@
       ]
     },
     {
+      "title": "Resource Management for Pods and Containers",
+      "author": "Kubernetes Docs",
+      "url": "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers",
+      "date": "undated (fetched Oct 19, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "When a container exceeds its memory limit, the kernel OOM subsystem typically stops one of the processes in that container.",
+      "proves": "Per-job memory limits keep one runaway agent run from taking down its neighbors.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "Memory limits are enforced reactively by OOM kills",
+        "OOMKilled pods report exit code 137"
+      ]
+    },
+    {
       "title": "Writing a good CLAUDE.md",
       "author": "Kyle (HumanLayer)",
       "url": "https://www.humanlayer.dev/blog/writing-a-good-claude-md",
@@ -6047,6 +6397,26 @@
       ],
       "secondary": [
         "No numeric overhead figure given, qualitative disclosure only; the author's own team had not completed comparative benchmarking at time of writing"
+      ]
+    },
+    {
+      "title": "The /proc Filesystem",
+      "author": "Linux kernel documentation",
+      "url": "https://docs.kernel.org/filesystems/proc.html",
+      "date": "undated (living docs page)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "PSS counts each page a process has in memory divided by the number of processes sharing it; smaps_rollup sums those fields across all of a process's mappings.",
+      "proves": "Measure a session tree in PSS, because summing RSS double-counts shared pages.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "VmRSS = RssAnon + RssFile + RssShmem",
+        "RSS double-counting is the post's inference from the definition"
       ]
     },
     {
@@ -6316,6 +6686,25 @@
       ]
     },
     {
+      "title": "playwright-mcp package.json",
+      "author": "Microsoft",
+      "url": "https://github.com/microsoft/playwright-mcp/blob/main/package.json",
+      "date": "main branch (fetched Oct 19, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "The @playwright/mcp package declares a playwright-mcp binary (bin: playwright-mcp -> cli.js).",
+      "proves": "A globally installed MCP server can be launched directly, without the resident npm exec wrapper npx adds.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "Skipping the wrapper saves memory is the post's inference from first-party process counts"
+      ]
+    },
+    {
       "title": "Azure REST API Guidelines",
       "author": "Microsoft (Azure API Stewardship Board)",
       "url": "https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md",
@@ -6350,6 +6739,27 @@
         "multi-agent-coordination-layer"
       ],
       "secondary": []
+    },
+    {
+      "title": "Advanced settings configuration in WSL",
+      "author": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/windows/wsl/wsl-config",
+      "date": "October 16, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "The WSL 2 VM gets 50% of total Windows memory unless .wslconfig sets memory.",
+      "proves": "On WSL the VM ceiling, not the physical box, is the budget every session packs against.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "swap defaults to 25% of Windows memory",
+        "autoMemoryReclaim=gradual reclaims cached memory slowly",
+        "isolateDistroCgroup defaults to true and requires cgroup v2"
+      ]
     },
     {
       "title": "Azure's approach to versioning and avoiding breaking changes",
@@ -6408,6 +6818,26 @@
       "secondary": []
     },
     {
+      "title": "Transports (2025-11-25)",
+      "author": "Model Context Protocol",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports",
+      "date": "2025-11-25 (spec revision)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "With stdio the client launches the MCP server as a subprocess; with Streamable HTTP the server is an independent process that can handle multiple client connections.",
+      "proves": "One HTTP server process can serve many sessions where stdio forces one copy per client.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "Local servers SHOULD bind only to localhost",
+        "Run-once-instead-of-N-copies is the post's inference from the two definitions"
+      ]
+    },
+    {
       "title": "How to Run a Multi-Agent Coding Workspace (2026)",
       "author": "Molisha Shah (Augment Code)",
       "url": "https://www.augmentcode.com/guides/how-to-run-a-multi-agent-coding-workspace",
@@ -6425,6 +6855,25 @@
       "secondary": [
         "Vendor guide authored by a go-to-market staff member rather than an engineer; the technical core is real but a '40% reduction in hallucinations' claim about the vendor's own product is unverified marketing and is not cited.",
         "Humans are given a tier in a review pipeline ('Reserve humans for semantic correctness and architecture'), not a position in a graph."
+      ]
+    },
+    {
+      "title": "Command-line API: --max-old-space-size",
+      "author": "Node.js",
+      "url": "https://nodejs.org/api/cli.html",
+      "date": "undated (living docs page)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "--max-old-space-size sets the max size of V8's old memory section; on a 2 GiB machine the docs suggest 1536 MiB to leave memory for other uses.",
+      "proves": "Node-based MCP servers can be capped individually, and the docs model leaving headroom below the ceiling.",
+      "verification": "partial",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "Limits V8 old space, not total process memory (the post's contrast)"
       ]
     },
     {
@@ -7717,6 +8166,65 @@
       ],
       "secondary": [
         "GET and DELETE do not take keys; they are idempotent by definition"
+      ]
+    },
+    {
+      "title": "systemd.resource-control: Resource control unit settings",
+      "author": "systemd project",
+      "url": "https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html",
+      "date": "systemd 262",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "It is recommended to use MemoryHigh= as the main control mechanism and MemoryMax= as the last line of defense.",
+      "proves": "Fence each session with a throttle first and a hard kill second.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "Verify user-session controller delegation before relying on systemd-run --user memory limits on every distro"
+      ]
+    },
+    {
+      "title": "systemd-run",
+      "author": "systemd project",
+      "url": "https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html",
+      "date": "undated (living man page)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "--user talks to the calling user's service manager, --scope creates a transient scope unit, and -p sets a property on that unit.",
+      "proves": "A per-session memory-limited wrapper can be composed from documented systemd-run options.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "The wrapper itself is a composition of options plus a #4953 user snippet, not a man-page example"
+      ]
+    },
+    {
+      "title": "Control Group v2",
+      "author": "Tejun Heo",
+      "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
+      "date": "October 2015 (living doc)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "memory.current and memory.peak cover a cgroup and its descendants; going over memory.high never invokes the OOM killer, while memory.max is the hard limit.",
+      "proves": "A per-session cgroup measures the whole session tree and lets memory.high throttle before memory.max kills.",
+      "verification": "confirmed",
+      "powers": [
+        "claude-code-parallel-sessions-memory"
+      ],
+      "secondary": [
+        "memory.high is the main mechanism to control memory usage",
+        "Overcommitting high limits (sum greater than available memory) treated as viable; the dossier captured only a fragment and the post carries this point as paraphrase, not a quote",
+        "memory.oom.group treats a cgroup as one indivisible workload for the OOM killer"
       ]
     },
     {
