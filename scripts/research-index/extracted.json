@@ -8653,5 +8653,572 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "comprehension-debt-on-call-ownership",
+    "sources": [
+      {
+        "title": "How AI assistance impacts the formation of coding skills",
+        "author": "Anthropic (Judy Hanwen Shen, Alex Tamkin)",
+        "url": "https://www.anthropic.com/research/AI-assistance-coding-skills",
+        "date": "January 29, 2026",
+        "class": "research-data",
+        "pillars": [
+          5,
+          3
+        ],
+        "stat": "In an RCT of 52 mostly junior engineers learning a new library, the AI-assisted group averaged 50% on the follow-up quiz against 67% for hand coders, with the largest gap on debugging questions and no significant speedup.",
+        "proves": "AI assistance while learning can cost the comprehension needed to validate and debug AI-written code, and how the tool is used decides how much.",
+        "verification": "confirmed",
+        "secondary": [
+          "High-scoring patterns (generation-then-comprehension, conceptual inquiry) kept quiz scores at 65% or more",
+          "Novices on a new library, quiz taken right after the task; debugging breakdown is exploratory"
+        ]
+      },
+      {
+        "title": "How AI Impacts Skill Formation",
+        "author": "Judy Hanwen Shen, Alex Tamkin",
+        "url": "https://arxiv.org/html/2601.20245",
+        "date": "January 28, 2026 (v2 February 1, 2026)",
+        "class": "research-data",
+        "pillars": [
+          5,
+          3
+        ],
+        "stat": "AI access lowered quiz-measured skill formation by 4.15 of 27 points (17%), Cohen's d=0.738, p=0.01; the largest gap was in debugging questions (exploratory).",
+        "proves": "Humans supervising AI-written code may lack the skills to validate and debug it if AI use inhibited their skill formation.",
+        "verification": "confirmed",
+        "secondary": [
+          "Treatment was chat-assistant access, not mandated delegation",
+          "Three of six interaction patterns preserved learning",
+          "The 50%/67% means are in Anthropic's companion post, not the paper text"
+        ]
+      },
+      {
+        "title": "(Im)Paired Programming: Coding Agents Improve Productivity but Harm Understanding",
+        "author": "Nishant Balepur, Connor Baumler, Valerie Chen, Eunsol Choi, Rachel Rudinger, Jordan Boyd-Graber",
+        "url": "https://arxiv.org/html/2607.26375v1",
+        "date": "July 29, 2026",
+        "class": "research-data",
+        "pillars": [
+          5,
+          3
+        ],
+        "stat": "Adding initial task accuracy barely improved the comprehension model (adjusted R2 0.40 to 0.42); auto-accepters scored 0.615 on comprehension against 0.777 for users who reviewed each file.",
+        "proves": "Task completion and comprehension are distinct, so a finished, passing change says little about whether its author understands it.",
+        "verification": "confirmed",
+        "secondary": [
+          "54 CS students, agent compared with a chatbot, not with no AI",
+          "Auto-accept n=6, accept-each n=7; authors call all analyses exploratory",
+          "In-progress preprint"
+        ]
+      },
+      {
+        "title": "Faster but Not Wiser: GitHub Copilot Decouples Programming Performance from Code Comprehension in Brownfield Tasks",
+        "author": "Yunhan Qiao, Md Istiak Hossain Shihab, Summit Haque, Christopher Hundhausen",
+        "url": "https://arxiv.org/html/2511.02922",
+        "date": "November 4, 2025 (v3 September 27, 2026)",
+        "class": "research-data",
+        "pillars": [
+          5,
+          3
+        ],
+        "stat": "With Copilot, 15 graduate students passed 7.2 tests against 4.2 without it on the first task, with no comprehension gain (p=0.59); high-comprehension participants ran write-then-view loops about 4.7x more often.",
+        "proves": "Task success in an unfamiliar codebase does not reliably demonstrate comprehension; how developers engage with generated code tracks what they understand.",
+        "verification": "confirmed",
+        "secondary": [
+          "n=15, fixed condition order (no Copilot first)",
+          "Associational, not causal"
+        ]
+      },
+      {
+        "title": "The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers",
+        "author": "Hao-Ping (Hank) Lee et al.",
+        "url": "https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/",
+        "date": "April 2025 (CHI 2025)",
+        "class": "research-data",
+        "pillars": [
+          5
+        ],
+        "stat": "In a survey of 319 knowledge workers sharing 936 examples, higher confidence in GenAI was associated with less critical thinking, and higher self-confidence with more.",
+        "proves": "The disengagement effect shows up in working professionals, not only students, though as self-report.",
+        "verification": "confirmed",
+        "secondary": [
+          "General knowledge workers, not developers",
+          "Measures self-reported critical thinking, not code comprehension"
+        ]
+      },
+      {
+        "title": "AI code causes real world production outages",
+        "author": "Chris Stokel-Walker (LeadDev)",
+        "url": "https://leaddev.com/ai/ai-code-causes-real-world-production-outages",
+        "date": "October 12, 2026",
+        "class": "research-data",
+        "pillars": [
+          5,
+          4
+        ],
+        "stat": "An Undo-sponsored survey of 300 senior engineering leaders reports 35% of AI-generated code reaching production before teams fully comprehend it, 81% with an AI-linked production incident in six months, and 93% with a root cause misdiagnosed after an AI hallucination.",
+        "proves": "Comprehension gaps in AI-written code surface as production incidents and slower root-cause work.",
+        "verification": "confirmed",
+        "secondary": [
+          "Sponsored by Undo, a debugging-tools vendor",
+          "Self-reported, fielded July and August 2026",
+          "Engineers report 16.9 hours a week debugging against 9.8 producing code"
+        ]
+      },
+      {
+        "title": "How AI is transforming work at Anthropic",
+        "author": "Anthropic Societal Impacts (Saffron Huang et al.)",
+        "url": "https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic",
+        "date": "December 2, 2025",
+        "class": "research-data",
+        "pillars": [
+          5
+        ],
+        "stat": "A survey of 132 Anthropic engineers and researchers names the paradox of supervision: using Claude well requires supervising it, and supervising it requires the coding skills that may atrophy from overuse.",
+        "proves": "Understanding agent-written code is a real and growing cost for the people accountable for it.",
+        "verification": "partial",
+        "secondary": [
+          "Convenience, non-anonymous sample",
+          "Merged PRs per engineer per day rose 67% (cited corroboration)",
+          "Some engineers deliberately skip Claude on tasks to stay sharp"
+        ]
+      },
+      {
+        "title": "Expectations, Outcomes, and Challenges of Modern Code Review",
+        "author": "Alberto Bacchelli, Christian Bird",
+        "url": "https://sback.it/publications/icse2013.pdf",
+        "date": "May 2013 (ICSE 2013)",
+        "class": "research-data",
+        "pillars": [
+          5
+        ],
+        "stat": "91% (798 of 873) of surveyed Microsoft programmers said reviewing unfamiliar files takes longer because they must learn the files' purpose, invariants, and APIs.",
+        "proves": "Understanding the change, including its purpose and invariants, is the key aspect of code review.",
+        "verification": "confirmed",
+        "secondary": [
+          "Finding defects remains the stated main motivation, but reviews deliver more knowledge transfer than expected",
+          "Verified by local PDF text extraction 2026-10-26"
+        ]
+      },
+      {
+        "title": "Don't Touch My Code! Examining the Effects of Ownership on Software Quality",
+        "author": "Christian Bird, Nachiappan Nagappan, Brendan Murphy, Harald Gall, Premkumar Devanbu",
+        "url": "https://www.microsoft.com/en-us/research/publication/dont-touch-my-code-examining-the-effects-of-ownership-on-software-quality/",
+        "date": "September 2011 (ESEC/FSE 2011)",
+        "class": "research-data",
+        "pillars": [
+          5
+        ],
+        "stat": "In Windows Vista and Windows 7, the number of minor contributors had a strong positive relationship with pre- and post-release failures, controlling for size, churn, and complexity.",
+        "proves": "Ownership measurably tracks software quality and is a lever management can set.",
+        "verification": "confirmed",
+        "secondary": [
+          "Pre-AI, human contributors, Windows only",
+          "Higher top-owner share means fewer failures, a smaller effect than minor contributors"
+        ]
+      },
+      {
+        "title": "Modern Code Review: A Case Study at Google",
+        "author": "Caitlin Sadowski, Emma Söderberg, Luke Church, Michal Sipko, Alberto Bacchelli",
+        "url": "https://sback.it/publications/icse2018seip.pdf",
+        "date": "2018 (ICSE-SEIP 2018)",
+        "class": "research-data",
+        "pillars": [
+          5
+        ],
+        "stat": "At Google, code review was introduced mainly to make code understandable to other developers, and was also seen as ensuring more than one person is familiar with each piece of code.",
+        "proves": "Shared understanding is a deliberate design goal of review at Google, not a side effect.",
+        "verification": "confirmed",
+        "secondary": [
+          "Google-scoped only: the general claim that review was created for understanding rather than defects is refuted (Fagan inspections targeted defects)"
+        ]
+      },
+      {
+        "title": "From Technical Debt to Cognitive and Intent Debt: Rethinking Software Health in the Age of AI",
+        "author": "Margaret-Anne Storey",
+        "url": "https://arxiv.org/abs/2603.22106",
+        "date": "March 23, 2026 (v4 April 6, 2026)",
+        "class": "research-data",
+        "pillars": [
+          5
+        ],
+        "stat": "Names intent debt, the absence or erosion of explicit rationale, goals, and constraints, and lists cognitive-debt signals including low bus factor and loss of transactive memory.",
+        "proves": "Shared understanding should be treated as a first-class deliverable, separate from working code.",
+        "verification": "confirmed",
+        "secondary": [
+          "Conceptual paper, no empirical data",
+          "Verified by local PDF text extraction 2026-10-26"
+        ]
+      },
+      {
+        "title": "Changes in Medical Errors after Implementation of a Handoff Program",
+        "author": "Starmer et al. (I-PASS Study Group)",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMsa1405556",
+        "date": "2014 (N Engl J Med 371:1803-12)",
+        "class": "research-data",
+        "pillars": [
+          5
+        ],
+        "stat": "Across 10,740 admissions in nine hospitals, a handoff bundle ending in receiver synthesis was associated with a 23% drop in medical errors and a 30% drop in preventable adverse events.",
+        "proves": "High-stakes handoffs already require the receiver to restate what they heard, with measurable error reductions.",
+        "verification": "partial",
+        "secondary": [
+          "Effect belongs to the whole bundle, not the receiver-synthesis step",
+          "NEJM page blocked (403); figures confirmed via abstract mirrors and Europe PMC"
+        ]
+      },
+      {
+        "title": "Programming as Theory Building",
+        "author": "Peter Naur",
+        "url": "https://gist.github.com/onlurking/fc5c81d18cfce9ff81bc968a7f342fb1",
+        "date": "1985",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "Reviving a program's theory merely from its documentation is strictly impossible; a program dies when the team holding its theory dissolves.",
+        "proves": "Modifiability lives in the theory its programmers hold, which code and documents cannot carry.",
+        "verification": "confirmed",
+        "secondary": [
+          "Gist transcription; original in Microprocessing and Microprogramming 15 (1985)"
+        ]
+      },
+      {
+        "title": "On the Criteria To Be Used in Decomposing Systems into Modules",
+        "author": "D. L. Parnas",
+        "url": "https://dl.acm.org/doi/10.1145/361598.361623",
+        "date": "December 1972 (CACM 15(12))",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "In the preferred decomposition, each module is characterized by its knowledge of a design decision it hides from all others.",
+        "proves": "The interface is the durable contract; the implementation behind it can change.",
+        "verification": "partial",
+        "secondary": [
+          "Paper text unreachable (scanned PDFs, ACM 403); quoted via Adrian Colyer's The Morning Paper"
+        ]
+      },
+      {
+        "title": "Being On-Call",
+        "author": "Andrea Spadaccini (ed. Kavita Guliani), Google SRE",
+        "url": "https://sre.google/sre-book/being-on-call/",
+        "date": "2017",
+        "class": "practitioner",
+        "pillars": [
+          5,
+          4
+        ],
+        "stat": "Engineers out of touch with production discover knowledge gaps only when an incident occurs; teams should be sized so every engineer is on call at least once or twice a quarter.",
+        "proves": "Gaps in understanding stay hidden until a page forces them out unless people stay exposed.",
+        "verification": "confirmed",
+        "secondary": [
+          "Wheel of Misfortune and DiRT drills hone troubleshooting and service knowledge"
+        ]
+      },
+      {
+        "title": "Introduction",
+        "author": "Google SRE",
+        "url": "https://sre.google/sre-book/introduction/",
+        "date": "2016",
+        "class": "practitioner",
+        "pillars": [
+          4
+        ],
+        "stat": "Recording best practices ahead of time in a playbook produces roughly a 3x improvement in MTTR over winging it.",
+        "proves": "A written debug path materially speeds incident response.",
+        "verification": "confirmed",
+        "secondary": [
+          "Google's claim; no dataset given"
+        ]
+      },
+      {
+        "title": "On-Call",
+        "author": "Google SRE Workbook",
+        "url": "https://sre.google/workbook/on-call/",
+        "date": "2018",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          5
+        ],
+        "stat": "Details in playbooks go out of date at the same rate as production environment changes.",
+        "proves": "The debug path has to be maintained alongside the code it describes.",
+        "verification": "confirmed",
+        "secondary": [
+          "Teams role-play recent incidents to practice debugging",
+          "Each alert should have a corresponding playbook entry"
+        ]
+      },
+      {
+        "title": "Accelerating SREs to On-Call and Beyond",
+        "author": "Andrew Widdowson (ed. Shylaja Nukala), Google SRE",
+        "url": "https://sre.google/sre-book/accelerating-sre-on-call/",
+        "date": "2017",
+        "class": "practitioner",
+        "pillars": [
+          4,
+          5
+        ],
+        "stat": "In Wheel of Misfortune, a game master runs a prepared, realistic scenario so learning happens before a new SRE's first real page.",
+        "proves": "Role-played failures surface gaps in understanding before production does.",
+        "verification": "partial",
+        "secondary": [
+          "Framed as onboarding, not as an ownership check on a service"
+        ]
+      },
+      {
+        "title": "REL12-BP05 Conduct game days regularly",
+        "author": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_testing_resiliency_game_days_resiliency.html",
+        "date": "undated (current)",
+        "class": "practitioner",
+        "pillars": [
+          4
+        ],
+        "stat": "Practicing response procedures in realistic conditions identifies gaps or weaknesses before a real event occurs; involve the same teams who would handle production.",
+        "proves": "Drills with the people who would respond are how teams find readiness gaps early.",
+        "verification": "confirmed",
+        "secondary": [
+          "Anti-pattern: documenting procedures but never exercising them"
+        ]
+      },
+      {
+        "title": "How we contain Claude across products",
+        "author": "Max McGuinness, Mikaela Grace, Jiri De Jonghe, Jake Eaton, Abel Ribbink (Anthropic Engineering)",
+        "url": "https://www.anthropic.com/engineering/how-we-contain-claude",
+        "date": "May 25, 2026",
+        "class": "research-data",
+        "pillars": [
+          4,
+          2
+        ],
+        "stat": "Users approved roughly 93% of permission prompts, and attention to each fell as approvals piled up.",
+        "proves": "Click-through approvals degrade into rubber stamps, so an approval count is weak evidence of scrutiny.",
+        "verification": "confirmed",
+        "secondary": [
+          "About tool-permission prompts, not code review; used as an analogy",
+          "OS-level sandboxing cut permission prompts 84%"
+        ]
+      },
+      {
+        "title": "Kernel Guidelines for Tool-Generated Content",
+        "author": "Linux kernel documentation",
+        "url": "https://docs.kernel.org/process/generated-content.html",
+        "date": "undated (docs v7.3.0)",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "Submitters are expected to understand and be able to defend everything they submit; if they cannot, they should not submit it.",
+        "proves": "Serious projects already set policy that the human owner of AI-assisted code must understand it.",
+        "verification": "confirmed",
+        "secondary": [
+          "Companion page: the human submitter takes full responsibility; AI agents must not add Signed-off-by tags"
+        ]
+      },
+      {
+        "title": "How Generative and Agentic AI Shift Concern from Technical Debt to Cognitive Debt",
+        "author": "Margaret-Anne Storey",
+        "url": "https://margaretstorey.com/blog/2026/02/09/cognitive-debt/",
+        "date": "February 9, 2026",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "Teams may wish to require that at least one human fully understands each AI-generated change before it ships.",
+        "proves": "Cognitive debt lives in developers' minds rather than the code, so mitigation is a team practice.",
+        "verification": "confirmed",
+        "secondary": [
+          "Hedged: one of three example practices",
+          "Term is cognitive debt"
+        ]
+      },
+      {
+        "title": "AI demands more engineering discipline. Not less",
+        "author": "Charity Majors",
+        "url": "https://charity.wtf/p/ai-demands-more-engineering-discipline",
+        "date": "June 15, 2026",
+        "class": "practitioner",
+        "pillars": [
+          5,
+          4
+        ],
+        "stat": "The fact that we cannot regenerate our code in the same way is a sign that we do not understand it.",
+        "proves": "What you cannot safely regenerate is what you must understand; trust moves to specs and production validation.",
+        "verification": "partial",
+        "secondary": [
+          "The code-as-cache line is Chad Fowler's, quoted by Majors"
+        ]
+      },
+      {
+        "title": "Understanding Spec-Driven-Development tools",
+        "author": "Birgitta Böckeler",
+        "url": "https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html",
+        "date": "October 15, 2025",
+        "class": "practitioner",
+        "pillars": [
+          2
+        ],
+        "stat": "In spec-as-source tools only the spec is edited by humans, and regenerating from the same spec produced non-deterministic code.",
+        "proves": "Regenerable code is replaceable behind a contract, not free or identical on each run.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "On the Criteria To Be Used in Decomposing Systems into Modules (the morning paper)",
+        "author": "Adrian Colyer",
+        "url": "https://blog.acolyer.org/2016/09/05/on-the-criteria-to-be-used-in-decomposing-systems-into-modules/",
+        "date": "September 5, 2016",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "Summarizes Parnas's information-hiding criterion and quotes his module definition.",
+        "proves": "Source of the verbatim Parnas quote used in the post.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "Comprehension debt: what AI-written code actually costs",
+        "author": "Amit Shrivastava",
+        "url": "https://dev.to/amit_shrivastava_e813c728/comprehension-debt-what-ai-written-code-actually-costs-2m02",
+        "date": "August 18, 2026",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "An approval with no comments on a four-hundred-line agent-written change is not evidence of understanding.",
+        "proves": "Silent approvals on agent PRs record completion, not comprehension.",
+        "verification": "confirmed",
+        "secondary": [
+          "Proposes author-of-record and banning silent approvals"
+        ]
+      },
+      {
+        "title": "Ask HN: How to deal with shipping AI-written code you don't understand?",
+        "author": "Hacker News (rzk)",
+        "url": "https://news.ycombinator.com/item?id=50151036",
+        "date": "October 19, 2026",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "621 points and more than 760 comments.",
+        "proves": "Shipping AI-written code nobody understands is a live, widely felt practitioner problem.",
+        "verification": "confirmed",
+        "secondary": [
+          "Accountability and debugging framings dominate; on-call is not mentioned directly"
+        ]
+      },
+      {
+        "title": "Comment on Ask HN: shipping AI-written code you don't understand",
+        "author": "xinu2020 (Hacker News)",
+        "url": "https://news.ycombinator.com/item?id=50158083",
+        "date": "October 2026",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "At the end you're the owner and accountable, so you need to justify your choices and your agent's.",
+        "proves": "Practitioners already frame AI-written code as an ownership and accountability problem.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "Comment on Ask HN: shipping AI-written code you don't understand",
+        "author": "linsomniac (Hacker News)",
+        "url": "https://news.ycombinator.com/item?id=50160011",
+        "date": "October 2026",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "An operations engineer ships much code he doesn't understand, relying on testing, monitoring, and staging soak.",
+        "proves": "The strongest objection: teams already ship dependencies nobody on the team understands.",
+        "verification": "confirmed",
+        "secondary": [
+          "Answered in the post: operators hold a dependency's contract and debug path, not its internals"
+        ]
+      },
+      {
+        "title": "Using I-PASS to improve nursing handoffs across the continuum of care at a tertiary oncology hospital",
+        "author": "Ait Aiss et al. (PMC)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12458891/",
+        "date": "2025",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "I-PASS ends in Synthesis by Receiver, which closes the communication loop to reach shared understanding.",
+        "proves": "Receiver restatement is a named, standard step in structured clinical handoffs.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "Sphinx: you can outsource your thinking, but not your understanding",
+        "author": "parthh01",
+        "url": "https://sphinx-six-theta.vercel.app/",
+        "date": "October 18, 2026 (Show HN)",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "A reviewer model that never saw the chat reads the diff and asks what the change does when things go wrong, blocking the push until answered (253 HN points).",
+        "proves": "Pre-push comprehension quizzes for agent code are an emerging tool category.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "sphinx (README)",
+        "author": "parthh01",
+        "url": "https://github.com/parthh01/sphinx",
+        "date": "October 2026",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "The tool's README calls it practice, not a security gate, and says passing does not prove the user understood the code unaided.",
+        "proves": "One-time author quizzes are weak evidence of understanding, by their makers' own account.",
+        "verification": "confirmed",
+        "secondary": [
+          "LLM examiner can be wrong; hooks are bypassable; local pushes only"
+        ]
+      },
+      {
+        "title": "vibecheck.dev",
+        "author": "JoeDrayton",
+        "url": "https://github.com/JoeDrayton/vibecheck.dev",
+        "date": "October 2026",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "A merge-blocking commit status quizzes the author on the diff; wrong answers can be retried, then the answer is revealed.",
+        "proves": "Merge-time author quizzes exist but grade the author once, against the diff.",
+        "verification": "confirmed",
+        "secondary": [
+          "Early, solo-maintained project"
+        ]
+      },
+      {
+        "title": "Are Your Mid-Level Engineers Vibe-Coding While You Drown in AI-Slop Reviews?",
+        "author": "Explyt Team",
+        "url": "https://explyt.ai/en/blog/comprehension-debt-quiz-gate",
+        "date": "October 15, 2026",
+        "class": "practitioner",
+        "pillars": [
+          5
+        ],
+        "stat": "Proposes a risk-tiered, change-specific quiz the author answers before merge, piloted for two weeks on one class of changes.",
+        "proves": "The closest published approach is a one-time author check before merge, with no post-merge verification.",
+        "verification": "partial",
+        "secondary": [
+          "Vendor blog; page title differs from its header"
+        ]
+      }
+    ]
   }
 ]
