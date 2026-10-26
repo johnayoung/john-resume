@@ -96,6 +96,7 @@
           {{ with .date }}{{ if ne . "undated" }}<span class="rsrc__date">{{ . }}</span>{{ end }}{{ end }}
           <span class="rsrc__tag{{ if $isData }} rsrc__tag--data{{ end }}">{{ if $isData }}data{{ else }}practitioner{{ end }}</span>
           {{ if ne .verification "confirmed" }}<span class="rsrc__tag rsrc__tag--warn" title="Source page changed since capture; quote could not be fully re-verified">{{ .verification }}</span>{{ end }}
+          {{ with .dead }}<span class="rsrc__tag rsrc__tag--warn" title="This URL no longer resolves and has no archived copy. The cited text was verified against the live page before it went dead.">link dead since {{ . }}</span>{{ end }}
           <button class="rsrc__anchor" type="button" aria-label="Copy link to this source">#</button>
         </p>
         <blockquote class="rsrc__stat">{{ .stat }}</blockquote>

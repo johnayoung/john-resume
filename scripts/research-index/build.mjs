@@ -101,12 +101,15 @@ for (const group of groups.values()) {
   for (const s of secondary) { if (contained(stat, s)) continue; if (sec2.some(x => contained(x, s))) continue; sec2.push(s); }
   const author = unesc(primary.author);
   const date = (group.map(g => g.date).find(d => d && d !== 'undated')) || primary.date || '';
+  // A source marked dead in any post stays marked; keep the earliest date it was found dead.
+  const dead = group.map(g => g.dead).filter(Boolean).sort()[0] || null;
   merged.push({
     title: stripAuthorFromTitle(unesc(primary.title), author),
     author, url: primary._display, date,
     class: isData ? 'research-data' : 'practitioner',
     pillars, stat, proves: unesc(primary.proves), verification: vname[bestV], powers,
     secondary: sec2.slice(0, 4),
+    ...(dead ? { dead } : {}),
   });
 }
 merged.sort((a, b) => {

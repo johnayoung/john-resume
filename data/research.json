@@ -8850,7 +8850,8 @@
       ],
       "secondary": [
         "5 runs per case with a 0.05 tolerance band as a starting point"
-      ]
+      ],
+      "dead": "2026-10-26"
     },
     {
       "title": "Agentic RAG Failure Modes: Retrieval Thrash, Tool Storms, and Context Bloat (and How to Spot Them Early)",

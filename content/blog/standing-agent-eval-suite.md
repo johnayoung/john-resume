@@ -153,7 +153,7 @@ Their remedy is the last row of the table: run evaluations "continuously on true
 - **Path-filter the agent's own files.** Trigger the per-change tier on `CLAUDE.md`, `.claude/**`, `harness/**`, and the model config, not only on application code.
 - **Pin the alias and check it.** Record the concrete snapshot every green run used, and fail CI when the alias resolves to something new.
 - **Schedule a nightly run.** The cron is the only trigger CL-4 will ever fire.
-- **Keep both.** Autonoma's Tom Piaggio names the failure on each side. Path-filtered only, "a silent model swap goes unnoticed"; nightly only, a bad prompt edit sits "for up to 24 hours before anyone finds out" ([Autonoma: Agent Regression Testing](https://getautonoma.com/blog/agent-regression-testing)).
+- **Keep both.** Autonoma's Tom Piaggio names the failure on each side. Path-filtered only, "a silent model swap goes unnoticed"; nightly only, a bad prompt edit sits "for up to 24 hours before anyone finds out" ([Autonoma: Agent Regression Testing](https://getautonoma.com/blog/agent-regression-testing); link dead as of 2026-10-26, verified when published).
 
 ---
 
@@ -329,7 +329,7 @@ The PR was approved as a flake fix. It also deleted the half of the check that w
 Split ownership on purpose. Anthropic's version: "What proved most effective was establishing dedicated evals teams to own the core infrastructure, while domain experts and product teams contribute most eval tasks" ([Anthropic Engineering: Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)). Shankar's interviews found that higher-stakes ML applications "created separate teams to manage the dynamic evaluation process." So did the opposite failure: "every engineer working on a particular model had a cloned version of the main evaluation notebook, with a few changes" ([Shankar et al.: Operationalizing Machine Learning](https://arxiv.org/abs/2209.09125)). The platform function owns the harness; the team that owns migrations owns `reg/migrations/rollback-present` and the definition of correct inside it. Then review every suite change the way Autonoma's practitioners do:
 
 > The teams that keep this running treat the golden set the way they'd treat a schema migration: reviewed in a pull request, not edited silently.
-> — [Autonoma: Agent Regression Testing](https://getautonoma.com/blog/agent-regression-testing)
+> — [Autonoma: Agent Regression Testing](https://getautonoma.com/blog/agent-regression-testing) (link dead as of 2026-10-26)
 
 | When a PR | Route it to | Record |
 | --- | --- | --- |
@@ -401,7 +401,7 @@ Use this as the charter for your suite: one row per section, the decision it for
 16. [OpenAI Cookbook: Macro Evals for Agentic Systems](https://developers.openai.com/cookbook/examples/partners/macro_evals_for_agentic_systems/macro_evals_for_agentic_systems) — Agent-level evals show local risk; macro evals show what it becomes at system scale. Also backs promoting failures into a regression suite.
 17. [OpenAI Cookbook: Build an Agent Improvement Loop with Traces, Evals, and Codex](https://developers.openai.com/cookbook/examples/agents_sdk/agent_improvement_loop) — Traces, feedback, and evals form a loop that makes expectations reusable. Backs the intake flywheel.
 18. [OpenRouter: AI Agent Regression Testing After a Prompt or Model Change](https://openrouter.ai/blog/tutorials/ai-agent-regression-testing-after-a-prompt-or-model-change/) — A "-latest" alias silently updates whenever the vendor publishes a new version. Backs the alias pin check.
-19. [Autonoma: Agent Regression Testing](https://getautonoma.com/blog/agent-regression-testing) — Path-filtered and nightly runs each miss what the other catches, and golden sets should be reviewed like schema migrations. Backs triggers and suite review.
+19. [Autonoma: Agent Regression Testing](https://getautonoma.com/blog/agent-regression-testing) — Link dead as of 2026-10-26 (404, no archived copy); the cited text was verified against the live page when this post was published on 2026-10-05. Path-filtered and nightly runs each miss what the other catches, and golden sets should be reviewed like schema migrations. Backs triggers and suite review.
 20. [Hamel Husain, Shreya Shankar: Q: How often should I run my evals?](https://hamel.dev/blog/posts/evals-faq/how-often-should-i-run-my-evals.html) — Weigh cost and saturation against the business value of catching the error, and harden a saturated eval before retiring it. Backs the tiering section.
 21. [Hamel Husain, Shreya Shankar: Q: How are evaluations used differently in CI/CD vs. monitoring production?](https://hamel.dev/blog/posts/evals-faq/how-are-evaluations-used-differently-in-cicd-vs-monitoring-production.html) — CI suites favor deterministic checks, and new production failure patterns feed back into the CI dataset. Backs tiers and intake.
 22. [Hamel Husain, Shreya Shankar: Q: How often should I re-run error analysis?](https://hamel.dev/blog/posts/evals-faq/how-often-should-i-re-run-error-analysis-on-my-production-system.html) — Always analyze after incidents, user complaint spikes, or metric drift. Backs intake triggers.

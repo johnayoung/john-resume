@@ -3,6 +3,8 @@
 // the page still contains the verbatim stat cited.
 //   Run: node scripts/research-index/verify.mjs
 // Exit 1 if any source is DEAD (404/410/DNS) so a scheduled run turns red.
+// A source already marked `dead: "YYYY-MM-DD"` in extracted.json is KNOWN DEAD: reported, never fails
+// the run. If a known-dead source answers again it is reported REVIVED so the mark can be removed.
 // 403/429/timeout are BLOCKED (bot-block, expected); a missing stat is DRIFT — both warn only.
 
 import { readFileSync } from 'node:fs';
@@ -28,7 +30,7 @@ function claimProbe(stat) {
 }
 
 async function check(src) {
-  const r = { url: src.url, author: src.author };
+  const r = { url: src.url, author: src.author, dead: src.dead };
   let res;
   try {
     res = await fetch(src.url, {
@@ -36,12 +38,13 @@ async function check(src) {
       redirect: 'follow', signal: AbortSignal.timeout(TIMEOUT),
     });
   } catch (e) {
-    r.state = /(ENOTFOUND|EAI_AGAIN|ECONNREFUSED|certificate)/i.test(String(e)) ? 'DEAD' : 'BLOCKED';
+    r.state = /(ENOTFOUND|EAI_AGAIN|ECONNREFUSED|certificate)/i.test(String(e)) ? (src.dead ? 'KNOWN_DEAD' : 'DEAD') : 'BLOCKED';
     r.note = String(e.name || e).slice(0, 40);
     return r;
   }
   r.status = res.status;
-  if (res.status === 404 || res.status === 410) { r.state = 'DEAD'; return r; }
+  if (res.status === 404 || res.status === 410) { r.state = src.dead ? 'KNOWN_DEAD' : 'DEAD'; return r; }
+  if (src.dead && res.ok) { r.state = 'REVIVED'; return r; }
   if (res.status === 403 || res.status === 429 || res.status >= 500 || !res.ok) { r.state = 'BLOCKED'; return r; }
   // arXiv abstract pages don't contain body quotes; a 200 is enough (skip claim-match).
   if (/arxiv\.org\/abs\//i.test(src.url)) { r.state = 'OK'; return r; }
@@ -62,9 +65,12 @@ await Promise.all(Array.from({ length: CONCURRENCY }, worker));
 
 const by = s => results.filter(r => r.state === s);
 const dead = by('DEAD'), drift = by('DRIFT'), blocked = by('BLOCKED'), ok = by('OK');
+const known = by('KNOWN_DEAD'), revived = by('REVIVED');
 console.log(`Research index link check — ${results.length} sources`);
-console.log(`  OK ${ok.length}  DRIFT ${drift.length}  BLOCKED ${blocked.length}  DEAD ${dead.length}`);
+console.log(`  OK ${ok.length}  DRIFT ${drift.length}  BLOCKED ${blocked.length}  DEAD ${dead.length}  KNOWN DEAD ${known.length}  REVIVED ${revived.length}`);
 if (dead.length) { console.log('\nDEAD (hard — fix or remove):'); dead.forEach(r => console.log(`  x [${r.status || r.note}] ${r.author} — ${r.url}`)); }
+if (revived.length) { console.log('\nREVIVED (marked dead but answering again; verify, then remove the dead mark):'); revived.forEach(r => console.log(`  + [${r.status}] ${r.author}: ${r.url} (marked ${r.dead})`)); }
+if (known.length) { console.log('\nKNOWN DEAD (marked on the post and in the index; informational):'); known.forEach(r => console.log(`  - [${r.status || r.note}] ${r.author}: ${r.url} (since ${r.dead})`)); }
 if (drift.length) { console.log('\nDRIFT (cited stat not found — may be paraphrase/JS/paywall, review):'); drift.forEach(r => console.log(`  ~ ${r.author} — ${r.url}`)); }
 if (blocked.length) { console.log('\nBLOCKED (bot-block/timeout — expected, informational):'); blocked.forEach(r => console.log(`  . [${r.status || r.note}] ${r.author} — ${r.url}`)); }
 process.exit(dead.length ? 1 : 0);

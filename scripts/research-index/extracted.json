@@ -7592,7 +7592,8 @@
         "verification": "confirmed",
         "secondary": [
           "5 runs per case with a 0.05 tolerance band as a starting point"
-        ]
+        ],
+        "dead": "2026-10-26"
       },
       {
         "title": "Q: How often should I run my evals?",
