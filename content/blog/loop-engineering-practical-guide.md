@@ -539,6 +539,8 @@ stop "MAX_ITERATIONS ($MAX_ITERATIONS)"
 | **Break on an unchanged diff** | `git diff --cached --quiet HEAD`, `NO_PROGRESS_LIMIT=3` | Iterations that rerun tests and never move the patch | Purdue's django-11141; Carlini's time blindness; frankbria's threshold |
 | **Know how the built-in loops stop** | A plain `claude -p` call, not `/goal` or `/ralph-loop` | Caps that a model judges, or that default to unlimited | `/goal` turn clause; ralph-loop `--max-iterations` default; Stop hook block cap |
 
+> **The container's limit.** `run.sh` puts `loop.sh` and the agent in the same container, as the same user, in the same working tree. That keeps the agent off your machine, but not off the wrapper. In the [hardened-loop test report](https://github.com/johnayoung/agent-engineering-toolkit/blob/main/templates/hardened-loop/TESTING.md), an agent set on gaming the loop could replace the cost file the ledger reads, leave a process running that flips a feature after the gate checked it, or edit `loop.sh` for the next run. None of that happens by accident, and the controls above stop the failures that do. Where gaming the harness matters, move the boundary: run `loop.sh` on the host and give each call its own `docker run --rm`.
+
 Run it on [bounded, verifiable work](/blog/what-ai-agents-are-actually-good-for/) first. Huntley, who started all of this, draws the same line: "There's no way in heck would I use Ralph in an existing code base" ([Huntley: Ralph Wiggum as a "software engineer"](https://ghuntley.com/ralph/)). A greenfield repo keeps the blast radius to code nobody depends on yet. A low ceiling keeps a bad night to lunch money:
 
 ```bash {title="first run"}
