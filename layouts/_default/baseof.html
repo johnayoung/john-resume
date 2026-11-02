@@ -276,6 +276,10 @@
     </div>
   </footer>
 
+  {{- if in .Content "<pre" }}
+  <script src="/js/copy-code.js" defer></script>
+  {{- end }}
+
   {{- with site.Params.cloudflareAnalyticsToken }}
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ . }}"}'></script>
   {{- end }}

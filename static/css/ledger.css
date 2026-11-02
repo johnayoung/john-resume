@@ -375,6 +375,13 @@ sup.cite a:hover{text-decoration:underline;text-decoration-thickness:1px}
   .code-panel figcaption{border:1px solid var(--hairline);border-bottom:1px solid var(--secondary)}
   .code-panel pre{border:1px solid var(--hairline);border-top:0}
 }
+/* copy button — injected by /js/copy-code.js; sits in the block's corner,
+   outside the scrolling <pre> so it stays put on horizontal scroll */
+.highlight.has-copy{position:relative}
+.copy-code{position:absolute;top:var(--sp-1);right:var(--sp-1);font-family:var(--mono);font-size:var(--label);font-weight:500;letter-spacing:var(--track);text-transform:uppercase;color:var(--code-muted);background:var(--code-bg);border:1px solid var(--secondary);border-radius:var(--radius);padding:0.2rem var(--sp-1);cursor:pointer;opacity:0;transition:opacity var(--dur),color var(--dur),border-color var(--dur)}
+.highlight.has-copy:hover .copy-code,.copy-code:focus-visible{opacity:1}
+.copy-code:hover{color:var(--code-ink);border-color:var(--code-muted)}
+@media (hover:none){.copy-code{opacity:1}}
 /* prose-style markdown fences wrap; real code keeps h-scroll */
 .article pre code.language-markdown{white-space:pre-wrap;word-break:break-word}
 .article pre code.language-markdown > span{display:inline !important}
