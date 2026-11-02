@@ -206,7 +206,7 @@ stop() { echo "loop.sh: stopped by $1 after $ITERATION iteration(s), spend \$$(s
   over_ceiling && stop "SPEND_CEILING (\$$SPEND_CEILING)"
 ```
 
-The default ceiling of $40 is deliberately lower than 20 iterations at $4, so the ledger is the control that binds and the iteration cap is the backstop. Treat the number as an estimate: `total_cost_usd` and `costUSD` are "client-side estimates, not authoritative billing data", and after a session crash "every cost field may be zeroed" ([Anthropic: Track cost and usage](https://code.claude.com/docs/en/agent-sdk/cost-tracking)). The Usage page is the bill; `spend.log` is the brake.
+The default ceiling of $40 is deliberately lower than 20 iterations at $4, so the ledger is the control that binds and the iteration cap is the backstop. Treat the number as an estimate: `total_cost_usd` and `costUSD` are "client-side estimates, not authoritative billing data", and after a session crash "every cost field may be zeroed" ([Anthropic: Track cost and usage](https://code.claude.com/docs/en/agent-sdk/cost-tracking)). The Usage page is the bill; the wrapper's running sum is the brake. The finished loop keeps that sum in memory, writes `spend.log` only as its record, and charges a call that reports no cost the full `CALL_BUDGET`, because a call that timed out still spent money.
 
 What this stops is a runaway rate, not one expensive call. Blake Crosley's early sessions ran without spawn budgets:
 
@@ -280,7 +280,7 @@ trap on_kill INT TERM HUP
   jq -e 'all(.[]; .passes == true)' features.json >/dev/null && stop "done" 0
 ```
 
-`only_flags_changed` strips `passes` from the committed and working copies and diffs what is left. If the agent rewrote a description, deleted a feature, or left invalid JSON, the wrapper restores `features.json` from HEAD and says so in `progress.txt`. Crosley's state was corrupted twice during development, and his recovery recreates "from safe defaults rather than crashing" ([Crosley: The Ralph Loop](https://blakecrosley.com/blog/ralph-agent-architecture)); here HEAD is the safe default.
+`only_flags_changed` strips `passes` from the committed and working copies and diffs what is left. If the agent rewrote a description, deleted a feature, or left invalid JSON, the wrapper restores `features.json` from its last checkpoint and says so in `progress.txt`. Crosley's state was corrupted twice during development, and his recovery recreates "from safe defaults rather than crashing" ([Crosley: The Ralph Loop](https://blakecrosley.com/blog/ralph-agent-architecture)); here the safe default is the last tree the wrapper committed itself. The finished loop tracks that tree as `BASE` instead of trusting `HEAD`, because an agent told to commit on success can commit its own flip and move `HEAD`.
 
 The `trap` exists because of a GitHub issue that reads like a postmortem:
 
@@ -296,7 +296,7 @@ One issue's attempts hit the limit four times in one day and cold-started each t
 v3 still accepts any `passes` flip the agent makes, which moves the self-report from a string into a boolean without making it any more true. Decide "done" in the wrapper by running tests the agent cannot write to, never by reading what the agent said.
 
 **Bad:** `jq -e 'all(.[]; .passes == true)' features.json` or `grep -q "ALL TASKS DONE" STATUS.md` as the exit, alone. Both read a file the agent writes.
-**Good:** before a flip survives the iteration, the wrapper runs that feature's `test` from `/gate/tests`, a directory mounted read-only into the container. When any protected test fails, it restores `features.json` from HEAD.
+**Good:** before a flip survives the iteration, the wrapper runs that feature's `test` from `/gate/tests`, a directory mounted read-only into the container. When any protected test fails, it restores `features.json` from the last checkpoint.
 
 ```bash {title="loop.sh v4: the external gate"}
 # Above the loop
@@ -338,7 +338,7 @@ The evidence for keeping tests out of reach is consistent. ImpossibleBench found
 
 Prompting doesn't substitute. METR found that telling a model not to cheat "had a nearly negligible effect on reward hacking, which still persisted in a majority of runs" ([METR: Recent Frontier Models Are Reward Hacking](https://metr.org/blog/2025-06-05-recent-reward-hacking/)). Self-assessment fails the same way: across 54 cycles an agent claimed improvement every time while 56 percent had a measured delta of zero or below ([Park and Choi: When Do Agent Loops Mistake Stagnation for Progress?](https://arxiv.org/abs/2607.25152)). Crosley's agent, asked to "write tests that pass," wrote `assert True` ([Crosley: The Ralph Loop](https://blakecrosley.com/blog/ralph-agent-architecture)). Anthropic's harness work landed on the same split: "Separating the agent doing the work from the agent judging it proves to be a strong lever to address this issue" ([Rajasekaran: Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps)).
 
-The gate has a limit, and it decides how far you trust a green run. Read-only access "does not eliminate other cheating methods such as special-casing or operator overloading", and ImpossibleBench measured all of this on deliberately impossible tasks ([Zhong et al.: ImpossibleBench](https://arxiv.org/abs/2510.20270)). The gate is only as good as the tests behind it, which is Carlini's point: "it's important that the task verifier is nearly perfect, otherwise Claude will solve the wrong problem" ([Carlini: Building a C compiler](https://www.anthropic.com/engineering/building-c-compiler)). Writing a test that works as that verifier is its own job, covered in [done criteria as predicates](/blog/agent-done-criteria-predicates/), and somebody still [reads the diff](/blog/evaluating-ai-coding-agent-output/) before anything merges.
+The gate has a limit, and it decides how far you trust a green run. Read-only access "does not eliminate other cheating methods such as special-casing or operator overloading", and ImpossibleBench measured all of this on deliberately impossible tasks ([Zhong et al.: ImpossibleBench](https://arxiv.org/abs/2510.20270)). Read-only also has to mean a read-only mount. A directory the agent's user owns with its write bit cleared is one `chmod` away from writable, and a test the agent can read has inputs it can special-case, so randomize the inputs or keep the tests hidden ([hardened-loop test report](https://github.com/johnayoung/agent-engineering-toolkit/blob/main/templates/hardened-loop/TESTING.md)). The gate is only as good as the tests behind it, which is Carlini's point: "it's important that the task verifier is nearly perfect, otherwise Claude will solve the wrong problem" ([Carlini: Building a C compiler](https://www.anthropic.com/engineering/building-c-compiler)). Writing a test that works as that verifier is its own job, covered in [done criteria as predicates](/blog/agent-done-criteria-predicates/), and somebody still [reads the diff](/blog/evaluating-ai-coding-agent-output/) before anything merges.
 
 ---
 
@@ -431,6 +431,8 @@ for bin in claude git jq timeout awk; do
 done
 [ "$MAX_ITERATIONS" -gt 0 ] || { echo "loop.sh: MAX_ITERATIONS must be > 0" >&2; exit 2; }
 git cat-file -e HEAD:features.json 2>/dev/null || { echo "loop.sh: commit features.json first" >&2; exit 2; }
+git show HEAD:features.json | jq -e 'type == "array" and all(.[]; .test | type == "string" and test("^\\S+$"))' >/dev/null 2>&1 \
+  || { echo "loop.sh: every feature in features.json needs a test id without spaces" >&2; exit 2; }
 
 mkdir -p "$LOOP_DIR/logs"
 touch "$LOOP_DIR/spend.log" progress.txt
@@ -441,10 +443,12 @@ grep -qxF "$LOOP_DIR/" "$EXCLUDE" 2>/dev/null || echo "$LOOP_DIR/" >> "$EXCLUDE"
 ITERATION=0
 NO_PROGRESS=0
 CHILD=""
+SPENT=0                               # the ledger lives here; spend.log is its record
+BASE=$(git rev-parse 'HEAD^{tree}')   # last tree the wrapper checked; agent commits can't move it
 
 note()  { printf '%s [loop.sh] %s\n' "$(date -u +%FT%TZ)" "$*" >> progress.txt; }
-spent() { awk -F'\t' '{ s += $2 } END { printf "%.2f", s }' "$LOOP_DIR/spend.log"; }
-over_ceiling() { awk -v s="$(spent)" -v c="$SPEND_CEILING" 'BEGIN { exit !(s + 0 >= c + 0) }'; }
+spent() { awk -v s="$SPENT" 'BEGIN { printf "%.2f", s }'; }
+over_ceiling() { awk -v s="$SPENT" -v c="$SPEND_CEILING" 'BEGIN { exit !(s + 0 >= c + 0) }'; }
 stop() {
   note "stopped by $1 after $ITERATION iteration(s), spend \$$(spent)"
   echo "loop.sh: stopped by $1 after $ITERATION iteration(s), spend \$$(spent)" >&2
@@ -460,7 +464,7 @@ on_kill() {
 trap on_kill INT TERM HUP
 
 only_flags_changed() {
-  diff -q <(git show HEAD:features.json | jq -S 'map(del(.passes))') \
+  diff -q <(git show "$BASE:features.json" | jq -S 'map(del(.passes))') \
           <(jq -S 'map(del(.passes))' features.json 2>/dev/null) >/dev/null
 }
 
@@ -475,8 +479,9 @@ gate_ok() {
 while [ "$ITERATION" -lt "$MAX_ITERATIONS" ]; do
   ITERATION=$((ITERATION + 1))
   out="$LOOP_DIR/logs/iter-$ITERATION.json"
+  mkdir -p "$LOOP_DIR/logs"
 
-  timeout "$ITER_TIMEOUT" claude -p "$(cat "$PROMPT_FILE")" \
+  timeout -k 5s "$ITER_TIMEOUT" claude -p "$(cat "$PROMPT_FILE")" \
     --dangerously-skip-permissions \
     --max-turns "$MAX_TURNS" \
     --max-budget-usd "$CALL_BUDGET" \
@@ -485,33 +490,39 @@ while [ "$ITERATION" -lt "$MAX_ITERATIONS" ]; do
   wait "$CHILD"; rc=$?
   CHILD=""
 
-  cost=$(jq -r '.total_cost_usd // 0' "$out" 2>/dev/null)
-  printf '%s\t%s\n' "$ITERATION" "${cost:-0}" >> "$LOOP_DIR/spend.log"
+  cost=$(jq -r '.total_cost_usd | numbers | select(. >= 0)' "$out" 2>/dev/null | tail -n 1)
+  [ -n "$cost" ] || { cost=$CALL_BUDGET; note "iteration $ITERATION reported no cost; charged CALL_BUDGET (\$$CALL_BUDGET)"; }
+  printf '%s\t%s\n' "$ITERATION" "$cost" >> "$LOOP_DIR/spend.log"
+  SPENT=$(awk -v s="$SPENT" -v c="$cost" 'BEGIN { printf "%.6f", s + c }')
+  subtype=$(jq -r '.subtype // empty' "$out" 2>/dev/null | tail -n 1)
 
   case "$rc" in
     0)   ;;
     124) note "iteration $ITERATION hit ITER_TIMEOUT ($ITER_TIMEOUT)" ;;
-    *)   note "iteration $ITERATION: claude exited $rc ($(jq -r '.subtype // "no result"' "$out" 2>/dev/null))" ;;
+    *)   note "iteration $ITERATION: claude exited $rc (${subtype:-no result})" ;;
   esac
 
   if ! only_flags_changed; then
-    git checkout -q HEAD -- features.json
-    note "iteration $ITERATION edited features.json beyond .passes; restored from HEAD"
+    git checkout -q "$BASE" -- features.json
+    note "iteration $ITERATION edited features.json beyond .passes; restored from the last loop checkpoint"
   fi
+  gated=1
   if ! gate_ok; then
-    git checkout -q HEAD -- features.json
+    gated=0
+    git checkout -q "$BASE" -- features.json
     note "iteration $ITERATION: gate failed, passes flips rejected (see $LOOP_DIR/logs/gate-$ITERATION.log)"
   fi
 
   git add -A
-  if git diff --cached --quiet HEAD -- . ':(exclude)progress.txt' ':(exclude)features.json'; then
+  if git diff --cached --quiet "$BASE" -- . ':(exclude)progress.txt' ':(exclude)features.json'; then
     NO_PROGRESS=$((NO_PROGRESS + 1))
   else
     NO_PROGRESS=0
   fi
   git commit -q -m "loop: iteration $ITERATION" >/dev/null || true
+  BASE=$(git write-tree 2>/dev/null || echo "$BASE")
 
-  jq -e 'all(.[]; .passes == true)' features.json >/dev/null && stop "done: every feature passed the gate" 0
+  [ "$gated" -eq 1 ] && jq -e 'all(.[]; .passes == true)' features.json >/dev/null && stop "done: every feature passed the gate" 0
   over_ceiling && stop "SPEND_CEILING (\$$SPEND_CEILING)"
   [ "$NO_PROGRESS" -ge "$NO_PROGRESS_LIMIT" ] && stop "no-progress breaker ($NO_PROGRESS unchanged diffs)"
 done
@@ -522,8 +533,8 @@ stop "MAX_ITERATIONS ($MAX_ITERATIONS)"
 | --- | --- | --- | --- |
 | **Start from the loop everyone publishes** | `jq -e 'all(.[]; .passes == true)'` replaces `grep -q "ALL TASKS DONE"` | An exit the agent writes about itself | The dev.to loop; Carlini's `pkill`; antiburn's overnight cron |
 | **Cap the outer loop and every call** | `MAX_ITERATIONS=20`, `--max-turns`, `--max-budget-usd`, `case "$rc"` | Unbounded iterations and unbounded calls | `--max-turns` "No limit by default"; Farr's "no hard technical limit" |
-| **Keep the spend ledger outside the agent** | `spend.log`, `over_ceiling`, no `--resume` | A run whose total no single flag sees | Per-call budgets reset each call; Crosley's 10x; antiburn's $70+ per PR |
-| **Put state on disk the agent can only flip** | `features.json`, `only_flags_changed`, per-iteration commit, `trap on_kill` | Premature "done", corrupted state, cold starts after a kill | Anthropic's premature-victory rows; rpbaptist #119; Crosley's corrupted state |
+| **Keep the spend ledger outside the agent** | `SPENT`, `over_ceiling`, no `--resume` | A run whose total no single flag sees | Per-call budgets reset each call; Crosley's 10x; antiburn's $70+ per PR |
+| **Put state on disk the agent can only flip** | `features.json`, `only_flags_changed`, `BASE`, per-iteration commit, `trap on_kill` | Premature "done", corrupted state, cold starts after a kill | Anthropic's premature-victory rows; rpbaptist #119; Crosley's corrupted state |
 | **Gate on a check the agent cannot edit** | `gate_ok` against `/gate/tests:ro` | Edited tests and self-graded flips | ImpossibleBench; METR; Park and Choi; Crosley's `assert True` |
 | **Break on an unchanged diff** | `git diff --cached --quiet HEAD`, `NO_PROGRESS_LIMIT=3` | Iterations that rerun tests and never move the patch | Purdue's django-11141; Carlini's time blindness; frankbria's threshold |
 | **Know how the built-in loops stop** | A plain `claude -p` call, not `/goal` or `/ralph-loop` | Caps that a model judges, or that default to unlimited | `/goal` turn clause; ralph-loop `--max-iterations` default; Stop hook block cap |
@@ -536,7 +547,7 @@ SPEND_CEILING=5 MAX_ITERATIONS=5 ./run.sh
 
 Then read the last line of `progress.txt`. It names the control that fired, and that is the number to tune before you raise anything else.
 
-The finished `loop.sh`, its container wrapper and a `features.json` starter are in [the agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit) as `hardened-loop`, with every exit path exercised against a stubbed `claude` before it shipped.
+The finished `loop.sh`, its container wrapper and a `features.json` starter are in [the agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit) as `hardened-loop`, with every exit path exercised against a stubbed `claude` before it shipped, and a [57-test suite](https://github.com/johnayoung/agent-engineering-toolkit/blob/main/templates/hardened-loop/TESTING.md) that also tries to break it.
 
 ---
 
@@ -573,6 +584,7 @@ The finished `loop.sh`, its container wrapper and a `features.json` starter are 
 24. [openai/codex issue #56875](https://github.com/openai/codex/issues/56875) — A refused turn is silently dropped and codex exec still exits 0. Backs not trusting exit 0.
 25. [de Oliveira and Segner: Getting started with loops](https://claude.com/blog/getting-started-with-loops) — Anthropic's Claude Code team defines loops as agents repeating cycles of work until a stop condition is met. Definitional anchor for the built-ins section.
 26. [agent-engineering-toolkit: hardened-loop](https://github.com/johnayoung/agent-engineering-toolkit) — The finished loop.sh from this post, with run.sh and a features.json starter, ready to copy into a repo. Every exit names the control that fired: done, spend ceiling, no-progress breaker, iteration cap or kill trap.
+27. [hardened-loop test report](https://github.com/johnayoung/agent-engineering-toolkit/blob/main/templates/hardened-loop/TESTING.md) — The Phase 1 test report for the finished loop.sh: 57 bats tests against a stubbed claude, covering every exit, fault injection and five attack hypotheses. Backs the chmod and special-casing limits of a read-only gate.
 
 ### Author's Judgment (not directly sourced)
 
