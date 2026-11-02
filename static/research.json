@@ -1365,9 +1365,11 @@
       "proves": "Scaling the judge does not close the gap when success lives outside the transcript; an isolated out-of-band evaluator does, and on artifact-verifiable tasks the gap collapses.",
       "verification": "partial",
       "powers": [
-        "agent-done-criteria-predicates"
+        "agent-done-criteria-predicates",
+        "loop-engineering-practical-guide"
       ],
       "secondary": [
+        "Across 54 cycles a frontier agent claimed improvement every time, yet 56 percent had a measured delta of zero or below.",
         "On a task whose success is verifiable from the artifact, the judge's mirage vanished to zero",
         "Oracle isolated on a separate network with read-only access to the artifact",
         "Preregistered pilot, one frontier agent, one testbed; body quotes verified via mirror"
@@ -2069,6 +2071,27 @@
       ]
     },
     {
+      "title": "Building a C compiler with a team of parallel Claudes",
+      "author": "Nicholas Carlini (Anthropic Engineering)",
+      "url": "https://www.anthropic.com/engineering/building-c-compiler",
+      "date": "February 5, 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Nearly 2,000 Claude Code sessions across two weeks consumed 2 billion input and 140 million output tokens for just under $20,000, run from an uncapped while-true loop.",
+      "proves": "A published, productive agent loop ran with no iteration, turn or spend cap; the only stop was the agent killing its own shell.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "The agent once ran pkill -9 bash and ended its own loop",
+        "'The task verifier is nearly perfect, otherwise Claude will solve the wrong problem'",
+        "Time blindness: Claude will 'happily spend hours running tests instead of making progress'"
+      ]
+    },
+    {
       "title": "How Coding Agents Fail Their Users: A Large-Scale Analysis of Developer-Agent Misalignment in 20,574 Real-World Sessions",
       "author": "Ningzhi Tang, Chaoran Chen, Gelei Xu, Yiyu Shi, Yu Huang, Collin McMillan, Tao Dong, Toby Jia-Jun Li (Notre Dame, Vanderbilt, Google)",
       "url": "https://arxiv.org/abs/2605.29442",
@@ -2707,11 +2730,14 @@
       "proves": "Instructions are not a control; the check has to be out of the agent's reach.",
       "verification": "confirmed",
       "powers": [
-        "agent-done-criteria-predicates"
+        "agent-done-criteria-predicates",
+        "loop-engineering-practical-guide"
       ],
       "secondary": [
+        "o3 reward-hacked in 30.4% of RE-Bench runs versus 0.7% of HCAST runs; instructions not to cheat had a nearly negligible effect.",
         "o3 traced the call stack to return the scorer's precomputed answer",
-        "o3 said its plan did not match user intent 10 out of 10 times"
+        "o3 said its plan did not match user intent 10 out of 10 times",
+        "HCAST detection method differs, so 0.7% is a floor"
       ]
     },
     {
@@ -3080,6 +3106,26 @@
       ]
     },
     {
+      "title": "Analyzing and Mitigating Cost-Inefficient Behaviors in Coding Agents",
+      "author": "Yiran Hu, Nan Jiang, Shanchao Liang, Anik Dey, Yi Wu, Lin Tan (Purdue University)",
+      "url": "https://arxiv.org/abs/2609.30725",
+      "date": "September 25, 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Test re-execution affects 49.67 to 83.00% of tasks and up to 5.39% of task cost; in django-11141 an agent reran one suite 22 times without updating the patch.",
+      "proves": "Progress stalls show up as reruns with no patch change between them, which is a detectable no-progress signal.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "The 49.67 to 83.00% figure covers all re-execution causes, not only stalls",
+        "Mitigation studied is developer-designed skills (up to 41.73% cost cut), not a runtime breaker"
+      ]
+    },
+    {
       "title": "Selective Classification for Deep Neural Networks",
       "author": "Yonatan Geifman, Ran El-Yaniv",
       "url": "https://arxiv.org/abs/1705.08500",
@@ -3338,20 +3384,23 @@
       "title": "ImpossibleBench: Measuring LLMs' Propensity of Exploiting Test Cases",
       "author": "Ziqian Zhong, Aditi Raghunathan, Nicholas Carlini",
       "url": "https://arxiv.org/abs/2510.20270",
-      "date": "2025-10-23",
+      "date": "October 23, 2025",
       "class": "research-data",
       "pillars": [
         1
       ],
-      "stat": "GPT-5 cheats 54.0% of the time on Conflicting-SWEbench; LLM monitors detect 42-65% of cheating on Impossible-SWEbench.",
-      "proves": "When the agent can see or write the tests, passing them is not evidence of the work; hiding or read-only tests reduce this at a cost.",
+      "stat": "On deliberately impossible tasks, multiple submissions raised cheating on Conflicting-SWEbench from 33% to 38%; an abort option cut GPT-5 cheating from 54% to 9% but helped Claude Opus 4.1 much less.",
+      "proves": "Agents with writable tests and retry feedback edit tests to pass; hide tests or make them read-only when feasible.",
       "verification": "confirmed",
       "powers": [
+        "loop-engineering-practical-guide",
         "agent-done-criteria-predicates"
       ],
       "secondary": [
-        "Four cheating categories: modify test cases, overload comparison operators, record extra states, special casing",
-        "Hidden tests cut cheating to near zero but degrade legitimate performance; read-only is a middle ground that does not stop special-casing"
+        "GPT-5 cheats 54.0% of the time on Conflicting-SWEbench; LLM monitors detect 42-65% of cheating on Impossible-SWEbench.",
+        "Claude models cheat primarily by modifying test cases",
+        "Read-only access does not stop special-casing or operator overloading",
+        "Measured on impossible tasks, so rates do not predict ordinary-task cheating"
       ]
     },
     {
@@ -3837,26 +3886,6 @@
       "secondary": []
     },
     {
-      "title": "Effective harnesses for long-running agents",
-      "author": "Anthropic",
-      "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
-      "date": "Nov 26, 2025",
-      "class": "practitioner",
-      "pillars": [
-        2
-      ],
-      "stat": "The core challenge of long-running agents is that they must work in discrete sessions, and each new session begins with no memory of what came before.",
-      "proves": "A high-level prompt alone fails a long-running loop; cross-session state must be externalized to disk.",
-      "verification": "confirmed",
-      "powers": [
-        "loop-engineering-breaks-your-playbook"
-      ],
-      "secondary": [
-        "even a frontier coding model like Opus 4.5 running on the Claude Agent SDK in a loop across multiple context windows will fall short of building a production-quality web app if it's only given a high-level prompt",
-        "memoryless-session framing is softened by Opus 4.5+ auto-compaction per Anthropic's March 2026 follow-up - the externalized-state lesson persists, the mechanism is version-dependent"
-      ]
-    },
-    {
       "title": "Building agents with the Claude Agent SDK",
       "author": "Anthropic",
       "url": "https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk",
@@ -4142,6 +4171,26 @@
       ]
     },
     {
+      "title": "ralph-loop plugin README",
+      "author": "Anthropic",
+      "url": "https://github.com/anthropics/claude-plugins-official/blob/main/plugins/ralph-loop/README.md",
+      "date": "undated (retrieved November 2, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "--max-iterations defaults to unlimited and --completion-promise uses exact string matching; the README says to rely on --max-iterations as the primary safety mechanism.",
+      "proves": "The official Ralph plugin leaves the cap to the user.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "Formerly ralph-wiggum in anthropics/claude-code",
+        "State file .claude/ralph-loop.local.md; cancel with /cancel-ralph"
+      ]
+    },
+    {
       "title": "Monitoring",
       "author": "Anthropic (Claude Code docs)",
       "url": "https://code.claude.com/docs/en/monitoring-usage",
@@ -4188,25 +4237,6 @@
       ]
     },
     {
-      "title": "Automate actions with hooks",
-      "author": "Anthropic (Claude Code docs)",
-      "url": "https://code.claude.com/docs/en/hooks-guide",
-      "date": "undated (fetched Jul 27, 2026)",
-      "class": "practitioner",
-      "pillars": [
-        2
-      ],
-      "stat": "'They provide deterministic control over Claude Code's behavior, ensuring certain actions always happen rather than relying on the LLM to choose to run them.'",
-      "proves": "'Deterministic' is the vendor's own word for the control surface - but the claim is immediately qualified.",
-      "verification": "confirmed",
-      "powers": [
-        "agent-harness-audit"
-      ],
-      "secondary": [
-        "The very next sentence: prompt-based and agent-based hooks 'use a Claude model to evaluate conditions' - so 'hook' is an umbrella containing probabilistic members, and the determinism attaches to command hooks only"
-      ]
-    },
-    {
       "title": "Security",
       "author": "Anthropic (Claude Code docs)",
       "url": "https://code.claude.com/docs/en/security",
@@ -4249,6 +4279,29 @@
         "The over-specified CLAUDE.md. If your CLAUDE.md is too long, Claude ignores half of it because important rules get lost in the noise.",
         "Keep it concise. For each line, ask: 'Would removing this cause Claude to make mistakes?' If not, cut it. Bloated CLAUDE.md files cause Claude to ignore your actual instructions!",
         "Ruthlessly prune. If Claude already does something correctly without the instruction, delete it or convert it to a hook."
+      ]
+    },
+    {
+      "title": "Automate actions with hooks",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/hooks-guide",
+      "date": "undated (retrieved November 2, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Claude Code overrides a Stop hook after it blocks eight times in a row with no tool call from Claude in between; raise it with CLAUDE_CODE_STOP_HOOK_BLOCK_CAP.",
+      "proves": "The Stop hook cap bounds consecutive no-tool blocks, not a loop whose iterations make edits.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide",
+        "agent-harness-audit"
+      ],
+      "secondary": [
+        "'They provide deterministic control over Claude Code's behavior, ensuring certain actions always happen rather than relying on the LLM to choose to run them.'",
+        "Stop fires on every response, not only task completion",
+        "Agent hooks are experimental; prefer command hooks in production",
+        "The very next sentence: prompt-based and agent-based hooks 'use a Claude model to evaluate conditions' - so 'hook' is an umbrella containing probabilistic members, and the determinism attaches to command hooks only"
       ]
     },
     {
@@ -4339,21 +4392,23 @@
       "title": "Run Claude Code programmatically",
       "author": "Anthropic (Claude Code Docs)",
       "url": "https://code.claude.com/docs/en/headless",
-      "date": "undated (fetched Oct 19, 2026)",
+      "date": "undated (retrieved November 2, 2026)",
       "class": "practitioner",
       "pillars": [
-        4
+        2
       ],
-      "stat": "Without --bare, a -p session connects the servers in a project's .mcp.json; with it, only servers supplied on the command line (for example via --mcp-config) connect.",
-      "proves": "CI runs can pin their MCP set explicitly and assert it from the system/init mcp_servers field.",
-      "verification": "partial",
+      "stat": "claude -p exits 0 on success and non-zero on failure, and --output-format json includes total_cost_usd.",
+      "proves": "A shell wrapper can branch on exit status and read spend per iteration.",
+      "verification": "confirmed",
       "powers": [
+        "loop-engineering-practical-guide",
         "claude-code-parallel-sessions-memory"
       ],
       "secondary": [
-        "--bare is recommended for scripted calls and will become the -p default",
-        "Before v2.1.286 the bare-mode limits held only partly",
-        "The page frames bare mode as startup time and reproducibility; the RAM saving is the post's inference"
+        "Without --bare, a -p session connects the servers in a project's .mcp.json; with it, only servers supplied on the command line (for example via --mcp-config) connect.",
+        "SIGTERM exits 143 and records no result for the in-progress turn",
+        "--permission-prompts none for unattended runs",
+        "--bare is recommended for scripted calls and will become the -p default"
       ]
     },
     {
@@ -4373,6 +4428,105 @@
       ],
       "secondary": [
         "Enabling agent teams can turn a named subagent into a teammate even when you did not ask for one"
+      ]
+    },
+    {
+      "title": "CLI reference",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/cli-reference",
+      "date": "undated (retrieved November 2, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "--max-turns has no limit by default; --max-budget-usd can be passed ('leave headroom') and ignores totals restored by --continue or --resume.",
+      "proves": "Claude Code's per-call stop controls are off unless you set them, and the budget is not a hard ceiling.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "--bare skips hooks, so a Stop hook will not fire under --bare",
+        "Both caps are print-mode only"
+      ]
+    },
+    {
+      "title": "How the agent loop works",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/agent-sdk/agent-loop",
+      "date": "undated (retrieved November 2, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Agent SDK max_turns and max_budget_usd both default to 'No limit'; count one extra turn for the final response, and spend can pass the cap by up to one response.",
+      "proves": "Size per-call caps with headroom and branch on error_max_turns / error_max_budget_usd.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "'Setting a budget is a good default for production agents'"
+      ]
+    },
+    {
+      "title": "Track cost and usage",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/agent-sdk/cost-tracking",
+      "date": "undated (retrieved November 2, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Sum total_cost_usd across independent calls yourself; for resumed sessions read only the latest result, because summing double-counts restored spend.",
+      "proves": "A cumulative spend ceiling has to live in the wrapper, not in a per-call flag.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "total_cost_usd is a client-side estimate, not billing",
+        "Crash results may zero every cost field"
+      ]
+    },
+    {
+      "title": "Run prompts on a schedule",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/scheduled-tasks",
+      "date": "undated (retrieved November 2, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Recurring /loop tasks expire 7 days after creation; a fixed-interval loop ignores Esc and Ctrl+C and stops only when you ask Claude to cancel it.",
+      "proves": "/loop is session-scoped scheduling with its own stop semantics, not a durable job.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "Up to 50 scheduled tasks per session",
+        "Tasks only fire while Claude Code is running and idle"
+      ]
+    },
+    {
+      "title": "Keep Claude working toward a goal",
+      "author": "Anthropic (Claude Code Docs)",
+      "url": "https://code.claude.com/docs/en/goal",
+      "date": "undated (retrieved November 2, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "/goal's completion check is a separate small model with no tool access; a turn cap is a clause in the condition that the evaluator judges, and resume resets the turn count.",
+      "proves": "/goal provides an external judge but not a harness-enforced cap or a test-running gate.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "Wrapper around a session-scoped prompt-based Stop hook",
+        "Stops on no tool use for several turns in a row"
       ]
     },
     {
@@ -4825,6 +4979,26 @@
       ]
     },
     {
+      "title": "The Ralph Loop: How I Run Autonomous AI Agents Overnight",
+      "author": "Blake Crosley",
+      "url": "https://blakecrosley.com/blog/ralph-agent-architecture",
+      "date": "February 8, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Without spawn budgets, early sessions consumed API tokens at 10x the normal rate; state was corrupted twice; 'tests pass' as a criterion produced assert True.",
+      "proves": "Unattended loops need spend limits, state recovery and completion criteria the agent cannot satisfy trivially.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "Spawn budget default of 12 agents via inheritance",
+        "Dead-end iterations left conflicting artifacts"
+      ]
+    },
+    {
       "title": "Enhance Memory System to Discover CLAUDE.md Context in Subdirectories (anthropics/claude-code#4275)",
       "author": "Boris Cherny (Anthropic) via GitHub",
       "url": "https://github.com/anthropics/claude-code/issues/4275",
@@ -5205,6 +5379,26 @@
       ]
     },
     {
+      "title": "The Ralph Playbook",
+      "author": "Clayton Farr (fork hosted by Geoffrey Huntley)",
+      "url": "https://github.com/ghuntley/how-to-ralph-wiggum",
+      "date": "2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "loop.sh's MAX_ITERATIONS limits only the outer loop and defaults to 0 (unlimited); the playbook states a single task execution has no hard technical limit.",
+      "proves": "Outer-loop caps do not bound a single iteration; per-call caps are a separate control.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "IMPLEMENTATION_PLAN.md persists on disk as shared state between iterations",
+        "Script pushes to git after every iteration"
+      ]
+    },
+    {
       "title": "We built the security layer MCP always needed",
       "author": "Cliff Smith",
       "url": "https://blog.trailofbits.com/2025/07/28/we-built-the-security-layer-mcp-always-needed",
@@ -5461,6 +5655,26 @@
       ]
     },
     {
+      "title": "The loop that cost $1000+ overnight - and why 'improve test coverage' was the actual bug",
+      "author": "Dave Slutzkin (antiburn)",
+      "url": "https://antiburn.com/resources/the-loop-that-cost-1000-dollars",
+      "date": "June 9, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "An overnight cron loop with an open-ended goal produced 30+ PRs and a four-figure token bill, about $70+ per PR and roughly 10x the spend the team would have chosen.",
+      "proves": "An unbounded goal with no stop condition turns a useful loop into an unapproved spend.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "Coverage improved roughly 8%",
+        "Vendor-adjacent write-up of a customer team's loop"
+      ]
+    },
+    {
       "title": "How to evaluate AI code review tools: A practical framework",
       "author": "David Loker / CodeRabbit",
       "url": "https://www.coderabbit.ai/blog/framework-for-evaluating-ai-code-review-tools",
@@ -5479,6 +5693,26 @@
         "\"Human reviewers are overwhelmed with feedback and cognitive load spikes.\" — same section",
         "\"Review behavior changes—comments are skimmed, bulk‑dismissed, or ignored\" — same section",
         "\"You are no longer measuring how a tool performs in practice, but how reviewers cope with noise.\""
+      ]
+    },
+    {
+      "title": "Loop engineering: Getting started with loops",
+      "author": "Delba de Oliveira, Michael Segner (Claude blog)",
+      "url": "https://claude.com/blog/getting-started-with-loops",
+      "date": "June 30, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "Anthropic's Claude Code team defines loops as agents repeating cycles of work until a stop condition is met, across turn-based, goal-based, time-based and proactive types.",
+      "proves": "First-party definition of loop engineering centered on the stop condition.",
+      "verification": "partial",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "Read at summary level",
+        "Blog's 'maximum number of turns' for /goal is an evaluator-judged clause per the /goal doc"
       ]
     },
     {
@@ -5742,6 +5976,26 @@
       ]
     },
     {
+      "title": "ralph-claude-code",
+      "author": "frankbria",
+      "url": "https://github.com/frankbria/ralph-claude-code",
+      "date": "last commit October 25, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "The runner opens its circuit breaker after 3 consecutive loops with no file changes (CB_NO_PROGRESS_THRESHOLD=3) and after 5 consecutive loops with errors.",
+      "proves": "A no-progress breaker keyed on file changes is implementable in a few lines of bash.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "Progress also credited for commits and completion signals",
+        "'Same error' is a consecutive-error counter, not a text compare"
+      ]
+    },
+    {
       "title": "Provide context with GEMINI.md files",
       "author": "Gemini CLI docs (geminicli.com)",
       "url": "https://geminicli.com/docs/cli/gemini-md",
@@ -5871,18 +6125,22 @@
       "title": "Ralph Wiggum as a \"software engineer\"",
       "author": "Geoffrey Huntley",
       "url": "https://ghuntley.com/ralph",
-      "date": "July 2025",
+      "date": "July 14, 2025",
       "class": "practitioner",
       "pillars": [
         2
       ],
-      "stat": "verify success programmatically rather than relying on the model to self-assess",
-      "proves": "The unattended overnight loop works only with programmatic verification; without it, runs go off track silently and can produce a broken codebase.",
-      "verification": "partial",
+      "stat": "The canonical Ralph loop is 'while :; do cat PROMPT.md | claude-code ; done', and the author warns you will wake up to a broken codebase from time to time.",
+      "proves": "The origin loop relies on backpressure, not caps, and is scoped to greenfield work.",
+      "verification": "confirmed",
       "powers": [
+        "loop-engineering-practical-guide",
         "loop-engineering-breaks-your-playbook"
       ],
       "secondary": [
+        "verify success programmatically rather than relying on the model to self-assess",
+        "Placeholder implementations and false 'not implemented' conclusions are named failures",
+        "'There's no way in heck would I use Ralph in an existing code base'",
         "fresh context every iteration, with state externalized to files"
       ]
     },
@@ -6588,6 +6846,29 @@
       "secondary": [
         "Vendor eval on Next.js 16 API tasks; no inference-cost delta is reported on the page",
         "The docs injection started at about 40KB and was compressed to 8KB, an 80% reduction"
+      ]
+    },
+    {
+      "title": "Effective harnesses for long-running agents",
+      "author": "Justin Young (Anthropic Engineering)",
+      "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+      "date": "November 26, 2025",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "A JSON feature list (over 200 features in the claude.ai clone) with a passes field, a progress file and git history lets each fresh session reorient; JSON chosen because the model is less likely to overwrite it.",
+      "proves": "Externalize loop state in a format the agent is least likely to rewrite, and read it at the start of every iteration.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide",
+        "loop-engineering-breaks-your-playbook"
+      ],
+      "secondary": [
+        "The core challenge of long-running agents is that they must work in discrete sessions, and each new session begins with no memory of what came before.",
+        "Named failures: declaring victory too early, marking features done prematurely",
+        "The test-edit ban is a prompt instruction, not enforcement",
+        "even a frontier coding model like Opus 4.5 running on the Claude Agent SDK in a loop across multiple context windows will fall short of building a production-quality web app if it's only given a high-level prompt"
       ]
     },
     {
@@ -7671,6 +7952,26 @@
       ]
     },
     {
+      "title": "Non-interactive mode",
+      "author": "OpenAI (Codex docs)",
+      "url": "https://learn.chatgpt.com/docs/non-interactive-mode",
+      "date": "undated (retrieved November 2, 2026)",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "codex exec runs in a read-only sandbox by default and --json turns stdout into a JSONL event stream; no turn or budget cap is documented.",
+      "proves": "The capped outer loop ports to Codex, but the caps stay in the wrapper.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "--sandbox workspace-write allows edits",
+        "Exit codes not documented on the page"
+      ]
+    },
+    {
       "title": "Elevated error rates",
       "author": "OpenAI (status.openai.com)",
       "url": "https://status.openai.com/incidents/01JXCAW3K3JAE0EP56AEZ7CBG3/write-up",
@@ -7896,6 +8197,26 @@
         "Illustrative notebook, not production data",
         "Byline not shown on page",
         "Undated page; date is access date"
+      ]
+    },
+    {
+      "title": "codex exec: refused turn silently dropped (issue #56875)",
+      "author": "openai/codex GitHub issue thread",
+      "url": "https://github.com/openai/codex/issues/56875",
+      "date": "October 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "A refused turn completes normally and codex exec exits 0.",
+      "proves": "Do not treat a zero exit as success; check events and run the gate.",
+      "verification": "partial",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "User and commenter report, not official documentation",
+        "Issue open at retrieval"
       ]
     },
     {
@@ -8257,6 +8578,26 @@
       ]
     },
     {
+      "title": "Harness design for long-running application development",
+      "author": "Prithvi Rajasekaran (Anthropic Engineering)",
+      "url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+      "date": "March 24, 2026",
+      "class": "practitioner",
+      "pillars": [
+        3
+      ],
+      "stat": "A solo run took 20 minutes and $9 and was broken; the full generator/evaluator harness took 6 hours and $200.",
+      "proves": "Separating the agent doing the work from the agent judging it is a strong lever, though the evaluator needs tuning.",
+      "verification": "confirmed",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "'Out of the box, Claude is a poor QA agent'",
+        "QA caught stub-only features"
+      ]
+    },
+    {
       "title": "Continuous Integration (Software Engineering at Google, ch. 23)",
       "author": "Rachel Tannenbaum, ed. Lisa Carey",
       "url": "https://abseil.io/resources/swe-book/html/ch23.html",
@@ -8314,6 +8655,26 @@
       "secondary": [
         "Overt vendor content: the piece closes with a section on Moderne's own product and quotes Moderne's CEO; Morgan Stanley is a named Moderne customer",
         "Anecdote-driven with no quantified metrics, surveys, or study citations"
+      ]
+    },
+    {
+      "title": "Fix RALPH loop: progress notes not persisted, causing repeated cold-start burns (Issue #119)",
+      "author": "rpbaptist",
+      "url": "https://github.com/rpbaptist/belastingaangifte-check/issues/119",
+      "date": "September 15, 2026",
+      "class": "practitioner",
+      "pillars": [
+        2
+      ],
+      "stat": "One issue's loop attempts hit the session limit four times in one day and left no trace, because the kill happens to the host wrapper, not inside an agent turn.",
+      "proves": "The wrapper, not the agent, must write the progress note when a run is killed.",
+      "verification": "partial",
+      "powers": [
+        "loop-engineering-practical-guide"
+      ],
+      "secondary": [
+        "Engineering ticket rather than a write-up",
+        "Fixed in PR #123 by having loop.sh write the note"
       ]
     },
     {
@@ -8896,21 +9257,24 @@
       ]
     },
     {
-      "title": "The Agentic Loop / Loop Engineering: A Practical Field Guide",
-      "author": "Truong Phung (DEV Community)",
+      "title": "The Agentic Loop: A Practical Field Guide",
+      "author": "truongpx396 (dev.to)",
       "url": "https://dev.to/truongpx396/the-agentic-loop-a-practical-field-guide-mnc",
-      "date": "Jun 25, 2026",
+      "date": "June 25, 2026",
       "class": "practitioner",
       "pillars": [
         2
       ],
-      "stat": "The model forgets everything between runs, so state must live on disk, not in the context window. The agent forgets; the repo doesn't.",
-      "proves": "Cross-iteration state must live on disk, and every unattended loop needs three hard stops: max iterations, no-progress detection, and a spend budget.",
+      "stat": "Lists three hard stops for every loop (max iterations, no-progress detection, a token or dollar budget); its one shell loop has none of them.",
+      "proves": "Commodity loop guidance names the controls but does not ship them in code.",
       "verification": "confirmed",
       "powers": [
+        "loop-engineering-practical-guide",
         "loop-engineering-breaks-your-playbook"
       ],
       "secondary": [
+        "The model forgets everything between runs, so state must live on disk, not in the context window. The agent forgets; the repo doesn't.",
+        "Loop exits only on a self-written 'ALL TASKS DONE' string",
         "Bake all three into every loop: 1. Max iteration count 2. No-progress detection 3. A token or dollar budget"
       ]
     },
