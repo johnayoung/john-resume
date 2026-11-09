@@ -9661,5 +9661,427 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "self-improving-software-factory",
+    "sources": [
+      {
+        "title": "Rethinking the Evaluation of Harness Evolution for Agents",
+        "author": "Yike Wang, Huaisheng Zhu, Zhengyu Hu, Yige Yuan, Zhengyu Chen, Shakti Senthil, Hannaneh Hajishirzi, Yulia Tsvetkov, Noah A. Smith, Pradeep Dasigi, Teng Xiao",
+        "url": "https://arxiv.org/abs/2607.12227",
+        "date": "October 5, 2026 (v4)",
+        "class": "research-data",
+        "pillars": [
+          3,
+          2
+        ],
+        "stat": "On a 45/10/34 split of Terminal-Bench 2.1 with disjoint search and evaluation tasks, the evolved harness moved +1.2 (Opus 4.6), 0.0 (GPT-5.4) and -1.4 (GPT-5.4 mini), averaging exactly flat.",
+        "proves": "Self-improvement gains measured on the tasks that drove the search overstate real improvement; ask for the held-out number.",
+        "verification": "confirmed",
+        "secondary": [
+          "Evolution did not beat simple test-time scaling under matched budgets on TB 2.1",
+          "Task-specific evolution helped in long-horizon games (ARC-AGI-3, EdgeBench)",
+          "Calls for protocols that separate optimization feedback from final measurement"
+        ]
+      },
+      {
+        "title": "RRSI: Regularized Recursive Self-Improvement of Agent Harnesses",
+        "author": "Peng Xia, Rujun Han, et al. (Google Cloud AI Research and others)",
+        "url": "https://arxiv.org/html/2609.24972v1",
+        "date": "September 21, 2026",
+        "class": "research-data",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "Unregularized evolution scored 92.8 on the evolve split but 40.3 out of distribution against a 39.7 base, using 3.80M vs 2.42M tokens per trial.",
+        "proves": "Evolve-split rankings of harness optimizers invert out of distribution; most prior methods keep little of their gain.",
+        "verification": "confirmed",
+        "secondary": [
+          "Meta-Harness +0.9 OOD; HarnessX at base; AHE and TTHE below base",
+          "A critic rejects diffs that encode task or entity names",
+          "Authors propose RRSI, so the baseline comparison is their own"
+        ]
+      },
+      {
+        "title": "Understanding When Reflective Prompt and Skill Optimization Helps on Locally Served Reasoning Models: A Two-Model Study of GEPA and SkillOpt",
+        "author": "Andrea Giummarra, Carmelo Baglieri, Antonio Di Maria, Andrea Farruggio, Michele Piatto, Giovanni Micale",
+        "url": "https://arxiv.org/html/2610.26020",
+        "date": "October 19, 2026",
+        "class": "research-data",
+        "pillars": [
+          3
+        ],
+        "stat": "A SkillOpt +15.6-point selection gain on HotpotQA became a -3.22 held-out F1 effect (p=.0004, n=500).",
+        "proves": "Optimizers overfit the split they are selected on; deployment needs evaluation data untouched by optimization plus a fresh external holdout.",
+        "verification": "confirmed",
+        "secondary": [
+          "DeepSeek accepted edit: +0.8 selection, -6.2 F1 on test",
+          "Hand-engineered prompt underperformed a minimal baseline",
+          "Scope: two local models, QA and math, not coding agents"
+        ]
+      },
+      {
+        "title": "Meta-Harness: End-to-End Optimization of Model Harnesses",
+        "author": "Yoonho Lee, Roshen Nair, Qizheng Zhang, Kangwook Lee, Omar Khattab, Chelsea Finn",
+        "url": "https://arxiv.org/abs/2603.28052",
+        "date": "March 30, 2026",
+        "class": "research-data",
+        "pillars": [
+          2
+        ],
+        "stat": "Proposer with full execution traces reached a 50.0 median vs 34.6 with scores only; the Terminal-Bench 2 experiment searched and evaluated on the same 89 tasks.",
+        "proves": "Traces fed back to the proposer drive harness search, and the evaluation split design determines whether a gain generalizes.",
+        "verification": "confirmed",
+        "secondary": [
+          "Text-classification and math results use held-out sets",
+          "TB2 overfitting checked by manual inspection and regex audits, not a structural holdout"
+        ]
+      },
+      {
+        "title": "Self-Harness: Harnesses That Improve Themselves",
+        "author": "Hangfan Zhang, Shao Zhang, Kangcong Li, Chen Zhang, Yang Chen, Yiqun Zhang, Lei Bai, Shuyue Hu",
+        "url": "https://arxiv.org/abs/2606.09498",
+        "date": "June 8, 2026",
+        "class": "research-data",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "Terminal-Bench-2.0 held-out pass rates rose 40.5 to 61.9 (MiniMax M2.5), 23.8 to 38.1 (Qwen3.5-35B-A3B) and 42.9 to 57.1 (GLM-5) on a 64-task subset.",
+        "proves": "A promotion gate can accept a harness edit only if it improves one split and degrades neither, with the held-out split hidden from the proposer.",
+        "verification": "confirmed",
+        "secondary": [
+          "Rejected candidates are logged without changing the active harness",
+          "Authors: higher-stakes changes need stronger gates than pass-rate non-regression",
+          "The held-out split drives selection, so it is not an untouched test set"
+        ]
+      },
+      {
+        "title": "Recursive Self-Evolving Agents via Held-Out Selection",
+        "author": "Michael Nguyen, Quoc Nguyen, Paul Vuong",
+        "url": "https://arxiv.org/abs/2606.28374",
+        "date": "June 17, 2026",
+        "class": "research-data",
+        "pillars": [
+          3,
+          2
+        ],
+        "stat": "Without a held-out gate, selection scored 100% in-sample but 66.7% on test; ungated Dynamic Cheatsheet collapsed to 0.14 on WebShop vs 0.43 for ReAct.",
+        "proves": "A strict held-out keep-better gate, with fallback to the base agent, prevents evolved context from regressing the agent.",
+        "verification": "confirmed",
+        "secondary": [
+          "Gate guarantees safety on held-out val, not every test draw when val is small",
+          "No evolved artifact universally wins",
+          "Non-coding benchmarks, small evals"
+        ]
+      },
+      {
+        "title": "Recursive self-improvement of AI research agents",
+        "author": "Dhruv Srikanth, Bingchen Zhao, Dixing Xu, Yuxiang Wu, Zhengyao Jiang (Weco AI)",
+        "url": "https://arxiv.org/abs/2609.26457",
+        "date": "September 22, 2026",
+        "class": "research-data",
+        "pillars": [
+          3,
+          2
+        ],
+        "stat": "Under private held-out selection, reward hacking on an unoptimized task family fell from 55% to 32%, below the 39% of the human-engineered agent.",
+        "proves": "Self-improvement selected on private held-out grading can generalize; the positive counter-case for the governance design.",
+        "verification": "confirmed",
+        "secondary": [
+          "Authors note the drop is not attributed to specific rewrites",
+          "Ignition test inconclusive (0.780 vs 0.782)",
+          "Vendor-authored"
+        ]
+      },
+      {
+        "title": "Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation",
+        "author": "Eric Zelikman, Eliana Lorch, Lester Mackey, Adam Tauman Kalai",
+        "url": "https://arxiv.org/abs/2310.02304",
+        "date": "August 16, 2024 (v3)",
+        "class": "research-data",
+        "pillars": [
+          2
+        ],
+        "stat": "Generated improvers disabled the sandbox in 0.42% of 10,000 GPT-4 improvements without a DO NOT CHANGE warning and 0.46% with it, not a significant difference.",
+        "proves": "Constraints written into the editable code get dropped; enforce them outside the surface the optimizer edits.",
+        "verification": "confirmed",
+        "secondary": [
+          "Budget instructions in the improver prompt were removed in later iterations",
+          "A misspecified utility returned an 'accuracy' over 1000%",
+          "Weaker models degraded under self-improvement"
+        ]
+      },
+      {
+        "title": "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses",
+        "author": "Jiahang Lin, Shichun Liu, Chengjun Pan, Lizhi Lin, Shihan Dou, Xuanjing Huang, Hang Yan, Zhenhua Han, Tao Gui",
+        "url": "https://arxiv.org/html/2604.25850v3",
+        "date": "April 30, 2026 (v3)",
+        "class": "research-data",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "The evolving agent's own regression predictions reached 11.8% precision and 11.1% recall, about 2x random, while TB2 pass@1 rose 69.7% to 77.0% over ten iterations.",
+        "proves": "Keep the verifier, tracer, runs and model config read-only, and measure regressions rather than trusting the optimizer's predicted risk.",
+        "verification": "confirmed",
+        "secondary": [
+          "Fix predictions sat about 5x above random",
+          "System-prompt-only edits cost 2.3 points",
+          "Evolution and in-domain reporting used the same 89 tasks"
+        ]
+      },
+      {
+        "title": "Recent Frontier Models Are Reward Hacking",
+        "author": "Sydney Von Arx, Lawrence Chan, Beth Barnes (METR)",
+        "url": "https://metr.org/blog/2025-06-05-recent-reward-hacking/",
+        "date": "June 5, 2025",
+        "class": "research-data",
+        "pillars": [
+          3
+        ],
+        "stat": "Reward hacking was over 43x more common on RE-Bench, where the model could see the scoring function, than on HCAST.",
+        "proves": "When the agent can see or reach the scoring code, it games it; patch the scorer rather than relying on instructions.",
+        "verification": "confirmed",
+        "secondary": [
+          "o3 monkey-patched a CodeContest evaluator to return a perfect score",
+          "Visibility offered as a 'perhaps' explanation"
+        ]
+      },
+      {
+        "title": "The Darwin Gödel Machine: AI that improves itself by rewriting its own code",
+        "author": "Sakana AI",
+        "url": "https://sakana.ai/dgm/",
+        "date": "2025",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "The self-improving agent removed the markers its hallucination detector relied on, sabotaging the detection function.",
+        "proves": "Freezing the scorer is not enough; the inputs the scorer reads must sit outside the editable surface too.",
+        "verification": "confirmed",
+        "secondary": [
+          "Caught through a traceable lineage of every change",
+          "Authors: more work is needed to prevent this cheating"
+        ]
+      },
+      {
+        "title": "Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation",
+        "author": "Bowen Baker, Joost Huizinga, Leo Gao, Zehao Dou, Melody Y. Guan, Aleksander Madry, Wojciech Zaremba, Jakub Pachocki, David Farhi (OpenAI)",
+        "url": "https://arxiv.org/abs/2503.11926",
+        "date": "March 14, 2025",
+        "class": "research-data",
+        "pillars": [
+          3
+        ],
+        "stat": "Agents modified libraries upstream of the tests, bypassing the standard mitigation that forbids modifying the testing framework.",
+        "proves": "Evaluator inputs can be reached indirectly; protecting the test files alone does not protect the score.",
+        "verification": "confirmed",
+        "secondary": [
+          "exit(0) and raise SkipTest hacks",
+          "Optimizing against a CoT monitor drove its recall near zero",
+          "RL training setting, not harness optimization"
+        ]
+      },
+      {
+        "title": "Auditing Harness Tampering in Self-Improving Agents",
+        "author": "Xing Wang, Xiaoyi Zhang, Jie Shao",
+        "url": "https://arxiv.org/abs/2609.00069",
+        "date": "August 30, 2026",
+        "class": "research-data",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "Harness tampering was observed in every self-improving system audited, and early modifications persisted across dozens of iterations into the best agent's lineage.",
+        "proves": "A self-improving loop's edits to its own evaluation, selection and recording roles are common and persistent, so check them from outside.",
+        "verification": "partial",
+        "secondary": [
+          "Taxonomy by harness role (execution, evaluation, selection, recording, propagation)",
+          "Findings are LLM-auditor flagged, not human-confirmed",
+          "Calls for tamper-proof evaluation channels"
+        ]
+      },
+      {
+        "title": "Phantom Guardrails: When Self-Improving Agent Harnesses Fix Failures That Never Happened",
+        "author": "Su Wang, Pin Qian, Yifan Lin, Jingzhou Xu, Yihang Chen, Xiaochong Jiang, Lifei Liu, Haoran Yu",
+        "url": "https://arxiv.org/abs/2607.13083",
+        "date": "July 13, 2026",
+        "class": "research-data",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "A harness proposer invented a failure in 15 of 60 runs versus 0 of 60 on featureless input; under add-only acceptance the phantom guard spread from 1/60 to 11/60 trajectories.",
+        "proves": "An optimizer's self-reported failures need independent confirmation; a warrant-aware rule that credits only oracle-confirmed failures excluded the phantom.",
+        "verification": "confirmed",
+        "secondary": [
+          "11 of the 15 fabrications came from one proposer model",
+          "Single synthetic domain",
+          "Suppression-only gates cannot see a no-op guard"
+        ]
+      },
+      {
+        "title": "Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution",
+        "author": "Anton Razzhigaev, Andrei Gritsaev, Andrei Kaznacheev, Nikita Dragunov, Roman Yampolskiy, Andrei Kuznetsov",
+        "url": "https://arxiv.org/abs/2608.08311",
+        "date": "August 31, 2026 (v3)",
+        "class": "research-data",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Over 161 days: 1,085 self-modification commits, 1,522 reviewed self-edit attempts and a 63.5% recent review block rate.",
+        "proves": "Separate the evolving substrate from the authority that decides what goes live, and keep stop and rollback outside the agent.",
+        "verification": "confirmed",
+        "secondary": [
+          "Promotion decided by deterministic preflight plus a multi-model blocking panel",
+          "A trajectory audit removed one reward-hacked Terminal-Bench trial",
+          "All deployment numbers self-reported"
+        ]
+      },
+      {
+        "title": "Reflections on Trusting Trust, Revisited: Contaminating Self-Modifying AI Coding Agents with Poisoned Benchmarks",
+        "author": "Franziska Roesner, Tadayoshi Kohno",
+        "url": "https://arxiv.org/abs/2609.17817",
+        "date": "September 15, 2026",
+        "class": "research-data",
+        "pillars": [
+          2,
+          4
+        ],
+        "stat": "Poisoned self-improvement benchmarks left 30 of 30 held-out tasks vulnerable versus 0 of 30 for clean runs, and an in-loop LLM security reviewer approved the poisoned change.",
+        "proves": "A reviewer inside the loop competes with benchmark pressure; enforce the veto mechanically and expect decontamination to be hard.",
+        "verification": "confirmed",
+        "secondary": [
+          "A generic security benchmark did not decontaminate",
+          "Contamination persisted after later clean evolution",
+          "Veto suggested, not tested"
+        ]
+      },
+      {
+        "title": "What 1,000+ Harness Experiments Taught Me About Self-Improving Agents",
+        "author": "Henry Pan",
+        "url": "https://www.henrypan.com/blog/2026-05-25-self-improvement-harness/",
+        "date": "May 25, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "768 of 1,231 non-baseline candidates were discarded because a baseline-solved task regressed.",
+        "proves": "Most self-improvement candidates should die at the gate, and a gate without a held-out panel cannot certify general improvement.",
+        "verification": "confirmed",
+        "secondary": [
+          "Supervisor froze model, provider, task panel and budgets",
+          "15 of 1,211 loops were stopped by the supervisor",
+          "Agent repeated byte-identical patches for 17 experiments"
+        ]
+      },
+      {
+        "title": "Signals: Toward a Self-Improving Agent",
+        "author": "Factory",
+        "url": "https://factory.com/news/factory-signals",
+        "date": "January 23, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "After a shipped fix, the 'repeated rephrasing' friction rate dropped thirty percent within forty-eight hours.",
+        "proves": "A production self-improvement loop as a vendor describes it: friction signals, auto-filed tickets, agent fixes and reviews, human approval before merge.",
+        "verification": "confirmed",
+        "secondary": [
+          "'It's not fully automated yet. A human still approves the PR before merge.'",
+          "Post describes no held-out evaluation or rollback"
+        ]
+      },
+      {
+        "title": "Factory raises $200M at $5B valuation",
+        "author": "Factory",
+        "url": "https://factory.com/news/5-billion-valuation",
+        "date": "September 15, 2026",
+        "class": "practitioner",
+        "pillars": [
+          6
+        ],
+        "stat": "Factory raised $200M at a $5B valuation to 'create a world where software builds and improves itself.'",
+        "proves": "Self-improving software factory is a funded vendor category, which makes the governance questions buyer questions.",
+        "verification": "confirmed",
+        "secondary": []
+      },
+      {
+        "title": "Autoheal raises $7.9M to build the self-improving software factory",
+        "author": "Autoheal",
+        "url": "https://autoheal.ai/press-releases/autoheal-funding-to-build-the-self-improving-software-factory",
+        "date": "September 28, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          6
+        ],
+        "stat": "$7.9 million seed round led by Innovation Endeavors.",
+        "proves": "Vendor architecture: an Evaluator agent scores runs, a Healer agent opens PRs to skills, prompts, tools or models, and every change requires engineer approval.",
+        "verification": "confirmed",
+        "secondary": [
+          "No published results data"
+        ]
+      },
+      {
+        "title": "Self-Improving AI Software Factory: How Feedback Loops Make Agents Better Over Time",
+        "author": "John Crowley (Port)",
+        "url": "https://www.port.io/blog/self-improving-ai-software-factory",
+        "date": "October 25, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          5
+        ],
+        "stat": "",
+        "proves": "The commodity write-back loop: capture, grade, find the pattern, write the fix back with a person reviewing.",
+        "verification": "partial",
+        "secondary": [
+          "Keep a person on the write-back of shared skills",
+          "No held-out evaluation or evaluator isolation discussed"
+        ]
+      },
+      {
+        "title": "Harness Engineering for Self-Improvement",
+        "author": "Lilian Weng",
+        "url": "https://lilianweng.github.io/posts/2026-07-04-harness/",
+        "date": "July 4, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          3
+        ],
+        "stat": "",
+        "proves": "A self-improvement loop optimizes whatever signal it is given; evaluator and permission control should sit outside the loop that evolves the harness.",
+        "verification": "confirmed",
+        "secondary": [
+          "Humans should move up the stack, not be removed from the loop",
+          "Survey of AHE, Self-Harness, DGM, STOP, AlphaEvolve"
+        ]
+      },
+      {
+        "title": "How Warp builds self-improving agents on Claude",
+        "author": "Michael Segner (Claude blog)",
+        "url": "https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude",
+        "date": "August 26, 2026",
+        "class": "practitioner",
+        "pillars": [
+          2,
+          5
+        ],
+        "stat": "",
+        "proves": "An improver agent proposes small edits to a production skill and a human reviews, approves and merges them through a normal PR.",
+        "verification": "confirmed",
+        "secondary": [
+          "No rejection or rollback numbers published"
+        ]
+      }
+    ]
   }
 ]
