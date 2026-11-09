@@ -93,6 +93,7 @@ If they cannot answer, the post's conclusion is that the system is changing itse
 
 **Keep reading:** <a class="leaf-exit" href="#essay">the full version, with the research and sources &darr;</a>
 {{< /eli5 >}}
+
 A self-improving AI software factory is a loop that edits the harness your agents run on. For a buyer or a platform team, the question is not whether the loop runs. It is who controls three things: what the loop is graded on, what it is allowed to touch, and who decides what goes live.
 
 Factory raised $200M in September to "create a world where software builds and improves itself" ([Factory: $200M at $5B](https://factory.com/news/5-billion-valuation)).
