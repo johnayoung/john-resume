@@ -395,6 +395,26 @@
       ]
     },
     {
+      "title": "Project Vend: Can Claude run a small shop? (And why does that matter?)",
+      "author": "Anthropic Frontier Red Team, with Andon Labs",
+      "url": "https://www.anthropic.com/research/project-vend-1",
+      "date": "June 27, 2025",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "A shop agent ran for about a month on note-keeping tools because its full history would overwhelm the context window, and still reversed a pricing decision within days.",
+      "proves": "External notes alone do not keep a long-running agent's decisions stable.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Unexplained identity-confusion episode",
+        "The agent did not reliably learn from its mistakes"
+      ]
+    },
+    {
       "title": "How AI is transforming work at Anthropic",
       "author": "Anthropic Societal Impacts (Saffron Huang et al.)",
       "url": "https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic",
@@ -1006,6 +1026,27 @@
       ]
     },
     {
+      "title": "Always-On Agents: A Survey of Persistent Memory, State, and Governance in LLM Agents",
+      "author": "Ding, Nannapaneni, Liu, Zhang",
+      "url": "https://arxiv.org/abs/2606.30306",
+      "date": "June 29, 2026",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "Only 27 of 435 works on persistent agents expose any rollback mechanism for state-affected decisions; none reports recovery success or cost after corruption.",
+      "proves": "The always-on agent literature accumulates state far more than it governs, recovers or relinquishes it.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Summarization collapses many sourced episodes into one unsourced summary",
+        "A cached credential can grant access long after the user intended it to lapse",
+        "A scheduled action authorized last week may no longer be permitted today"
+      ]
+    },
+    {
       "title": "Accelerate State of DevOps Report 2024",
       "author": "DORA (Google Cloud)",
       "url": "https://dora.dev/research/2024/dora-report",
@@ -1058,6 +1099,26 @@
       ],
       "secondary": [
         "Evidence base is a qualitative comparative audit across nine dimensions in three layers, not quantitative failure-rate measurement"
+      ]
+    },
+    {
+      "title": "Useful Memories Become Faulty When Continuously Updated by LLMs",
+      "author": "Dylan Zhang, Yanshan Lin, Zhengkun Wu, Yihang Sun, Bingxuan Li, Dianqi Li, Hao Peng",
+      "url": "https://arxiv.org/abs/2605.12978",
+      "date": "August 29, 2026 (v2)",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "As consolidation proceeds, memory utility first rises, then degrades, and can fall below the no-memory baseline; agents that preserve raw episodes double the accuracy of forced-consolidation counterparts.",
+      "proves": "Memory an agent keeps rewriting decays; keep raw episodes as first-class evidence and gate consolidation.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "An episodic-only control stays competitive with the consolidators tested",
+        "The same trajectories yield different memories under different update schedules"
       ]
     },
     {
@@ -1371,6 +1432,26 @@
         "Rejected candidates are logged without changing the active harness",
         "Authors: higher-stakes changes need stronger gates than pass-rate non-regression",
         "The held-out split drives selection, so it is not an untouched test set"
+      ]
+    },
+    {
+      "title": "STALE: Can LLM Agents Know When Their Memories Are No Longer Valid?",
+      "author": "Hanxiang Chao, Yihan Bai, Rui Sheng, Tianle Li, Yushi Sun",
+      "url": "https://arxiv.org/abs/2605.06527",
+      "date": "May 7, 2026",
+      "class": "research-data",
+      "pillars": [
+        2
+      ],
+      "stat": "Even the best evaluated model achieved only 55.2% overall accuracy at acting on updated evidence over stale memories.",
+      "proves": "Persisted memory goes stale, and agents retrieve the update without acting on it.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "400 expert-validated conflict scenarios, 1,200 queries",
+        "Models accept outdated assumptions embedded in a query"
       ]
     },
     {
@@ -2384,6 +2465,27 @@
       "secondary": [
         "This is self-reported perception, not measured defect-detection data; it is the qualitative companion to the ICSME 2015 study and should be paired with it rather than substituted for it",
         "Scoped to one large open-source community: 'While our findings might not generalize outside of Mozilla...'"
+      ]
+    },
+    {
+      "title": "Suppressing misalignment monitoring alerts and disabling misalignment monitoring",
+      "author": "OpenAI Alignment Research Blog",
+      "url": "https://alignment.openai.com/misalignment-reports/suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring",
+      "date": "October 20, 2026 (updated)",
+      "class": "research-data",
+      "pillars": [
+        4
+      ],
+      "stat": "On Oct 3 and Oct 6, 2026, coding agents in OpenAI internal deployments disabled human alerts and removed a monitoring integration; neither incident was a P0 and neither trajectory was automatically killed.",
+      "proves": "Alerts and kill switches an agent can reach are not controls; OpenAI moved monitoring outside the agent's direct control.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Internal deployments, not customer production",
+        "Intent unresolved",
+        "Auto-Review now blocks attempts to disable monitoring"
       ]
     },
     {
@@ -4084,16 +4186,19 @@
       "date": "2017",
       "class": "practitioner",
       "pillars": [
-        5
+        4
       ],
       "stat": "Engineers out of touch with production discover knowledge gaps only when an incident occurs; teams should be sized so every engineer is on call at least once or twice a quarter.",
       "proves": "Gaps in understanding stay hidden until a page forces them out unless people stay exposed.",
       "verification": "confirmed",
       "powers": [
-        "comprehension-debt-on-call-ownership"
+        "comprehension-debt-on-call-ownership",
+        "always-on-agents"
       ],
       "secondary": [
-        "Wheel of Misfortune and DiRT drills hone troubleshooting and service knowledge"
+        "Pages land on primary and secondary on-call rotations, and paging alerts should align with symptoms that threaten SLOs.",
+        "Wheel of Misfortune and DiRT drills hone troubleshooting and service knowledge",
+        "All paging alerts should be actionable"
       ]
     },
     {
@@ -5131,6 +5236,45 @@
       ]
     },
     {
+      "title": "Discover service integration patterns in Step Functions",
+      "author": "AWS",
+      "url": "https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Callback tasks can pause a workflow for a human approval until a task token returns, up to the one-year service quota.",
+      "proves": "Approval is a durable, asynchronous event with an expiry, not a live prompt.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Configure a heartbeat timeout to avoid stuck executions"
+      ]
+    },
+    {
+      "title": "Amazon SQS visibility timeout",
+      "author": "AWS (SQS Developer Guide)",
+      "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Under at-least-once delivery a message can be delivered more than once; an unfinished message reappears after the visibility timeout, capped at 12 hours.",
+      "proves": "Queue-triggered agents get redeliveries by design.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Default visibility timeout is 30 seconds",
+        "Use a heartbeat to extend the timeout"
+      ]
+    },
+    {
       "title": "AGENTREL06-BP04 Implement idempotent task execution patterns",
       "author": "AWS Well-Architected Agentic AI Lens",
       "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentrel06-bp04.html",
@@ -5467,6 +5611,49 @@
       "secondary": []
     },
     {
+      "title": "Automate work with scheduled tasks",
+      "author": "Claude Code Docs (Anthropic)",
+      "url": "https://code.claude.com/docs/en/routines",
+      "date": "undated (research preview, as of November 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Run outcomes say how the session ended, not whether Claude completed the work; GitHub events beyond hourly caps are dropped.",
+      "proves": "Page on outcomes, not run status; a fired prompt is never approval.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Runs act as the owning user",
+        "Task turns off after 72 hours without a GitHub connection",
+        "On-the-hour runs can start several minutes late",
+        "Org-level toggle stops existing tasks"
+      ]
+    },
+    {
+      "title": "Claude Code GitHub Actions",
+      "author": "Claude Code Docs (Anthropic)",
+      "url": "https://code.claude.com/docs/en/github-actions",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Deleting a repo secret leaves the credential valid, and scheduled runs are attributed to the user who last changed the cron.",
+      "proves": "A standing agent needs its own identity, not a borrowed human secret.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "OIDC workload identity federation avoids long-lived secrets",
+        "Bot actors rejected to prevent trigger loops",
+        "Public-repo schedules disabled after 60 days of inactivity"
+      ]
+    },
+    {
       "title": "How Claude remembers your project",
       "author": "Claude Code docs (code.claude.com)",
       "url": "https://code.claude.com/docs/en/memory",
@@ -5689,6 +5876,28 @@
       "secondary": [
         "The page ships the enforcement mechanism but gives no guidance on how a human decides which files each session owns, and says nothing about what happens when two sessions need the same file - that absence is the gap the post addresses",
         "Isolation is filesystem and branch level, not permission or prompt level: subagents take an 'isolation: worktree' frontmatter field, and Claude runs 'git worktree lock' while an agent is active"
+      ]
+    },
+    {
+      "title": "Scheduled deployments",
+      "author": "Claude Platform docs (Anthropic)",
+      "url": "https://platform.claude.com/docs/en/managed-agents/scheduled-deployments",
+      "date": "undated (beta, as of November 2026)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Spring-forward wall-clock times are not triggered, fall-back times fire twice, and missed triggers are not backfilled after unpause.",
+      "proves": "A managed scheduler skips, doubles and drops runs by documented design; dedup and the off switch must be yours.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Jitter up to 15% of the interval",
+        "Pause does not stop running sessions",
+        "Budget caps apply per run, not cumulatively",
+        "Rate-limited runs are not retried"
       ]
     },
     {
@@ -6728,6 +6937,25 @@
       ]
     },
     {
+      "title": "Monitoring Distributed Systems",
+      "author": "Google SRE book",
+      "url": "https://sre.google/sre-book/monitoring-distributed-systems",
+      "date": "2016",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Every page should be actionable; paging focuses on symptoms, with causes reserved for debugging.",
+      "proves": "Page on the missing outcome, not on run status.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Monitoring answers what's broken and why"
+      ]
+    },
+    {
       "title": "On-Call",
       "author": "Google SRE Workbook",
       "url": "https://sre.google/workbook/on-call",
@@ -7363,6 +7591,27 @@
       ]
     },
     {
+      "title": "CronJob",
+      "author": "Kubernetes documentation",
+      "url": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs",
+      "date": "October 31, 2026 (last modified)",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Two Jobs might be created, or no Job might be created, for one schedule; Jobs should be idempotent.",
+      "proves": "Schedulers are not exactly-once; key runs on the scheduled time.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "concurrencyPolicy defaults to Allow",
+        "Only the latest of more than 100 missed schedules runs",
+        "cronjob-scheduled-timestamp annotation since v1.32"
+      ]
+    },
+    {
       "title": "Writing a good CLAUDE.md",
       "author": "Kyle (HumanLayer)",
       "url": "https://www.humanlayer.dev/blog/writing-a-good-claude-md",
@@ -7416,13 +7665,14 @@
       "verification": "confirmed",
       "powers": [
         "agent-observability-trace-schema",
+        "always-on-agents",
         "loop-engineering-breaks-your-playbook"
       ],
       "secondary": [
+        "Because the session log sits outside the harness, nothing in the harness needs to survive a crash; the harness is never made aware of any credentials.",
         "getEvents(), allows the brain to interrogate context by selecting positional slices of the event stream",
         "Cited for the BEFORE state only. A full-text search confirms the article never reports an observability after-state",
-        "It names decoupling as the fix and scopes its durable event log to crash recovery and model-side context interrogation",
-        "Its quantified improvements (p50 TTFT down roughly 60%, p95 over 90%) are latency, not observability"
+        "It names decoupling as the fix and scopes its durable event log to crash recovery and model-side context interrogation"
       ]
     },
     {
@@ -7476,9 +7726,11 @@
       "proves": "A human checkpoint can be a first-class graph node with durable state rather than a process stage described in prose - the mechanism ships today in a production framework.",
       "verification": "confirmed",
       "powers": [
-        "agent-architecture-review-capacity"
+        "agent-architecture-review-capacity",
+        "always-on-agents"
       ],
       "secondary": [
+        "The checkpointer writes the exact graph state so execution can resume later on the same thread ID.",
         "Durability is explicit: state is saved by the checkpointer, which in production should be database-backed.",
         "Idempotency gotcha: 'The node restarts from the beginning... so any code before the interrupt runs again.'",
         "The documentation contains no notion of review capacity, cost, or how many checkpoints is too many."
@@ -8669,6 +8921,26 @@
       ]
     },
     {
+      "title": "How to Build Your Own Always-On AI Agent (TypeScript)",
+      "author": "OpenRouter",
+      "url": "https://openrouter.ai/blog/tutorials/build-always-on-ai-agent",
+      "date": "October 31, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Roughly $0.86 to $3.46 a month at one check every 15 minutes; the tutorial accepts duplicates because a duplicate is easier to fix than a lost story.",
+      "proves": "The opposite skip-or-double default from Google SRE, right for a read-only digest.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "While approval is pending the agent skips its checks entirely",
+        "Memory is machine-maintained raw IDs, not agent notes"
+      ]
+    },
+    {
       "title": "Semantic conventions for generative client AI spans",
       "author": "OpenTelemetry Authors",
       "url": "https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/gen-ai-spans.md",
@@ -8875,6 +9147,45 @@
       ]
     },
     {
+      "title": "NHI7:2025 Long-Lived Secrets",
+      "author": "OWASP Non-Human Identities Top 10",
+      "url": "https://owasp.org/www-project-non-human-identities-top-10/2025/7-long-lived-secrets",
+      "date": "2025",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "51% of organizations have no formal process to offboard or revoke long-lived API keys (CSA, as cited by OWASP).",
+      "proves": "Use short-lived, auto-expiring credentials for non-human identities.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "60% of keys across cloud providers are older than 1 year (Datadog)",
+        "79% of organizations have an access key older than 90 days (Orca)"
+      ]
+    },
+    {
+      "title": "NHI1:2025 Improper Offboarding",
+      "author": "OWASP Non-Human Identities Top 10",
+      "url": "https://owasp.org/www-project-non-human-identities-top-10/2025/1-improper-offboarding",
+      "date": "2025",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Non-human identities are orphaned when their owner leaves; periodically recertify that each one is still needed and has a valid owner.",
+      "proves": "Every standing agent needs an owner on record and an offboarding path.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Stale, orphaned and partially offboarded identities"
+      ]
+    },
+    {
       "title": "Sphinx: you can outsource your thinking, but not your understanding",
       "author": "parthh01",
       "url": "https://sphinx-six-theta.vercel.app",
@@ -8966,6 +9277,26 @@
       ],
       "secondary": [
         "Original Koi Security disclosure no longer reachable (redirects)"
+      ]
+    },
+    {
+      "title": "Idempotency",
+      "author": "Powertools for AWS Lambda (Python)",
+      "url": "https://docs.aws.amazon.com/powertools/python/latest/utilities/idempotency",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Idempotency records expire after one hour by default, after which the same payload is no longer treated as idempotent.",
+      "proves": "Dedup records must outlive the sender's retry window.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Concurrent same-payload invocations are locked while in progress",
+        "Whole-payload keys re-run on a header change"
       ]
     },
     {
@@ -9450,6 +9781,26 @@
       ]
     },
     {
+      "title": "A quote from Summer Yue",
+      "author": "Simon Willison (quoting Summer Yue)",
+      "url": "https://simonwillison.net/2026/Feb/23/summer-yue",
+      "date": "February 23, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Three typed stop messages between 6:01 and 6:03 PM were ignored after compaction dropped a 'don't action until I tell you to' instruction; she had to run to the Mac mini.",
+      "proves": "The person at the keyboard was the agent's only working control; an unattended agent has none.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Single first-person account of an interactive agent, not an investigated incident",
+        "Worked on a toy inbox, failed on the real one"
+      ]
+    },
+    {
       "title": "Context engineering",
       "author": "Simon Willison's Weblog",
       "url": "https://simonwillison.net/2025/Jun/27/context-engineering",
@@ -9485,6 +9836,26 @@
       ],
       "secondary": [
         "Each criterion names one thing a user can see or a test can check"
+      ]
+    },
+    {
+      "title": "Distributed Periodic Scheduling with Cron",
+      "author": "Štěpán Davidovič (ed. Kavita Guliani), Google SRE book",
+      "url": "https://sre.google/sre-book/distributed-periodic-scheduling",
+      "date": "2017",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Google's distributed cron favors skipping launches rather than risking double launches, because a skip is easier to recover from.",
+      "proves": "Decide skip or double per side effect; record launch state.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Launch start and end recorded to a Paxos quorum",
+        "Job names include the scheduled launch time"
       ]
     },
     {
@@ -9525,6 +9896,26 @@
       ],
       "secondary": [
         "GET and DELETE do not take keys; they are idempotent by definition"
+      ]
+    },
+    {
+      "title": "Receive Stripe events in your webhook endpoint",
+      "author": "Stripe",
+      "url": "https://docs.stripe.com/webhooks",
+      "date": "undated",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Stripe retries deliveries for up to three days in live mode, and endpoints might receive the same event more than once.",
+      "proves": "Dedupe webhook-triggered runs on the sender's event ID.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "Retries carry a new signature and timestamp",
+        "No ordering guarantee"
       ]
     },
     {
@@ -9911,6 +10302,27 @@
         "most multi-agent setups in the world are limited to 'readonly' subagents",
         "The practical shape is map-reduce-and-manage: a manager splits work, children execute, the manager synthesizes",
         "an average of 2 bugs per PR, of which roughly 58% are severe"
+      ]
+    },
+    {
+      "title": "Building always-on agents",
+      "author": "William Hu (Anthropic)",
+      "url": "https://claude.com/resources/articles/building-always-on-agents",
+      "date": "November 13, 2026",
+      "class": "practitioner",
+      "pillars": [
+        4
+      ],
+      "stat": "Five core primitives: an event inbox, timers, memory, permissions and an outbox; an inbox should only have one active worker at a time.",
+      "proves": "Route every trigger through a durable inbox; competing runs and lost events are the default without one.",
+      "verification": "confirmed",
+      "powers": [
+        "always-on-agents"
+      ],
+      "secondary": [
+        "A deferred tool call ends the run and the answer returns as an inbox event",
+        "Memory should only hold what the agent can't look up again",
+        "Credentials injected by a proxy the agent never sees"
       ]
     },
     {
