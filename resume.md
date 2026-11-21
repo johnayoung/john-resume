@@ -1,108 +1,99 @@
 # JOHN YOUNG
 
-**Chief Technology Officer | Full Stack Engineer | DeFi Systems Architect**
+**Head of Engineering | Chief Technology Officer | DeFi Execution Infrastructure | AI-Native Engineering**
 
 Laurel, Maryland  
 [john.anto.young@gmail.com](mailto:john.anto.young@gmail.com)  
-[LinkedIn](https://linkedin.com/in/jyoung1985) • [Portfolio](https://jyoung.dev)
+[LinkedIn](https://linkedin.com/in/jyoung1985) • [Portfolio](https://jyoung.dev) • [GitHub](https://github.com/johnayoung)
 
 ---
 
 ## PROFESSIONAL SUMMARY
 
-With 12+ years in fintech, spearheaded multi-agent systems development, optimized workflow automation, and led technical due diligence for portfolio investments. Fine-tuned LLMs for enhanced investigation efficiency and built data infrastructure processing 100K+ daily events. Expertise spans agentic workflow automation, risk management, and financial modeling.
+Head of engineering and CTO who ships trading and DeFi infrastructure, from audited on-chain contracts to sub-millisecond execution, with an agent-first workflow: AI agents write most of the code, while deterministic graders, blind test oracles, and human-reviewed PRs decide what ships. Built the open-source control plane that runs it. 15+ years in finance and fintech, two startup exits.
 
 ---
 
 ## WORK EXPERIENCE
 
-### Technical Lead
-**Infrared** • *December 2025 - Present*
+### Head of Engineering
+**Infrared** • *November 2025 - Present*
 
-- Architecting a unified MIMO token router that models swaps, deposits, and LP operations as arcs in a single flow network, eliminating suboptimal sequential solving across **50+ liquidity sources**
-- Implementing min-cost flow optimization with capacity scaling, reducing algorithmic complexity to **O((V+E) × log U)** for handling ERC-20 amounts at **10^18 precision**
-- Designing piecewise linear cost approximation with configurable segment counts, achieving **<1% slippage estimation error** while maintaining **sub-100ms** route computation
-- Engineering discretized bundle nodes for LP composition, enabling the optimizer to evaluate **11 ratio configurations** per pool and discover optimal token allocations dynamically
-- Building gas-aware cost modeling that factors execution overhead into routing decisions, optimizing net output for trade sizes from **$10K to $500K+**
+- Built Infrared's production DeFi routing API: a min-cost-flow solver over **28 protocols** on Ethereum, Base, and Arbitrum that routes multi-asset portfolios in a single atomic transaction
+- Shipped the Solidity execution layer to **3 mainnets**, backed by **257 Foundry tests** and a Nethermind audit
+- Built a Rust UniswapX filler grader-first with AI agents: first live fills **4 days** after the first commit, RFQ quoting in production by day 24; in its first 4 days of quoting it answered **5.4M requests** and filled **$566K** with zero ledger mismatches
+- Cut filler decision latency to **~500 µs p50** (2.3 ms p95) and p99 feed latency from **14.1 s to 89 ms**
+
+*AI automation*
+
+- **Routing reliability:** daily Claude job on Cloud Run clusters failed quotes, adversarially re-checks each diagnosis, and files evidence-backed issues and fix PRs: **139 issues** and **15 chain-wide outage alerts** since July
+- **Protocol research desk:** weekly agents verify facts for **12 DeFi protocols** against primary sources, escalate contradictions to a human, and surface new integration candidates: **150 merged PRs**
+- **Trading forensics:** sandboxed agents post-mortem lost orders by on-chain replay; a blind verifier ranks causes by dollars, and the top three fixes now run in production
+- **Decision research:** an agent-audited counterfactual replay of **5,451** RFQ orders drove the decision to enter UniswapX quoting
+- **Engineering delivery:** **92 of 94** spec'd tasks landed through a self-built agent control plane, each gated by command graders, rubric review, and blind held-out tests
 
 ### Chief Technology Officer
 **Combine Capital** • *January 2023 - Present*
 
-- Implemented a robust multi-agent system that streamlined data processing, achieving a **75% reduction in analysis time** and increasing decision-making speed within 3 months
-- Fine-tuned LLMs to explain complex DeFi transactions in plain English, improving investigation efficiency by **65%** for compliance reviews
-- Built ReAct-based agentic workflow automation for complex DeFi transactions, integrating dynamic slippage optimization and MEV protection across **10+ protocols**
-- Developed an end-to-end data infrastructure that processed **100K+ daily events** across multiple EVM chains and CEXs, enhancing data accessibility within 6 months
-- Led technical due diligence for portfolio investments
+- Built and solely maintain Combine's fund administration stack: a Go platform (**~80K LOC**) that turns **13 custodian, exchange, and on-chain sources** into a ledger, daily NAV, and monthly investor reports
+- Automated the monthly fund close from **1-2 days to under an hour**, reconciling **6 venues** across multiple fund entities on one multi-tenant platform
+- Made on-chain activity book itself: transaction decoders for **18 DeFi protocols and bridges** across 6 EVM chains, Solana, and Bitcoin
+- Led two platform generations, from a Python/Airflow/BigQuery pipeline over **24 data vendors** to a Go/Postgres rewrite on Cloud Run with full CI/CD
+- Gave the investment team self-serve data: a React admin app (real-time positions, TWRR, exposure) and a Google Workspace Marketplace add-on with **21 live data functions**
+- Codified the close and audit investigations as agent-run Claude Code workflows; led technical due diligence for portfolio investments
 
 ### Software Engineer
 **FRACTAL (Fractal Wealth)** • *January 2021 - January 2022*
 
-- Designed and deployed automated crypto/DeFi trading strategies
-- Developed a backtesting framework that processed **5+ years of historical data**, enhancing strategy validation and performance analysis within 4 months
-- Engineered risk management systems with dynamic position sizing, reducing potential losses by **40%** within 4 months through advanced algorithmic strategies
+- Designed and deployed automated crypto/DeFi trading strategies, validated by a backtesting framework covering **5+ years** of data
+- Built risk management with dynamic position sizing, reducing potential losses by **40%**
 
 ### Founder & Chief Technology Officer
-**Cryptosheets** • *January 2018 - January 2021*
+**Cryptosheets** • *January 2016 - January 2021*
 
-- Scaled a data platform to over **30,000 active users** within 12 months by implementing targeted marketing strategies and enhancing user experience
-- Developed a Microsoft Excel add-in for real-time crypto market data, enhancing user decision-making speed and accuracy through custom APIs within 3 months
-- Led successful exit to private buyer within first year
-
-### Founder & Chief Software Architect
-**Spreadstreet.io** • *January 2016 - January 2019*
-
-- Built subscriber base of **5,000+ users** with recurring revenue
-- Negotiated and completed exit to strategic buyer
+- Built a real-time crypto market data platform and Excel add-in, scaling to **30,000+ active users** within 12 months
+- Grew a **5,000+** recurring-revenue subscriber base and led two exits, to a strategic buyer and a private buyer
 
 ### Principal Financial Analyst
 **Capital One** • *January 2010 - January 2017*
 
-*Progressive roles: Finance Rotation → Senior Analyst → Principal Analyst*
+- Led cross-functional teams building financial models for a **$1B+ credit portfolio**, progressing from Finance Rotation to Principal Analyst
 
-- Led cross-functional teams developing financial models for **$1B+ credit portfolio**
-- Developed predictive models for customer acquisition and retention
+---
+
+## SELECTED PROJECTS
+
+**AI agent engineering**
+
+- **[flywheel](https://github.com/johnayoung/flywheel)**: Rust control plane for AI coding agents: worktree isolation, grader-gated landing, blind held-out oracles, a multi-agent hub, and an eval harness; its own worker landed **931 commits** through graders
+- **[agent-engineering-toolkit](https://github.com/johnayoung/agent-engineering-toolkit)**: **28** Claude Code skills and templates, one per jyoung.dev essay
+- **[jyoung.dev](https://jyoung.dev)**: **30 weekly essays** on AI coding-agent engineering and a field report grounded in **114 primary sources**
+
+**DeFi infrastructure (Go)**
+
+- **[go-mcf](https://github.com/Infrared-Trading-Technologies/go-mcf)**: Go port of LEMON's Network Simplex min-cost-flow solver, specialized for DeFi (uint256 flows)
+- **[go-weiroll](https://github.com/Infrared-Trading-Technologies/go-weiroll)**: Weiroll command planner for chaining smart-contract calls in one transaction
+- **[go-gas](https://github.com/Infrared-Trading-Technologies/go-gas)**: Low-latency, push-based EIP-1559 gas estimator for trading and MEV workloads
 
 ---
 
 ## TECHNICAL SKILLS
 
-| Category             | Technologies                                                                                                                                                                                                                                                  |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Languages**        | Go, Python, Solidity, SQL, TypeScript                                                                                                                                                                                                                         |
-| **AI/ML & LLMs**     | Anthropic Claude API, OpenAI API, Gemini API, LangChain, LangGraph, AutoGen, CrewAI, Chain-of-thought prompting, Constitutional AI, Function calling & tool use, ReAct patterns, Model fine-tuning (LoRA/QLoRA), Multi-agent orchestration, RAG architectures |
-| **Frontend**         | React, Next.js, Vue.js, Tailwind CSS, Ant Design, D3.js, Recharts                                                                                                                                                                                             |
-| **Backend**          | Node.js, REST APIs, GraphQL, gRPC, WebSockets, FIX Protocol                                                                                                                                                                                                   |
-| **Databases**        | PostgreSQL, MongoDB, Redis, TimescaleDB, BigQuery, ChromaDB, Pinecone, Qdrant, Weaviate                                                                                                                                                                       |
-| **Infrastructure**   | AWS, GCP, Docker, Kubernetes, CI/CD, Modal, Ray, Replicate                                                                                                                                                                                                    |
-| **Blockchain**       | Uniswap, Aave, Compound, Ethers.js, Web3.js, EVM chains, Geth, Erigon                                                                                                                                                                                         |
-| **Data Engineering** | Apache Kafka, Airflow, Pandas, LlamaIndex, Google Sheets API, Retool, Weights & Biases                                                                                                                                                                        |
-| **Trading Systems**  | Autonomous agents, Backtesting frameworks, CCXT, FIX connectivity, Hummingbot, Market data feeds, OMS, Reinforcement learning, Risk management                                                                                                                |
+| Category           | Technologies                                                                                               |
+| ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| **Languages**      | Go, Rust, Solidity, Python, TypeScript, SQL                                                                |
+| **AI / Agents**    | Claude Code (skills, subagents, hooks), Claude Agent SDK, MCP, agent harnesses, grader and held-out-oracle verification, agent evals, LangChain, LangGraph, CrewAI, LoRA/QLoRA |
+| **DeFi & Trading** | Uniswap V2-V4, UniswapX, Curve, Balancer, Aave, Morpho, Weiroll, Foundry, revm, RFQ, FIX, CCXT, Hummingbot |
+| **Infrastructure** | GCP, AWS, PostgreSQL, Redis, BigQuery, Airflow, Temporal, Docker, GitHub Actions, OpenTelemetry            |
+| **Frontend**       | React, Next.js, Tailwind CSS                                                                               |
 
 ---
 
 ## EDUCATION
 
-**Engineering Immersion Program**  
-Thinkful • *January 2018 - January 2019*  
-Intensive 6-month program (60-90 hours/week) focused on full-stack development with JavaScript, React, Node.js, and PostgreSQL
-
-**Bachelor of Science, Finance & Economics** (Dual Concentration)  
-Towson University • *January 2008 - January 2010*  
-Activities: Towson University Investment Group
-
----
+**Bachelor of Science, Finance & Economics** • Towson University  
+**Engineering Immersion Program** • Thinkful
 
 ## CERTIFICATIONS
 
-**StrategyV2 Developer**  
-Hummingbot Foundation • *May 2024*
-
----
-
-## PUBLICATIONS
-
-**Medium Articles**
-
-- "10 Statistical Price Predictions for 10 Cryptocurrencies"
-- "Bitcoin Madness: How to Simulate Bitcoin Prices in Google Sheets"
-- Additional technical articles on cryptocurrency analysis and DeFi protocols
+**StrategyV2 Developer, MVP Award** • Hummingbot Foundation • *May 2024*
