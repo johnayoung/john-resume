@@ -96,4 +96,4 @@ Head of engineering and CTO who ships trading and DeFi infrastructure, from audi
 
 ## CERTIFICATIONS
 
-**StrategyV2 Developer, MVP Award** • Hummingbot Foundation • *May 2024*
+**StrategyV2 Developer, MVP at Demo Day** • Hummingbot Foundation • *May 2024*

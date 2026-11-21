@@ -7,7 +7,7 @@
     <img class="portrait" src="{{ $portrait.RelPermalink }}" alt="John Young" width="280" height="210" fetchpriority="high">
     <div class="about-prose">
       <p>I started in finance &mdash; modeling risk on a $1B+ credit-card portfolio at Capital One &mdash; then taught myself to code and never looked back. Since then I&rsquo;ve founded two data platforms, both acquired, and built systems that clear 1M+ API requests a day.</p>
-      <p>Today I run engineering across Combine Capital and Infrared under Branched Services: multi-agent workflows that cut analysis time 75%, data infrastructure processing 100K+ daily events across EVM chains, and a MIMO token router that solves DeFi routing as a single min-cost-flow problem &mdash; sub-100ms across 50+ liquidity sources.</p>
+      <p>Today I run engineering across Combine Capital and Infrared under Branched Services: a min-cost-flow DeFi routing API across 28 protocols, an audited on-chain execution layer, a Rust UniswapX filler that decides in ~500&micro;s, and the fund accounting platform behind Combine&rsquo;s daily NAV. AI agents write most of the code; graders, held-out test oracles, and human review decide what ships.</p>
       <p>I publish research-backed essays on running AI coding agents in production. Every claim is traced to a primary source in a verified <a href="/research/">research index</a>{{ with site.Data.research }}{{ with .updated }}, updated {{ . }}{{ end }}{{ end }}.</p>
     </div>
   </div>
@@ -48,7 +48,7 @@
         <circle class="hit" cx="250" cy="170" r="16" fill="transparent" stroke="none"/>
         <circle class="dot" cx="250" cy="170" r="4.5"/>
       </a>
-      <a href="#exp-spreadstreet" aria-label="Spreadstreet, 2016 to 2019, acquired — jump to entry">
+      <a href="#exp-cryptosheets" aria-label="Spreadstreet, 2016 to 2019, acquired — jump to entry">
         <circle class="hit" cx="485" cy="100" r="16" fill="transparent" stroke="none"/>
         <circle class="dot" cx="485" cy="100" r="4.5"/>
       </a>
@@ -106,7 +106,7 @@
         <circle class="hit" cx="270" cy="295" r="22" fill="transparent" stroke="none"/>
         <circle class="dot" cx="270" cy="295" r="4.5"/>
       </a>
-      <a href="#exp-spreadstreet" aria-label="Spreadstreet, 2016 to 2019, acquired — jump to entry">
+      <a href="#exp-cryptosheets" aria-label="Spreadstreet, 2016 to 2019, acquired — jump to entry">
         <circle class="hit" cx="110" cy="373" r="22" fill="transparent" stroke="none"/>
         <circle class="dot" cx="110" cy="373" r="4.5"/>
       </a>
@@ -125,12 +125,14 @@
         <p class="entry-date">2023 &mdash; <span class="now">Now</span></p>
         <div class="entry-body">
           <h3>CTO, Combine Capital &amp; Head of Engineering, Infrared <span class="co">&mdash; Branched Services</span></h3>
-          <p class="scope">Trading infrastructure, DeFi routing, AI-agent workflows.</p>
+          <p class="scope">DeFi routing and execution, fund accounting, AI automation.</p>
           <ul class="claims">
-            <li><span class="fig">75%</span><span class="claim">reduction in analysis time from a production multi-agent data-processing system</span></li>
-            <li><span class="fig">65%</span><span class="claim">faster DeFi compliance investigation via fine-tuned LLMs that explain transactions in plain English</span></li>
-            <li><span class="fig">100K+</span><span class="claim">daily events processed across EVM chains and CEXs</span></li>
-            <li><span class="fig">sub-100ms</span><span class="claim">MIMO route computation across 50+ liquidity sources at less than 1% slippage estimation error</span></li>
+            <li><span class="fig">28</span><span class="claim">protocols routed by a production min-cost-flow API on Ethereum, Base, and Arbitrum</span></li>
+            <li><span class="fig">4 days</span><span class="claim">from first commit to live fills for a Rust UniswapX filler, built grader-first with AI agents</span></li>
+            <li><span class="fig">~500&micro;s</span><span class="claim">p50 filler decision latency; 5.4M RFQ requests answered in its first 4 days of quoting</span></li>
+            <li><span class="fig">92 of 94</span><span class="claim">agent tasks landed through command graders, rubric review, and blind held-out tests</span></li>
+            <li><span class="fig">150</span><span class="claim">merged PRs from a weekly AI research desk that verifies 12 DeFi protocols against primary sources</span></li>
+            <li><span class="fig">&lt;1 hr</span><span class="claim">monthly fund close at Combine, down from 1&ndash;2 days</span></li>
           </ul>
         </div>
       </article>
@@ -150,27 +152,15 @@
     </li>
     <li>
       <article class="entry" id="exp-cryptosheets">
-        <p class="entry-date">2018 &mdash; 2021</p>
+        <p class="entry-date">2016 &mdash; 2021</p>
         <div class="entry-body">
           <h3>Founder &amp; CTO <span class="co">&mdash; Cryptosheets</span></h3>
-          <p class="scope">Real-time cryptocurrency data platform for Microsoft Excel. Acquired 2019.</p>
+          <p class="scope">Real-time cryptocurrency market data for Microsoft Excel and Google Sheets. Two exits.</p>
           <ul class="claims">
             <li><span class="fig">30,000+</span><span class="claim">active users</span></li>
             <li><span class="fig">1M+</span><span class="claim">daily API requests on architecture I designed and scaled</span></li>
-            <li><span class="fig">Exit</span><span class="claim">acquired by a private buyer within the first year of operation</span></li>
-          </ul>
-        </div>
-      </article>
-    </li>
-    <li>
-      <article class="entry" id="exp-spreadstreet">
-        <p class="entry-date">2016 &mdash; 2019</p>
-        <div class="entry-body">
-          <h3>Founder &amp; Chief Software Architect <span class="co">&mdash; Spreadstreet.io</span></h3>
-          <p class="scope">Google Sheets integration for cryptocurrency market data. Exited to a strategic buyer.</p>
-          <ul class="claims">
-            <li><span class="fig">500+</span><span class="claim">cryptocurrencies with real-time feeds and custom functions</span></li>
             <li><span class="fig">5,000+</span><span class="claim">subscribers on a recurring-revenue model</span></li>
+            <li><span class="fig">2 exits</span><span class="claim">Spreadstreet.io to a strategic buyer, Cryptosheets to a private buyer</span></li>
           </ul>
         </div>
       </article>
@@ -196,12 +186,12 @@
   <ul class="sys-list">
     <li class="sys">
       <h3 class="sys-name">Flywheel</h3>
-      <p class="sys-spec">Control plane for AI coding agents: concurrent agents in isolated git worktrees, dependency-aware scheduling, grader-gated landing.</p>
-      <p class="sys-meta"><span class="tag">Python</span><a href="https://github.com/johnayoung/flywheel" target="_blank" rel="noopener">github &nearr;</a></p>
+      <p class="sys-spec">Control plane for AI coding agents: isolated git worktrees, grader-gated landing, blind held-out oracles, a multi-agent hub. Its own worker landed 931 commits.</p>
+      <p class="sys-meta"><span class="tag">Rust</span><a href="https://github.com/johnayoung/flywheel" target="_blank" rel="noopener">github &nearr;</a></p>
     </li>
     <li class="sys">
       <h3 class="sys-name">go-gas</h3>
-      <p class="sys-spec">Ultra low-latency Ethereum gas estimation, ~69&micro;s per calculation, zero-copy uint256 math.</p>
+      <p class="sys-spec">Low-latency, push-based Ethereum gas estimation, ~61&micro;s per strategy calculation, uint256 math.</p>
       <p class="sys-meta"><span class="tag">Go</span><a href="https://github.com/Infrared-Trading-Technologies/go-gas" target="_blank" rel="noopener">github &nearr;</a></p>
     </li>
     <li class="sys">
@@ -215,9 +205,14 @@
       <p class="sys-meta"><span class="tag">Go</span><a href="https://github.com/Infrared-Trading-Technologies/go-weiroll" target="_blank" rel="noopener">github &nearr;</a></p>
     </li>
     <li class="sys">
-      <h3 class="sys-name">eth-finetuning-cookbook</h3>
-      <p class="sys-spec">QLoRA fine-tuning pipeline extracting structured intents from Ethereum transactions at 90%+ accuracy.</p>
-      <p class="sys-meta"><span class="tag">PyTorch</span><a href="https://github.com/johnayoung/eth-finetuning-cookbook" target="_blank" rel="noopener">github &nearr;</a></p>
+      <h3 class="sys-name">go-mcf</h3>
+      <p class="sys-spec">Go port of LEMON&rsquo;s Network Simplex min-cost-flow solver, specialized for DeFi with uint256 flows.</p>
+      <p class="sys-meta"><span class="tag">Go</span><a href="https://github.com/Infrared-Trading-Technologies/go-mcf" target="_blank" rel="noopener">github &nearr;</a></p>
+    </li>
+    <li class="sys">
+      <h3 class="sys-name">agent-engineering-toolkit</h3>
+      <p class="sys-spec">28 Claude Code skills and templates, one runnable artifact per essay.</p>
+      <p class="sys-meta"><span class="tag">Claude Code</span><a href="https://github.com/johnayoung/agent-engineering-toolkit" target="_blank" rel="noopener">github &nearr;</a></p>
     </li>
   </ul>
 </section>
@@ -228,10 +223,10 @@
     <div>
       <h3 class="subhead">Stack</h3>
       <dl class="stack-matrix">
-        <div><dt>Languages</dt><dd>Go &middot; Python &middot; TypeScript &middot; Solidity &middot; SQL</dd></div>
-        <div><dt>AI&ndash;LLM</dt><dd>Claude API &middot; LangGraph &middot; multi-agent orchestration &middot; RAG &middot; QLoRA fine-tuning</dd></div>
-        <div><dt>Data &amp; Infra</dt><dd>PostgreSQL &middot; TimescaleDB &middot; Redis &middot; BigQuery &middot; Kubernetes &middot; AWS &middot; GCP</dd></div>
-        <div><dt>DeFi</dt><dd>Uniswap &middot; Aave &middot; EVM internals &middot; MEV protection</dd></div>
+        <div><dt>Languages</dt><dd>Go &middot; Rust &middot; Solidity &middot; Python &middot; TypeScript &middot; SQL</dd></div>
+        <div><dt>AI&ndash;LLM</dt><dd>Claude Code &middot; Claude Agent SDK &middot; MCP &middot; agent harnesses &amp; evals &middot; LangGraph &middot; QLoRA fine-tuning</dd></div>
+        <div><dt>Data &amp; Infra</dt><dd>PostgreSQL &middot; Redis &middot; BigQuery &middot; Airflow &middot; Temporal &middot; AWS &middot; GCP</dd></div>
+        <div><dt>DeFi</dt><dd>Uniswap V2&ndash;V4 &amp; UniswapX &middot; Aave &middot; Morpho &middot; Weiroll &middot; revm &middot; Foundry</dd></div>
       </dl>
     </div>
     <div>

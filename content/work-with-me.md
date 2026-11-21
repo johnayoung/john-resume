@@ -3,7 +3,7 @@ title: "Work With Me"
 description: "Advisory and hands-on help for engineering leaders putting AI coding agents into production."
 ---
 
-I'm John Young — an engineering leader (CTO, 12+ years in fintech) who builds and runs production multi-agent systems and writes about the engineering practices behind AI coding agents.
+I'm John Young — an engineering leader (CTO and Head of Engineering, 15+ years in finance and fintech) who builds and runs production AI automation and agent-driven engineering, and writes about the engineering practices behind AI coding agents.
 
 If your team is moving real work onto AI coding agents and hitting the questions that don't have blog-post answers yet — how to scope tasks an agent actually finishes, how to verify output beyond a green build, what production operations and guardrails really cost — that's where I help.
 
